@@ -3,14 +3,14 @@ import interfaz_remota.Operacion;
 import servidor.eventos.SistemaEventos;
 import servidor.objeto_bolsa.contenedor.Contenedor;
 import servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;
-import servidor.objeto_bolsa.informacion.Informacion;
+import servidor.objeto_bolsa.informacion.*;
 import servidor.objeto_bolsa.operaciones.SistOperaciones;
 import sist_mensajeria.emisor.*;
 
 public class ObjetoBolsa {
 	String nombreEmpresa;
 	
-	Informacion informacion;
+	IInformacion informacion;
 	SistOperaciones sistemaOperaciones;
 	Fluctuaciones fluctuaciones;
 	Contenedor contenedor;
