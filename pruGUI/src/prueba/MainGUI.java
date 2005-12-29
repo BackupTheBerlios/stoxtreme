@@ -5,37 +5,66 @@ import java.awt.event.*;
 
 public class MainGUI extends JFrame{
 	JDesktopPane mainPane;
+	JMenuBar menuPrincipal;
 	
 	public MainGUI(){
-		super("Stock Xtreme");
+		super("Stock Xtreme Server");
 		mainPane = new JDesktopPane();
 		this.setContentPane(mainPane);
 		mainPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		
-		JInternalFrame f = 
-			new JInternalFrame("Probando", true, true, true, true);
-
-		f.setSize(300, 300);
-		f.setVisible(true);
+		VentanaPrueba1 f1 = 	new VentanaPrueba1();
+		VentanaPrueba2 f2 = 	new VentanaPrueba2();
+		VentanaPrueba3 f3 = new VentanaPrueba3();
 		
-		mainPane.add(f);
+		f1.jbInit();
+		f1.setLocation(0,0);
+		f2.jbInit();
+		f2.setLocation(0, 300);
+		f3.jbInit();
+		f3.setLocation(450, 0);
+		
+		mainPane.add(f1);
+		mainPane.add(f2);
+		mainPane.add(f3);
+		
 		initialize();
 	}
 	
 	public void initialize(){
-		Dimension d = new Dimension(600, 600);
+		Dimension d = new Dimension(800, 700);
 		this.setSize(d);
 		this.setPreferredSize(d);
 		this.setMinimumSize(d);
 		this.setMaximumSize(d);
+		this.setLocation(30, 30);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.addWindowListener(
-				new WindowAdapter(){
-					public void windowClosing(WindowEvent e){
-						System.exit(0);
-					}
-				}
-		);
+		menuPrincipal = new JMenuBar();
+		JMenu archivo = new JMenu("Archivo");
+			JMenu nuevo = new JMenu("Nuevo");
+				nuevo.add(new JMenuItem("Proyecto"));
+				nuevo.add(new JMenuItem("Archivo"));
+				nuevo.add(new JMenuItem("Cosa"));
+				archivo.add(nuevo);
+			archivo.add(new JMenuItem("Abrir"));
+			archivo.add(new JMenuItem("Guardar"));
+			archivo.add(new JMenuItem("Guardar como..."));
+			archivo.add(new JMenuItem("Cerrar"));
+		
+		menuPrincipal.add(archivo);
+		JMenu editar = new JMenu("Editar");
+		menuPrincipal.add(editar);
+		JMenu ver = new JMenu("Ver");
+		menuPrincipal.add(ver);
+		JMenu ir = new JMenu("Ir");
+		menuPrincipal.add(ir);
+		JMenu herramientas = new JMenu("Herramientas");
+		menuPrincipal.add(herramientas);
+		JMenu ayuda = new JMenu("Ayuda");
+		menuPrincipal.add(ayuda);
+		
+		this.setJMenuBar(menuPrincipal);
 	}
 	
 	public static void main(String[] args) {
