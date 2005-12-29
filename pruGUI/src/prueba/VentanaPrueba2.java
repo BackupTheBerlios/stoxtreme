@@ -41,6 +41,7 @@ public class VentanaPrueba2 extends JInternalFrame{
 			ChartFactory.createXYLineChart("","Meses","Sesiones", datos,	PlotOrientation.VERTICAL,false, false, true);
 
 		ChartPanel panel = new ChartPanel(chart);
+		panel.setDoubleBuffered(false);
 		getContentPane().add(panel);
 	}
 }
