@@ -10,7 +10,13 @@ public class MainGUI extends JFrame{
 	public MainGUI(){
 		super("Stock Xtreme Server");
 		mainPane = new JDesktopPane();
-		this.setContentPane(mainPane);
+		//setContentPane(mainPane);
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().add(mainPane, BorderLayout.CENTER);
+		
+		PanelCotizaciones panelCotizaciones = new PanelCotizaciones();
+		getContentPane().add(panelCotizaciones, BorderLayout.SOUTH);
+		
 		mainPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		
 		VentanaPrueba1 f1 = 	new VentanaPrueba1();
