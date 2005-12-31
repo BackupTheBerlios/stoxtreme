@@ -6,6 +6,7 @@ import java.awt.event.*;
 public class MainGUI extends JFrame{
 	JDesktopPane mainPane;
 	JMenuBar menuPrincipal;
+	JToolBar toolbarPrincipal;
 	
 	public MainGUI(){
 		super("Stock Xtreme Server");
@@ -16,6 +17,23 @@ public class MainGUI extends JFrame{
 		
 		PanelCotizaciones panelCotizaciones = new PanelCotizaciones();
 		getContentPane().add(panelCotizaciones, BorderLayout.SOUTH);
+		
+		toolbarPrincipal = new JToolBar();
+		toolbarPrincipal.setPreferredSize(new Dimension(0, 26));
+		toolbarPrincipal.setFloatable(false);
+		JButton b1 = new JButton(new ImageIcon("iconoEncima.png"));
+		//b1.setPreferredSize(new Dimension(26,26));
+		//b1.setSize(new Dimension(26,26));
+		b1.setMinimumSize(new Dimension(26,26));
+		b1.setMaximumSize(new Dimension(26,26));
+		toolbarPrincipal.add(b1);
+		JButton b2 = new JButton(new ImageIcon("iconoPulsado.png"));
+		//b2.setPreferredSize(new Dimension(26,26));
+		//b2.setSize(new Dimension(26,26));
+		b2.setMinimumSize(new Dimension(26,26));
+		b2.setMaximumSize(new Dimension(26,26));
+		toolbarPrincipal.add(b2);
+		getContentPane().add(toolbarPrincipal, BorderLayout.NORTH);
 		
 		mainPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		
@@ -47,6 +65,7 @@ public class MainGUI extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		menuPrincipal = new JMenuBar();
+		
 		JMenu archivo = new JMenu("Archivo");
 			JMenu nuevo = new JMenu("Nuevo");
 				nuevo.add(new JMenuItem("Proyecto"));
@@ -69,14 +88,14 @@ public class MainGUI extends JFrame{
 		menuPrincipal.add(herramientas);
 		JMenu ayuda = new JMenu("Ayuda");
 		menuPrincipal.add(ayuda);
-		
 		this.setJMenuBar(menuPrincipal);
 	}
+	
 	
 	public static void main(String[] args) {
 		MainGUI m = new MainGUI();
 		m.pack();
-		m.show();
+		m.setVisible(true);
 	}
 
 }
