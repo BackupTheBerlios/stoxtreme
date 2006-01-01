@@ -19,20 +19,16 @@ public class MainGUI extends JFrame{
 		getContentPane().add(panelCotizaciones, BorderLayout.SOUTH);
 		
 		toolbarPrincipal = new JToolBar();
-		toolbarPrincipal.setPreferredSize(new Dimension(0, 26));
+		//toolbarPrincipal.setPreferredSize(new Dimension(0, 30));
 		toolbarPrincipal.setFloatable(false);
-		JButton b1 = new JButton(new ImageIcon("iconoEncima.png"));
-		//b1.setPreferredSize(new Dimension(26,26));
-		//b1.setSize(new Dimension(26,26));
-		b1.setMinimumSize(new Dimension(26,26));
-		b1.setMaximumSize(new Dimension(26,26));
-		toolbarPrincipal.add(b1);
-		JButton b2 = new JButton(new ImageIcon("iconoPulsado.png"));
-		//b2.setPreferredSize(new Dimension(26,26));
-		//b2.setSize(new Dimension(26,26));
-		b2.setMinimumSize(new Dimension(26,26));
-		b2.setMaximumSize(new Dimension(26,26));
-		toolbarPrincipal.add(b2);
+		
+		String nombres[] = {"009", "Ankh", "BooklatchGrey", "Computer", "Diskette", "Figure", 
+				"Folderhome", "gundam", "Network", "Otorii", "Scroll", "Wi006332"};
+		
+		for (int i=0; i<nombres.length; i++){
+			JButton b = new JButton(new ImageIcon("iconos/"+nombres[i]+".gif"));
+			toolbarPrincipal.add(b);
+		}
 		getContentPane().add(toolbarPrincipal, BorderLayout.NORTH);
 		
 		mainPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
