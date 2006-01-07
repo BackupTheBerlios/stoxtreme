@@ -1,0 +1,1 @@
+javacc -STATIC=false -OUTPUT_DIRECTORY=../src/servidor/eventos/evaluador/ ParserEventos.jj

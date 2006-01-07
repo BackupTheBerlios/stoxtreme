@@ -1,0 +1,269 @@
+PARSER_BEGIN(Evaluador)
+	package servidor.eventos.evaluador;
+	import java.util.*;
+	import java.io.*;
+
+	public class Evaluador{
+		// VARIABLES DEL PARSER
+		private ArrayList variablesUsadas;
+		private Hashtable variables;
+
+		public Evaluador (String s){
+			this(new ByteArrayInputStream(s.getBytes()));
+		}
+
+		public ArrayList getVariablesUsadas(){
+			return variablesUsadas;
+		}
+
+		public boolean evalua(Hashtable variables) throws ParseException{
+			this.variables = variables;
+			String[] ret = E0();
+			compruebaTipo(ret[0], "boolean");
+			return Boolean.parseBoolean(ret[1]);
+		}
+
+		private String evalua(String op, String el1, String el2){
+			if(op.equals("and")){
+				boolean b1 = Boolean.parseBoolean(el1);
+				boolean b2 = Boolean.parseBoolean(el2);
+				return Boolean.toString(b1&&b2);
+			}
+			else if(op.equals("or")){
+				boolean b1 = Boolean.parseBoolean(el1);
+				boolean b2 = Boolean.parseBoolean(el2);
+				return Boolean.toString(b1||b2);
+			}
+			else if(op.equals("multiplica")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Double.toString(d1*d2);
+			}
+			else if(op.equals("divide")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Double.toString(d1/d2);
+			}
+			else if(op.equals("modulo")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Double.toString(d1%d2);
+			}
+			else if(op.equals("suma")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Double.toString(d1+d2);
+			}
+			else if(op.equals("resta")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Double.toString(d1-d2);
+			}
+			else if(op.equals("mayor")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Boolean.toString(d1>d2);
+			}
+			else if(op.equals("menor")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Boolean.toString(d1<d2);
+			}
+			else if(op.equals("mayor_igual")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Boolean.toString(d1>=d2);
+			}
+			else if(op.equals("menor_igual")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Boolean.toString(d1<=d2);
+			}
+			else if(op.equals("igual")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Boolean.toString(d1==d2);
+			}
+			else if(op.equals("distinto")){
+				double d1 = Double.parseDouble(el1);
+				double d2 = Double.parseDouble(el2);
+				return Boolean.toString(d1!=d2);
+			}
+			else{ //if(op.equals("not"){
+				boolean b1 = Boolean.parseBoolean(el1);
+				return Boolean.toString(!b1);
+			}
+		}
+		private void compruebaTipo(String valor, String tipo) throws ParseException{
+			if(!valor.equals(tipo))
+				throw new ParseException("Error de tipo: esperado "+tipo);
+		}
+	}
+	
+PARSER_END(Evaluador)
+
+// Caracteres que se tiene que saltar
+SKIP:{
+	" " | "\t" | "\n" | "\r" 
+}
+
+// Palabras reservadas
+TOKEN [IGNORE_CASE]:{
+	<AND: ("and" | "&&" | "&")> |
+	<OR: ("or" | "||" | "|")> |
+	<TRUE: "true"> |
+	<FALSE: "false"> |
+	// Simbolos de puntuacion
+	<PAP: "("> |
+	<PCI: ")"> |
+	<MENORIGUAL: "<="> |
+	<MAYORIGUAL: ">="> |
+	<IGUALDAD: "=="> |
+	<DISTINTO: "!=" | "<>"> |
+	<MENOR: "<"> |
+	<MAYOR: ">"> |
+	
+	<POR: "*"> |
+	<ENTRE: ("/" | "div")> |
+	<MAS: "+"> |
+	<MENOS: "-"> |
+	<MOD: "mod"> |
+	<NOT: ("!" | "not")>
+}
+
+// Tokens g�ericos
+TOKEN [IGNORE_CASE]:{
+  <VAR: ( ["a"-"z"] | "_" )(["a"-"z"]|"_"|["0"-"9"])*> |
+  <NUMERO:(<NUMEROENTERO> | (<NUMEROENTERO>)?"."<DIGITOS>(("e")("-")?<NUMEROENTERO>)? )> |
+  <#NUMEROENTERO: "0"|(["1"-"9"])((["0"-"9"])*)> |
+  <#DIGITO: ["1"-"9"]> |
+  <#DIGITOS: (["0"-"9"])*>
+}
+
+SKIP:{<ERROR:~[]>{ /*throw new ParseException("Error Lexico en "+image);*/}}
+
+
+String[] E0():{String[] ret1, ret2; String[] ret = new String[2];}{
+	ret1 = E1() 
+	(<OR> ret2 = E0()
+		{
+			compruebaTipo(ret1[0], "boolean");
+			compruebaTipo(ret2[0], "boolean");
+			ret[0] = "boolean";
+			ret[1] = evalua("or", ret1[1], ret2[1]);
+			return ret;
+		}
+	)?{return ret1;}
+}
+
+String[] E1():{String[] ret1, ret2; String[] ret = new String[2];}{
+	ret1 = E2() 
+	(<AND> ret2 = E1()
+		{
+			compruebaTipo(ret1[0], "boolean");
+			compruebaTipo(ret2[0], "boolean");
+			ret[0] = "boolean";
+			ret[1] = evalua("and", ret1[1], ret2[1]);
+			return ret;
+		}
+	)?{return ret1;}
+}
+
+String[] E2():{String op; String[] ret1, ret2; String[] ret = new String[2];}{
+	ret1 = E3() 
+	(op = OpComp() ret2 = E2() 
+		{ 
+			compruebaTipo(ret1[0], "double");
+			compruebaTipo(ret2[0], "double");
+			ret[0] = "boolean";
+			ret[1] = evalua(op, ret1[1], ret2[1]);
+			return ret;
+		}
+	)?{return ret1;}
+}
+
+String OpComp():{String s;}{
+	(
+	<MENORIGUAL> {return "menor_igual";}|
+	<MAYORIGUAL> {return "mayor_igual";}|
+	<IGUALDAD> {return "igual";}|
+	<DISTINTO> {return "distinto";}|
+	<MENOR> {return "menor";}|
+	<MAYOR> {return "mayor";}
+	)
+}
+
+String[] E3():{String op; String[] ret1, ret2; String[] ret = new String[2];}{
+	ret1 = E4() 
+	(op = OpSum() ret2 = E3()
+		{
+			compruebaTipo(ret1[0], "double");
+			compruebaTipo(ret2[0], "double");
+			ret[0] = "double";
+			ret[1] = evalua(op, ret1[1], ret2[1]);
+			return ret;
+		}
+	)?{return ret1;}
+}
+
+String OpSum():{String s;}{
+	(
+	<MAS> {return "suma";} | 
+	<MENOS> {return "resta";}
+	)
+}
+
+String[] E4():{String op; String[] ret1, ret2; String[] ret = new String[2];}{
+	ret1 = E5() 
+	(op = OpMul() ret2 = E4()
+		{
+			compruebaTipo(ret1[0], "double");
+			compruebaTipo(ret2[0], "double");
+			ret[0] = "double";
+			ret[1] = evalua(op, ret1[1], ret2[1]);
+			return ret;
+		}
+	)?{return ret1;}
+}
+
+String OpMul():{String s;Token t;}{
+	(
+	<POR> {return "multiplica";}| 
+	<ENTRE> {return "divide";}| 
+	<MOD> {return "modulo";}
+	)
+}
+
+String[] E5():{String[] ret1; String[] ret = new String[2]; boolean not = false;}{
+	(<NOT>
+		{not = true;}
+	)? 
+	ret1 = E6()
+	{ 
+		if(not) {
+			compruebaTipo(ret1[0], "boolean");
+			ret[0] = "boolean";
+			ret[1] = evalua("not", ret1[1], "");
+			return ret;
+		}
+		{
+			return ret1;
+		}
+	}
+}
+
+String[] E6():{String[] ret = new String[2]; Token t;}{
+	(<PAP> ret = E0() <PCI> | 
+	t=<VAR> 
+		{
+			ret[0] = "double"; 
+			if(!variables.containsKey(t.image))
+				throw new ParseException("Error: No existe la variable "+t.image);
+			ret[1] = variables.get(t.image).toString();
+			variablesUsadas.add(t.image);
+		}| 
+	t=<NUMERO> {ret[0] = "double"; ret[1] = t.image; } | 
+	<TRUE> {ret[0] = "boolean"; ret[1] = "true";}| 
+	<FALSE> {ret[0] = "boolean"; ret[1] = "false";} )
+	{return ret;}
+}

@@ -3,6 +3,8 @@ package servidor.eventos;
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
 
+import servidor.eventos.evaluador.ParseException;
+
 public class SistemaEventos extends AbstractTableModel{
 	private Hashtable variables;
 	private ArrayList listaCondiciones;
@@ -23,6 +25,7 @@ public class SistemaEventos extends AbstractTableModel{
 		variables.put(var, valor);
 		for (int i=listaCondiciones.size(); i>=0; i--){
 			ObjetoCondicion oc = ((ObjetoCondicion)listaCondiciones.get(i));
+			oc.cambiaVariable(var, valor);
 			if (oc.evalua()){
 				ejecutor.ejecuta((String)listaAcciones.get(i));
 				
@@ -34,7 +37,7 @@ public class SistemaEventos extends AbstractTableModel{
 		}
 	}
 	
-	public void insertarEvento(String descripcion, String accion, boolean unavez) throws ExceptionMalformedEvent{
+	public void insertarEvento(String descripcion, String accion, boolean unavez) throws ParseException{
 		ObjetoCondicion oc = new ObjetoCondicion(descripcion, variables, unavez);
 		if (oc.evalua()){
 			ejecutor.ejecuta(accion);
