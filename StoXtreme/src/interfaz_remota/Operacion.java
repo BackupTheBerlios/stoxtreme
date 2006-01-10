@@ -31,6 +31,10 @@ public class Operacion {
 	
 	public Hashtable toHashtable(){
 		Hashtable h= new Hashtable();
+		h.put("nombreEmpresa", this.nombreEmpresa);
+		h.put("numAcciones",new Integer(this.numAcciones).toString());
+		h.put("precio",new Float (this.precio).toString());
+		h.put("tipoOp",this.tipoOp);
 		return h;
 	}
 }

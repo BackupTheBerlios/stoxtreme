@@ -10,14 +10,14 @@ import java.util.Hashtable;
 import org.apache.xmlrpc.XmlRpcClientLite;
 import org.apache.xmlrpc.XmlRpcException;
 
-public class Cliente implements IAgente{
+public class ClienteRemoto implements IAgente{
 	
 	public XmlRpcClientLite c=null;
 	public String id;
 	//Faltaria un objeto grupoAgentes que tenga la info de todos los agentes que simula el cliente
 	public Hashtable opPendientes;
 	
-	public Cliente(){
+	public ClienteRemoto(){
 		id="";
 		opPendientes=new Hashtable();
 		try{
@@ -28,7 +28,7 @@ public class Cliente implements IAgente{
 	
 	}
 	
-	public Cliente(String ident){
+	public ClienteRemoto(String ident){
 		id=ident;
 		opPendientes=new Hashtable();
 		try{
@@ -86,7 +86,7 @@ public class Cliente implements IAgente{
 		cancelaOperacion(idOp);
 		insertaOperacion(id, nuevaOp);
 	}
-	
+	//Este main es para probar que funciona
 	public static void main(String[] args) {
 		
 		Cliente usuario=new Cliente("yo");
