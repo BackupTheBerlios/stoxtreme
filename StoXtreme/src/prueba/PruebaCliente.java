@@ -1,8 +1,9 @@
 package prueba;
 
+import interfaz_remota.Mensaje;
+
 import java.net.MalformedURLException;
 
-import sist_mensajeria.mensajes.Mensaje;
 import sist_mensajeria.receptor.MessageListener;
 import sist_mensajeria.receptor.SistemaMensajesReceptor;
 

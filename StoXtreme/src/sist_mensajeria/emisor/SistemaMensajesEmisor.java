@@ -1,11 +1,32 @@
 package sist_mensajeria.emisor;
 
+import interfaz_remota.Mensaje;
+
 import java.util.Vector;
-import sist_mensajeria.mensajes.Mensaje;
 
 // Es basicamente una interfaz remota al almacen de
 // mensajes local del servidor
 public class SistemaMensajesEmisor {
+	// Metodos SINGLETONE
+	static private SistemaMensajesEmisor sme = null;
+	static private AlmacenMensajes a = null;
+	
+	static public SistemaMensajesEmisor getReferenciaGlobalEmisor(){
+		if(sme == null){
+			a = new AlmacenMensajes();
+			sme = new SistemaMensajesEmisor(a);
+		}
+		return sme;
+	}
+	static public AlmacenMensajes getReferenciaGlobalAlmacen(){
+		if(sme == null){
+			a = new AlmacenMensajes();
+			sme = new SistemaMensajesEmisor(a);
+		}
+		return a;
+	}
+	
+	// Metodos del objeto
 	AlmacenMensajes almacen;
 	
 	public SistemaMensajesEmisor(AlmacenMensajes almacen){

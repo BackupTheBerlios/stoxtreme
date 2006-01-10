@@ -1,5 +1,5 @@
 package sist_mensajeria.receptor;
-import sist_mensajeria.mensajes.Mensaje;
+import interfaz_remota.Mensaje;
 
 public interface MessageListener {
 	public void onMessage(Mensaje m);

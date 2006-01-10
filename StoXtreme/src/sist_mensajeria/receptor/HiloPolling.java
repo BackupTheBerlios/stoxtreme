@@ -1,5 +1,7 @@
 package sist_mensajeria.receptor;
 
+import interfaz_remota.Mensaje;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Vector;
@@ -7,7 +9,6 @@ import java.util.Vector;
 import org.apache.xmlrpc.XmlRpcClientLite;
 import org.apache.xmlrpc.XmlRpcException;
 
-import sist_mensajeria.mensajes.Mensaje;
 
 public class HiloPolling extends Thread{
 	SistemaMensajesReceptor smr;

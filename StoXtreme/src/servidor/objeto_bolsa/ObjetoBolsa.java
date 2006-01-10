@@ -1,7 +1,6 @@
 package servidor.objeto_bolsa;
 import interfaz_remota.Operacion;
 import servidor.eventos.SistemaEventos;
-import servidor.objeto_bolsa.contenedor.Contenedor;
 import servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;
 import servidor.objeto_bolsa.informacion.*;
 import servidor.objeto_bolsa.operaciones.SistOperaciones;
@@ -13,7 +12,6 @@ public class ObjetoBolsa {
 	IInformacion informacion;
 	SistOperaciones sistemaOperaciones;
 	Fluctuaciones fluctuaciones;
-	Contenedor contenedor;
 	
 	SistemaEventos sisEventos;
 	SistemaMensajesEmisor sisMensajes;

@@ -1,10 +1,11 @@
 package sist_mensajeria.receptor;
+import interfaz_remota.Mensaje;
+
 import java.net.MalformedURLException;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
-import sist_mensajeria.mensajes.Mensaje;
 
 public class SistemaMensajesReceptor {
 	Vector listaSub;

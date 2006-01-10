@@ -1,5 +1,7 @@
 package prueba;
 
+import interfaz_remota.Mensaje;
+
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -7,7 +9,6 @@ import org.apache.xmlrpc.WebServer;
 
 import sist_mensajeria.emisor.AlmacenMensajes;
 import sist_mensajeria.emisor.SistemaMensajesEmisor;
-import sist_mensajeria.mensajes.Mensaje;
 
 public class PruebaServidor {
 	public static void main(String[] args) {

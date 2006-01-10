@@ -1,8 +1,9 @@
 package sist_mensajeria.emisor;
+import interfaz_remota.Mensaje;
+
 import java.util.Vector;
 import java.util.Hashtable;
 
-import sist_mensajeria.mensajes.Mensaje;
 
 public class AlmacenMensajes{
 	// Tabla que guarda el numero del ultimo mensaje global que ha leido el usuario
