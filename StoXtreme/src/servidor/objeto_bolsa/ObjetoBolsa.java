@@ -1,4 +1,5 @@
 package servidor.objeto_bolsa;
+import interfaz_remota.IInformacion;
 import interfaz_remota.Operacion;
 import servidor.eventos.SistemaEventos;
 import servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;

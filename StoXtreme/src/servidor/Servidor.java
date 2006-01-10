@@ -13,7 +13,7 @@ public class Servidor {
 	public Servidor(Parametros p) throws Exception{
 		// Necesita los daos de las empresas de un objeto informacion
 		DatosEmpresas dEmps = new DatosEmpresas();
-		empresas = dEmps.creaObjetosBolsa();
+		empresas = dEmps.creaObjetosBolsa(p.getFicheroEmpresas());
 				
 		variables = new VariablesSistema(p);
 		reloj = new Reloj(p.getTiempo());

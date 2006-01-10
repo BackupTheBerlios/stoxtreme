@@ -1,13 +1,15 @@
 package herramienta_agentes.agentes;
-import interfaz_remota.IAgente;
-import interfaz_remota.Operacion;
-import herramienta_agentes.HerramientaAgentes;
+import interfaz_remota.*;
+import herramienta_agentes.*;
 
-public class AgentePrueba {
-	private IAgente h;
+public class AgentePrueba extends Thread{
+	private MonitorAgentes monitor;
 	
-	public AgentePrueba(IAgente h){
-		this.h = h;
+	public AgentePrueba(MonitorAgentes ma, IInformacion info){
+		monitor = ma;
 	}
-
+	
+	public void run(){
+		
+	}
 }

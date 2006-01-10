@@ -1,7 +1,25 @@
 package servidor;
 
 public class Parametros {
-	public long getTiempo(){
-		return 0;
+	private long tiempo;
+	private String ficheroEmpresas;
+	
+	public Parametros(){
+		
 	}
+	public void setTiempo(long tiempo){
+		this.tiempo = tiempo;
+	}
+	
+	public long getTiempo(){
+		return tiempo;
+	}
+
+	public void setFicheroEmpresas(String s){
+		ficheroEmpresas = s;
+	}
+	public String getFicheroEmpresas() {
+		return ficheroEmpresas;
+	}
+	
 }

@@ -1,15 +1,52 @@
 package servidor.objeto_bolsa.informacion.infoXML;
 
+import interfaz_remota.IInformacion;
+
 import java.util.Date;
 import java.util.Vector;
 
 import servidor.objeto_bolsa.informacion.*;
 
 public class InformacionXML implements IInformacion{
-	// Actuará como un monitor de lectores escritores, creando inicialmente el hilo que escribirá
-	// Toda la información concurrentemente y que comprobará si ha habido cambios o quizas mejor
-	// mediante un metodo de UPDATE, los lectores leeran eventualmente la información que necesiten.
-	public InformacionXML(String archivo){
+	/* 
+	 * Actuará como un monitor de lectores escritores, creando inicialmente el hilo que escribirá
+	 * Toda la información concurrentemente y que comprobará si ha habido cambios o quizas mejor
+	 * mediante un metodo de UPDATE, los lectores leeran eventualmente la información que necesiten.
+	 * 
+	 * Si se omite el nombre de la empresa se supondra que el archivo esta
+	 * dedicado por entero a la empresa y por tanto no tiene que buscar el tag
+	 * 
+	 * FORMATO DE LOS XMLS
+	 * XML GLOBAL
+	 * <info>
+	 * 		<empresa nombre="NombreDeLaEmpresa">
+	 * 			<info_bursatil>
+	 * 				<participaciones> NUMERO_PARTICIPACIONES </participaciones>
+	 * 				<ampliaciones> NUMERO_AMPLIACIONES </ampliaciones>
+	 * 				<capital> DINERO_CAPITAL </capital>
+	 * 				<archivo_historico>
+	 * 					FICHERO_HISTORICO.xml
+	 * 				</archivo_historico>
+	 * 			<info_bursatil>
+	 * 			<balances>
+	 * 				<balance fecha="FECHA">
+	 * 					<efectivo></efectivo>
+	 * 					<bienes></bienes>
+	 * 					<empleados></empleados>
+	 * 				</balance>
+	 * 			</balances>
+	 * 			<cuentas>
+	 * 				<cuenta fecha="FECHA">
+	 * 					<periodo> MENSUAL | TRIMESTRAL |ANUAL </periodo>
+	 * 					<ganancias>GANANCIAS</ganancias>
+	 * 					<perdidas>PERDIDAS</perdidas>
+	 * 				</cuenta>
+	 * 			</cuentas>
+	 * 			<perspectiva></perspectiva>
+	 * 		</empresa>
+	 * </info>
+	*/
+	public InformacionXML(String archivo, String empresa){
 		
 	}
 
