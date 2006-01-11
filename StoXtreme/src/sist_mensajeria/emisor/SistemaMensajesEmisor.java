@@ -1,7 +1,6 @@
 package sist_mensajeria.emisor;
 
 import interfaz_remota.Mensaje;
-
 import java.util.Vector;
 
 // Es basicamente una interfaz remota al almacen de
@@ -27,6 +26,10 @@ public class SistemaMensajesEmisor {
 	}
 	
 	// Metodos del objeto
+	/**
+	 * @uml.property  name="almacen"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	AlmacenMensajes almacen;
 	
 	public SistemaMensajesEmisor(AlmacenMensajes almacen){

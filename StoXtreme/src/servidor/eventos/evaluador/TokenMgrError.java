@@ -28,9 +28,9 @@ public class TokenMgrError extends Error
    static final int LOOP_DETECTED = 3;
 
    /**
-    * Indicates the reason why the exception is thrown. It will have
-    * one of the above 4 values.
-    */
+ * Indicates the reason why the exception is thrown. It will have one of the above 4 values.
+ * @uml.property  name="errorCode"
+ */
    int errorCode;
 
    /**

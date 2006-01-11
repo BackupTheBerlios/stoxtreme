@@ -1,6 +1,5 @@
 package sist_mensajeria.receptor;
 import interfaz_remota.Mensaje;
-
 import java.net.MalformedURLException;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -8,7 +7,15 @@ import java.util.Vector;
 
 
 public class SistemaMensajesReceptor {
+	/**
+	 * @uml.property  name="listaSub"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="sist_mensajeria.receptor.MessageListener"
+	 */
 	Vector listaSub;
+	/**
+	 * @uml.property  name="hPol"
+	 * @uml.associationEnd  multiplicity="(1 1)" inverse="smr:sist_mensajeria.receptor.HiloPolling"
+	 */
 	HiloPolling hPol;
 	
 	public SistemaMensajesReceptor(String URL, String ID) throws MalformedURLException{

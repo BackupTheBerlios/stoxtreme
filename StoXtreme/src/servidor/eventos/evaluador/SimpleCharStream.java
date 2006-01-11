@@ -9,24 +9,66 @@ package servidor.eventos.evaluador;
 public class SimpleCharStream
 {
   public static final boolean staticFlag = false;
-  int bufsize;
-  int available;
-  int tokenBegin;
-  public int bufpos = -1;
-  protected int bufline[];
-  protected int bufcolumn[];
+  /**
+ * @uml.property  name="bufsize"
+ */
+int bufsize;
+  /**
+ * @uml.property  name="available"
+ */
+int available;
+  /**
+ * @uml.property  name="tokenBegin"
+ */
+int tokenBegin;
+  /**
+ * @uml.property  name="bufpos"
+ */
+public int bufpos = -1;
+  /**
+ * @uml.property  name="bufline" multiplicity="(0 -1)" dimension="1"
+ */
+protected int bufline[];
+  /**
+ * @uml.property  name="bufcolumn" multiplicity="(0 -1)" dimension="1"
+ */
+protected int bufcolumn[];
 
-  protected int column = 0;
-  protected int line = 1;
+  /**
+ * @uml.property  name="column"
+ */
+protected int column = 0;
+  /**
+ * @uml.property  name="line"
+ */
+protected int line = 1;
 
-  protected boolean prevCharIsCR = false;
-  protected boolean prevCharIsLF = false;
+  /**
+ * @uml.property  name="prevCharIsCR"
+ */
+protected boolean prevCharIsCR = false;
+  /**
+ * @uml.property  name="prevCharIsLF"
+ */
+protected boolean prevCharIsLF = false;
 
-  protected java.io.Reader inputStream;
+  /**
+ * @uml.property  name="inputStream"
+ */
+protected java.io.Reader inputStream;
 
-  protected char[] buffer;
-  protected int maxNextCharInd = 0;
-  protected int inBuf = 0;
+  /**
+ * @uml.property  name="buffer" multiplicity="(0 -1)" dimension="1"
+ */
+protected char[] buffer;
+  /**
+ * @uml.property  name="maxNextCharInd"
+ */
+protected int maxNextCharInd = 0;
+  /**
+ * @uml.property  name="inBuf"
+ */
+protected int inBuf = 0;
 
   protected void ExpandBuff(boolean wrapAround)
   {

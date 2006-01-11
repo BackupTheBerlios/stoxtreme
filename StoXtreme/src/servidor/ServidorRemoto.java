@@ -1,12 +1,17 @@
 package servidor;
-//Una prueba mas que otra cosa
 import java.util.Hashtable;
 import java.util.Vector;
-
 import org.apache.xmlrpc.WebServer;
 
 public class ServidorRemoto {
+	/**
+	 * @uml.property  name="ops"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="java.util.Hashtable"
+	 */
 	public Vector ops=new Vector();
+	/**
+	 * @uml.property  name="turno"
+	 */
 	int turno=0;
 
 	public int insOp(Hashtable op, String is){

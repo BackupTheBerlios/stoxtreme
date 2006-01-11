@@ -1,7 +1,15 @@
 package servidor.gestion_usuarios;
 
 public class GestionUsuarios {
+	/**
+	 * @uml.property  name="conectados"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private UsuariosConectados conectados;
+	/**
+	 * @uml.property  name="registrados"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private UsuariosRegistrados registrados;
 	
 	public GestionUsuarios(){

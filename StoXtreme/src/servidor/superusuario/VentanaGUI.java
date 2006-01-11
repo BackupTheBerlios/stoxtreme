@@ -1,5 +1,6 @@
 package servidor.superusuario;
+import javax.swing.*;
 
-public interface VentanaGUI {
-	public void init();
+public abstract class VentanaGUI extends JInternalFrame{
+	public abstract void init();
 }

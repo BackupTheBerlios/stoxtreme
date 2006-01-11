@@ -1,12 +1,21 @@
 package servidor;
 import java.util.*;
-
 import sun.security.krb5.internal.crypto.t;
 
 
 public class Reloj extends Thread{
+	/**
+	 * @uml.property  name="oyentes"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="servidor.RelojListener"
+	 */
 	private ArrayList oyentes;
+	/**
+	 * @uml.property  name="timer"
+	 */
 	private Timer timer;
+	/**
+	 * @uml.property  name="ms"
+	 */
 	private long ms;
 	
 	public Reloj(){

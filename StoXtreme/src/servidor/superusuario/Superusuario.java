@@ -1,12 +1,16 @@
 package servidor.superusuario;
-import servidor.Servidor;
 import servidor.Parametros;
+import servidor.Servidor;
 import sist_mensajeria.emisor.*;
 
 // Clase principal en el servidor, arranca el mismo y aparte proporciona
 // la interfaz grafica
 
 public class Superusuario {
+	/**
+	 * @uml.property  name="gui"
+	 * @uml.associationEnd  
+	 */
 	SuperusuarioGUI gui;
 	
 	public static void main(String[] args){

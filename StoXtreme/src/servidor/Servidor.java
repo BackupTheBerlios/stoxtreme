@@ -4,10 +4,29 @@ import servidor.eventos.*;
 import servidor.gestion_usuarios.GestionUsuarios;
 
 public class Servidor {
+	/**
+	 * @uml.property  name="empresas"
+	 */
 	Hashtable empresas;
+	/**
+	 * @uml.property  name="reloj"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	Reloj reloj;
+	/**
+	 * @uml.property  name="variables"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	VariablesSistema variables;
+	/**
+	 * @uml.property  name="eventos"
+	 * @uml.associationEnd  readOnly="true"
+	 */
 	SistemaEventos eventos;
+	/**
+	 * @uml.property  name="gestorUsuarios"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	GestionUsuarios gestorUsuarios;
 	
 	public Servidor(Parametros p) throws Exception{

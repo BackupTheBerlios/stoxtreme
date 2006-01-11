@@ -1,13 +1,29 @@
 package servidor.superusuario;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import javax.swing.*;
 
 public class SuperusuarioGUI extends JFrame{
+	/**
+	 * @uml.property  name="mainPane"
+	 * @uml.associationEnd  
+	 */
 	private JDesktopPane mainPane;
+	/**
+	 * @uml.property  name="menuPrincipal"
+	 * @uml.associationEnd  
+	 */
 	private JMenuBar menuPrincipal;
+	/**
+	 * @uml.property  name="toolbarPrincipal"
+	 * @uml.associationEnd  
+	 */
 	private JToolBar toolbarPrincipal;
+	/**
+	 * @uml.property  name="listaVentanas"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="servidor.superusuario.VentanaGUI"
+	 */
 	private ArrayList listaVentanas;
 	
 	public SuperusuarioGUI(){
@@ -15,7 +31,7 @@ public class SuperusuarioGUI extends JFrame{
 		listaVentanas = new ArrayList();
 	}
 	
-	public void addVentana(JInternalFrame ventana){
+	public void addVentana(VentanaGUI ventana){
 		listaVentanas.add(ventana);
 	}
 	

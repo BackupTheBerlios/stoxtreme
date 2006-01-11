@@ -57,31 +57,28 @@ public class ParseException extends Exception {
   }
 
   /**
-   * This variable determines which constructor was used to create
-   * this object and thereby affects the semantics of the
-   * "getMessage" method (see below).
-   */
+ * This variable determines which constructor was used to create this object and thereby affects the semantics of the "getMessage" method (see below).
+ * @uml.property  name="specialConstructor"
+ */
   protected boolean specialConstructor;
 
   /**
-   * This is the last token that has been consumed successfully.  If
-   * this object has been created due to a parse error, the token
-   * followng this token will (therefore) be the first error token.
-   */
+ * This is the last token that has been consumed successfully.  If this object has been created due to a parse error, the token followng this token will (therefore) be the first error token.
+ * @uml.property  name="currentToken"
+ * @uml.associationEnd  
+ */
   public Token currentToken;
 
   /**
-   * Each entry in this array is an array of integers.  Each array
-   * of integers represents a sequence of tokens (by their ordinal
-   * values) that is expected at this point of the parse.
-   */
+ * Each entry in this array is an array of integers.  Each array of integers represents a sequence of tokens (by their ordinal values) that is expected at this point of the parse.
+ * @uml.property  name="expectedTokenSequences" multiplicity="(0 -1)" dimension="2"
+ */
   public int[][] expectedTokenSequences;
 
   /**
-   * This is a reference to the "tokenImage" array of the generated
-   * parser within which the parse error occurred.  This array is
-   * defined in the generated ...Constants interface.
-   */
+ * This is a reference to the "tokenImage" array of the generated parser within which the parse error occurred.  This array is defined in the generated ...Constants interface.
+ * @uml.property  name="tokenImage" multiplicity="(0 -1)" dimension="1"
+ */
   public String[] tokenImage;
 
   /**
@@ -135,8 +132,9 @@ public class ParseException extends Exception {
   }
 
   /**
-   * The end of line string for this machine.
-   */
+ * The end of line string for this machine.
+ * @uml.property  name="eol"
+ */
   protected String eol = System.getProperty("line.separator", "\n");
  
   /**
