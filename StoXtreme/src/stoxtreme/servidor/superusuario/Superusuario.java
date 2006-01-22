@@ -1,5 +1,4 @@
 package stoxtreme.servidor.superusuario;
-import sist_mensajeria.emisor.*;
 import stoxtreme.servidor.Parametros;
 import stoxtreme.servidor.Servidor;
 
@@ -7,10 +6,6 @@ import stoxtreme.servidor.Servidor;
 // la interfaz grafica
 
 public class Superusuario {
-	/**
-	 * @uml.property  name="gui"
-	 * @uml.associationEnd  
-	 */
 	SuperusuarioGUI gui;
 	
 	public static void main(String[] args){

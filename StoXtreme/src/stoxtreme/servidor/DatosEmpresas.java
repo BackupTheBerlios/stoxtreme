@@ -11,9 +11,6 @@ import java.util.Hashtable;
  * <empresas>
  */
 public class DatosEmpresas {
-	/**
-	 * @uml.property  name="nombresEmpresas" multiplicity="(0 -1)" dimension="1"
-	 */
 	String[] nombresEmpresas;
 	
 	public DatosEmpresas(){
@@ -25,10 +22,6 @@ public class DatosEmpresas {
 		
 		return null;
 	}
-	/**
-	 * @return  Returns the nombresEmpresas.
-	 * @uml.property  name="nombresEmpresas"
-	 */
 	public String[] getNombresEmpresas(){
 		return nombresEmpresas;
 	}

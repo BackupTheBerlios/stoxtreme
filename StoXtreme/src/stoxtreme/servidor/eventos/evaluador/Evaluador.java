@@ -5,23 +5,13 @@
 
         public class Evaluador implements EvaluadorConstants {
                 // VARIABLES DEL PARSER
-                /**
-				 * @uml.property  name="variablesUsadas"
-				 */
                 private ArrayList variablesUsadas;
-                /**
-				 * @uml.property  name="variables"
-				 */
                 private Hashtable variables;
 
                 public Evaluador (String s){
                         this(new ByteArrayInputStream(s.getBytes()));
                 }
 
-                /**
-				 * @return  Returns the variablesUsadas.
-				 * @uml.property  name="variablesUsadas"
-				 */
                 public ArrayList getVariablesUsadas(){
                         return variablesUsadas;
                 }
@@ -360,37 +350,12 @@
     throw new Error("Missing return statement in function");
   }
 
-  /**
- * @uml.property  name="token_source"
- * @uml.associationEnd  multiplicity="(1 1)"
- */
 public EvaluadorTokenManager token_source;
-  /**
- * @uml.property  name="jj_input_stream"
- * @uml.associationEnd  
- */
 SimpleCharStream jj_input_stream;
-  /**
- * @uml.property  name="token"
- * @uml.associationEnd  multiplicity="(1 1)"
- */
 public Token token;
-  /**
- * @uml.property  name="jj_nt"
- * @uml.associationEnd  
- */
 public Token jj_nt;
-  /**
- * @uml.property  name="jj_ntk"
- */
 private int jj_ntk;
-  /**
- * @uml.property  name="jj_gen"
- */
 private int jj_gen;
-  /**
- * @uml.property  name="jj_la1" multiplicity="(0 -1)" dimension="1"
- */
 final private int[] jj_la1 = new int[10];
   static private int[] jj_la1_0;
   static {
@@ -490,18 +455,8 @@ final private int[] jj_la1 = new int[10];
       return (jj_ntk = jj_nt.kind);
   }
 
-  /**
- * @uml.property  name="jj_expentries"
- * @uml.associationEnd  multiplicity="(0 -1)" elementType="[I"
- */
 private java.util.Vector jj_expentries = new java.util.Vector();
-  /**
- * @uml.property  name="jj_expentry" multiplicity="(0 -1)" dimension="1"
- */
 private int[] jj_expentry;
-  /**
- * @uml.property  name="jj_kind"
- */
 private int jj_kind = -1;
 
   public ParseException generateParseException() {

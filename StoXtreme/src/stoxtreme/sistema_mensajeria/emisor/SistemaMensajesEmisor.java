@@ -27,10 +27,6 @@ public class SistemaMensajesEmisor {
 	}
 	
 	// Metodos del objeto
-	/**
-	 * @uml.property  name="almacen"
-	 * @uml.associationEnd  multiplicity="(1 1)"
-	 */
 	AlmacenMensajes almacen;
 	
 	public SistemaMensajesEmisor(AlmacenMensajes almacen){

@@ -6,25 +6,9 @@ import javax.swing.table.AbstractTableModel;
 import stoxtreme.servidor.eventos.evaluador.ParseException;
 
 public class SistemaEventos extends AbstractTableModel{
-	/**
-	 * @uml.property  name="variables"
-	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="java.lang.Object" qualifier="var:java.lang.String java.lang.Object"
-	 */
 	private Hashtable variables;
-	/**
-	 * @uml.property  name="listaCondiciones"
-	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="servidor.eventos.ObjetoCondicion"
-	 */
 	private ArrayList listaCondiciones;
-	/**
-	 * @uml.property  name="listaAcciones"
-	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="java.lang.String"
-	 */
 	private ArrayList listaAcciones;
-	/**
-	 * @uml.property  name="ejecutor"
-	 * @uml.associationEnd  multiplicity="(1 1)"
-	 */
 	private Ejecutor ejecutor;
 	
 	public SistemaEventos(){

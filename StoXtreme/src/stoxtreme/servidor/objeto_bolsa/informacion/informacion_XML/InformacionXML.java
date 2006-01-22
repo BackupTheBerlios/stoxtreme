@@ -4,7 +4,6 @@ package stoxtreme.servidor.objeto_bolsa.informacion.informacion_XML;
 import java.util.Date;
 import java.util.Vector;
 
-import servidor.objeto_bolsa.informacion.*;
 import stoxtreme.interfaz_remota.IInformacion;
 import stoxtreme.servidor.objeto_bolsa.informacion.Balance;
 import stoxtreme.servidor.objeto_bolsa.informacion.Cuenta;

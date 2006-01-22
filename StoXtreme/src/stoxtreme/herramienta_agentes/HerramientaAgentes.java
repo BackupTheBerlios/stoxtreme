@@ -1,6 +1,6 @@
 package stoxtreme.herramienta_agentes;
 
-import herramienta_agentes.agentes.*;
+import stoxtreme.herramienta_agentes.agentes.*;
 import java.util.*;
 
 import stoxtreme.herramienta_agentes.agentes.AgentePrueba;
@@ -8,15 +8,7 @@ import stoxtreme.interfaz_remota.IAgente;
 import stoxtreme.interfaz_remota.Operacion;
 
 public class HerramientaAgentes extends Thread{
-	/**
-	 * @uml.property  name="listaAgentes"
-	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="herramienta_agentes.agentes.AgentePrueba"
-	 */
 	ArrayList listaAgentes;
-	/**
-	 * @uml.property  name="monitor"
-	 * @uml.associationEnd  readOnly="true"
-	 */
 	MonitorAgentes monitor;
 	
 	public HerramientaAgentes(ParametrosAgentes parametros){

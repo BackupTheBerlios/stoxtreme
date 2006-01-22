@@ -9,65 +9,22 @@ package stoxtreme.servidor.eventos.evaluador;
 public class SimpleCharStream
 {
   public static final boolean staticFlag = false;
-  /**
- * @uml.property  name="bufsize"
- */
 int bufsize;
-  /**
- * @uml.property  name="available"
- */
 int available;
-  /**
- * @uml.property  name="tokenBegin"
- */
 int tokenBegin;
-  /**
- * @uml.property  name="bufpos"
- */
 public int bufpos = -1;
-  /**
- * @uml.property  name="bufline" multiplicity="(0 -1)" dimension="1"
- */
 protected int bufline[];
-  /**
- * @uml.property  name="bufcolumn" multiplicity="(0 -1)" dimension="1"
- */
 protected int bufcolumn[];
 
-  /**
- * @uml.property  name="column"
- */
 protected int column = 0;
-  /**
- * @uml.property  name="line"
- */
 protected int line = 1;
 
-  /**
- * @uml.property  name="prevCharIsCR"
- */
 protected boolean prevCharIsCR = false;
-  /**
- * @uml.property  name="prevCharIsLF"
- */
 protected boolean prevCharIsLF = false;
 
-  /**
- * @uml.property  name="inputStream"
- */
 protected java.io.Reader inputStream;
-
-  /**
- * @uml.property  name="buffer" multiplicity="(0 -1)" dimension="1"
- */
 protected char[] buffer;
-  /**
- * @uml.property  name="maxNextCharInd"
- */
 protected int maxNextCharInd = 0;
-  /**
- * @uml.property  name="inBuf"
- */
 protected int inBuf = 0;
 
   protected void ExpandBuff(boolean wrapAround)

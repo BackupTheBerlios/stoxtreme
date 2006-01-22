@@ -1,6 +1,6 @@
 package stoxtreme.cliente;
 
-import interfaz_remota.*;
+import stoxtreme.interfaz_remota.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Hashtable;
@@ -12,21 +12,9 @@ import stoxtreme.interfaz_remota.IAgente;
 import stoxtreme.interfaz_remota.Operacion;
 
 public class Cliente implements IAgente{
-	
-	/**
-	 * @uml.property  name="c"
-	 * @uml.associationEnd  multiplicity="(1 1)"
-	 */
 	public XmlRpcClientLite c=null;
-	/**
-	 * @uml.property  name="id"
-	 */
 	public String id;
 	//Faltaria un objeto grupoAgentes que tenga la info de todos los agentes que simula el cliente
-	/**
-	 * @uml.property  name="opPendientes"
-	 * @uml.associationEnd  qualifier="new:java.lang.Integer interfaz_remota.Operacion"
-	 */
 	public Hashtable opPendientes;
 	
 	public Cliente(){
@@ -101,7 +89,5 @@ public class Cliente implements IAgente{
 		Cliente usuario=new Cliente("yo");
 		Operacion op=new Operacion("Compra","Endesa",300,50);
 		usuario.insertaOperacion(usuario.id,op);
-		
 	}
-
 }

@@ -1,5 +1,4 @@
 package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
-import servidor.objeto_bolsa.operaciones.*;
 import stoxtreme.servidor.objeto_bolsa.operaciones.SistOperaciones;
 
 public class Fluctuaciones {

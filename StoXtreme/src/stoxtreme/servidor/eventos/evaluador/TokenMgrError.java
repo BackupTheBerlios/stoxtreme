@@ -29,7 +29,6 @@ public class TokenMgrError extends Error
 
    /**
  * Indicates the reason why the exception is thrown. It will have one of the above 4 values.
- * @uml.property  name="errorCode"
  */
    int errorCode;
 

@@ -7,26 +7,11 @@ import stoxtreme.interfaz_remota.Mensaje;
 
 public class AlmacenMensajes{
 	// Tabla que guarda el numero del ultimo mensaje global que ha leido el usuario
-	/**
-	 * @uml.property  name="buzon"
-	 * @uml.associationEnd  qualifier="ID:java.lang.String java.lang.Integer"
-	 */
 	Hashtable buzon;
 	// Vector de mensajes
-	/**
-	 * @uml.property  name="mensajesGlobales"
-	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="interfaz_remota.Mensaje"
-	 */
 	Vector mensajesGlobales;
-	/**
-	 * @uml.property  name="numMensajesGlobales"
-	 */
 	int numMensajesGlobales;
 	// Tabla que guarda los mensajes privados
-	/**
-	 * @uml.property  name="mensajesPrivados"
-	 * @uml.associationEnd  multiplicity="(0 -1)" ordering="true" elementType="interfaz_remota.Mensaje" qualifier="ID:java.lang.String java.util.Vector"
-	 */
 	Hashtable mensajesPrivados;
 	
 	public AlmacenMensajes(){
