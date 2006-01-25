@@ -1,29 +1,25 @@
 package stoxtreme.servidor;
-import java.util.*;
-import stoxtreme.servidor.eventos.*;
-import stoxtreme.servidor.eventos.SistemaEventos;
-import stoxtreme.servidor.gestion_usuarios.GestionUsuarios;
+import stoxtreme.interfaz_remota.Operacion;
 
 public class Servidor {
-	Hashtable empresas;
-	Reloj reloj;
-	VariablesSistema variables;
-	SistemaEventos eventos;
-	GestionUsuarios gestorUsuarios;
+	private static int IDS = 0;
 	
-	public Servidor(Parametros p) throws Exception{
-		// Necesita los daos de las empresas de un objeto informacion
-		DatosEmpresas dEmps = new DatosEmpresas();
-		empresas = dEmps.creaObjetosBolsa(p.getFicheroEmpresas());
-				
-		variables = new VariablesSistema(p);
-		reloj = new Reloj(p.getTiempo());
-		reloj.addListener(variables);
-		gestorUsuarios = new GestionUsuarios();
-		gestorUsuarios.leeDatos();
+	public boolean login(String usr, String psw){
+		System.out.println("REGISTRO USUARIO " + usr + " " + psw);
+		return true;
 	}
 	
-	public void init(){
-		
+	public boolean registro(String usr, String psw){
+		System.out.println("LOGIN USUARIO " + usr + " " + psw);
+		return true;
+	}
+	
+	public synchronized int insertarOperacion(String usuario, Operacion o){
+		System.out.println("USUARIO "+usuario+" INSERTA OPERACION");
+		return IDS++;
+	}
+	
+	public void cancelarOperacion(String usuario, int i){
+		System.out.println("USUARIO "+usuario+" CANCELA OPERACION");
 	}
 }

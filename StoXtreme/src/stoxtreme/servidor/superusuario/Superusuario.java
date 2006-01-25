@@ -8,24 +8,7 @@ import stoxtreme.servidor.Servidor;
 public class Superusuario {
 	SuperusuarioGUI gui;
 	
-	public static void main(String[] args){
-		try{
-			new Superusuario().init();
-		}
-		catch(Exception e){
-			System.err.println("Fallo en el sistema, razon:");
-			e.printStackTrace();
-		}
-	}
-	
 	public void Superusuario(){
 		gui = new SuperusuarioGUI();
-	}
-	
-	public void init() throws Exception{
-		// TODO
-		// Crea el servidor e inicializa la conexi�n remota
-		Parametros p = new Parametros();
-		Servidor servidor = new Servidor(p);
 	}
 }

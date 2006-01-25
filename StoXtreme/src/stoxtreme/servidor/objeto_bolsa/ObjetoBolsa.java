@@ -5,7 +5,7 @@ import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;
 import stoxtreme.servidor.objeto_bolsa.operaciones.SistOperaciones;
-import stoxtreme.sistema_mensajeria.emisor.SistemaMensajesEmisor;
+import stoxtreme.sistema_mensajeria.emisor.EmisorMensajes;
 
 public class ObjetoBolsa {
 	String nombreEmpresa;
@@ -13,10 +13,10 @@ public class ObjetoBolsa {
 	SistOperaciones sistemaOperaciones;
 	Fluctuaciones fluctuaciones;
 	SistemaEventos sisEventos;
-	SistemaMensajesEmisor sisMensajes;
+	EmisorMensajes sisMensajes;
 	
 	public ObjetoBolsa(String nombreEmpresa, 
-			SistemaEventos sistEventos, SistemaMensajesEmisor smg, VariablesSistema var){
+			SistemaEventos sistEventos, EmisorMensajes smg, VariablesSistema var){
 		sistemaOperaciones = new SistOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 	}
@@ -28,9 +28,9 @@ public class ObjetoBolsa {
 	
 	public void insertaOperacion(String IDAgente,int idOperacion, Operacion op){
 		if(op.getTipoOp()==Operacion.COMPRA)
-			sistemaOperaciones.introduceCompra(idOperacion, IDAgente, op.getPrecio(), op.getNumAcciones());
+			sistemaOperaciones.introduceCompra(idOperacion, IDAgente, op.getPrecio(), op.getCantidad());
 		if(op.getTipoOp()==Operacion.VENTA)
-			sistemaOperaciones.introduceVenta(idOperacion, IDAgente, op.getPrecio(), op.getNumAcciones());
+			sistemaOperaciones.introduceVenta(idOperacion, IDAgente, op.getPrecio(), op.getCantidad());
 	}
 	
 	public void cancelarOperacion(int idOperacion, String tipoOp){
