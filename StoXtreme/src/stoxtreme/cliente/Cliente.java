@@ -1,14 +1,10 @@
 package stoxtreme.cliente;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.xml.rpc.ServiceException;
 
 import stoxtreme.interfaz_remota.*;
+import stoxtreme.servicio_web.StoxtremeServiceLocator;
 import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 import stoxtreme.sistema_mensajeria.receptor.*;
 

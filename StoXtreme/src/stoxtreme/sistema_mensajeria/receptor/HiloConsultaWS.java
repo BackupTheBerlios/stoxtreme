@@ -2,9 +2,9 @@ package stoxtreme.sistema_mensajeria.receptor;
 
 import javax.xml.rpc.ServiceException;
 
-import stoxtreme.cliente.StoxtremeServiceLocator;
 import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.Stoxtreme;
+import stoxtreme.servicio_web.StoxtremeServiceLocator;
 
 public class HiloConsultaWS extends Thread{
 	ReceptorMensajesWS receptor;

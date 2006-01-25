@@ -5,11 +5,10 @@
  * by the Apache Axis 1.3 Oct 05, 2005 (05:23:37 EDT) WSDL2Java emitter.
  */
 
-package stoxtreme.cliente;
+package stoxtreme.servicio_web;
 
-import stoxtreme.interfaz_remota.Stoxtreme;
-import stoxtreme.interfaz_remota.StoxtremeService;
-
+// TODO CUIDADO CON LA SUPRESION DEL SERIAL
+@SuppressWarnings("serial")
 public class StoxtremeServiceLocator extends org.apache.axis.client.Service implements stoxtreme.interfaz_remota.StoxtremeService {
 
     public StoxtremeServiceLocator() {
@@ -55,7 +54,7 @@ public class StoxtremeServiceLocator extends org.apache.axis.client.Service impl
 
     public stoxtreme.interfaz_remota.Stoxtreme getStoxtreme(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            stoxtreme.cliente.StoxtremeSoapBindingStub _stub = new stoxtreme.cliente.StoxtremeSoapBindingStub(portAddress, this);
+            stoxtreme.servicio_web.StoxtremeSoapBindingStub _stub = new stoxtreme.servicio_web.StoxtremeSoapBindingStub(portAddress, this);
             _stub.setPortName(getStoxtremeWSDDServiceName());
             return _stub;
         }
@@ -76,7 +75,7 @@ public class StoxtremeServiceLocator extends org.apache.axis.client.Service impl
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
             if (stoxtreme.interfaz_remota.Stoxtreme.class.isAssignableFrom(serviceEndpointInterface)) {
-                stoxtreme.cliente.StoxtremeSoapBindingStub _stub = new stoxtreme.cliente.StoxtremeSoapBindingStub(new java.net.URL(Stoxtreme_address), this);
+                stoxtreme.servicio_web.StoxtremeSoapBindingStub _stub = new stoxtreme.servicio_web.StoxtremeSoapBindingStub(new java.net.URL(Stoxtreme_address), this);
                 _stub.setPortName(getStoxtremeWSDDServiceName());
                 return _stub;
             }

@@ -6,9 +6,10 @@
  */
 
 package stoxtreme.interfaz_remota;
-
+// TODO CUIDADO CON LA SUPRESION DEL SERIAL
+@SuppressWarnings("serial")
 public class Mensaje  implements java.io.Serializable {
-    private java.lang.String mensaje;
+	private java.lang.String mensaje;
 
     public Mensaje() {
     }

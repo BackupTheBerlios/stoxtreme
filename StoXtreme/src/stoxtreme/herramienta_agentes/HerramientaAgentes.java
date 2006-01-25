@@ -1,11 +1,8 @@
 package stoxtreme.herramienta_agentes;
 
-import stoxtreme.herramienta_agentes.agentes.*;
 import java.util.*;
 
 import stoxtreme.herramienta_agentes.agentes.AgentePrueba;
-import stoxtreme.interfaz_remota.IAgente;
-import stoxtreme.interfaz_remota.Operacion;
 
 public class HerramientaAgentes extends Thread{
 	ArrayList listaAgentes;

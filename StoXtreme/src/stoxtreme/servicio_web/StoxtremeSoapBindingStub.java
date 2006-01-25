@@ -5,7 +5,7 @@
  * by the Apache Axis 1.3 Oct 05, 2005 (05:23:37 EDT) WSDL2Java emitter.
  */
 
-package stoxtreme.cliente;
+package stoxtreme.servicio_web;
 
 import stoxtreme.interfaz_remota.Stoxtreme;
 

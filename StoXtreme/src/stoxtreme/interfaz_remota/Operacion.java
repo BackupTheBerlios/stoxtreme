@@ -7,6 +7,8 @@
 
 package stoxtreme.interfaz_remota;
 
+// TODO CUIDADO CON LA SUPERSION DEL SERIAL
+@SuppressWarnings("serial")
 public class Operacion  implements java.io.Serializable {
 	public static final int COMPRA=1;
 	public static final int VENTA=2;
