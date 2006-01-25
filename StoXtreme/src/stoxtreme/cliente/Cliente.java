@@ -1,7 +1,13 @@
 package stoxtreme.cliente;
 
+import java.awt.Dimension;
 import java.rmi.RemoteException;
+
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 import javax.xml.rpc.ServiceException;
+
+import com.sun.corba.se.spi.ior.iiop.JavaCodebaseComponent;
 
 import stoxtreme.interfaz_remota.*;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
@@ -20,12 +26,18 @@ public class Cliente implements IMensajeriaListener{
 		}
 	}
 	public static void main(String[] args) {
-	
+		ClienteGUI gui = new ClienteGUI();
+		gui.init();
+		gui.setPreferredSize(new Dimension(300, 300));
+		gui.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		gui.pack();
+		gui.setVisible(true);
+		/*
 		Cliente c = new Cliente();
 		c.init();
 		ReceptorMensajes receptor = new ReceptorMensajesWS("alonso");
 		receptor.addListener(c);
-		
+		*/
 	}
 	
 	public void init() {
