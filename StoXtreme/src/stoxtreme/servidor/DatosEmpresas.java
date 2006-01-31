@@ -1,7 +1,7 @@
 package stoxtreme.servidor;
 
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.Enumeration;
 //import the JAXP APIs you'll be using
 import javax.xml.parsers.DocumentBuilder; 
@@ -19,6 +19,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.DOMException;
+
+import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 /*
  * Fichero debe ser de la forma:
  * <empresas>
@@ -29,17 +31,11 @@ import org.w3c.dom.DOMException;
  * </empresas>
  */
 public class DatosEmpresas {
-	Vector nombresEmpresas;
-	Hashtable ObjetosBolsa;
+	ArrayList nombresEmpresas;
 	
 	public DatosEmpresas(){
 		// Inicialmente no tiene datos hasta que no se parsea el fichero
-		nombresEmpresas = new Vector();
-		ObjetosBolsa=creaObjetosBolsa("conf/empresas.xml");
-		Enumeration e=ObjetosBolsa.keys();
-		while (e.hasMoreElements()){
-			nombresEmpresas.addElement(e.nextElement());			
-		}
+		nombresEmpresas = new ArrayList();
 	}
 	
 	public Hashtable creaObjetosBolsa(String fichero) {
@@ -51,13 +47,16 @@ public class DatosEmpresas {
 			Element ele = document.getDocumentElement();
 			NodeList nl = ele.getElementsByTagName("emp");
 			String nombre=null;
-			Double cotiz=0.0;
+			float cotiz=0;
+			String info;
 			//Obtengo todas las empresas y creo un objeto bolsa para cada una
 			for (int i=0; nl!=null && i<nl.getLength();i++){
 				ele=(Element)nl.item(i);
 				nombre=ele.getAttribute("nombre");
-				cotiz=new Double(ele.getAttribute("cotizacion"));
-				ht.put(nombre,new ObjetoBolsa(nombre,sEventos,eMensajes,VSistema));
+				cotiz=new Float(ele.getAttribute("cotizacion"));
+				//le quitamos los /t y /n del final y del principio
+				info=ele.getTextContent().trim();
+				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info));
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
@@ -73,12 +72,16 @@ public class DatosEmpresas {
 	       // I/O error
 	       ioe.printStackTrace();
 	    }
+		int i=0;
+		Enumeration e=ht.keys();
+		while (e.hasMoreElements()){
+			nombresEmpresas.add(i,e.nextElement().toString());	
+			i++;
+		}
 		return ht;
 	}
-	public Vector getNombresEmpresas(){
+	public ArrayList getNombresEmpresas(){
 		return nombresEmpresas;
 	}
-	public static void main(String[] args){
-		DatosEmpresas de =new DatosEmpresas();
-	}
+
 }

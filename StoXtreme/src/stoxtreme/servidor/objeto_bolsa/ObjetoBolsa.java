@@ -14,13 +14,18 @@ public class ObjetoBolsa {
 	Fluctuaciones fluctuaciones;
 	SistemaEventos sisEventos;
 	EmisorMensajes sisMensajes;
+	float cotizacion;
 	
-	public ObjetoBolsa(String nombreEmpresa, 
+	/*public ObjetoBolsa(String nombreEmpresa, float cotizacion, String Informacion,
 			SistemaEventos sistEventos, EmisorMensajes smg, VariablesSistema var){
 		sistemaOperaciones = new SistOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
+	}*/
+	public ObjetoBolsa(String nombreEmpresa, float cotizacion, String Informacion){
+		this.nombreEmpresa=nombreEmpresa;
+		this.cotizacion=cotizacion;
+		
 	}
-	
 	public void paso(){
 		sistemaOperaciones.paso();
 		fluctuaciones.paso();
