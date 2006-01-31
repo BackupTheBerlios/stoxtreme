@@ -48,7 +48,7 @@ public class DatosEmpresas {
 			NodeList nl = ele.getElementsByTagName("emp");
 			String nombre=null;
 			float cotiz=0;
-			String info;
+			String info=null;
 			//Obtengo todas las empresas y creo un objeto bolsa para cada una
 			for (int i=0; nl!=null && i<nl.getLength();i++){
 				ele=(Element)nl.item(i);
