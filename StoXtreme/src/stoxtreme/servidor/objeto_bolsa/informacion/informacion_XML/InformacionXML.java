@@ -1,10 +1,23 @@
 package stoxtreme.servidor.objeto_bolsa.informacion.informacion_XML;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import stoxtreme.interfaz_remota.IInformacion;
+import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 import stoxtreme.servidor.objeto_bolsa.informacion.Balance;
 import stoxtreme.servidor.objeto_bolsa.informacion.Cuenta;
 import stoxtreme.servidor.objeto_bolsa.informacion.InfoBursatil;
@@ -48,8 +61,31 @@ public class InformacionXML implements IInformacion{
 	 * 		</empresa>
 	 * </info>
 	*/
+	private DocumentBuilderFactory factory;
+	private DocumentBuilder builder;
+	private Document document;
+	private Element ele;
+	
 	public InformacionXML(String archivo, String empresa){
-		
+		factory = DocumentBuilderFactory.newInstance();
+		try {
+			builder = factory.newDocumentBuilder();
+			document = builder.parse(new File(archivo));
+			ele = document.getDocumentElement();
+	    } catch (SAXException sxe) {
+	       // Error generated during parsing
+	       Exception  x = sxe;
+	       if (sxe.getException() != null)
+	           x = sxe.getException();
+	       x.printStackTrace();
+
+	    } catch (ParserConfigurationException pce) {
+	       // Parser with specified options can't be built
+	       pce.printStackTrace();
+	    } catch (IOException ioe) {
+	       // I/O error
+	       ioe.printStackTrace();
+	    }
 	}
 
 	public Balance getBalanceActual() {
@@ -78,12 +114,25 @@ public class InformacionXML implements IInformacion{
 	}
 
 	public InfoBursatil getDatosBursatiles() {
-		// TODO Auto-generated method stub
-		return null;
+		InfoBursatil ib=null;
+		Hashtable part=new Hashtable();
+		//////TODO MAL
+		NodeList nl = ele.getOwnerDocument().getElementsByTagName("info_bursatil");
+		int num_acciones=0;
+		String nombre=null;
+		//Obtengo todos los accionistas y les asigno el numero de acciones
+		for (int i=0; nl!=null && i<nl.getLength();i++){
+			ele=(Element)nl.item(i);
+			nombre=ele.getAttribute("nombre");
+			//le quitamos los /t y /n del final y del principio
+			num_acciones=new Integer(ele.getTextContent().trim()).intValue();
+			part.put(nombre,num_acciones);
+		}
+		ib.setParticipaciones(part);
+		return ib;
 	}
 
 	public void setInfoBursatil(InfoBursatil i) {
-		// TODO Auto-generated method stub
 		
 	}
 

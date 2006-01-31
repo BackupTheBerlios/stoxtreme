@@ -8,9 +8,9 @@ public class Informacion {
 	private Cuenta cuenta;
 	
 	public Informacion(Balance b, InfoBursatil ib, Cuenta c){
-		balance=b;
+		//balance=b;
 		iBursatil=ib;
-		cuenta=c;
+		//cuenta=c;
 	}
 	
 	public Balance getBalance(){

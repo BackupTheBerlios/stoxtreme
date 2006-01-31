@@ -2,7 +2,8 @@ package stoxtreme.servidor.objeto_bolsa.informacion;
 
 import java.util.Vector;
 
-public class Balance {
+
+public class Balance{
 	private int numeroEmpleados;
 	private double efectivo;
 	private double bienes; // Precio de los bienes en euros
