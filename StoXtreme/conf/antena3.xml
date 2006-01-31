@@ -1,0 +1,27 @@
+<info>
+ 	<empresa nombre="ENDESA">
+	 	<info_bursatil>
+	 		<participaciones> 55556000  </participaciones>
+	 		<ampliaciones> NUMERO_AMPLIACIONES </ampliaciones>
+	 		<capital> DINERO_CAPITAL </capital>
+	  		<archivo_historico>
+	  			FICHERO_HISTORICO.xml
+	  		</archivo_historico>
+		</info_bursatil>
+		<balances>
+			<balance fecha="FECHA">
+				<efectivo></efectivo>
+				<bienes></bienes>
+				<empleados></empleados>
+			</balance>
+		</balances>
+		<cuentas>
+			<cuenta fecha="FECHA">
+				<periodo> MENSUAL | TRIMESTRAL |ANUAL </periodo>
+				<ganancias>GANANCIAS</ganancias>
+				<perdidas>PERDIDAS</perdidas>
+			</cuenta>
+		</cuentas>
+		<perspectiva></perspectiva>
+	</empresa>
+</info>
