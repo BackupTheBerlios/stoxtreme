@@ -35,11 +35,13 @@ public class InformacionXML implements IInformacion{
 	 * FORMATO DE LOS XMLS
 	 * XML GLOBAL
 	 * <info>
-	 * 		<empresa nombre="NombreDeLaEmpresa">
+	 * 		<empresa nombre="NombreDeLaEmpresa" grupo="Energia/Servicios de consumo/...">
 	 * 			<info_bursatil>
-	 * 				<participaciones> NUMERO_PARTICIPACIONES </participaciones>
+	 * 				<capital_social capital=IMPORTE valor_nominal=IMPORTE num_acciones=NUMERO_ACCIONES/>
+	 * 				<participaciones> 
+	 * 					<accionista nombre=NOMBRE numero=NUMERO DE ACCIONES QUE POSEE>
+	 * 				 </participaciones>
 	 * 				<ampliaciones> NUMERO_AMPLIACIONES </ampliaciones>
-	 * 				<capital> DINERO_CAPITAL </capital>
 	 * 				<archivo_historico>
 	 * 					FICHERO_HISTORICO.xml
 	 * 				</archivo_historico>
@@ -65,14 +67,12 @@ public class InformacionXML implements IInformacion{
 	private DocumentBuilderFactory factory;
 	private DocumentBuilder builder;
 	private Document document;
-	private Element ele;
 	
 	public InformacionXML(String archivo, String empresa){
 		factory = DocumentBuilderFactory.newInstance();
 		try {
 			builder = factory.newDocumentBuilder();
 			document = builder.parse(new File(archivo));
-			ele = document.getDocumentElement();
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
 	       Exception  x = sxe;
@@ -113,39 +113,71 @@ public class InformacionXML implements IInformacion{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	/*Obtenemos los datos bursatiles:
+	 * Participaciones (nombre del accionista, numero de acciones que posee)
+	 * Capital Social (Capital, calor nominal de la accion y numero de acciones)
+	 * Ampliaciones de capital
+	 * Informacion historica
+	 */
 	public InfoBursatil getDatosBursatiles() {
-		InfoBursatil ib=null;
-		Hashtable ht=this.getParticipaciones();
-		ib.setParticipaciones(ht);
+		InfoBursatil ib=new InfoBursatil();
+		ib.setParticipaciones(this.getParticipaciones());
+		ib.setAmpliacionesCapital(this.getAmpliacionesCapital());
+		ib.setCapitalSocial(this.getCapitalSocial());
 		return ib;
 	}
 	
+	/*Obtenemos las participaciones.
+	 * Se guardan en una Hashtable con:
+	 * key=nombre del accionista
+	 * valor=numero de acciones que posee
+	 */
 	public Hashtable getParticipaciones(){
 		Hashtable part=new Hashtable();
-		while (!ele.getNodeName().equals("participaciones")){
-			Node n=ele.getFirstChild();
-			while (n.getNodeType()!=1){
-				n=n.getNextSibling();
-			}
-			ele=(Element)n;
-		}
-		NodeList nl = ele.getChildNodes();
-		int num_acciones=0;
-		String nombre=null;
+		NodeList nl=document.getElementsByTagName("accionista");
 		//Obtengo todos los accionistas y les asigno el numero de acciones
 		for (int i=0; nl!=null && i<nl.getLength();i++){
-			if (nl.item(i).getNodeType()==1 && nl.item(i).getNodeName().equals("accionista")){
-				ele=(Element)nl.item(i);
-				nombre=ele.getAttribute("nombre");
-				//le quitamos los /t y /n del final y del principio
-				num_acciones=new Integer(ele.getAttribute("numero")).intValue();
+				String nombre=((Element)nl.item(i)).getAttribute("nombre");
+				int num_acciones=new Integer(((Element)nl.item(i)).getAttribute("numero")).intValue();
 				part.put(nombre,num_acciones);
-			}
 		}
 		return part;
 	}
-
+	
+	/*Modificamos el XML para adecuarlo a los cambios 
+	 * que se han dado en la bolsa
+	 */
+	public void setParticipaciones(Hashtable ht){
+		
+	}
+	
+	/*Obtenemos la informacion de las ampliaciones de capital.
+	 * 
+	 */
+	public Vector getAmpliacionesCapital(){
+		Vector amps=new Vector();
+		NodeList nl=document.getElementsByTagName("ampliaciones");
+		amps.addElement(((Element)nl.item(0)).getTextContent().trim());
+		return amps;
+	}
+	
+	/*Modificamos el XML para adecuarlo a los cambios 
+	 * que se han dado en la bolsa
+	 */
+	public void setAmpliacionesCapital(Vector v){
+		//TODO
+	}
+	
+	public Vector getCapitalSocial(){
+		Vector capSocial=new Vector();
+		NodeList nl=document.getElementsByTagName("capital_social");
+		capSocial.addElement(((Element)nl.item(0)).getAttribute("capital"));
+		capSocial.addElement(((Element)nl.item(0)).getAttribute("valor_nominal"));
+		capSocial.addElement(((Element)nl.item(0)).getAttribute("num_acciones"));
+		return capSocial;
+	}
+	
 	public void setInfoBursatil(InfoBursatil i) {
 		
 	}
@@ -159,4 +191,5 @@ public class InformacionXML implements IInformacion{
 		// TODO Auto-generated method stub
 		
 	}
+		
 }

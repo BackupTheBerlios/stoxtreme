@@ -6,8 +6,8 @@ import java.util.Vector;
 public class InfoBursatil {
 	private Hashtable participaciones;
 	private Vector ampliacionesCapital;
-	private double capitalSocial;
-
+	private Vector capitalSocial;//0-Capital,1-Valor nominal,2-Numero acciones
+	
 	public void setParticipaciones(Hashtable participaciones) {
 		this.participaciones = participaciones;
 	}
@@ -24,11 +24,11 @@ public class InfoBursatil {
 		return ampliacionesCapital;
 	}
 
-	public void setCapitalSocial(double capitalSocial) {
+	public void setCapitalSocial(Vector capitalSocial) {
 		this.capitalSocial = capitalSocial;
 	}
 
-	public double getCapitalSocial() {
+	public Vector getCapitalSocial() {
 		return capitalSocial;
 	}
 	

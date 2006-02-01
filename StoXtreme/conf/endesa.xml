@@ -1,9 +1,14 @@
 <info>
- 	<empresa nombre="ENDESA">
+ 	<empresa nombre="ENDESA" grupo="Petroleo/Energia">
 	 	<info_bursatil>
-	 		<participaciones> 1058752117  </participaciones>
-	 		<ampliaciones> NUMERO_AMPLIACIONES </ampliaciones>
-	 		<capital> DINERO_CAPITAL </capital>
+	 		<capital_social capital="1270502540.40" valor_nominal="1.2" num_acciones="1058752117"/>
+	 		<participaciones> 
+				<accionista nombre="Planeta-De Agostini S.L." numero="87730496"/>
+				<accionista nombre="SCH, S.A/Macame S.A." numero="22222572"/>
+				<accionista nombre="RTL Group Communiations, S.L.U." numero="38372340"/>
+				<accionista nombre="Publico" numero="73898592"/>
+			</participaciones>
+	 		<ampliaciones>0</ampliaciones>
 	  		<archivo_historico>
 	  			FICHERO_HISTORICO.xml
 	  		</archivo_historico>
