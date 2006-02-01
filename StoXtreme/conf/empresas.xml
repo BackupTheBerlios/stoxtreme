@@ -8,7 +8,7 @@
  	<emp nombre="TELECINCO" cotizacion="15.30" global="FALSE">
 		conf\telecinco.xml 		
 	</emp>
-	<emp nombre="ANTENA3" cotizacion="17.25" global="FALSE">
+	<emp nombre="ANTENA3" cotizacion="23.5" global="FALSE">
 		conf\antena3.xml 		
 	</emp>
 </empresas>

@@ -1,9 +1,15 @@
 <info>
- 	<empresa nombre="ENDESA">
+ 	<empresa nombre="ANTENA3">
 	 	<info_bursatil>
-	 		<participaciones> 55556000  </participaciones>
-	 		<ampliaciones> NUMERO_AMPLIACIONES </ampliaciones>
-	 		<capital> DINERO_CAPITAL </capital>
+	 		<participaciones> 
+				<accionista nombre="Planeta-De Agostini S.L." numero="87730496"/>
+				<accionista nombre="SCH, S.A/Macame S.A." numero="22222572"/>
+				<accionista nombre="RTL Group Communiations, S.L.U." numero="38372340"/>
+				<accionista nombre="Publico" numero="73898592"/>
+			</participaciones>
+			<valor_nominal>	0.75 </valor_nominal>
+	 		<ampliaciones>0</ampliaciones>
+	 		<capital> 166668000 </capital>
 	  		<archivo_historico>
 	  			FICHERO_HISTORICO.xml
 	  		</archivo_historico>

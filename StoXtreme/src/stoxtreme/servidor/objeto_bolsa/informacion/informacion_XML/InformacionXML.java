@@ -14,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import stoxtreme.interfaz_remota.IInformacion;
@@ -115,21 +116,34 @@ public class InformacionXML implements IInformacion{
 
 	public InfoBursatil getDatosBursatiles() {
 		InfoBursatil ib=null;
+		Hashtable ht=this.getParticipaciones();
+		ib.setParticipaciones(ht);
+		return ib;
+	}
+	
+	public Hashtable getParticipaciones(){
 		Hashtable part=new Hashtable();
-		//////TODO MAL
-		NodeList nl = ele.getOwnerDocument().getElementsByTagName("info_bursatil");
+		while (!ele.getNodeName().equals("participaciones")){
+			Node n=ele.getFirstChild();
+			while (n.getNodeType()!=1){
+				n=n.getNextSibling();
+			}
+			ele=(Element)n;
+		}
+		NodeList nl = ele.getChildNodes();
 		int num_acciones=0;
 		String nombre=null;
 		//Obtengo todos los accionistas y les asigno el numero de acciones
 		for (int i=0; nl!=null && i<nl.getLength();i++){
-			ele=(Element)nl.item(i);
-			nombre=ele.getAttribute("nombre");
-			//le quitamos los /t y /n del final y del principio
-			num_acciones=new Integer(ele.getTextContent().trim()).intValue();
-			part.put(nombre,num_acciones);
+			if (nl.item(i).getNodeType()==1 && nl.item(i).getNodeName().equals("accionista")){
+				ele=(Element)nl.item(i);
+				nombre=ele.getAttribute("nombre");
+				//le quitamos los /t y /n del final y del principio
+				num_acciones=new Integer(ele.getAttribute("numero")).intValue();
+				part.put(nombre,num_acciones);
+			}
 		}
-		ib.setParticipaciones(part);
-		return ib;
+		return part;
 	}
 
 	public void setInfoBursatil(InfoBursatil i) {

@@ -27,8 +27,11 @@ public class ObjetoBolsa {
 	public ObjetoBolsa(String nombreEmpresa, float cotizacion, String informacion){
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
-		this.infoXML=new InformacionXML(informacion,nombreEmpresa);
-		this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
+		if(nombreEmpresa.equals("ANTENA3")){
+			this.infoXML=new InformacionXML(informacion,nombreEmpresa);
+			this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
+			System.out.println("hola");
+		}
 	}
 	public void paso(){
 		sistemaOperaciones.paso();
