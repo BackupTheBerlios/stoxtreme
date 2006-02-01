@@ -44,18 +44,16 @@ public class DatosEmpresas {
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(new File(fichero));
-			Element ele = document.getDocumentElement();
-			NodeList nl = ele.getElementsByTagName("emp");
+			NodeList nl = document.getElementsByTagName("emp");
 			String nombre=null;
 			float cotiz=0;
 			String info=null;
 			//Obtengo todas las empresas y creo un objeto bolsa para cada una
 			for (int i=0; nl!=null && i<nl.getLength();i++){
-				ele=(Element)nl.item(i);
-				nombre=ele.getAttribute("nombre");
-				cotiz=new Float(ele.getAttribute("cotizacion"));
+				nombre=((Element)nl.item(i)).getAttribute("nombre");
+				cotiz=new Float(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio
-				info=ele.getTextContent().trim();
+				info=((Element)nl.item(i)).getTextContent().trim();
 				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info));
 			}
 	    } catch (SAXException sxe) {

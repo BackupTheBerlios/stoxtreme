@@ -139,8 +139,8 @@ public class InformacionXML implements IInformacion{
 		//Obtengo todos los accionistas y les asigno el numero de acciones
 		for (int i=0; nl!=null && i<nl.getLength();i++){
 				String nombre=((Element)nl.item(i)).getAttribute("nombre");
-				int num_acciones=new Integer(((Element)nl.item(i)).getAttribute("numero")).intValue();
-				part.put(nombre,num_acciones);
+				float porcentaje=new Float(((Element)nl.item(i)).getAttribute("porcentaje")).floatValue();
+				part.put(nombre,porcentaje);
 		}
 		return part;
 	}

@@ -5,11 +5,7 @@
 	 		<participaciones> 
 				<accionista nombre="La Caixa" porcentaje="2"/>
 				<accionista nombre="Caja Madrid" porcentaje="9"/>
-				<accionista nombre="Europa Continental" porcentaje="18.9"/>
-				<accionista nombre="Reino Unido" porcentaje="10.8"/>
-				<accionista nombre="Institucional Español" porcentaje="14.4"/>
-				<accionista nombre="E.E.U.U." porcentaje="15.3"/>
-				<accionista nombre="Bolsa Española" porcentaje="28.8"/>
+				<accionista nombre="Bolsa" porcentaje="89"/>
 			</participaciones>
 	 		<ampliaciones>
 				1
