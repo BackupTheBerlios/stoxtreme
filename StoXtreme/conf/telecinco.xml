@@ -1,9 +1,13 @@
 <info>
- 	<empresa nombre="TELECINCO">
+	<empresa nombre="TELECINCO" grupo="Servicios de consumo">
 	 	<info_bursatil>
-	 		<participaciones> 246641856  </participaciones>
-	 		<ampliaciones> NUMERO_AMPLIACIONES </ampliaciones>
-	 		<capital> DINERO_CAPITAL </capital>
+			<capital_social capital="123320928" valor_nominal="0.50" num_acciones="246641856"/>
+	 		<participaciones> 
+				<accionista nombre="Vocento" porcentaje="13"/>
+				<accionista nombre="Mediaset" porcentaje="50.1"/>
+				<accionista nombre="Bolsa" porcentaje="36.9"/>
+			</participaciones>
+	 		<ampliaciones>0</ampliaciones>
 	  		<archivo_historico>
 	  			FICHERO_HISTORICO.xml
 	  		</archivo_historico>
