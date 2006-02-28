@@ -6,37 +6,60 @@
  */
 
 package stoxtreme.interfaz_remota;
-// TODO CUIDADO CON LA SUPRESION DEL SERIAL
-@SuppressWarnings("serial")
+
 public class Mensaje  implements java.io.Serializable {
-	private java.lang.String mensaje;
+    private java.lang.String contenido;
+
+    private java.lang.String tipoMensaje;
 
     public Mensaje() {
     }
 
     public Mensaje(
-           java.lang.String mensaje) {
-           this.mensaje = mensaje;
+           java.lang.String contenido,
+           java.lang.String tipoMensaje) {
+           this.contenido = contenido;
+           this.tipoMensaje = tipoMensaje;
     }
 
 
     /**
-     * Gets the mensaje value for this Mensaje.
+     * Gets the contenido value for this Mensaje.
      * 
-     * @return mensaje
+     * @return contenido
      */
-    public java.lang.String getMensaje() {
-        return mensaje;
+    public java.lang.String getContenido() {
+        return contenido;
     }
 
 
     /**
-     * Sets the mensaje value for this Mensaje.
+     * Sets the contenido value for this Mensaje.
      * 
-     * @param mensaje
+     * @param contenido
      */
-    public void setMensaje(java.lang.String mensaje) {
-        this.mensaje = mensaje;
+    public void setContenido(java.lang.String contenido) {
+        this.contenido = contenido;
+    }
+
+
+    /**
+     * Gets the tipoMensaje value for this Mensaje.
+     * 
+     * @return tipoMensaje
+     */
+    public java.lang.String getTipoMensaje() {
+        return tipoMensaje;
+    }
+
+
+    /**
+     * Sets the tipoMensaje value for this Mensaje.
+     * 
+     * @param tipoMensaje
+     */
+    public void setTipoMensaje(java.lang.String tipoMensaje) {
+        this.tipoMensaje = tipoMensaje;
     }
 
     private java.lang.Object __equalsCalc = null;
@@ -51,9 +74,12 @@ public class Mensaje  implements java.io.Serializable {
         __equalsCalc = obj;
         boolean _equals;
         _equals = true && 
-            ((this.mensaje==null && other.getMensaje()==null) || 
-             (this.mensaje!=null &&
-              this.mensaje.equals(other.getMensaje())));
+            ((this.contenido==null && other.getContenido()==null) || 
+             (this.contenido!=null &&
+              this.contenido.equals(other.getContenido()))) &&
+            ((this.tipoMensaje==null && other.getTipoMensaje()==null) || 
+             (this.tipoMensaje!=null &&
+              this.tipoMensaje.equals(other.getTipoMensaje())));
         __equalsCalc = null;
         return _equals;
     }
@@ -65,8 +91,11 @@ public class Mensaje  implements java.io.Serializable {
         }
         __hashCodeCalc = true;
         int _hashCode = 1;
-        if (getMensaje() != null) {
-            _hashCode += getMensaje().hashCode();
+        if (getContenido() != null) {
+            _hashCode += getContenido().hashCode();
+        }
+        if (getTipoMensaje() != null) {
+            _hashCode += getTipoMensaje().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -79,8 +108,14 @@ public class Mensaje  implements java.io.Serializable {
     static {
         typeDesc.setXmlType(new javax.xml.namespace.QName("http://interfaz_remota.stoxtreme", "Mensaje"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("mensaje");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "mensaje"));
+        elemField.setFieldName("contenido");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "contenido"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://schemas.xmlsoap.org/soap/encoding/", "string"));
+        elemField.setNillable(true);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("tipoMensaje");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "tipoMensaje"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://schemas.xmlsoap.org/soap/encoding/", "string"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);

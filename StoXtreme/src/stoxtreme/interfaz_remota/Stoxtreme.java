@@ -7,11 +7,11 @@
 
 package stoxtreme.interfaz_remota;
 
+import java.rmi.RemoteException;
+
 public interface Stoxtreme extends java.rmi.Remote {
-    public void inicializacion() throws java.rmi.RemoteException;
-    public boolean registro(java.lang.String usuario, java.lang.String pass) throws java.rmi.RemoteException;
-    public boolean login(java.lang.String usuario, java.lang.String pass) throws java.rmi.RemoteException;
-    public int insertarOperacion(java.lang.String usuario, stoxtreme.interfaz_remota.Operacion operacion) throws java.rmi.RemoteException;
-    public void cancelarOperacion(java.lang.String usuario, int idOperacion) throws java.rmi.RemoteException;
-    public stoxtreme.interfaz_remota.Mensaje siguienteMensaje(java.lang.String usuario) throws java.rmi.RemoteException;
+    public boolean registro(String id, String pass) throws RemoteException;
+    public boolean login(String id, String pass) throws RemoteException;
+    public int insertarOperacion(String id, Operacion op) throws RemoteException;
+    public void cancelarOperacion(String id, int idOp) throws RemoteException;
 }

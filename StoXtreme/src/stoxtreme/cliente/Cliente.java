@@ -20,7 +20,7 @@ public class Cliente implements IMensajeriaListener{
 	public Cliente(){
 		try {
 			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
-			servicio = locator.getStoxtreme();
+			servicio = locator.getStoXtreme();
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
@@ -41,7 +41,6 @@ public class Cliente implements IMensajeriaListener{
 	
 	public void init() {
 		try {
-			servicio.inicializacion();
 			// Aqui se da de alta pero no esta en login
 			servicio.registro("alonso", "alonso");
 			
@@ -51,7 +50,7 @@ public class Cliente implements IMensajeriaListener{
 				receptor.addListener(this);
 			}
 			
-			int i = servicio.insertarOperacion("alonso", new Operacion(Operacion.COMPRA, 100, "Empresa1", 20.0f));
+			int i = servicio.insertarOperacion("alonso", new Operacion("Alonso#1", Operacion.COMPRA, 100, "Empresa1", 20.0f));
 			servicio.cancelarOperacion("alonso", i);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -59,6 +58,6 @@ public class Cliente implements IMensajeriaListener{
 	}
 	
 	public synchronized void onMensaje(Mensaje m){
-		System.out.println("RECIBIDO MENSAJE " + m.getMensaje());
+		System.out.println("RECIBIDO MENSAJE " + m.getContenido());
 	}
 }

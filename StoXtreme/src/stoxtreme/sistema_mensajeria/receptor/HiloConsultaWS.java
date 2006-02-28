@@ -4,6 +4,8 @@ import javax.xml.rpc.ServiceException;
 
 import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.Stoxtreme;
+import stoxtreme.interfaz_remota.StoxtremeMensajes;
+import stoxtreme.servicio_web.StoxtremeMensajesServiceLocator;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
 
 public class HiloConsultaWS extends Thread{
@@ -14,10 +16,10 @@ public class HiloConsultaWS extends Thread{
 	
 	public void run(){
 		try{
-			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
-			Stoxtreme stoxtreme = locator.getStoxtreme();
+			StoxtremeMensajesServiceLocator locator = new StoxtremeMensajesServiceLocator();
+			StoxtremeMensajes stoxtreme = locator.getStoXtremeMsg();
 			while(true){
-				Mensaje m = stoxtreme.siguienteMensaje(receptor.getUsuario());
+				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());
 				if(m!=null){
 					receptor.notifica(m);
 				}

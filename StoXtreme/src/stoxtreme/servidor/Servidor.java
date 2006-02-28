@@ -1,13 +1,23 @@
 package stoxtreme.servidor;
 import stoxtreme.interfaz_remota.Operacion;
+import stoxtreme.interfaz_remota.Administrador;
+import stoxtreme.interfaz_remota.Stoxtreme;
+
+import java.rmi.RemoteException;
 import java.util.Hashtable;
 
-public class Servidor {
+public class Servidor implements Administrador, Stoxtreme{
+	/**/
+	private static Servidor _instance = new Servidor();
+	public static Servidor getInstance(){
+		return _instance;
+	}
+	/**/
 	private static int IDS = 0;
 	private Hashtable objetosBolsa=new Hashtable();
 	private DatosEmpresas de;
 	
-	public Servidor(){
+	private Servidor(){
 		de=new DatosEmpresas();
 		objetosBolsa=de.creaObjetosBolsa("conf/empresas.xml");
 		}
@@ -35,5 +45,29 @@ public class Servidor {
 	}
 	public static void main(String[] argv){
 		Servidor server=new Servidor();
+	}
+	public void iniciarServidor() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+	public void pararServidor() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+	public void iniciaSesion() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+	public void finalizaSesion() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+	public void showGUI() throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+	public void hideGUI() throws RemoteException {
+		// TODO Auto-generated method stub
+		
 	}
 }

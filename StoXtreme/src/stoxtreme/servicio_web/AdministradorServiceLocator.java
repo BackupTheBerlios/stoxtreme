@@ -1,5 +1,5 @@
 /**
- * StoxtremeServiceLocator.java
+ * AdministradorServiceLocator.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.3 Oct 05, 2005 (05:23:37 EDT) WSDL2Java emitter.
@@ -7,55 +7,55 @@
 
 package stoxtreme.servicio_web;
 
-import stoxtreme.interfaz_remota.Stoxtreme;
+import stoxtreme.interfaz_remota.Administrador;
 
-public class StoxtremeServiceLocator extends org.apache.axis.client.Service implements stoxtreme.servicio_web.StoxtremeService {
+public class AdministradorServiceLocator extends org.apache.axis.client.Service implements stoxtreme.servicio_web.AdministradorService {
 
-    public StoxtremeServiceLocator() {
+    public AdministradorServiceLocator() {
     }
 
 
-    public StoxtremeServiceLocator(org.apache.axis.EngineConfiguration config) {
+    public AdministradorServiceLocator(org.apache.axis.EngineConfiguration config) {
         super(config);
     }
 
-    public StoxtremeServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
+    public AdministradorServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
         super(wsdlLoc, sName);
     }
 
-    // Use to get a proxy class for StoXtreme
-    private java.lang.String StoXtreme_address = "http://localhost:8080/axis/services/StoXtreme";
+    // Use to get a proxy class for StoXtremeAdmin
+    private java.lang.String StoXtremeAdmin_address = "http://localhost:8080/axis/services/StoXtremeAdmin";
 
-    public java.lang.String getStoXtremeAddress() {
-        return StoXtreme_address;
+    public java.lang.String getStoXtremeAdminAddress() {
+        return StoXtremeAdmin_address;
     }
 
     // The WSDD service name defaults to the port name.
-    private java.lang.String StoXtremeWSDDServiceName = "StoXtreme";
+    private java.lang.String StoXtremeAdminWSDDServiceName = "StoXtremeAdmin";
 
-    public java.lang.String getStoXtremeWSDDServiceName() {
-        return StoXtremeWSDDServiceName;
+    public java.lang.String getStoXtremeAdminWSDDServiceName() {
+        return StoXtremeAdminWSDDServiceName;
     }
 
-    public void setStoXtremeWSDDServiceName(java.lang.String name) {
-        StoXtremeWSDDServiceName = name;
+    public void setStoXtremeAdminWSDDServiceName(java.lang.String name) {
+        StoXtremeAdminWSDDServiceName = name;
     }
 
-    public stoxtreme.interfaz_remota.Stoxtreme getStoXtreme() throws javax.xml.rpc.ServiceException {
+    public stoxtreme.interfaz_remota.Administrador getStoXtremeAdmin() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
-            endpoint = new java.net.URL(StoXtreme_address);
+            endpoint = new java.net.URL(StoXtremeAdmin_address);
         }
         catch (java.net.MalformedURLException e) {
             throw new javax.xml.rpc.ServiceException(e);
         }
-        return getStoXtreme(endpoint);
+        return getStoXtremeAdmin(endpoint);
     }
 
-    public stoxtreme.interfaz_remota.Stoxtreme getStoXtreme(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public stoxtreme.interfaz_remota.Administrador getStoXtremeAdmin(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            stoxtreme.servicio_web.StoXtremeSoapBindingStub _stub = new stoxtreme.servicio_web.StoXtremeSoapBindingStub(portAddress, this);
-            _stub.setPortName(getStoXtremeWSDDServiceName());
+            stoxtreme.servicio_web.StoXtremeAdminSoapBindingStub _stub = new stoxtreme.servicio_web.StoXtremeAdminSoapBindingStub(portAddress, this);
+            _stub.setPortName(getStoXtremeAdminWSDDServiceName());
             return _stub;
         }
         catch (org.apache.axis.AxisFault e) {
@@ -63,8 +63,8 @@ public class StoxtremeServiceLocator extends org.apache.axis.client.Service impl
         }
     }
 
-    public void setStoXtremeEndpointAddress(java.lang.String address) {
-        StoXtreme_address = address;
+    public void setStoXtremeAdminEndpointAddress(java.lang.String address) {
+        StoXtremeAdmin_address = address;
     }
 
     /**
@@ -74,9 +74,9 @@ public class StoxtremeServiceLocator extends org.apache.axis.client.Service impl
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (stoxtreme.interfaz_remota.Stoxtreme.class.isAssignableFrom(serviceEndpointInterface)) {
-                stoxtreme.servicio_web.StoXtremeSoapBindingStub _stub = new stoxtreme.servicio_web.StoXtremeSoapBindingStub(new java.net.URL(StoXtreme_address), this);
-                _stub.setPortName(getStoXtremeWSDDServiceName());
+            if (stoxtreme.interfaz_remota.Administrador.class.isAssignableFrom(serviceEndpointInterface)) {
+                stoxtreme.servicio_web.StoXtremeAdminSoapBindingStub _stub = new stoxtreme.servicio_web.StoXtremeAdminSoapBindingStub(new java.net.URL(StoXtremeAdmin_address), this);
+                _stub.setPortName(getStoXtremeAdminWSDDServiceName());
                 return _stub;
             }
         }
@@ -96,8 +96,8 @@ public class StoxtremeServiceLocator extends org.apache.axis.client.Service impl
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
-        if ("StoXtreme".equals(inputPortName)) {
-            return getStoXtreme();
+        if ("StoXtremeAdmin".equals(inputPortName)) {
+            return getStoXtremeAdmin();
         }
         else  {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
@@ -107,7 +107,7 @@ public class StoxtremeServiceLocator extends org.apache.axis.client.Service impl
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://interfaz_remota.stoxtreme", "StoxtremeService");
+        return new javax.xml.namespace.QName("http://interfaz_remota.stoxtreme", "AdministradorService");
     }
 
     private java.util.HashSet ports = null;
@@ -115,7 +115,7 @@ public class StoxtremeServiceLocator extends org.apache.axis.client.Service impl
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://interfaz_remota.stoxtreme", "StoXtreme"));
+            ports.add(new javax.xml.namespace.QName("http://interfaz_remota.stoxtreme", "StoXtremeAdmin"));
         }
         return ports.iterator();
     }
@@ -125,8 +125,8 @@ public class StoxtremeServiceLocator extends org.apache.axis.client.Service impl
     */
     public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
         
-if ("StoXtreme".equals(portName)) {
-            setStoXtremeEndpointAddress(address);
+if ("StoXtremeAdmin".equals(portName)) {
+            setStoXtremeAdminEndpointAddress(address);
         }
         else 
 { // Unknown Port Name
