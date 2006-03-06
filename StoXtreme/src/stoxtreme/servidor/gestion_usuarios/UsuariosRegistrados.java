@@ -6,5 +6,5 @@ public class UsuariosRegistrados {
 		// TODO Lee los datos de los usuarios registrados de donde
 		// corresponda
 	}
-
+	
 }

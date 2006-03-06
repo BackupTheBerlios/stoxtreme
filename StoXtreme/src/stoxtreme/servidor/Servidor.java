@@ -1,12 +1,20 @@
+/*
+ * TODO:
+ * 	- Falta todo lo de los parametros
+ *  - Falta la ejecucion
+ *  - Falta con la interfaz grafica
+ */
+
 package stoxtreme.servidor;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Administrador;
 import stoxtreme.interfaz_remota.Stoxtreme;
+import stoxtreme.servidor.superusuario.GUI.MainFrameAdmin;
 
 import java.rmi.RemoteException;
 import java.util.Hashtable;
 
-public class Servidor implements Administrador, Stoxtreme{
+public class Servidor implements Administrador, Stoxtreme, Runnable{
 	/**/
 	private static Servidor _instance = new Servidor();
 	public static Servidor getInstance(){
@@ -16,11 +24,13 @@ public class Servidor implements Administrador, Stoxtreme{
 	private static int IDS = 0;
 	private Hashtable objetosBolsa=new Hashtable();
 	private DatosEmpresas de;
+	private VariablesSistema variables;
 	
+	// TODO falta meter las variables del sistema y los parametros
 	private Servidor(){
 		de=new DatosEmpresas();
-		objetosBolsa=de.creaObjetosBolsa("conf/empresas.xml");
-		}
+		objetosBolsa=de.creaObjetosBolsa("conf/empresas.xml", variables);
+	}
 	public boolean login(String usr, String psw){
 		System.out.println("REGISTRO USUARIO " + usr + " " + psw);
 		return true;
@@ -40,34 +50,35 @@ public class Servidor implements Administrador, Stoxtreme{
 		System.out.println("USUARIO "+usuario+" CANCELA OPERACION");
 	}
 	
-	public void insertarOBolsa(String nombre, float cotizacion, String ficheroInf){
-		
-	}
 	public static void main(String[] argv){
 		Servidor server=new Servidor();
 	}
 	public void iniciarServidor() throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		// TODO Aqui debe ir toda la ejecucion
+		// Empezar cogiendo el tiempo de paso
+		// Crear un Timer que ejecute run cada tiempo de paso
 	}
+	
 	public void pararServidor() throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		// TODO Parar el Timer y destruir lo necesario
 	}
+	
 	public void iniciaSesion() throws RemoteException {
-		// TODO Auto-generated method stub
+		// TODO Mirar cual es la siguiente sesion (apertur, cierre)
 		
 	}
 	public void finalizaSesion() throws RemoteException {
-		// TODO Auto-generated method stub
+		// TODO Finaliza
 		
 	}
 	public void showGUI() throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		// TODO solo un gui.show
 	}
 	public void hideGUI() throws RemoteException {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public void run(){
+		// TODO AQUI VA LO GORDO
 	}
 }

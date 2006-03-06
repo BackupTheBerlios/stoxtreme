@@ -1,18 +1,26 @@
+/*
+ * TODO:
+ * 	- Falta el sistema de cruzar las operaciones
+ * 	- Conectar esto con el sistema de eventos y las variables del sistema
+ * 	- 
+ */
+
+
 package stoxtreme.servidor.objeto_bolsa;
 import stoxtreme.interfaz_remota.IInformacion;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;
+import stoxtreme.servidor.objeto_bolsa.fluctuaciones.SistemaOperaciones;
 import stoxtreme.servidor.objeto_bolsa.informacion.Informacion;
 import stoxtreme.servidor.objeto_bolsa.informacion.informacion_XML.InformacionXML;
-import stoxtreme.servidor.objeto_bolsa.operaciones.SistOperaciones;
 import stoxtreme.sistema_mensajeria.emisor.EmisorMensajes;
 
 public class ObjetoBolsa {
 	String nombreEmpresa;
 	Informacion informacion;
-	SistOperaciones sistemaOperaciones;
+	SistemaOperaciones sistemaOperaciones;
 	Fluctuaciones fluctuaciones;
 	SistemaEventos sisEventos;
 	EmisorMensajes sisMensajes;
@@ -24,11 +32,13 @@ public class ObjetoBolsa {
 		sistemaOperaciones = new SistOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 	}*/
-	public ObjetoBolsa(String nombreEmpresa, float cotizacion, String informacion){
+	public ObjetoBolsa(String nombreEmpresa, float cotizacion, String informacion, VariablesSistema var){
+		sistemaOperaciones = new SistemaOperaciones();
+		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
-			this.infoXML=new InformacionXML(informacion,nombreEmpresa);
-			this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
+		this.infoXML=new InformacionXML(informacion,nombreEmpresa);
+		this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
 
 	}
 	public void paso(){

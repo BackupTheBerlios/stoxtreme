@@ -49,6 +49,7 @@ public class Fluctuaciones {
     else
       return ordV;
   }
+  //cambiar para el proyecto total
   public void paso(){
     float nuevoValor=calculaValorTitulo();
     System.out.print("El nuevo valor es="+nuevoValor);

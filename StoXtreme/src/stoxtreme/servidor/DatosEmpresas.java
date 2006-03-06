@@ -38,7 +38,7 @@ public class DatosEmpresas {
 		nombresEmpresas = new ArrayList();
 	}
 	
-	public Hashtable creaObjetosBolsa(String fichero) {
+	public Hashtable creaObjetosBolsa(String fichero, VariablesSistema var) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Hashtable ht=new Hashtable();
 		try {
@@ -54,7 +54,7 @@ public class DatosEmpresas {
 				cotiz=new Float(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio
 				info=((Element)nl.item(i)).getTextContent().trim();
-				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info));
+				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info, var));
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing

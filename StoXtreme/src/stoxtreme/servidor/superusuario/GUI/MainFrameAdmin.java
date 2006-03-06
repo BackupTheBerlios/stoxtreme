@@ -122,8 +122,11 @@ public class MainFrameAdmin extends JFrame{
 	}
 	public static void main(String[] args){
 		MainFrameAdmin mf = new MainFrameAdmin();
+		// sistema operaciones
 		ModeloTablaOperaciones mo = new ModeloTablaOperaciones();
+		// sistema registro
 		ModeloListaUsuariosConectados lusr = new ModeloListaUsuariosConectados();
+		// Eventos
 		ModeloTablaPrecioAcciones pacc = new ModeloTablaPrecioAcciones();
 		ModeloTablaVariables vars = new ModeloTablaVariables();
 		ModeloTablaEventos evn = new ModeloTablaEventos();
