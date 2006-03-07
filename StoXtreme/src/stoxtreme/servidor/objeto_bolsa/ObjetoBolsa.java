@@ -9,6 +9,8 @@
 package stoxtreme.servidor.objeto_bolsa;
 import stoxtreme.interfaz_remota.IInformacion;
 import stoxtreme.interfaz_remota.Operacion;
+import stoxtreme.servidor.Reloj;
+import stoxtreme.servidor.RelojListener;
 import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;
@@ -17,7 +19,7 @@ import stoxtreme.servidor.objeto_bolsa.informacion.Informacion;
 import stoxtreme.servidor.objeto_bolsa.informacion.informacion_XML.InformacionXML;
 import stoxtreme.sistema_mensajeria.emisor.EmisorMensajes;
 
-public class ObjetoBolsa {
+public class ObjetoBolsa implements RelojListener{
 	String nombreEmpresa;
 	Informacion informacion;
 	SistemaOperaciones sistemaOperaciones;

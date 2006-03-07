@@ -3,10 +3,11 @@ import java.util.*;
 import sun.security.krb5.internal.crypto.t;
 
 
-public class Reloj extends Thread{
+public class Reloj extends TimerTask{
 	private ArrayList oyentes;
 	private Timer timer;
 	private long ms;
+	private boolean parado = true;
 	
 	public Reloj(){
 		this(500);
@@ -24,20 +25,38 @@ public class Reloj extends Thread{
 	}
 	
 	public void run(){
-		TimerTask t = new TimerTask(){
-			public void run(){
-				notificaOyentes();
-			}
-		};
-		
-		timer.schedule(t, ms, ms); 
-	}
-	
-	private void notificaOyentes(){
 		Iterator i = oyentes.iterator();
 		while(i.hasNext()){
 			// TODO CUIDADO CON LA CONCURRENCIA EN ESTE METODO
 			((RelojListener)i.next()).paso();
 		}
+		
 	}
+	
+	public void iniciarReloj(){
+		parado = false;
+	}
+	
+	public void iniciarReloj(long tEspera){
+		ms = tEspera;
+		reiniciarReloj();
+	}
+	
+	public void reiniciarReloj(){
+		timer = new Timer(true);
+		timer.schedule(this, ms, ms);
+	}
+	
+	public void pararReloj(){
+		if(!parado){
+			timer.cancel();
+			timer = null;
+		}
+	}
+	
+	public void reanudarReloj(){
+		timer = new Timer();
+	}
+	
+	
 }

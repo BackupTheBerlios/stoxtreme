@@ -3,29 +3,29 @@ package stoxtreme.servidor.eventos;
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
 
+import stoxtreme.servidor.VariablesListener;
+import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.evaluador.ParseException;
 
-public class SistemaEventos extends AbstractTableModel{
-	private Hashtable variables;
+public class SistemaEventos extends AbstractTableModel implements VariablesListener{
+	private VariablesSistema variables;
 	private ArrayList listaCondiciones;
 	private ArrayList listaAcciones;
 	private Ejecutor ejecutor;
 	
-	public SistemaEventos(){
-		variables = new Hashtable();
+	public SistemaEventos(VariablesSistema variables){
+		this.variables = variables;
+		variables.addListener(this);
 		listaCondiciones = new ArrayList();
 		listaAcciones = new ArrayList();
 		ejecutor = new Ejecutor();
 	}
-	public void registrarVariable(String var, Object v){
-		
-	}
-	
-	public void cambiarEstadoVariable(String var, Object valor){
-		variables.put(var, valor);
+
+	public void cambioEstadoVariable(String var, Object valor){
 		for (int i=listaCondiciones.size(); i>=0; i--){
 			ObjetoCondicion oc = ((ObjetoCondicion)listaCondiciones.get(i));
 			oc.cambiaVariable(var, valor);
+			
 			if (oc.evalua()){
 				ejecutor.ejecuta((String)listaAcciones.get(i));
 				

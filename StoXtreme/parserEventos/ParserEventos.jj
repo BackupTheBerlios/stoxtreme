@@ -1,8 +1,10 @@
 PARSER_BEGIN(Evaluador)
-	package servidor.eventos.evaluador;
+	package stoxtreme.servidor.eventos.evaluador;
+	
 	import java.util.*;
 	import java.io.*;
-
+	import stoxtreme.servidor.VariablesSistema;
+	
 	public class Evaluador{
 		// VARIABLES DEL PARSER
 		private ArrayList variablesUsadas;
@@ -16,7 +18,7 @@ PARSER_BEGIN(Evaluador)
 			return variablesUsadas;
 		}
 
-		public boolean evalua(Hashtable variables) throws ParseException{
+		public boolean evalua(VariablesSistema variables) throws ParseException{
 			this.variables = variables;
 			String[] ret = E0();
 			compruebaTipo(ret[0], "boolean");
@@ -257,9 +259,9 @@ String[] E6():{String[] ret = new String[2]; Token t;}{
 	t=<VAR> 
 		{
 			ret[0] = "double"; 
-			if(!variables.containsKey(t.image))
+			if(!variables.hasVariable(t.image))
 				throw new ParseException("Error: No existe la variable "+t.image);
-			ret[1] = variables.get(t.image).toString();
+			ret[1] = variables.getValue(t.image).toString();
 			variablesUsadas.add(t.image);
 		}| 
 	t=<NUMERO> {ret[0] = "double"; ret[1] = t.image; } | 

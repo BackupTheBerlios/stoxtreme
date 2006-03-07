@@ -9,27 +9,50 @@ package stoxtreme.servidor;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Administrador;
 import stoxtreme.interfaz_remota.Stoxtreme;
+import stoxtreme.servidor.eventos.SistemaEventos;
+import stoxtreme.servidor.gestion_usuarios.GestionUsuarios;
+import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 import stoxtreme.servidor.superusuario.GUI.MainFrameAdmin;
 
 import java.rmi.RemoteException;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
-public class Servidor implements Administrador, Stoxtreme, Runnable{
+public class Servidor implements Administrador, Stoxtreme{
 	/**/
 	private static Servidor _instance = new Servidor();
+	
 	public static Servidor getInstance(){
 		return _instance;
 	}
+	
 	/**/
 	private static int IDS = 0;
-	private Hashtable objetosBolsa=new Hashtable();
+	/* COMPONENTES DEL SERVIDOR */
+	// Empresas dentro de la bolsa
+	private Hashtable objetosBolsa;
+	// Datos de las empresas
 	private DatosEmpresas de;
+	// Variables del sistema
 	private VariablesSistema variables;
+
+	// Sistema de eventos
+	private SistemaEventos sistEventos;
+	// Reloj de sincronizacion del sistema
+	private Reloj reloj;
+	// Gestor de los usuarios
+	private GestionUsuarios gestorUsuarios;
 	
 	// TODO falta meter las variables del sistema y los parametros
 	private Servidor(){
+		objetosBolsa = new Hashtable();
 		de=new DatosEmpresas();
 		objetosBolsa=de.creaObjetosBolsa("conf/empresas.xml", variables);
+
+		Parametros p = Parametros.leeFicheroParametros("Fichero parametros");
+		variables = new VariablesSistema(p);
+		sistEventos = new SistemaEventos(variables);
+		reloj = new Reloj(p.getTiempo());
 	}
 	public boolean login(String usr, String psw){
 		System.out.println("REGISTRO USUARIO " + usr + " " + psw);
@@ -55,30 +78,39 @@ public class Servidor implements Administrador, Stoxtreme, Runnable{
 	}
 	public void iniciarServidor() throws RemoteException {
 		// TODO Aqui debe ir toda la ejecucion
+		/* TODO: Añadir al reloj todos los listener
+		 * 	- Objetos Bolsa
+		 *  - Variables del sistema
+		 *  - ¿Sistema de eventos?
+		 */
+		// Insertamos en el reloj los objetos bolsa
+		Enumeration e = objetosBolsa.keys();
+		while(e.hasMoreElements()){
+			reloj.addListener((ObjetoBolsa)e.nextElement());
+		}
+		
 		// Empezar cogiendo el tiempo de paso
 		// Crear un Timer que ejecute run cada tiempo de paso
+		reloj.iniciarReloj();
 	}
 	
 	public void pararServidor() throws RemoteException {
 		// TODO Parar el Timer y destruir lo necesario
+		reloj.pararReloj();
 	}
 	
 	public void iniciaSesion() throws RemoteException {
 		// TODO Mirar cual es la siguiente sesion (apertur, cierre)
-		
+		reloj.reanudarReloj();
 	}
 	public void finalizaSesion() throws RemoteException {
 		// TODO Finaliza
-		
+		reloj.pararReloj();
 	}
 	public void showGUI() throws RemoteException {
 		// TODO solo un gui.show
 	}
 	public void hideGUI() throws RemoteException {
 		// TODO Auto-generated method stub
-	}
-	
-	public void run(){
-		// TODO AQUI VA LO GORDO
 	}
 }

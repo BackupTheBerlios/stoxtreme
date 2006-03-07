@@ -23,4 +23,9 @@ public class Parametros {
 	public String getFicheroEmpresas() {
 		return ficheroEmpresas;
 	}
+
+	public static Parametros leeFicheroParametros(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
