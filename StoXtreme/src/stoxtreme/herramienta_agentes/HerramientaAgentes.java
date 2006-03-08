@@ -9,10 +9,18 @@ public class HerramientaAgentes{
 	MonitorAgentes monitor;
 	
 	public HerramientaAgentes(ParametrosAgentes parametros){
-		listaAgentes = new Array
+		monitor = new MonitorAgentes();
+		listaAgentes = new ArrayList<Agente>();
+		listaAgentes.add(new Agente(monitor, "AgentePrueba"));
 	}
 	
 	public void cambiaParametros(ParametrosAgentes nParam){
 		
+	}
+	
+	public void start(){
+		monitor.start();
+		Iterator<Agente> it = listaAgentes.iterator();
+		while(it.hasNext()) new Thread(it.next()).start();
 	}
 }
