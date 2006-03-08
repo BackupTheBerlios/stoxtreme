@@ -1,5 +1,9 @@
 package stoxtreme.servidor.gestion_usuarios;
 
-public class UsuariosConectados {
+import java.util.Hashtable;
 
+public class UsuariosConectados {
+	
+	
 }
+

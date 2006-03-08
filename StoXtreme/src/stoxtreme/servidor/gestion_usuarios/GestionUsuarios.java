@@ -13,13 +13,16 @@ public class GestionUsuarios {
 		registrados.leeDatos();
 	}
 	
-	public boolean conectaUsuario(String ID, String psw){
+	public boolean conectaUsuario(String id, String psw){
 		// TODO
 		return true;
 	}
 	
-	public boolean registraUsuario(String ID, String psw){
-		// TODO
+	public boolean registraUsuario(String id, String psw){
+		if (!registrados.existeUsuario(id)){
+			//TODO Añadir a la tabla hash
+			//TODO Añadir al XML
+		}
 		return true;
 	}
 }
