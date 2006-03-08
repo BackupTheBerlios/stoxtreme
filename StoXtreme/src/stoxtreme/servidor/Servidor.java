@@ -35,7 +35,6 @@ public class Servidor implements Administrador, Stoxtreme{
 	private DatosEmpresas de;
 	// Variables del sistema
 	private VariablesSistema variables;
-
 	// Sistema de eventos
 	private SistemaEventos sistEventos;
 	// Reloj de sincronizacion del sistema
@@ -45,23 +44,21 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	// TODO falta meter las variables del sistema y los parametros
 	private Servidor(){
-		gestorUsuarios=new GestionUsuarios();
+		Parametros p = Parametros.leeFicheroParametros("conf/parametros.xml");
+		gestorUsuarios=new GestionUsuarios(p.getFicheroRegistrados());
+		variables = new VariablesSistema(p);
 		objetosBolsa = new Hashtable();
 		de=new DatosEmpresas();
-		objetosBolsa=de.creaObjetosBolsa("conf/empresas.xml", variables);
-		Parametros p = Parametros.leeFicheroParametros("Fichero parametros");
-		variables = new VariablesSistema(p);
+		objetosBolsa=de.creaObjetosBolsa(p.getFicheroEmpresas(), variables);
 		sistEventos = new SistemaEventos(variables);
 		reloj = new Reloj(p.getTiempo());
 	}
 	public boolean login(String usr, String psw){
-		//System.out.println("REGISTRO USUARIO " + usr + " " + psw);
-		return gestorUsuarios.registraUsuario(usr,psw);
+		return gestorUsuarios.conectaUsuario(usr,psw);
 	}
 	
 	public boolean registro(String usr, String psw){
-		System.out.println("LOGIN USUARIO " + usr + " " + psw);
-		return true;
+		return gestorUsuarios.registraUsuario(usr,psw);
 	}
 	
 	public synchronized int insertarOperacion(String usuario, Operacion o){
@@ -74,8 +71,15 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	
 	public static void main(String[] argv){
-		Servidor server=new Servidor();
+		try {
+			Servidor serv = Servidor.getInstance();
+			serv.iniciarServidor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
+	
 	public void iniciarServidor() throws RemoteException {
 		// TODO Aqui debe ir toda la ejecucion
 		/* TODO: Añadir al reloj todos los listener
