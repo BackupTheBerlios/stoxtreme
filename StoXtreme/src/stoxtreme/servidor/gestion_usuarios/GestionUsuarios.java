@@ -12,17 +12,23 @@ public class GestionUsuarios {
 		// TODO Deberia leer los datos de los usuarios registrados
 		registrados.leeDatos();
 	}
-	
+	/* 
+	 * 
+	 */
 	public boolean conectaUsuario(String id, String psw){
 		// TODO
 		return true;
 	}
-	
+	/* Si el id de usuario no existe, se añade a la tabla hash
+	 * y al fichero XML
+	 */
 	public boolean registraUsuario(String id, String psw){
 		if (!registrados.existeUsuario(id)){
-			//TODO Añadir a la tabla hash
+			registrados.añadeUsuario(id,psw);
 			//TODO Añadir al XML
-		}
-		return true;
+			return true;
+		}else
+			return false;
+		
 	}
 }
