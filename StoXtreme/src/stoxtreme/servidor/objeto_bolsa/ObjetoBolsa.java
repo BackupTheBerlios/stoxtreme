@@ -36,7 +36,7 @@ public class ObjetoBolsa implements RelojListener{
 	}*/
 	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion, VariablesSistema var){
 		sistemaOperaciones = new SistemaOperaciones();
-		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
+		//fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
 		this.infoXML=new InformacionXML(informacion,nombreEmpresa);

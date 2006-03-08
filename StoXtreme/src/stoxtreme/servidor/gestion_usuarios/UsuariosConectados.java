@@ -1,12 +1,23 @@
 package stoxtreme.servidor.gestion_usuarios;
 
-import java.util.Hashtable;
+import java.util.ArrayList;
 
 public class UsuariosConectados {
-	Hashtable conectados;	
+	ArrayList conectados;	
 	
+	//Constructora
 	public UsuariosConectados(){
-		conectados=new Hashtable();
+		conectados=new ArrayList();
+	}
+	
+	//Comprueba si el usuario ya esta conectado
+	public boolean yaConectado(String id){
+		return conectados.contains(id);
+	}
+	
+	//Añade el usuario a la lista de conectados
+	public void insertaUsuario(String id){
+		conectados.add(id);
 	}
 }
 

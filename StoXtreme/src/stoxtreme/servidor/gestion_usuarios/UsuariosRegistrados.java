@@ -1,8 +1,5 @@
 package stoxtreme.servidor.gestion_usuarios;
 
-/*Al iniciarse el servidor se vuelcan los datos del fichero
- *  registrados.xml en la tabla hash. 
- **/
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -18,9 +15,10 @@ import org.xml.sax.SAXException;
 public class UsuariosRegistrados {
 private Hashtable  registrados ;
 	
-	public UsuariosRegistrados(){
+	//Constructora
+	public UsuariosRegistrados(String fich){
 		registrados=new Hashtable();
-		vuelcaFichero("conf/registrados.xml");
+		vuelcaFichero(fich);
 
 	}
 	
@@ -29,14 +27,22 @@ private Hashtable  registrados ;
 		// corresponda
 	}
 	
+	//Comprueba si ya existe un usuario con ese id
 	public boolean existeUsuario(String id){
 		return registrados.containsKey(id);
 	}
 	
-	public void añadeUsuario(String id, String pwd){
-		registrados.put(id,pwd);
+	//Añade el usuario a la tabla
+	public void insertaUsuario(String id, String psw){
+		registrados.put(id,psw);
 	}
-	//El fichero contiene el nombre de usuario y la contraseña
+	
+	//Comprueba que el password introducido es correcto
+	public boolean compruebaPsw(String id, String psw){
+		return psw.equals(registrados.get(id));
+	}
+	
+	//Rellena la tabla hash con los datos del fichero
 	public void vuelcaFichero(String fichero){
 		DocumentBuilderFactory factory;
 		Document document;
@@ -45,12 +51,12 @@ private Hashtable  registrados ;
 			document = factory.newDocumentBuilder().parse(new File(fichero));
 			NodeList nl = document.getElementsByTagName("usuario");
 			String id=null;
-			String pwd=null;
+			String psw=null;
 			//Inserto los datos del usuario en la tabla Hash
 			for (int i=0; nl!=null && i<nl.getLength();i++){
 				id=((Element)nl.item(i)).getAttribute("id");
-				pwd=((Element)nl.item(i)).getAttribute("pwd");
-				this.añadeUsuario(id,pwd);
+				psw=((Element)nl.item(i)).getAttribute("psw");
+				this.insertaUsuario(id,psw);
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
