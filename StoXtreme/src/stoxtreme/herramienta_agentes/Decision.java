@@ -1,7 +1,7 @@
 package stoxtreme.herramienta_agentes;
 
-public abstract class Decision {
-	abstract public String getIDAccion();
-	abstract public double getTiempoEjecucion();
-	abstract public void ejecutar();
+public interface Decision {
+	public String getIDAccion();
+	public int getTiempoEjecucion();
+	public void ejecutar();
 }
