@@ -26,15 +26,15 @@ public class ObjetoBolsa implements RelojListener{
 	Fluctuaciones fluctuaciones;
 	SistemaEventos sisEventos;
 	EmisorMensajes sisMensajes;
-	float cotizacion;
+	double cotizacion;
 	InformacionXML infoXML;
 	
-	/*public ObjetoBolsa(String nombreEmpresa, float cotizacion, String Informacion,
+	/*public ObjetoBolsa(String nombreEmpresa, double cotizacion, String Informacion,
 			SistemaEventos sistEventos, EmisorMensajes smg, VariablesSistema var){
 		sistemaOperaciones = new SistOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 	}*/
-	public ObjetoBolsa(String nombreEmpresa, float cotizacion, String informacion, VariablesSistema var){
+	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion, VariablesSistema var){
 		sistemaOperaciones = new SistemaOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 		this.nombreEmpresa=nombreEmpresa;

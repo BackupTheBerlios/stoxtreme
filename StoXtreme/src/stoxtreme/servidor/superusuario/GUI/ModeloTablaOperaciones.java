@@ -48,7 +48,7 @@ public class ModeloTablaOperaciones extends AbstractTableModel{
 			case 3:
 				return new Integer(o.getCantidad());
 			case 4:
-				return new Float(o.getPrecio());
+				return new Double(o.getPrecio());
 			default:
 				if(o.getTipo() == Operacion.COMPRA)
 					return "Compra";

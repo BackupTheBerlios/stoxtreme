@@ -13,7 +13,7 @@ public class ValoresEmpresa extends TimeSeries{
 	private ArrayList preciosSesion;
 	private int ultimaPos;
 	private Calendar c;
-	private float inicioSesion;
+	private double inicioSesion;
 	
 	public ValoresEmpresa(String empresa, int cadaCuanto){
 		super(empresa);
@@ -28,25 +28,25 @@ public class ValoresEmpresa extends TimeSeries{
 		Calendar c2 = Calendar.getInstance();
 	}
 	
-	public void insertarSiguienteValor(float valor){
+	public void insertarSiguienteValor(double valor){
 		if(preciosSesion.size()==0)
 			inicioSesion = valor;
-		preciosSesion.add(new Float(valor));
+		preciosSesion.add(new Double(valor));
 		ultimaPos++;
 		addOrUpdate(new Minute(c.getTime()), valor);
 		fireSeriesChanged();
 		c.add(Calendar.MINUTE, 1);
 	}
 	
-	public float ultimoPrecio(){
+	public double ultimoPrecio(){
 		if(preciosSesion.size()>0)
-			return ((Float)preciosSesion.get(preciosSesion.size()-1)).floatValue();
+			return ((Double)preciosSesion.get(preciosSesion.size()-1)).doubleValue();
 		else
 			return 0.0f;
 	}
 	public boolean isTendenciaAlta(){
 		if(preciosSesion.size() > 0){
-			return ((Float)preciosSesion.get(preciosSesion.size()-1)).floatValue() >= inicioSesion;
+			return ((Double)preciosSesion.get(preciosSesion.size()-1)).doubleValue() >= inicioSesion;
 		}
 		else{
 			return false;

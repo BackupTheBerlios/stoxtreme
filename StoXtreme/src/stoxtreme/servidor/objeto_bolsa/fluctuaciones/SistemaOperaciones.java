@@ -17,8 +17,8 @@ import java.util.*;
  *
  */
 public class SistemaOperaciones /*implements RelojListener*/{
-        //private Hashtable<float, ArrayList<Object>> listaCompras;
-        //private Hashtable<float, ArrayList<Object>> listaVentas;
+        //private Hashtable<double, ArrayList<Object>> listaCompras;
+        //private Hashtable<double, ArrayList<Object>> listaVentas;
         private Hashtable listaCompras;
         private Hashtable listaVentas;
         public void paso(){
@@ -40,12 +40,12 @@ public class SistemaOperaciones /*implements RelojListener*/{
         }
 
         public void introduceCompra(int idOperacion, String agente,
-                        float precio, int numAcciones) {
+                        double precio, int numAcciones) {
                 // TODO Introduce la operacion en la tabla correspondiente
         }
 
         public void introduceVenta(int idOperacion, String agente,
-                        float precio, int numAcciones) {
+                        double precio, int numAcciones) {
                 // TODO Introduce la operacion en la tabla correspondiente
         }
 

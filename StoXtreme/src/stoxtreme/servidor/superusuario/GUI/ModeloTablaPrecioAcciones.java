@@ -47,13 +47,13 @@ public class ModeloTablaPrecioAcciones extends AbstractTableModel{
 	
 	public void insertarEmpresa(String empresa){
 		listaEmpresas.add(empresa);
-		precioAcciones.put(empresa, new Float(0.0));
+		precioAcciones.put(empresa, new Double(0.0));
 		colorEmpresa.put(empresa, Color.black);
 		this.fireTableRowsInserted(listaEmpresas.size()-1, listaEmpresas.size()-1);
 	}
 	
-	public void cambiaPrecioAccion(String empresa, float nuevoPrecio){
-		precioAcciones.put(empresa, new Float(nuevoPrecio));
+	public void cambiaPrecioAccion(String empresa, double nuevoPrecio){
+		precioAcciones.put(empresa, new Double(nuevoPrecio));
 		int index = listaEmpresas.indexOf(empresa);
 		this.fireTableCellUpdated(index, 1);
 	}

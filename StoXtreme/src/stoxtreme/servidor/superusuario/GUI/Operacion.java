@@ -7,10 +7,10 @@ public class Operacion {
 	private String IDusr;
 	private String IDempresa;
 	private int cantidad;
-	private float precio;
+	private double precio;
 	private int tipo;
 	
-	public Operacion(String IDusr, String IDempresa, int cantidad, float precio, int tipo){
+	public Operacion(String IDusr, String IDempresa, int cantidad, double precio, int tipo){
 		this.IDusr = IDusr;
 		this.IDempresa = IDempresa;
 		this.cantidad = cantidad;
@@ -35,10 +35,10 @@ public class Operacion {
 	public int getCantidad() {
 		return cantidad;
 	}
-	public void setPrecio(float precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-	public float getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
 	public void setTipo(int tipo) {

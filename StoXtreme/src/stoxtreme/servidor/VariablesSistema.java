@@ -28,7 +28,7 @@ public class VariablesSistema implements RelojListener{
 		return (Float)variables.get(VAR_TICK);
 	}
 
-	public float getPrecioInicial(String nombreEmpresa) {
+	public double getPrecioInicial(String nombreEmpresa) {
 		// TODO ¿¿¿Esto iria aqui???
 		return 0;
 	}

@@ -58,7 +58,7 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 		String empresa = (String)listaEmpresas.get(rowIndex);
 		switch(columnIndex){
 			case 0: return empresa;
-			case 1: return new Float(((ValoresEmpresa)valoresAcciones.get(empresa)).ultimoPrecio());
+			case 1: return new Double(((ValoresEmpresa)valoresAcciones.get(empresa)).ultimoPrecio());
 			default: return new Boolean(seleccionado.contains(empresa));
 		}
 		
@@ -103,11 +103,11 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 		}
 	}
 	
-	public void insertaValor(String empresa, float valor){
+	public void insertaValor(String empresa, double valor){
 		((ValoresEmpresa)valoresAcciones.get(empresa)).insertarSiguienteValor(valor);
 		fireTableCellUpdated(listaEmpresas.indexOf(empresa), 1);
 		if(textEscucha != null && empresaEscucha.equals(empresa)){
-			textEscucha.setText(Float.toString(valor));
+			textEscucha.setText(Double.toString(valor));
 		}
 	}
 	
@@ -139,6 +139,6 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 	}
 
 	public void ponPrecio(String empresa, JTextField precioSeleccionado) {
-		precioSeleccionado.setText(new Float(((ValoresEmpresa)valoresAcciones.get(empresa)).ultimoPrecio()).toString());
+		precioSeleccionado.setText(new Double(((ValoresEmpresa)valoresAcciones.get(empresa)).ultimoPrecio()).toString());
 	}
 }

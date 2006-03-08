@@ -46,12 +46,12 @@ public class DatosEmpresas {
 			Document document = builder.parse(new File(fichero));
 			NodeList nl = document.getElementsByTagName("emp");
 			String nombre=null;
-			float cotiz=0;
+			double cotiz=0;
 			String info=null;
 			//Obtengo todas las empresas y creo un objeto bolsa para cada una
 			for (int i=0; nl!=null && i<nl.getLength();i++){
 				nombre=((Element)nl.item(i)).getAttribute("nombre");
-				cotiz=new Float(((Element)nl.item(i)).getAttribute("cotizacion"));
+				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio
 				info=((Element)nl.item(i)).getTextContent().trim();
 				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info, var));

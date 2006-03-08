@@ -41,7 +41,7 @@ public class ModeloOpPendientes extends AbstractTableModel{
 		case 2: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getTipo()==Operacion.COMPRA?"COMPRA":"VENTA";
 		case 3: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getIDempresa();
 		case 4: return new Integer(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getCantidad());
-		default: return new Float(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getPrecio());
+		default: return new Double(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getPrecio());
 		}
 	}
 	

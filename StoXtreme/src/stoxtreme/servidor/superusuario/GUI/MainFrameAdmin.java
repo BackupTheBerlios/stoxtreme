@@ -149,14 +149,14 @@ public class MainFrameAdmin extends JFrame{
 		int i = 0;
 		//*/while(true){
 			mo.insertarOperacion(new Operacion("Cliente"+i, "Empresa"+i, 
-					(int)(Math.random()*200), (float)Math.random(), 
+					(int)(Math.random()*200), (double)Math.random(), 
 					(Math.random()>0.5)?Operacion.COMPRA:Operacion.VENTA));
 
 			lusr.registraUsuario("Cliente"+i);
 			lusr.setEstadoUsuario("Cliente"+i, (Math.random()>0.5)?true:false);
 			
 			pacc.insertarEmpresa("Empresa"+i);
-			pacc.cambiaPrecioAccion("Empresa"+i, (float)Math.random());
+			pacc.cambiaPrecioAccion("Empresa"+i, (double)Math.random());
 			pacc.cambiaColor("Empresa"+i, (Math.random()>0.5)?Color.GREEN:Color.RED);
 			i++;
 		/*	

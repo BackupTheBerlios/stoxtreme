@@ -17,7 +17,7 @@ public class Operacion  implements java.io.Serializable {
 
     private java.lang.String idEmisor;
 
-    private float precio;
+    private double precio;
 
     private int tipoOp;
 
@@ -32,7 +32,7 @@ public class Operacion  implements java.io.Serializable {
     		int tipoOp,
     		int cantidad,
            java.lang.String empresa,
-           float precio
+           double precio
            ) {
            this.cantidad = cantidad;
            this.empresa = empresa;
@@ -108,7 +108,7 @@ public class Operacion  implements java.io.Serializable {
      * 
      * @return precio
      */
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -118,7 +118,7 @@ public class Operacion  implements java.io.Serializable {
      * 
      * @param precio
      */
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
@@ -202,7 +202,7 @@ public class Operacion  implements java.io.Serializable {
         if (getIdEmisor() != null) {
             _hashCode += getIdEmisor().hashCode();
         }
-        _hashCode += new Float(getPrecio()).hashCode();
+        _hashCode += new Double(getPrecio()).hashCode();
         _hashCode += getTipoOp();
         _hashCode += (isValido() ? Boolean.TRUE : Boolean.FALSE).hashCode();
         __hashCodeCalc = false;
@@ -236,7 +236,7 @@ public class Operacion  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("precio");
         elemField.setXmlName(new javax.xml.namespace.QName("", "precio"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "float"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();

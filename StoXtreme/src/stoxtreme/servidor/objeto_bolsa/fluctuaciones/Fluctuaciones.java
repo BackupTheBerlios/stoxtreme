@@ -13,9 +13,9 @@ public class Fluctuaciones {
   //protected Hashtable entorno=new Hashtable();
   //protected Hashtable compraT,ventaT;
   private SistemaOperaciones sisOp;
-  protected float tick;//o intervalo?
-  protected float pActual;
-  public Fluctuaciones(SistemaOperaciones sO,float nt,float pa) {
+  protected double tick;//o intervalo?
+  protected double pActual;
+  public Fluctuaciones(SistemaOperaciones sO,double nt,double pa) {
     sisOp=sO;
     tick=nt;
     pActual=pa;
@@ -24,7 +24,7 @@ public class Fluctuaciones {
     Hashtable vFinal=new Hashtable();
     Vector listaValores;
     Enumeration listaClaves;
-    float max, min;
+    double max, min;
     String claveI;
     max= pActual + tick;
     min= pActual - tick;
@@ -33,7 +33,7 @@ public class Fluctuaciones {
     while (listaClaves.hasMoreElements()){
       claveI=(String)listaClaves.nextElement();
     //}
-      if(Float.parseFloat(claveI)<=max && Float.parseFloat(claveI)>=min){
+      if(Double.parseDouble(claveI)<=max && Double.parseDouble(claveI)>=min){
         listaValores=(Vector)vTotal.get(claveI);
         if (!vFinal.containsKey(claveI)){
           vFinal.put(claveI,listaValores);
@@ -51,10 +51,10 @@ public class Fluctuaciones {
   }
   //cambiar para el proyecto total
   public void paso(){
-    float nuevoValor=calculaValorTitulo();
+    double nuevoValor=calculaValorTitulo();
     System.out.print("El nuevo valor es="+nuevoValor);
   }
-  public float calculaValorTitulo(/*String nombreTitulo,float precioA*/){
+  public double calculaValorTitulo(/*String nombreTitulo,double precioA*/){
 
     Hashtable compra,venta;
     Vector preciosCompra,preciosVenta;
@@ -67,7 +67,7 @@ public class Fluctuaciones {
     //if (compra.size() == venta.size() ){
       int ordenesM=0;
       int ordParcial;
-      float precioM=pActual;
+      double precioM=pActual;
       while(claves.hasMoreElements()){
         clave=(String)claves.nextElement();
         if (venta.containsKey(clave)){
@@ -78,7 +78,7 @@ public class Fluctuaciones {
            //atencion esto se queda kon el primer minimo mirar a ver si keremos otros minimos
             if (ordParcial>ordenesM){
               ordenesM = ordParcial;
-              precioM=Float.parseFloat(clave);
+              precioM=Double.parseDouble(clave);
 
             }
 
@@ -89,10 +89,10 @@ public class Fluctuaciones {
   public static void main(String[] args) {
     Hashtable cT=new Hashtable();
     Hashtable vT=new Hashtable();
-    //Float precio1=new Float(23.5f);
-    //Float precio2=new Float(25.5);
-    float precio1=(float)23.5;
-    float precio2=(float)25.5;
+    //Double precio1=new Double(23.5f);
+    //Double precio2=new Double(25.5);
+    double precio1=(double)23.5;
+    double precio2=(double)25.5;
     Vector compras=new Vector();
     Vector compras2=new Vector();
     Posicion c1,c2,c3,v1,v2,v3;
@@ -106,8 +106,8 @@ public class Fluctuaciones {
     compras2.add(c3);
     Vector ventas=new Vector();
     Vector ventas2=new Vector();
-    cT.put(Float.toString(precio1),compras);
-    cT.put(Float.toString(precio2),compras2);
+    cT.put(Double.toString(precio1),compras);
+    cT.put(Double.toString(precio2),compras2);
     v1=new Posicion("vendedor1",25,4);
     v2=new Posicion("vendedor2",10,5);
     v3=new Posicion("vendedor3",15,6);
@@ -116,10 +116,10 @@ public class Fluctuaciones {
     ventas2.add(Integer.toString(25));
     ventas2.add(c2);
     ventas2.add(c3);
-    vT.put(Float.toString(precio1),ventas);
-    vT.put(Float.toString(precio2),ventas2);
+    vT.put(Double.toString(precio1),ventas);
+    vT.put(Double.toString(precio2),ventas2);
     SistemaOperaciones so=new SistemaOperaciones(cT,vT);
-    Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(float)5.0,(float)20.5);
+    Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5);
     fluctuaciones1.paso();
   }
 

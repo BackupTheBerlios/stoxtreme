@@ -219,7 +219,7 @@ public class MainFrameCliente extends JFrame{
 							Operacion.COMPRA:Operacion.VENTA;
 				try{
 					int cantidad = Integer.parseInt(cantidadSeleccionada.getText());
-					float precio = Float.parseFloat(precioSeleccionado.getText());
+					double precio = Double.parseDouble(precioSeleccionado.getText());
 					new Operacion("Alonso", empresa, cantidad, precio, tipoOperacion);
 				}
 				catch(NumberFormatException ex){

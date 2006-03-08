@@ -24,7 +24,7 @@ public class ModeloEmpresas extends DefaultComboBoxModel{
 		valorFocus = (ValoresEmpresa)empresas.get(nombreEmpresas.get(0));
 	}
 	
-	public void insertaValor(String empresa, float valor){
+	public void insertaValor(String empresa, double valor){
 		((ValoresEmpresa)empresas.get(empresa)).insertarSiguienteValor(valor);
 	}
 
