@@ -6,7 +6,7 @@ public class Agente implements Runnable{
 	private String IDAgente;
 	private ArrayList<Decision> decisiones;
 	
-	public Agente(MonitorAgentes monitor){
+	public Agente(MonitorAgentes monitor, String id){
 		
 	}
 	
