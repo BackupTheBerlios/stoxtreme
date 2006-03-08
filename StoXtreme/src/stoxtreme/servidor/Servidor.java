@@ -45,18 +45,18 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	// TODO falta meter las variables del sistema y los parametros
 	private Servidor(){
+		gestorUsuarios=new GestionUsuarios();
 		objetosBolsa = new Hashtable();
 		de=new DatosEmpresas();
 		objetosBolsa=de.creaObjetosBolsa("conf/empresas.xml", variables);
-
 		Parametros p = Parametros.leeFicheroParametros("Fichero parametros");
 		variables = new VariablesSistema(p);
 		sistEventos = new SistemaEventos(variables);
 		reloj = new Reloj(p.getTiempo());
 	}
 	public boolean login(String usr, String psw){
-		System.out.println("REGISTRO USUARIO " + usr + " " + psw);
-		return true;
+		//System.out.println("REGISTRO USUARIO " + usr + " " + psw);
+		return gestorUsuarios.registraUsuario(usr,psw);
 	}
 	
 	public boolean registro(String usr, String psw){
