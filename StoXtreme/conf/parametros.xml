@@ -1,0 +1,6 @@
+<parametros>
+	<tick>0.05</tick>
+	<tiempo>5000</tiempo>
+	<fichero_emp>conf/empresas.xml</fichero_emp>
+	<fichero_reg>conf/registrados.xml</fichero_reg>
+</parametros>
