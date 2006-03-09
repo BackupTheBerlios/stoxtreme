@@ -39,7 +39,7 @@ private Document document;
 			e.printStackTrace();
 		}
 		vuelcaEnTabla();
-		//insertaEnDOM("hola","micontraseña");
+		insertaEnDOM("hola","micontraseña");
 		vuelcaEnFichero(fich);
 
 	}
@@ -64,7 +64,7 @@ private Document document;
 		Element e = document.createElement("usuario");
 		e.setAttribute("id",id);
 		e.setAttribute("psw",psw);
-		//TODO añadir el nuevo elemento al arbol DOM
+		document.getChildNodes().item(0).appendChild(e);
 	}
 	
 	//Rellena el fichero con los datos del arbol DOM (al finalizar la sesion)
