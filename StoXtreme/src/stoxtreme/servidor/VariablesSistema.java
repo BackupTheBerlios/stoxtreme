@@ -16,6 +16,8 @@ public class VariablesSistema implements RelojListener{
 	
 	public VariablesSistema(Parametros p){
 		variables = new Hashtable<String, Object>();
+		this.setValue(VAR_TICK,p.getTick());
+		this.setValue(VAR_TIEMPO,p.getTiempo());
 		listeners = new ArrayList<VariablesListener>();
 	}
 
@@ -24,8 +26,8 @@ public class VariablesSistema implements RelojListener{
 		cambiaVariable(VAR_TIEMPO, t+1);
 	}
 
-	public float getTick() {
-		return (Float)variables.get(VAR_TICK);
+	public double getTick() {
+		return (Double)variables.get(VAR_TICK);
 	}
 
 	public double getPrecioInicial(String nombreEmpresa) {

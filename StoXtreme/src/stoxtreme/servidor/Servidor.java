@@ -42,7 +42,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	// Gestor de los usuarios
 	private GestionUsuarios gestorUsuarios;
 	
-	// TODO falta meter las variables del sistema y los parametros
+	// TODO falta meter las variables del sistema
 	private Servidor(){
 		Parametros p = Parametros.leeFicheroParametros("conf/parametros.xml");
 		gestorUsuarios=new GestionUsuarios(p.getFicheroRegistrados());
