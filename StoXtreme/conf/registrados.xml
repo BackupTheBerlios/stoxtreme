@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <usuarios>
-	<usuario id="alonso" psw="alonso">
-	<usuario id="ivan" psw="ivan">
-	<usuario id="itzi" psw="itzi">
+	<usuario id="alonso" psw="alonso"/>
+	<usuario id="ivan"
+        psw="ivan"/>
+	<usuario id="itzi" psw="itzi"/>
 </usuarios>

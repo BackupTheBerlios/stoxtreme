@@ -8,10 +8,6 @@ public class GestionUsuarios {
 		conectados = new UsuariosConectados();
 		registrados = new UsuariosRegistrados(fichReg);
 	}
-	public void leeDatos() throws Exception{
-		// TODO Deberia leer los datos de los usuarios registrados
-		registrados.leeDatos();
-	}
 	
 	/* Comprueba que el usuario esta dado de alta, que la contraseña es correcta 
 	 * y que no estaba ya conectado.
@@ -25,12 +21,13 @@ public class GestionUsuarios {
 	}
 	
 	/* Si el id de usuario no existe, se añade a la tabla hash
-	 * y al fichero XML.
+	 * y al arbol DOM (para que los cambios queden reflejados
+	 * en el fichero registrados.xml)
 	 */
 	public boolean registraUsuario(String id, String psw){
 		if (!registrados.existeUsuario(id)){
 			registrados.insertaUsuario(id,psw);
-			//TODO Añadir al XML
+			registrados.insertaEnDOM(id,psw);
 			return true;
 		}else
 			return false;

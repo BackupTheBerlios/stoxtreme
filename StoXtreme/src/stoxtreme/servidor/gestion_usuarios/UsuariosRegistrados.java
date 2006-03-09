@@ -1,7 +1,10 @@
 package stoxtreme.servidor.gestion_usuarios;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -9,22 +12,36 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import org.apache.xml.serialize.XMLSerializer;
+import org.apache.xml.serialize.Method;
+import org.apache.xml.serialize.OutputFormat;
+
 public class UsuariosRegistrados {
 private Hashtable  registrados ;
+private DocumentBuilderFactory factory;
+private Document document;
 	
 	//Constructora
 	public UsuariosRegistrados(String fich){
 		registrados=new Hashtable();
-		vuelcaFichero(fich);
+		factory = DocumentBuilderFactory.newInstance();
+		try {
+			document = factory.newDocumentBuilder().parse(new File(fich));
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		vuelcaEnTabla();
+		//insertaEnDOM("hola","micontraseña");
+		vuelcaEnFichero(fich);
 
-	}
-	
-	public void leeDatos() {
-		// TODO Lee los datos de los usuarios registrados de donde
-		// corresponda
 	}
 	
 	//Comprueba si ya existe un usuario con ese id
@@ -42,13 +59,33 @@ private Hashtable  registrados ;
 		return psw.equals(registrados.get(id));
 	}
 	
-	//Rellena la tabla hash con los datos del fichero
-	public void vuelcaFichero(String fichero){
-		DocumentBuilderFactory factory;
-		Document document;
-		factory = DocumentBuilderFactory.newInstance();
+	//Inserta un nuevo elemento de tipo "usuario" en el arbol DOM
+	public void insertaEnDOM(String id, String psw){
+		Element e = document.createElement("usuario");
+		e.setAttribute("id",id);
+		e.setAttribute("psw",psw);
+		//TODO añadir el nuevo elemento al arbol DOM
+	}
+	
+	//Rellena el fichero con los datos del arbol DOM (al finalizar la sesion)
+	public void vuelcaEnFichero(String fich){
+		OutputFormat format = new OutputFormat(Method.XML,"UTF-8",true);
+		format.setPreserveSpace(true);
+		OutputStream oStream=null;
 		try {
-			document = factory.newDocumentBuilder().parse(new File(fichero));
+			oStream= new FileOutputStream(fich);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		XMLSerializer serializer = new XMLSerializer(oStream, format);
+		try{
+			serializer.serialize(this.document);
+		}catch (IOException ioe){
+			ioe.printStackTrace();
+		}
+	}
+	//Rellena la tabla hash con los datos del fichero
+	public void vuelcaEnTabla(){
 			NodeList nl = document.getElementsByTagName("usuario");
 			String id=null;
 			String psw=null;
@@ -58,20 +95,7 @@ private Hashtable  registrados ;
 				psw=((Element)nl.item(i)).getAttribute("psw");
 				this.insertaUsuario(id,psw);
 			}
-	    } catch (SAXException sxe) {
-	       // Error generated during parsing
-	       Exception  x = sxe;
-	       if (sxe.getException() != null)
-	           x = sxe.getException();
-	       x.printStackTrace();
-
-	    } catch (ParserConfigurationException pce) {
-	       // Parser with specified options can't be built
-	       pce.printStackTrace();
-	    } catch (IOException ioe) {
-	       // I/O error
-	       ioe.printStackTrace();
-	    }
+		
 	}
 	
 	

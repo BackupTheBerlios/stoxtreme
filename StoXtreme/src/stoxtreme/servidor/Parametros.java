@@ -12,6 +12,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class Parametros {
+	private double tick;
 	private long tiempo;
 	private String ficheroEmpresas;
 	private String ficheroRegistrados;
@@ -19,7 +20,15 @@ public class Parametros {
 	public Parametros(){
 		
 	}
-
+	
+	public void setTick(double tick){
+		this.tick = tick;
+	}
+	
+	public double getTick(){
+		return tick;
+	}
+	
 	public void setTiempo(long tiempo){
 		this.tiempo = tiempo;
 	}
@@ -51,7 +60,9 @@ public class Parametros {
 		Parametros param=new Parametros();
 		try {
 			document = factory.newDocumentBuilder().parse(new File(fichero));
-			NodeList nl = document.getElementsByTagName("tiempo");
+			NodeList nl = document.getElementsByTagName("tick");
+			param.setTick(new Double(((Element)nl.item(0)).getTextContent().trim()));
+			nl = document.getElementsByTagName("tiempo");
 			param.setTiempo(new Long(((Element)nl.item(0)).getTextContent().trim()));
 			nl = document.getElementsByTagName("fichero_emp");
 			param.setFicheroEmpresas(((Element)nl.item(0)).getTextContent().trim());
