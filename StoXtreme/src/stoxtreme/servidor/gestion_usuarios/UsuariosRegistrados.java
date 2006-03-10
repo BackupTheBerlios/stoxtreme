@@ -12,7 +12,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -21,13 +20,13 @@ import org.apache.xml.serialize.Method;
 import org.apache.xml.serialize.OutputFormat;
 
 public class UsuariosRegistrados {
-private Hashtable  registrados ;
+private Hashtable <String,String> registrados ;
 private DocumentBuilderFactory factory;
 private Document document;
 	
 	//Constructora
 	public UsuariosRegistrados(String fich){
-		registrados=new Hashtable();
+		registrados=new Hashtable <String,String>();
 		factory = DocumentBuilderFactory.newInstance();
 		try {
 			document = factory.newDocumentBuilder().parse(new File(fich));
@@ -39,9 +38,6 @@ private Document document;
 			e.printStackTrace();
 		}
 		vuelcaEnTabla();
-		insertaEnDOM("hola","micontraseña");
-		vuelcaEnFichero(fich);
-
 	}
 	
 	//Comprueba si ya existe un usuario con ese id

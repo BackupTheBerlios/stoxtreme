@@ -13,12 +13,12 @@ public class Informacion {
 	public Informacion(Balance b, InfoBursatil ib, Cuenta c){
 		//balance=b;
 		iBursatil=ib;
-		Hashtable ht=ib.getParticipaciones();
+		/*Hashtable ht=ib.getParticipaciones();
 		Enumeration e=ht.keys();
 		while (e.hasMoreElements()){
 			String i=e.nextElement().toString();
 			System.out.println("Accionista: "+i+". Porcentaje: "+ht.get(i)+"%");
-		}
+		}*/
 		//cuenta=c;
 	}
 	

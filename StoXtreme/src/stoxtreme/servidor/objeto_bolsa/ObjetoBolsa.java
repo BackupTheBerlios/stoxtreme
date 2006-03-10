@@ -1,15 +1,13 @@
 /*
  * TODO:
- * 	- Falta el sistema de cruzar las operaciones
  * 	- Conectar esto con el sistema de eventos y las variables del sistema
- * 	- 
+ * 	
  */
 
 
 package stoxtreme.servidor.objeto_bolsa;
-import stoxtreme.interfaz_remota.IInformacion;
 import stoxtreme.interfaz_remota.Operacion;
-import stoxtreme.servidor.Reloj;
+//import stoxtreme.servidor.Reloj;
 import stoxtreme.servidor.RelojListener;
 import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.SistemaEventos;
@@ -39,6 +37,7 @@ public class ObjetoBolsa implements RelojListener{
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
 		this.infoXML=new InformacionXML(informacion,nombreEmpresa);
+		//Se le pasa null xq el balance y las cuentas de momento no estan hechos
 		this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(),this.cotizacion);
 
@@ -46,6 +45,22 @@ public class ObjetoBolsa implements RelojListener{
 	public void paso(){
 		sistemaOperaciones.paso();
 		fluctuaciones.paso();
+	}
+	
+	public double  getCotizacion(){
+		return this.cotizacion;
+	}
+	
+	public void setCotizacion(double cotiz){
+		this.cotizacion=cotiz;
+	}
+	
+	public String getNombreEmpresa(){
+		return this.nombreEmpresa;
+	}
+	
+	public Informacion getInformacion(){
+		return this.informacion;
 	}
 	
 	public void insertaOperacion(String IDAgente,int idOperacion, Operacion op){

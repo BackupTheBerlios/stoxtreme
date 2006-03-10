@@ -2,23 +2,23 @@ package stoxtreme.servidor;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Enumeration;
 import java.util.Iterator;
 
-import stoxtreme.servidor.eventos.SistemaEventos;
+import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;;
 
 public class VariablesSistema implements RelojListener{
 	public static String VAR_TIEMPO = "Tiempo";
 	public static String VAR_TICK = "Tick";
 	
 	private Hashtable<String, Object> variables;
-	private SistemaEventos eventos;
 	private ArrayList<VariablesListener> listeners;
 	
 	public VariablesSistema(Parametros p){
 		variables = new Hashtable<String, Object>();
-		this.setValue(VAR_TICK,p.getTick());
-		this.setValue(VAR_TIEMPO,p.getTiempo());
 		listeners = new ArrayList<VariablesListener>();
+		cambiaVariable(VAR_TICK,p.getTick());
+		cambiaVariable(VAR_TIEMPO,p.getTiempo());
 	}
 
 	public void paso() {
@@ -30,11 +30,6 @@ public class VariablesSistema implements RelojListener{
 		return (Double)variables.get(VAR_TICK);
 	}
 
-	public double getPrecioInicial(String nombreEmpresa) {
-		// TODO ¿¿¿Esto iria aqui???
-		return 0;
-	}
-	
 	public void addListener(VariablesListener listener){
 		listeners.add(listener);
 	}
@@ -47,6 +42,15 @@ public class VariablesSistema implements RelojListener{
 		variables.put(var, value);
 		Iterator<VariablesListener> it = listeners.iterator();
 		while(it.hasNext()) it.next().cambioEstadoVariable(var, value);
+	}
+	
+	public void insertaPrecios(Hashtable<String,ObjetoBolsa> objetosBolsa){
+		Enumeration e=objetosBolsa.keys();
+		String clave=null;
+		while (e.hasMoreElements()){
+			clave=e.nextElement().toString();
+			this.cambiaVariable(clave,objetosBolsa.get(clave).getCotizacion());
+		}
 	}
 	
 	public Object getValue(String variable){

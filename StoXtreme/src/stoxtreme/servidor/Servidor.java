@@ -41,15 +41,18 @@ public class Servidor implements Administrador, Stoxtreme{
 	private Reloj reloj;
 	// Gestor de los usuarios
 	private GestionUsuarios gestorUsuarios;
+	// Parametros del sistema
+	private Parametros p;
 	
-	// TODO falta meter las variables del sistema
+	//Constructora
 	private Servidor(){
-		Parametros p = Parametros.leeFicheroParametros("conf/parametros.xml");
+		p = new Parametros();
 		gestorUsuarios=new GestionUsuarios(p.getFicheroRegistrados());
-		variables = new VariablesSistema(p);
 		objetosBolsa = new Hashtable<String, ObjetoBolsa>();
 		de=new DatosEmpresas();
+		variables = new VariablesSistema(p);
 		objetosBolsa=de.creaObjetosBolsa(p.getFicheroEmpresas(), variables);
+		variables.insertaPrecios(objetosBolsa);
 		sistEventos = new SistemaEventos(variables);
 		reloj = new Reloj(p.getTiempo());
 	}

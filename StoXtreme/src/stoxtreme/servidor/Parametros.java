@@ -2,6 +2,7 @@ package stoxtreme.servidor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -12,62 +13,57 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class Parametros {
-	private double tick;
-	private long tiempo;
-	private String ficheroEmpresas;
-	private String ficheroRegistrados;
+	public static String FICH_EMP="ficheroEmpresas";
+	public static String FICH_REG="ficheroRegistrados";
+	public static String TICK="tick";
+	public static String TIEMPO="tiempo";
 	
+	private Hashtable <String,Object> parametros;
+	
+	//Constructora
 	public Parametros(){
-		
+		this.parametros=new Hashtable <String,Object>();
+		this.leeFicheroParametros("conf/parametros.xml");
 	}
 	
-	public void setTick(double tick){
-		this.tick = tick;
-	}
-	
+	//Accesores de "parametros"
 	public double getTick(){
-		return tick;
-	}
-	
-	public void setTiempo(long tiempo){
-		this.tiempo = tiempo;
+		return ((Double)(this.parametros.get(TICK)));
 	}
 	
 	public long getTiempo(){
-		return tiempo;
+		return ((Long)(this.parametros.get(TIEMPO)));
 	}
-
-	public void setFicheroEmpresas(String s){
-		ficheroEmpresas = s;
-	}
-
+	
 	public String getFicheroEmpresas() {
-		return ficheroEmpresas;
+		return this.parametros.get(FICH_EMP).toString();
 	}
 	
-	public void setFicheroRegistrados(String s){
-		ficheroRegistrados = s;
-	}
-
+	
 	public String getFicheroRegistrados() {
-		return ficheroRegistrados;
+		return this.parametros.get(FICH_REG).toString();
 	}
 	
-	public static Parametros leeFicheroParametros(String fichero) {
+	//Modificador de la tabla hash "parametros"
+	public void modificarParams(String clave,Object valor){
+		parametros.put(clave,valor);
+	}
+	
+	//Vuelca en "parametros" la informacion del fichero XML
+	public void leeFicheroParametros(String fichero) {
 		DocumentBuilderFactory factory;
 		Document document;
 		factory = DocumentBuilderFactory.newInstance();
-		Parametros param=new Parametros();
 		try {
 			document = factory.newDocumentBuilder().parse(new File(fichero));
 			NodeList nl = document.getElementsByTagName("tick");
-			param.setTick(new Double(((Element)nl.item(0)).getTextContent().trim()));
+			this.modificarParams(TICK,new Double(((Element)nl.item(0)).getTextContent().trim()));
 			nl = document.getElementsByTagName("tiempo");
-			param.setTiempo(new Long(((Element)nl.item(0)).getTextContent().trim()));
+			this.modificarParams(TIEMPO,new Long(((Element)nl.item(0)).getTextContent().trim()));
 			nl = document.getElementsByTagName("fichero_emp");
-			param.setFicheroEmpresas(((Element)nl.item(0)).getTextContent().trim());
+			this.modificarParams(FICH_EMP,((Element)nl.item(0)).getTextContent().trim());
 			nl = document.getElementsByTagName("fichero_reg");
-			param.setFicheroRegistrados(((Element)nl.item(0)).getTextContent().trim());
+			this.modificarParams(FICH_REG,((Element)nl.item(0)).getTextContent().trim());
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
 	       Exception  x = sxe;
@@ -82,6 +78,5 @@ public class Parametros {
 	       // I/O error
 	       ioe.printStackTrace();
 	    }
-	    return param;
 	}
 }

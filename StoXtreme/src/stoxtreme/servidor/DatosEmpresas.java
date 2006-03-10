@@ -31,16 +31,16 @@ import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
  * </empresas>
  */
 public class DatosEmpresas {
-	ArrayList nombresEmpresas;
+	ArrayList <String>nombresEmpresas;
 	
 	public DatosEmpresas(){
 		// Inicialmente no tiene datos hasta que no se parsea el fichero
-		nombresEmpresas = new ArrayList();
+		nombresEmpresas = new ArrayList <String>();
 	}
 	
 	public Hashtable creaObjetosBolsa(String fichero, VariablesSistema var) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		Hashtable ht=new Hashtable();
+		Hashtable <String,ObjetoBolsa>ht=new Hashtable<String,ObjetoBolsa>();
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(new File(fichero));
