@@ -112,10 +112,10 @@ public class Fluctuaciones {
     v2=new Posicion("vendedor2",10,5);
     v3=new Posicion("vendedor3",15,6);
     ventas.add(Integer.toString(25));
-    ventas.add(c1);
+    ventas.add(v1);
     ventas2.add(Integer.toString(25));
-    ventas2.add(c2);
-    ventas2.add(c3);
+    ventas2.add(v2);
+    ventas2.add(v3);
     vT.put(Double.toString(precio1),ventas);
     vT.put(Double.toString(precio2),ventas2);
     SistemaOperaciones so=new SistemaOperaciones(cT,vT);
