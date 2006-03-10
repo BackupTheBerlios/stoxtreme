@@ -30,7 +30,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	private static int IDS = 0;
 	/* COMPONENTES DEL SERVIDOR */
 	// Empresas dentro de la bolsa
-	private Hashtable objetosBolsa;
+	private Hashtable<String, ObjetoBolsa> objetosBolsa;
 	// Datos de las empresas
 	private DatosEmpresas de;
 	// Variables del sistema
@@ -47,7 +47,7 @@ public class Servidor implements Administrador, Stoxtreme{
 		Parametros p = Parametros.leeFicheroParametros("conf/parametros.xml");
 		gestorUsuarios=new GestionUsuarios(p.getFicheroRegistrados());
 		variables = new VariablesSistema(p);
-		objetosBolsa = new Hashtable();
+		objetosBolsa = new Hashtable<String, ObjetoBolsa>();
 		de=new DatosEmpresas();
 		objetosBolsa=de.creaObjetosBolsa(p.getFicheroEmpresas(), variables);
 		sistEventos = new SistemaEventos(variables);
@@ -61,9 +61,12 @@ public class Servidor implements Administrador, Stoxtreme{
 		return gestorUsuarios.registraUsuario(usr,psw);
 	}
 	
-	public synchronized int insertarOperacion(String usuario, Operacion o){
+	public int insertarOperacion(String usuario, Operacion o){
 		System.out.println("USUARIO "+usuario+" INSERTA OPERACION");
-		return IDS++;
+		IDS++;
+		String empresa = o.getEmpresa();
+		objetosBolsa.get(empresa).insertaOperacion(usuario, IDS, o);
+		return IDS;
 	}
 	
 	public void cancelarOperacion(String usuario, int i){

@@ -17,8 +17,8 @@ import java.util.*;
  *
  */
 public class SistemaOperaciones /*implements RelojListener*/{
-        //private Hashtable<double, ArrayList<Object>> listaCompras;
-        //private Hashtable<double, ArrayList<Object>> listaVentas;
+        //private Hashtable<Double, ArrayList<Object>> listaCompras;
+        //private Hashtable<Double, ArrayList<Object>> listaVentas;
         private Hashtable listaCompras;
         private Hashtable listaVentas;
         public void paso(){
@@ -41,7 +41,27 @@ public class SistemaOperaciones /*implements RelojListener*/{
 
         public void introduceCompra(int idOperacion, String agente,
                         double precio, int numAcciones) {
-                // TODO Introduce la operacion en la tabla correspondiente
+        	Vector compra=new Vector();
+        	Integer accionesTotales;
+        	Posicion p1;
+        	int idOp;
+        	Integer num= new Integer(numAcciones);
+        	if (listaCompras.containsKey(Double.toString(precio))){
+        		compra=(Vector) listaCompras.get(Double.toString(precio));
+        		accionesTotales=(Integer)compra.firstElement();
+        		accionesTotales=Integer.valueOf(num.intValue()+accionesTotales.intValue());
+        		compra.setElementAt(accionesTotales,0);
+        		//TODO problema con el id op
+        		//idOp=lista
+        		p1=new Posicion(agente,numAcciones,4);
+        	}
+        	else{
+        		p1=new Posicion(agente,numAcciones,4);
+        		compra.add(num);
+        		compra.add(p1);
+        		listaCompras.put(Double.toHexString(precio),compra);
+        		
+        	}
         }
 
         public void introduceVenta(int idOperacion, String agente,
