@@ -36,12 +36,12 @@ public class DatosEmpresas {
 		nombresEmpresas = new ArrayList <String>();
 	}
 	
-	public Hashtable<String, ObjetoBolsa> creaObjetosBolsa(String fichero, ParametrosServidor parServ) {
+	public Hashtable<String, ObjetoBolsa> creaObjetosBolsa(ParametrosServidor parServ) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Hashtable <String,ObjetoBolsa>ht=new Hashtable<String,ObjetoBolsa>();
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(new File(fichero));
+			Document document = builder.parse(new File(parServ.getFicheroEmpresas()));
 			NodeList nl = document.getElementsByTagName("emp");
 			String nombre=null;
 			double cotiz=0;
