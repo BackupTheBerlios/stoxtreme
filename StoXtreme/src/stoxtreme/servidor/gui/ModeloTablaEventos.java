@@ -49,7 +49,7 @@ public class ModeloTablaEventos extends AbstractTableModel implements MouseListe
 		return columnIndex==2;
 	}
 	
-	public void insertarEvento(String condicion, String accion, boolean activo) {
+	public void addEvento(String condicion, String accion, boolean activo) {
 		listaEventos.add(new Evento(condicion, accion));
 		eventosActivos.add(new Boolean(activo));
 		this.fireTableRowsInserted(listaEventos.size()-1, listaEventos.size()-1);
@@ -92,7 +92,7 @@ public class ModeloTablaEventos extends AbstractTableModel implements MouseListe
 		private String condicion;
 		private String accion;
 		
-		public Evento(String accion, String condicion) {
+		public Evento(String condicion, String accion) {
 			this.accion = accion;
 			this.condicion = condicion;
 		}

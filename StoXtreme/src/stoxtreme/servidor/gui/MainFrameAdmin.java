@@ -31,12 +31,6 @@ import javax.swing.table.TableModel;
 import stoxtreme.interfaz_remota.Operacion;
 
 public class MainFrameAdmin extends JFrame{
-	/**/
-	private static MainFrameAdmin _instance = new MainFrameAdmin();
-	public static MainFrameAdmin getInstance(){
-		return _instance;
-	}
-	/**/
 	private ModeloTablaOperaciones modeloOperaciones; 
 	private ModeloListaUsuariosConectados modeloUsuarios; 
 	private ModeloTablaPrecioAcciones modeloPrecios;
@@ -58,17 +52,10 @@ public class MainFrameAdmin extends JFrame{
 		}
 	}
 	
-	private MainFrameAdmin(){
+	public MainFrameAdmin(){
 		super("Stock Xtreme: Administrador");
 	}
 	public void init(){
-		/*CREAMOS LOS MODELOS*/
-		modeloOperaciones = new ModeloTablaOperaciones(); 
-		modeloUsuarios = new ModeloListaUsuariosConectados(); 
-		modeloPrecios = new ModeloTablaPrecioAcciones();
-		modeloVariables = new ModeloTablaVariables();
-		modeloEventos = new ModeloTablaEventos();
-		/**/
 		JTabbedPane tabbed = new JTabbedPane();
 		tabbed.insertTab("Control", null, getPanelControl(), "Control de los usuarios", 0);
 		tabbed.insertTab("Eventos", null, getPanelEventos(), "Control de los eventos", 1);
@@ -98,6 +85,9 @@ public class MainFrameAdmin extends JFrame{
 		panelSecundario = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelIzqAbajo, panelIzqArriba);
 		panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelSecundario, panelDerecha);
 		
+		panelPrincipal.setDividerLocation(300);
+		panelSecundario.setDividerLocation(300);
+		
 		panelIzqArriba.setPreferredSize(new Dimension(250, 300));
 		panelIzqAbajo.setPreferredSize(new Dimension(250, 300));
 		panelDerecha.setPreferredSize(new Dimension(550, 600));
@@ -124,7 +114,7 @@ public class MainFrameAdmin extends JFrame{
 		JSplitPane panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
 				new FakeInternalFrame("Variables del sistema",panelIzq), 
 				new FakeInternalFrame("Control de Eventos", panelDer));
-		
+		panelPrincipal.setDividerLocation(350);
 		panelIzq.setPreferredSize(new Dimension(200, 600));
 		panelDer.setPreferredSize(new Dimension(600, 600));
 		return panelPrincipal;

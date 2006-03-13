@@ -5,10 +5,10 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-import stoxtreme.servidor.gui.MainFrameAdmin;
+import stoxtreme.servidor.gui.ModeloTablaVariables;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;;
 
-public class VariablesSistema implements RelojListener{
+public class VariablesSistema extends ModeloTablaVariables implements RelojListener{
 	/* TODAS LAS VARIABLES EN MAYUSCULAS!! NECESARIO PARA EL PARSER DE LOS EVENTOS*/
 	public static String VAR_TIEMPO = "TIEMPO";
 	
@@ -36,11 +36,11 @@ public class VariablesSistema implements RelojListener{
 	}
 	
 	public void cambiaVariable(String var, Object value){
-		if(variables.containsKey(var)){
-			MainFrameAdmin.getInstance().getModeloVariables().insertarVariable(var, value);
+		if(!variables.containsKey(var)){
+			super.insertarVariable(var, value);
 		}
 		else{
-			MainFrameAdmin.getInstance().getModeloVariables().cambiaVariable(var, value);
+			super.cambiaVariable(var, value);
 		}
 		variables.put(var, value);
 		Iterator<VariablesListener> it = listeners.iterator();

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -50,7 +52,6 @@ private Document document;
 	//Añade el usuario a la tabla
 	public void insertaUsuario(String id, String psw){
 		registrados.put(id,psw);
-		MainFrameAdmin.getInstance().getModeloUsuarios().registraUsuario(id);
 	}
 	
 	//Comprueba que el password introducido es correcto
@@ -94,5 +95,9 @@ private Document document;
 				psw=((Element)nl.item(i)).getAttribute("psw");
 				this.insertaUsuario(id,psw);
 			}
+	}
+	
+	public Enumeration<String> dameUsuarios(){
+		return registrados.keys();
 	}
 }

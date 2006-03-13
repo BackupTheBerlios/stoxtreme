@@ -18,6 +18,8 @@ import java.rmi.RemoteException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import javax.swing.JFrame;
+
 public class Servidor implements Administrador, Stoxtreme{
 	/**/
 	private static Servidor _instance = new Servidor();
@@ -32,7 +34,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	// Empresas dentro de la bolsa
 	private Hashtable<String, ObjetoBolsa> objetosBolsa;
 	// Datos de las empresas
-	private DatosEmpresas de;
+	private DatosEmpresas datosEmpresa;
 	// Variables del sistema
 	private VariablesSistema variables;
 	// Sistema de eventos
@@ -42,7 +44,13 @@ public class Servidor implements Administrador, Stoxtreme{
 	// Gestor de los usuarios
 	private GestionUsuarios gestorUsuarios;
 	// Parametros del sistema
-	private ParametrosServidor p;
+	private ParametrosServidor param;
+	// Registro Operaciones
+	private RegistroOperaciones regOperaciones;
+	// Interfaz grafica
+	private MainFrameAdmin guiAdmin;
+	// Estado de la bolsa
+	private EstadoBolsa estadoBolsa;
 	
 	//Constructora
 	private Servidor(){
@@ -60,8 +68,8 @@ public class Servidor implements Administrador, Stoxtreme{
 		System.out.println("USUARIO "+usuario+" INSERTA OPERACION");
 		IDS++;
 		String empresa = o.getEmpresa();
-		objetosBolsa.get(empresa).insertaOperacion(usuario, IDS, o);
-		MainFrameAdmin.getInstance().getModeloOperaciones().insertarOperacion(o);
+		//objetosBolsa.get(empresa).insertaOperacion(usuario, IDS, o);
+		regOperaciones.insertarOperacion(o);
 		return IDS;
 	}
 	
@@ -75,7 +83,8 @@ public class Servidor implements Administrador, Stoxtreme{
 			Servidor serv = Servidor.getInstance();
 			serv.iniciarServidor();
 			serv.showGUI();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -87,16 +96,30 @@ public class Servidor implements Administrador, Stoxtreme{
 		 * 	- Objetos Bolsa
 		 *  - Variables del sistema
 		 */
-		MainFrameAdmin.getInstance().init();
-		p = new ParametrosServidor();
-		gestorUsuarios=new GestionUsuarios(p.getFicheroRegistrados());
+		guiAdmin = new MainFrameAdmin();
+		param = new ParametrosServidor();
+		gestorUsuarios=new GestionUsuarios(param.getFicheroRegistrados());
+		guiAdmin.setModeloUsuarios(gestorUsuarios);
 		objetosBolsa = new Hashtable<String, ObjetoBolsa>();
-		de=new DatosEmpresas();
-		variables = new VariablesSistema(p);
-		objetosBolsa=de.creaObjetosBolsa(p.getFicheroEmpresas(), p);
+		datosEmpresa=new DatosEmpresas();
+		variables = new VariablesSistema(param);
+		guiAdmin.setModeloVariables(variables);
+		objetosBolsa=datosEmpresa.creaObjetosBolsa(param.getFicheroEmpresas(), param);
+		
+		sistEventos = new SistemaEventos(variables);
+		guiAdmin.setModeloEventos(sistEventos);
+		regOperaciones = new RegistroOperaciones();
+		guiAdmin.setModeloOperaciones(regOperaciones);
+		estadoBolsa = new EstadoBolsa(datosEmpresa);
+		variables.addListener(sistEventos);
+		variables.addListener(estadoBolsa);
 		variables.insertaPrecios(objetosBolsa);
-		this.sistEventos = new SistemaEventos(variables);
-		reloj = new Reloj(p.getTiempo());
+		guiAdmin.setModeloPrecios(estadoBolsa);
+		guiAdmin.init();
+		/*TODO SALE AL CERRAR!!! CAMBIAR ESTO DESPUES DE PROBARLO*/
+		guiAdmin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		reloj = new Reloj(param.getTiempo());
 		// Insertamos en el reloj los objetos bolsa
 		
 		Enumeration e = objetosBolsa.keys();
@@ -132,10 +155,10 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	public void showGUI() throws RemoteException {
 		// TODO solo un gui.show
-		MainFrameAdmin.getInstance().setVisible(true);
+		guiAdmin.setVisible(true);
 	}
 	public void hideGUI() throws RemoteException {
 		// TODO Auto-generated method stub
-		MainFrameAdmin.getInstance().setVisible(false);
+		guiAdmin.setVisible(false);
 	}
 }

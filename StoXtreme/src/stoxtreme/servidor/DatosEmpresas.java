@@ -53,7 +53,6 @@ public class DatosEmpresas {
 				//le quitamos los /t y /n del final y del principio
 				info=((Element)nl.item(i)).getTextContent().trim();
 				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info, parServ));
-				MainFrameAdmin.getInstance().getModeloPrecios().insertarEmpresa(nombre);
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
@@ -77,7 +76,7 @@ public class DatosEmpresas {
 		}
 		return ht;
 	}
-	public ArrayList getNombresEmpresas(){
+	public ArrayList<String> getNombresEmpresas(){
 		return nombresEmpresas;
 	}
 

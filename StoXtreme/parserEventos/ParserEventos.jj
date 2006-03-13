@@ -7,7 +7,7 @@ PARSER_BEGIN(Evaluador)
 	
 	public class Evaluador{
 		// VARIABLES DEL PARSER
-		private ArrayList variablesUsadas;
+		private ArrayList variablesUsadas = new ArrayList();
 		private Hashtable variables;
 
 		public Evaluador (String s){

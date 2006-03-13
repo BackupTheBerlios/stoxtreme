@@ -19,7 +19,7 @@ public class ModeloListaUsuariosConectados extends AbstractListModel{
 		usuariosRegistrados = new ArrayList();
 	}
 	
-	public void registraUsuario(String usuario){
+	public void addUsuario(String usuario){
 		estadoUsuarios.put(usuario, new Boolean(false));
 		usuariosRegistrados.add(usuario);
 		fireContentsChanged(this, usuariosRegistrados.size()-1, usuariosRegistrados.size()-1);
