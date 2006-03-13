@@ -8,14 +8,13 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-public class ModeloTablaEventos extends AbstractTableModel implements MouseListener, TableModelListener{
+public class ModeloTablaEventos extends AbstractTableModel{
 	private ArrayList<Evento> listaEventos;
 	private ArrayList<Boolean> eventosActivos;
 	
 	public ModeloTablaEventos(){
 		listaEventos = new ArrayList<Evento>();
 		eventosActivos = new ArrayList<Boolean>();
-		this.addTableModelListener(this);
 	}
 	
 	public String getColumnName(int columnIndex){
@@ -60,34 +59,6 @@ public class ModeloTablaEventos extends AbstractTableModel implements MouseListe
 		this.fireTableCellUpdated(indice, 2);
 	}
 
-	public void mouseClicked(MouseEvent e) {
-		
-	}
-
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void tableChanged(TableModelEvent e) {
-		System.out.println(e);
-	}
-	
 	private class Evento{
 		private String condicion;
 		private String accion;

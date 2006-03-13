@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.EventObject;
@@ -101,8 +103,20 @@ public class MainFrameAdmin extends JFrame{
 		JScrollPane panelIzq = new JScrollPane(tablaVariables);
 		JPanel panelDer = new JPanel(new BorderLayout());
 		JPanel panelDerAbajo = new JPanel();
-		panelDerAbajo.add(new JButton("InsertarEvento"));
-		panelDerAbajo.add(new JButton("CancelarEvento"));
+		JButton botonInsertar = new JButton("InsertarEvento");
+		botonInsertar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				/*TODO METER DIALOGO PARA QUE EL X INSERTE EVENTO*/
+			}
+		});
+		panelDerAbajo.add(botonInsertar);
+		JButton botonCancelar = new JButton("CancelarEvento");
+		botonCancelar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				/*TODO PUES LO MISMO XO CANCELANDO*/
+			}
+		});
+		panelDerAbajo.add(botonCancelar);
 		
 		JTable tablaEventos = new JTable(modeloEventos);
 		tablaEventos.getColumn(tablaEventos.getColumnName(2)).setMaxWidth(40);

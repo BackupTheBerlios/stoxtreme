@@ -1,4 +1,4 @@
-package stoxtreme.cliente.GUI;
+package stoxtreme.cliente.gui;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -16,6 +16,8 @@ import org.jfree.data.*;
 import org.jfree.data.time.*;
 import org.jfree.data.xy.*;
 import org.jfree.date.SerialDateUtilities;
+
+import stoxtreme.interfaz_remota.Operacion;
 
 public class MainFrameCliente extends JFrame{
 	private ModeloCartera modeloCartera;
@@ -213,18 +215,7 @@ public class MainFrameCliente extends JFrame{
 		JButton insertar = new JButton("Insertar Operacion");
 		insertar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				String empresa = (String)empresaSeleccionada.getSelectedItem();
-				int tipoOperacion = 
-					(tipoSeleccionado.getSelectedItem().equals("Compra"))?
-							Operacion.COMPRA:Operacion.VENTA;
-				try{
-					int cantidad = Integer.parseInt(cantidadSeleccionada.getText());
-					double precio = Double.parseDouble(precioSeleccionado.getText());
-					new Operacion("Alonso", empresa, cantidad, precio, tipoOperacion);
-				}
-				catch(NumberFormatException ex){
-					JOptionPane.showMessageDialog(null, "Error en los datos, reviselos e intentelo de nuevo");
-				}
+				/*TODO DIALOGO PARA INSERTAR LA OPERACION*/
 			}
 		});
 		p.add(insertar);
@@ -261,6 +252,7 @@ public class MainFrameCliente extends JFrame{
 		return frame;
 	}
 
+	/*
 	public static void main(String[] args){
 		ArrayList lEmpresas = new ArrayList();
 		lEmpresas.add("Empresa1");
@@ -298,5 +290,5 @@ public class MainFrameCliente extends JFrame{
 				}
 			}
 		}
-	}
+	}*/
 }

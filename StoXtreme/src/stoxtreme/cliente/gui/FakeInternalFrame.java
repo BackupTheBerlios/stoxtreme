@@ -1,4 +1,4 @@
-package stoxtreme.cliente.GUI;
+package stoxtreme.cliente.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

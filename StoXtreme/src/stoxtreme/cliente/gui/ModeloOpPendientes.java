@@ -1,4 +1,4 @@
-package stoxtreme.cliente.GUI;
+package stoxtreme.cliente.gui;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -14,6 +14,8 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
+
+import stoxtreme.interfaz_remota.Operacion;
 
 public class ModeloOpPendientes extends AbstractTableModel{
 	private static String[] nCol = {" ","IDOperacion", "Tipo", "Empresa", "Cantidad", "Precio"};
@@ -38,8 +40,8 @@ public class ModeloOpPendientes extends AbstractTableModel{
 		switch(columnIndex){
 		case 0: return null;
 		case 1: return listaIDS.get(rowIndex);
-		case 2: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getTipo()==Operacion.COMPRA?"COMPRA":"VENTA";
-		case 3: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getIDempresa();
+		case 2: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getTipoOp()==Operacion.COMPRA?"COMPRA":"VENTA";
+		case 3: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getEmpresa();
 		case 4: return new Integer(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getCantidad());
 		default: return new Double(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getPrecio());
 		}
