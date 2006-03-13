@@ -1,8 +1,10 @@
-package stoxtreme.servidor.superusuario.GUI;
+package stoxtreme.servidor.gui;
 
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
+
+import stoxtreme.interfaz_remota.Operacion;
 
 public class ModeloTablaOperaciones extends AbstractTableModel{
 	private ArrayList listaOperaciones;
@@ -42,15 +44,15 @@ public class ModeloTablaOperaciones extends AbstractTableModel{
 			case 0:
 				return new Integer(rowIndex);
 			case 1:
-				return o.getIDusr(); 
+				return o.getIdEmisor(); 
 			case 2:
-				return o.getIDempresa();
+				return o.getEmpresa();
 			case 3:
 				return new Integer(o.getCantidad());
 			case 4:
 				return new Double(o.getPrecio());
 			default:
-				if(o.getTipo() == Operacion.COMPRA)
+				if(o.getTipoOp() == Operacion.COMPRA)
 					return "Compra";
 				else
 					return "Venta";

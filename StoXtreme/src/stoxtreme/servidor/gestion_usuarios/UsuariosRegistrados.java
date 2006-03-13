@@ -19,6 +19,8 @@ import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xml.serialize.Method;
 import org.apache.xml.serialize.OutputFormat;
 
+import stoxtreme.servidor.gui.MainFrameAdmin;
+
 public class UsuariosRegistrados {
 private Hashtable <String,String> registrados ;
 private DocumentBuilderFactory factory;
@@ -48,6 +50,7 @@ private Document document;
 	//Añade el usuario a la tabla
 	public void insertaUsuario(String id, String psw){
 		registrados.put(id,psw);
+		MainFrameAdmin.getInstance().getModeloUsuarios().registraUsuario(id);
 	}
 	
 	//Comprueba que el password introducido es correcto
@@ -91,8 +94,5 @@ private Document document;
 				psw=((Element)nl.item(i)).getAttribute("psw");
 				this.insertaUsuario(id,psw);
 			}
-		
 	}
-	
-	
 }

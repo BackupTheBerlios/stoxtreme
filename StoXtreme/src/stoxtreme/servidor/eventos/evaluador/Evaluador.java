@@ -7,19 +7,22 @@ import stoxtreme.servidor.VariablesSistema;
 
         public class Evaluador implements EvaluadorConstants {
                 // VARIABLES DEL PARSER
-                private ArrayList variablesUsadas;
+                private ArrayList variablesUsadas=new ArrayList();
                 private VariablesSistema variables;
-
+                private String condicion;
+                
                 public Evaluador (String s){
-                        this(new ByteArrayInputStream(s.getBytes()));
+                	this(new ByteArrayInputStream(s.getBytes()));
+                	this.condicion = s;
                 }
-
+                
                 public ArrayList getVariablesUsadas(){
                         return variablesUsadas;
                 }
 
                 public boolean evalua(VariablesSistema variables) throws ParseException{
-                        this.variables = variables;
+                		ReInit(new ByteArrayInputStream(condicion.getBytes()));
+                		this.variables = variables;
                         String[] ret = E0();
                         compruebaTipo(ret[0], "boolean");
                         return Boolean.parseBoolean(ret[1]);

@@ -23,6 +23,7 @@ public class ObjetoCondicion {
 	public ObjetoCondicion(String descripcion, VariablesSistema variables, boolean unavez) throws ParseException{
 		this.descripcion = descripcion;
 		this.unavez = unavez;
+		this.vSistema = variables;
 		
 		e = new Evaluador(descripcion);
 		
@@ -56,5 +57,9 @@ public class ObjetoCondicion {
 	
 	public boolean isUnaVez(){
 		return this.unavez;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
 	}
 }

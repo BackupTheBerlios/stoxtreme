@@ -5,30 +5,26 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import stoxtreme.servidor.gui.MainFrameAdmin;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;;
 
 public class VariablesSistema implements RelojListener{
 	/* TODAS LAS VARIABLES EN MAYUSCULAS!! NECESARIO PARA EL PARSER DE LOS EVENTOS*/
 	public static String VAR_TIEMPO = "TIEMPO";
-	public static String VAR_TICK = "TICK";
 	
 	private Hashtable<String, Object> variables;
 	private ArrayList<VariablesListener> listeners;
 	
-	public VariablesSistema(Parametros p){
+	public VariablesSistema(ParametrosServidor p){
 		variables = new Hashtable<String, Object>();
 		listeners = new ArrayList<VariablesListener>();
-		cambiaVariable(VAR_TICK,p.getTick());
-		cambiaVariable(VAR_TIEMPO,p.getTiempo());
+		cambiaVariable(VAR_TIEMPO,0L);
 	}
 
 	public void paso() {
 		long t = (Long)variables.get(VAR_TIEMPO);
 		cambiaVariable(VAR_TIEMPO, t+1);
-	}
-
-	public double getTick() {
-		return (Double)variables.get(VAR_TICK);
+//		System.out.println(variables.get(VAR_TIEMPO));
 	}
 
 	public void addListener(VariablesListener listener){
@@ -40,6 +36,12 @@ public class VariablesSistema implements RelojListener{
 	}
 	
 	public void cambiaVariable(String var, Object value){
+		if(variables.containsKey(var)){
+			MainFrameAdmin.getInstance().getModeloVariables().insertarVariable(var, value);
+		}
+		else{
+			MainFrameAdmin.getInstance().getModeloVariables().cambiaVariable(var, value);
+		}
 		variables.put(var, value);
 		Iterator<VariablesListener> it = listeners.iterator();
 		while(it.hasNext()) it.next().cambioEstadoVariable(var, value);
@@ -50,8 +52,10 @@ public class VariablesSistema implements RelojListener{
 		String clave=null;
 		while (e.hasMoreElements()){
 			clave=e.nextElement().toString();
-			this.cambiaVariable(clave,objetosBolsa.get(clave).getCotizacion());
-		}
+			String cInsert = clave;
+			cInsert = cInsert.toUpperCase();
+			cInsert = "PRECIO_"+cInsert;
+			this.cambiaVariable(cInsert,objetosBolsa.get(clave).getCotizacion());		}
 	}
 	
 	public Object getValue(String variable){

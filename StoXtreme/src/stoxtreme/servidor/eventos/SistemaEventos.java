@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 import stoxtreme.servidor.VariablesListener;
 import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.evaluador.ParseException;
+import stoxtreme.servidor.gui.MainFrameAdmin;
 
 public class SistemaEventos extends AbstractTableModel implements VariablesListener{
 	private VariablesSistema variables;
@@ -18,20 +19,19 @@ public class SistemaEventos extends AbstractTableModel implements VariablesListe
 		variables.addListener(this);
 		listaCondiciones = new ArrayList();
 		listaAcciones = new ArrayList();
-		ejecutor = new Ejecutor();
 	}
 
 	public void cambioEstadoVariable(String var, Object valor){
 		for (int i=listaCondiciones.size()-1; i>=0; i--){
 			ObjetoCondicion oc = ((ObjetoCondicion)listaCondiciones.get(i));
 			oc.cambiaVariable(var, valor);
-			
 			if (oc.evalua()){
-				ejecutor.ejecuta((String)listaAcciones.get(i));
+				Ejecutor.ejecuta((String)listaAcciones.get(i));
 				
 				if(oc.isUnaVez()){
 					listaAcciones.remove(i);
 					listaCondiciones.remove(i);
+					MainFrameAdmin.getInstance().getModeloEventos().quitarEvento(oc.getDescripcion());
 				}
 			}
 		}
@@ -41,16 +41,16 @@ public class SistemaEventos extends AbstractTableModel implements VariablesListe
 		String descripcion = descripcionIn.toUpperCase();
 		String accion = accionIn.toUpperCase();
 		ObjetoCondicion oc = new ObjetoCondicion(descripcion, variables, unavez);
+		
+		boolean ejecutado = false;
 		if (oc.evalua()){
-			ejecutor.ejecuta(accion);
-			if (!oc.isUnaVez()){
-				listaCondiciones.add(oc);
-				listaAcciones.add(accion);
-			}
+			Ejecutor.ejecuta(accion);
+			ejecutado = true;
 		}
-		else{
+		if (!ejecutado || !oc.isUnaVez()){
 			listaCondiciones.add(oc);
 			listaAcciones.add(accion);
+			MainFrameAdmin.getInstance().getModeloEventos().insertarEvento(descripcion, accion, unavez);
 		}
 	}
 

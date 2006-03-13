@@ -8,6 +8,7 @@
 package stoxtreme.servidor.objeto_bolsa;
 import stoxtreme.interfaz_remota.Operacion;
 //import stoxtreme.servidor.Reloj;
+import stoxtreme.servidor.ParametrosServidor;
 import stoxtreme.servidor.RelojListener;
 import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.SistemaEventos;
@@ -32,19 +33,17 @@ public class ObjetoBolsa implements RelojListener{
 		sistemaOperaciones = new SistOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 	}*/
-	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion, VariablesSistema var){
+	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion, ParametrosServidor parametros){
 		sistemaOperaciones = new SistemaOperaciones();
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
 		this.infoXML=new InformacionXML(informacion,nombreEmpresa);
 		//Se le pasa null xq el balance y las cuentas de momento no estan hechos
 		this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
-		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(),this.cotizacion);
+		fluctuaciones = new Fluctuaciones(sistemaOperaciones, parametros.getTick(),this.cotizacion);
 
 	}
 	public void paso(){
-		System.out.println("Paso: "+nombreEmpresa);
-		
 		/*sistemaOperaciones.paso();
 		fluctuaciones.paso();*/
 	}

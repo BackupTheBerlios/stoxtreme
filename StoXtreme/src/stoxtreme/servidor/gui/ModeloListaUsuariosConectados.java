@@ -1,4 +1,4 @@
-package stoxtreme.servidor.superusuario.GUI;
+package stoxtreme.servidor.gui;
 
 import java.awt.Color;
 import java.awt.Component;

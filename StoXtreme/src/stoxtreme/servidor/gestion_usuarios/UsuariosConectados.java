@@ -2,6 +2,8 @@ package stoxtreme.servidor.gestion_usuarios;
 
 import java.util.ArrayList;
 
+import stoxtreme.servidor.gui.MainFrameAdmin;
+
 public class UsuariosConectados {
 	ArrayList <String> conectados;	
 	
@@ -18,6 +20,12 @@ public class UsuariosConectados {
 	//Añade el usuario a la lista de conectados
 	public void insertaUsuario(String id){
 		this.conectados.add(id);
+		MainFrameAdmin.getInstance().getModeloUsuarios().setEstadoUsuario(id, true);
+	}
+	
+	public void quitarUsuario(String id){
+		this.conectados.remove(id);
+		MainFrameAdmin.getInstance().getModeloUsuarios().setEstadoUsuario(id, false);
 	}
 }
 

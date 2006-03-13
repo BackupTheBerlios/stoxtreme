@@ -1,32 +1,28 @@
-package stoxtreme.servidor.superusuario.GUI;
+package stoxtreme.servidor.gui;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableColumnModelEvent;
-import javax.swing.event.TableColumnModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 public class ModeloTablaEventos extends AbstractTableModel implements MouseListener, TableModelListener{
-	private ArrayList listaEventos;
-	private ArrayList eventosActivos;
+	private ArrayList<Evento> listaEventos;
+	private ArrayList<Boolean> eventosActivos;
 	
 	public ModeloTablaEventos(){
-		listaEventos = new ArrayList();
-		eventosActivos = new ArrayList();
+		listaEventos = new ArrayList<Evento>();
+		eventosActivos = new ArrayList<Boolean>();
 		this.addTableModelListener(this);
 	}
 	
 	public String getColumnName(int columnIndex){
 		switch(columnIndex){
-		case 0: return "Condicion";
-		case 1: return "Accion";
-		default: return "Activo?";
+			case 0: return "Condicion";
+			case 1: return "Accion";
+			default: return "Activo?";
 		}
 	}
 	public int getRowCount() {
@@ -53,8 +49,8 @@ public class ModeloTablaEventos extends AbstractTableModel implements MouseListe
 		return columnIndex==2;
 	}
 	
-	public void insertarEvento(Evento evento, boolean activo) {
-		listaEventos.add(evento);
+	public void insertarEvento(String condicion, String accion, boolean activo) {
+		listaEventos.add(new Evento(condicion, accion));
 		eventosActivos.add(new Boolean(activo));
 		this.fireTableRowsInserted(listaEventos.size()-1, listaEventos.size()-1);
 	}
@@ -90,5 +86,39 @@ public class ModeloTablaEventos extends AbstractTableModel implements MouseListe
 
 	public void tableChanged(TableModelEvent e) {
 		System.out.println(e);
+	}
+	
+	private class Evento{
+		private String condicion;
+		private String accion;
+		
+		public Evento(String accion, String condicion) {
+			this.accion = accion;
+			this.condicion = condicion;
+		}
+
+		public String getAccion() {
+			return accion;
+		}
+
+		public void setAccion(String accion) {
+			this.accion = accion;
+		}
+
+		public String getCondicion() {
+			return condicion;
+		}
+
+		public void setCondicion(String condicion) {
+			this.condicion = condicion;
+		}
+	}
+
+	public void quitarEvento(String descripcion) {
+		for(int i=listaEventos.size()-1; i>=0; i--){
+			if(listaEventos.get(i).getCondicion().equals(descripcion)){
+				listaEventos.remove(i);
+			}
+		}
 	}
 }

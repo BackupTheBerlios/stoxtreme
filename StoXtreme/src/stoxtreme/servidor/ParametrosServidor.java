@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class Parametros {
+public class ParametrosServidor {
 	public static String FICH_EMP="ficheroEmpresas";
 	public static String FICH_REG="ficheroRegistrados";
 	public static String TICK="tick";
@@ -21,7 +21,7 @@ public class Parametros {
 	private Hashtable <String,Object> parametros;
 	
 	//Constructora
-	public Parametros(){
+	public ParametrosServidor(){
 		this.parametros=new Hashtable <String,Object>();
 		this.leeFicheroParametros("conf/parametros.xml");
 	}

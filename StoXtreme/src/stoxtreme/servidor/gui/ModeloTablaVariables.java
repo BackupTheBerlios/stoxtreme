@@ -1,4 +1,4 @@
-package stoxtreme.servidor.superusuario.GUI;
+package stoxtreme.servidor.gui;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

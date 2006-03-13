@@ -17,6 +17,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import stoxtreme.servidor.gui.MainFrameAdmin;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 /*
  * Fichero debe ser de la forma:
@@ -35,7 +36,7 @@ public class DatosEmpresas {
 		nombresEmpresas = new ArrayList <String>();
 	}
 	
-	public Hashtable<String, ObjetoBolsa> creaObjetosBolsa(String fichero, VariablesSistema var) {
+	public Hashtable<String, ObjetoBolsa> creaObjetosBolsa(String fichero, ParametrosServidor parServ) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Hashtable <String,ObjetoBolsa>ht=new Hashtable<String,ObjetoBolsa>();
 		try {
@@ -51,7 +52,8 @@ public class DatosEmpresas {
 				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio
 				info=((Element)nl.item(i)).getTextContent().trim();
-				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info, var));
+				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info, parServ));
+				MainFrameAdmin.getInstance().getModeloPrecios().insertarEmpresa(nombre);
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
