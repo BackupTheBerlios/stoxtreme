@@ -6,11 +6,9 @@ import java.util.Enumeration;
 //import the JAXP APIs you'll be using
 import javax.xml.parsers.DocumentBuilder; 
 import javax.xml.parsers.DocumentBuilderFactory;  
-import javax.xml.parsers.FactoryConfigurationError;  
 import javax.xml.parsers.ParserConfigurationException;
 //exceptions that can be thrown when the XML document is parsed
 import org.xml.sax.SAXException;  
-import org.xml.sax.SAXParseException;
 //read the sample XML file and identify errors
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +16,6 @@ import java.io.IOException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.DOMException;
 
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 /*
@@ -38,7 +35,7 @@ public class DatosEmpresas {
 		nombresEmpresas = new ArrayList <String>();
 	}
 	
-	public Hashtable creaObjetosBolsa(String fichero, VariablesSistema var) {
+	public Hashtable<String, ObjetoBolsa> creaObjetosBolsa(String fichero, VariablesSistema var) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Hashtable <String,ObjetoBolsa>ht=new Hashtable<String,ObjetoBolsa>();
 		try {

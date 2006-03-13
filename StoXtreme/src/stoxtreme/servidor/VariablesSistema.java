@@ -8,8 +8,9 @@ import java.util.Iterator;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;;
 
 public class VariablesSistema implements RelojListener{
-	public static String VAR_TIEMPO = "Tiempo";
-	public static String VAR_TICK = "Tick";
+	/* TODAS LAS VARIABLES EN MAYUSCULAS!! NECESARIO PARA EL PARSER DE LOS EVENTOS*/
+	public static String VAR_TIEMPO = "TIEMPO";
+	public static String VAR_TICK = "TICK";
 	
 	private Hashtable<String, Object> variables;
 	private ArrayList<VariablesListener> listeners;
@@ -22,7 +23,7 @@ public class VariablesSistema implements RelojListener{
 	}
 
 	public void paso() {
-		int t = (Integer)variables.get(VAR_TIEMPO);
+		long t = (Long)variables.get(VAR_TIEMPO);
 		cambiaVariable(VAR_TIEMPO, t+1);
 	}
 

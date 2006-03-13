@@ -25,6 +25,7 @@ public class Reloj extends TimerTask{
 	}
 	
 	public void run(){
+		System.out.println("Reloj");
 		Iterator i = oyentes.iterator();
 		while(i.hasNext()){
 			// TODO CUIDADO CON LA CONCURRENCIA EN ESTE METODO
@@ -35,16 +36,12 @@ public class Reloj extends TimerTask{
 	
 	public void iniciarReloj(){
 		parado = false;
-	}
-	
-	public void iniciarReloj(long tEspera){
-		ms = tEspera;
 		reiniciarReloj();
 	}
 	
 	public void reiniciarReloj(){
 		timer = new Timer(true);
-		timer.schedule(this, ms, ms);
+		timer.schedule(this, new Date(), ms);
 	}
 	
 	public void pararReloj(){

@@ -43,8 +43,10 @@ public class ObjetoBolsa implements RelojListener{
 
 	}
 	public void paso(){
-		sistemaOperaciones.paso();
-		fluctuaciones.paso();
+		System.out.println("Paso: "+nombreEmpresa);
+		
+		/*sistemaOperaciones.paso();
+		fluctuaciones.paso();*/
 	}
 	
 	public double  getCotizacion(){

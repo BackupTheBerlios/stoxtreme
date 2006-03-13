@@ -53,7 +53,7 @@ public class Servidor implements Administrador, Stoxtreme{
 		variables = new VariablesSistema(p);
 		objetosBolsa=de.creaObjetosBolsa(p.getFicheroEmpresas(), variables);
 		variables.insertaPrecios(objetosBolsa);
-		sistEventos = new SistemaEventos(variables);
+		this.sistEventos = new SistemaEventos(variables);
 		reloj = new Reloj(p.getTiempo());
 	}
 	public boolean login(String usr, String psw){
@@ -78,6 +78,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	public static void main(String[] argv){
 		try {
+			/*Lanzamiento estatico del servidor para pruebas*/
 			Servidor serv = Servidor.getInstance();
 			serv.iniciarServidor();
 		} catch (Exception e) {
@@ -91,14 +92,21 @@ public class Servidor implements Administrador, Stoxtreme{
 		/* TODO: Añadir al reloj todos los listener
 		 * 	- Objetos Bolsa
 		 *  - Variables del sistema
-		 *  - ¿Sistema de eventos?
 		 */
 		// Insertamos en el reloj los objetos bolsa
 		Enumeration e = objetosBolsa.keys();
 		while(e.hasMoreElements()){
-			reloj.addListener((ObjetoBolsa)e.nextElement());
+			reloj.addListener(objetosBolsa.get(e.nextElement()));
 		}
+		reloj.addListener(variables);
 		
+		try{
+			sistEventos.insertarEvento("tiempo>2", "dihola", false);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 		// Empezar cogiendo el tiempo de paso
 		// Crear un Timer que ejecute run cada tiempo de paso
 		reloj.iniciarReloj();
