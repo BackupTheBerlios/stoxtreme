@@ -104,7 +104,7 @@ public class Servidor implements Administrador, Stoxtreme{
 		datosEmpresa=new DatosEmpresas();
 		variables = new VariablesSistema(param);
 		guiAdmin.setModeloVariables(variables);
-		objetosBolsa=datosEmpresa.creaObjetosBolsa(param.getFicheroEmpresas(), param);
+		objetosBolsa=datosEmpresa.creaObjetosBolsa(param);
 		
 		sistEventos = new SistemaEventos(variables);
 		guiAdmin.setModeloEventos(sistEventos);
