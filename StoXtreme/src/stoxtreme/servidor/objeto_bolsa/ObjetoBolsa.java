@@ -10,7 +10,6 @@ import stoxtreme.interfaz_remota.Operacion;
 //import stoxtreme.servidor.Reloj;
 import stoxtreme.servidor.ParametrosServidor;
 import stoxtreme.servidor.RelojListener;
-import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;
 import stoxtreme.servidor.objeto_bolsa.fluctuaciones.SistemaOperaciones;
