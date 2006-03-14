@@ -1,5 +1,7 @@
 package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
 import java.util.*;
+
+import stoxtreme.servidor.VariablesSistema;
 /**
  * <p>Título: </p>
  * <p>Descripción: </p>
@@ -15,11 +17,22 @@ public class Fluctuaciones {
   private SistemaOperaciones sisOp;
   protected double tick;//o intervalo?
   protected double pActual;
-  public Fluctuaciones(SistemaOperaciones sO,double nt,double pa) {
+  private VariablesSistema varS;
+  private String empresa;
+  
+  public Fluctuaciones(VariablesSistema varSis,SistemaOperaciones sO,double nt,double pa,String emp) {
     sisOp=sO;
     tick=nt;
     pActual=pa;
+    varS=varSis;
+    empresa=emp;
   }
+  public Fluctuaciones(SistemaOperaciones sO,double nt,double pa,String emp) {
+	    sisOp=sO;
+	    tick=nt;
+	    pActual=pa;
+	    empresa=emp;
+	  }
   public Hashtable filtrayOrdena(Hashtable vTotal){
     Hashtable vFinal=new Hashtable();
     Vector listaValores;
@@ -28,7 +41,6 @@ public class Fluctuaciones {
     String claveI;
     max= pActual + tick;
     min= pActual - tick;
-    int j=0;
     listaClaves=vTotal.keys();
     while (listaClaves.hasMoreElements()){
       claveI=(String)listaClaves.nextElement();
@@ -52,7 +64,9 @@ public class Fluctuaciones {
   //cambiar para el proyecto total
   public void paso(){
     double nuevoValor=calculaValorTitulo();
-    System.out.print("El nuevo valor es="+nuevoValor);
+    //System.out.print("El nuevo valor es="+nuevoValor);
+    String nomEmpresa="EMPRESA_"+empresa.toUpperCase();
+    varS.cambiaVariable(nomEmpresa,new Double(nuevoValor));
   }
   public double calculaValorTitulo(/*String nombreTitulo,double precioA*/){
 
@@ -118,8 +132,9 @@ public class Fluctuaciones {
     ventas2.add(v3);
     vT.put(Double.toString(precio1),ventas);
     vT.put(Double.toString(precio2),ventas2);
+    
     SistemaOperaciones so=new SistemaOperaciones(cT,vT);
-    Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5);
+    Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5,"GESSER");
     fluctuaciones1.paso();
   }
 

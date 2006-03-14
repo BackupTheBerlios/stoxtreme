@@ -106,6 +106,11 @@ public class Servidor implements Administrador, Stoxtreme{
 		guiAdmin.setModeloVariables(variables);
 		objetosBolsa=datosEmpresa.creaObjetosBolsa(param);
 		
+		Enumeration<String> e = objetosBolsa.keys();
+		while(e.hasMoreElements()){
+			objetosBolsa.get(e.nextElement()).setVariablesSistema(variables, param);
+		}
+		
 		sistEventos = new SistemaEventos(variables);
 		guiAdmin.setModeloEventos(sistEventos);
 		regOperaciones = new RegistroOperaciones();
@@ -122,9 +127,9 @@ public class Servidor implements Administrador, Stoxtreme{
 		reloj = new Reloj(param.getTiempo());
 		// Insertamos en el reloj los objetos bolsa
 		
-		Enumeration e = objetosBolsa.keys();
-		while(e.hasMoreElements()){
-			reloj.addListener(objetosBolsa.get(e.nextElement()));
+		Enumeration eObBols = objetosBolsa.keys();
+		while(eObBols.hasMoreElements()){
+			reloj.addListener(objetosBolsa.get(eObBols.nextElement()));
 		}
 		reloj.addListener(variables);
 		

@@ -58,7 +58,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         		p1=new Posicion(agente,numAcciones,4);
         		compra.add(num);
         		compra.add(p1);
-        		listaCompras.put(Double.toHexString(precio),compra);
+        		listaCompras.put(Double.toString(precio),compra);
         		
         	}
         }
@@ -93,25 +93,36 @@ public class SistemaOperaciones /*implements RelojListener*/{
         	Vector cadena=new Vector();
         	Posicion pi;
         	if (tipoOp.equals("Compra"))
-        		operacion=this.listaCompras;        	
-        	
-        	if(tipoOp.equals("Venta"))
-        		operacion=this.listaVentas;
+        		operacion=this.listaCompras;
         	else{
-        		operacion=new Hashtable();
-        		System.out.println("No existe la operación deseada");
+        	
+	        	if(tipoOp.equals("Venta"))
+	        		operacion=this.listaVentas;
+	        	else{
+	        		operacion=new Hashtable();
+	        		System.out.println("No existe la operación deseada");
+	        	}
         	}
         	Enumeration claves=operacion.keys();
         	while(claves.hasMoreElements()&&!encontrado){
-        		cadena=(Vector)operacion.get(claves.nextElement());
+        		String elemento=(String) claves.nextElement();
+        		cadena=(Vector)operacion.get(elemento);
         		int i=1;
-        		while(i<cadena.size()&&!encontrado){
+        		while(!encontrado&&i<cadena.size()){
         			pi=(Posicion)cadena.elementAt(i);
         			if (pi.getIdOperación()==idOperacion){
         				encontrado=true;
         				cadena.remove(i);
         				String acciones=(String)cadena.firstElement();
         				acciones=Integer.toString(Integer.parseInt(acciones)-pi.getNumeroDeAcciones());
+        				if (acciones.equals("0")) {
+        					cadena.removeAllElements(); 
+        					//System.out.println(elemento);
+        				    operacion.remove(elemento);
+        				    cadena.removeAllElements();
+        				}
+        				else
+        					cadena.setElementAt(acciones,0);
         				System.out.println("se ha eliminado la operación "+idOperacion);
         			}
         			i++;
@@ -126,7 +137,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
             Hashtable vT=new Hashtable();
             //Double precio1=new Double(23.5f);
             //Double precio2=new Double(25.5);
-            double precio1=(double)23.5;
+            /*double precio1=(double)23.5;
             double precio2=(double)25.5;
             Vector compras=new Vector();
             Vector compras2=new Vector();
@@ -134,10 +145,10 @@ public class SistemaOperaciones /*implements RelojListener*/{
             c1=new Posicion("comprador1",53,1);
             c2=new Posicion("comprador2",32,2);
             c3=new Posicion("comprador3",62,3);
-            compras.add(new Integer(85));
+            compras.add(Integer.toString(85));
             compras.add(c1);
             compras.add(c2);
-            compras2.add(new Integer(62));
+            compras2.add(Integer.toString(62));
             compras2.add(c3);
             Vector ventas=new Vector();
             Vector ventas2=new Vector();
@@ -152,9 +163,10 @@ public class SistemaOperaciones /*implements RelojListener*/{
             ventas2.add(v2);
             ventas2.add(v3);
             vT.put(Double.toString(precio1),ventas);
-            vT.put(Double.toString(precio2),ventas2);
+            vT.put(Double.toString(precio2),ventas2);*/
             SistemaOperaciones so=new SistemaOperaciones(cT,vT);
-            so.cancelaOperacion(4,"Venta");
+            so.introduceCompra(1,"Pako",23.4,35);
+            //so.cancelaOperacion(1,"Compra");
             //Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5);
             //fluctuaciones1.paso();
           }

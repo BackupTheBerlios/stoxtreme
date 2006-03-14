@@ -10,6 +10,7 @@ import stoxtreme.interfaz_remota.Operacion;
 //import stoxtreme.servidor.Reloj;
 import stoxtreme.servidor.ParametrosServidor;
 import stoxtreme.servidor.RelojListener;
+import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;
 import stoxtreme.servidor.objeto_bolsa.fluctuaciones.SistemaOperaciones;
@@ -32,19 +33,19 @@ public class ObjetoBolsa implements RelojListener{
 		sistemaOperaciones = new SistOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 	}*/
-	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion, ParametrosServidor parametros){
-		sistemaOperaciones = new SistemaOperaciones();
+	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion){
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
 		this.infoXML=new InformacionXML(informacion,nombreEmpresa);
 		//Se le pasa null xq el balance y las cuentas de momento no estan hechos
 		this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
-		fluctuaciones = new Fluctuaciones(sistemaOperaciones, parametros.getTick(),this.cotizacion);
-
+		
 	}
 	public void paso(){
-		/*sistemaOperaciones.paso();
-		fluctuaciones.paso();*/
+		if(sistemaOperaciones != null && fluctuaciones !=null){
+			sistemaOperaciones.paso();
+			fluctuaciones.paso();
+		}
 	}
 	
 	public double  getCotizacion(){
@@ -72,5 +73,9 @@ public class ObjetoBolsa implements RelojListener{
 	
 	public void cancelarOperacion(int idOperacion, String tipoOp){
 		sistemaOperaciones.cancelaOperacion(idOperacion, tipoOp);
+	}
+	public void setVariablesSistema(VariablesSistema variables, ParametrosServidor parametros) {
+		sistemaOperaciones = new SistemaOperaciones();
+		fluctuaciones = new Fluctuaciones(variables,sistemaOperaciones, parametros.getTick(),this.cotizacion,nombreEmpresa);
 	}
 }
