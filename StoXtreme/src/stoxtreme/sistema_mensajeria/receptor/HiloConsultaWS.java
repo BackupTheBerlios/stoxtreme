@@ -9,8 +9,9 @@ import stoxtreme.servicio_web.StoxtremeMensajesServiceLocator;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
 
 public class HiloConsultaWS extends Thread{
-	ReceptorMensajesWS receptor;
-	public HiloConsultaWS(ReceptorMensajesWS mensajesWS){
+	ReceptorMensajes receptor;
+	
+	public HiloConsultaWS(ReceptorMensajes mensajesWS){
 		receptor = mensajesWS;
 	}
 	
