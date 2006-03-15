@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -21,19 +20,21 @@ import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xml.serialize.Method;
 import org.apache.xml.serialize.OutputFormat;
 
-import stoxtreme.servidor.gui.MainFrameAdmin;
+//import stoxtreme.servidor.gui.MainFrameAdmin;
 
 public class UsuariosRegistrados {
 private Hashtable <String,String> registrados ;
+private String rutaFichero;
 private DocumentBuilderFactory factory;
 private Document document;
 	
 	//Constructora
 	public UsuariosRegistrados(String fich){
+		rutaFichero=fich;
 		registrados=new Hashtable <String,String>();
 		factory = DocumentBuilderFactory.newInstance();
 		try {
-			document = factory.newDocumentBuilder().parse(new File(fich));
+			document = factory.newDocumentBuilder().parse(new File(rutaFichero));
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -68,12 +69,12 @@ private Document document;
 	}
 	
 	//Rellena el fichero con los datos del arbol DOM (al finalizar la sesion)
-	public void vuelcaEnFichero(String fich){
+	public void vuelcaEnFichero(){
 		OutputFormat format = new OutputFormat(Method.XML,"UTF-8",true);
 		format.setPreserveSpace(true);
 		OutputStream oStream=null;
 		try {
-			oStream= new FileOutputStream(fich);
+			oStream= new FileOutputStream(rutaFichero);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

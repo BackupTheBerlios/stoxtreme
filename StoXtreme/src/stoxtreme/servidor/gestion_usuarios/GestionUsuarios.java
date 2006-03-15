@@ -42,6 +42,9 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados{
 		if (!registrados.existeUsuario(id)){
 			registrados.insertaUsuario(id,psw);
 			registrados.insertaEnDOM(id,psw);
+			//TODO es ineficiente que vuelque cada vez que se registra uno
+			//habria que hacerlo al salir del servidor
+			registrados.vuelcaEnFichero();
 			addUsuario(id);
 			return true;
 		}else
