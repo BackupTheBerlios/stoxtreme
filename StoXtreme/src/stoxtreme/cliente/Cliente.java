@@ -16,6 +16,7 @@ import stoxtreme.cliente.gui.MainFrameCliente;
 import stoxtreme.cliente.gui.ModeloCartera;
 import stoxtreme.cliente.gui.ModeloOpPendientes;
 import stoxtreme.cliente.gui.ModeloPrecioAccionesGrafico;
+import stoxtreme.cliente.gui.DialogoInicial;
 import stoxtreme.interfaz_remota.*;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
 import stoxtreme.servidor.Servidor;
@@ -53,6 +54,13 @@ public class Cliente implements IMensajeriaListener{
 			Servidor serv = Servidor.getInstance();
 			serv.iniciarServidor();
 			serv.showGUI();
+			/*Dialogo para que el usuario se registre o se conecte,
+			 *si sale bien, se conectará al servidor.
+			DialogoInicial identificacion=new DialogoInicial();
+			identificacion.init();
+			identificacion.pack();
+			identificacion.setVisible(true);
+			identificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 			Cliente c = new Cliente();
 			c.init("alonso", "alonso");
 
