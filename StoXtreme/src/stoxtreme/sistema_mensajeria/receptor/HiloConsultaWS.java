@@ -30,7 +30,6 @@ public class HiloConsultaWS extends Thread{
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			this.stop();
 		}
 	}
 }

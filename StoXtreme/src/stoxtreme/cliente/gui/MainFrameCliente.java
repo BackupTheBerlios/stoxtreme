@@ -17,12 +17,14 @@ import org.jfree.data.time.*;
 import org.jfree.data.xy.*;
 import org.jfree.date.SerialDateUtilities;
 
+import stoxtreme.cliente.Cliente;
 import stoxtreme.interfaz_remota.Operacion;
 
 public class MainFrameCliente extends JFrame{
 	private ModeloCartera modeloCartera;
 	private ModeloOpPendientes modeloOpPendientes;
 	private ModeloPrecioAccionesGrafico modeloPrecios;
+	private Cliente cliente;
 	
 	private JTable tablaArribaIzq; // Asociada al combo de tipos
 	private ChartPanel chartPanel; // Asociada al combo de empresas
@@ -42,10 +44,12 @@ public class MainFrameCliente extends JFrame{
 			
 		}
 	}
-	public MainFrameCliente(ModeloCartera modeloCartera,
+	public MainFrameCliente(Cliente cliente,
+			ModeloCartera modeloCartera,
 			ModeloOpPendientes modeloOpPendientes,
 			ModeloPrecioAccionesGrafico modeloPrecios){
 		super("Stock Xtreme");
+		this.cliente = cliente;
 		this.modeloCartera = modeloCartera;
 		this.modeloOpPendientes = modeloOpPendientes;
 		this.modeloPrecios = modeloPrecios;
@@ -215,7 +219,20 @@ public class MainFrameCliente extends JFrame{
 		JButton insertar = new JButton("Insertar Operacion");
 		insertar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				/*TODO DIALOGO PARA INSERTAR LA OPERACION*/
+				try{
+					String id = cliente.getNUsuario();
+					String empresa = (String)empresaSeleccionada.getSelectedItem();
+					String tipoOp = ((String)tipoSeleccionado.getSelectedItem()).toLowerCase();
+					int tipo = Operacion.COMPRA;
+					if(tipoOp.equals("venta")) tipo = Operacion.VENTA;
+					double precio = Double.parseDouble(precioSeleccionado.getText());
+					int cantidad = Integer.parseInt(cantidadSeleccionada.getText());
+					Operacion op = new Operacion(id,tipo, cantidad, empresa, precio );
+					cliente.insertarOperacion(op);
+				}
+				catch(Exception ex){
+					JOptionPane.showConfirmDialog(null, "Error en los datos");
+				}
 			}
 		});
 		p.add(insertar);
@@ -252,43 +269,44 @@ public class MainFrameCliente extends JFrame{
 		return frame;
 	}
 
-	/*
-	public static void main(String[] args){
-		ArrayList lEmpresas = new ArrayList();
-		lEmpresas.add("Empresa1");
-		lEmpresas.add("Empresa2");
-		lEmpresas.add("Empresa3");
-		ModeloOpPendientes mOpPendientes = new ModeloOpPendientes();
-		ModeloCartera mCartera = new ModeloCartera();
-		ModeloPrecioAccionesGrafico mPrecios = new ModeloPrecioAccionesGrafico(lEmpresas);
-
-		MainFrameCliente gui = new MainFrameCliente(mCartera, mOpPendientes, mPrecios);
-		gui.init();
-		gui.pack();
-		gui.setVisible(true);
-		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+//	public static void main(String[] args){
+//		ArrayList lEmpresas = new ArrayList();
+//		lEmpresas.add("Empresa1");
+//		lEmpresas.add("Empresa2");
+//		lEmpresas.add("Empresa3");
+//		ModeloOpPendientes mOpPendientes = new ModeloOpPendientes();
+//		ModeloCartera mCartera = new ModeloCartera();
+//		ModeloPrecioAccionesGrafico mPrecios = new ModeloPrecioAccionesGrafico(lEmpresas);
+//
+//		MainFrameCliente gui = new MainFrameCliente(mCartera, mOpPendientes, mPrecios);
+//		gui.init();
+//		gui.pack();
+//		gui.setVisible(true);
+//		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		
 		
-		mOpPendientes.insertarOperacion(new Operacion("ID1", "Empresa1", 100, 10.0f, Operacion.COMPRA), 10);
-		mOpPendientes.insertarOperacion(new Operacion("ID1", "Empresa2", 100, 10.0f, Operacion.VENTA), 50);
-		
-		mCartera.insertarAcciones("Empresa1", 100);
-		mCartera.insertarAcciones("Empresa2", 200);
-		
-		int i=0;
-		int j=270;
-		while(true){
-			i++;
-			j+=(Math.random()>0.5?1:-1);
-			if(i<540){
-				mPrecios.insertaValor("Empresa1", i);
-				mPrecios.insertaValor("Empresa2", 540-i);
-				mPrecios.insertaValor("Empresa3", j);
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}*/
+//		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.COMPRA, 100, "Empresa1", 10.0f), 10);
+//		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.VENTA, 100, "Empresa2", 10.0f), 50);
+//		
+//		mCartera.insertarAcciones("Empresa1", 100);
+//		mCartera.insertarAcciones("Empresa2", 200);
+//		
+//		int i=0;
+//		int j=270;
+//		while(true){
+//			i++;
+//			j+=(Math.random()>0.5?1:-1);
+//			if(i<540){
+//				mPrecios.insertaValor("Empresa1", i);
+//				mPrecios.insertaValor("Empresa2", 540-i);
+//				mPrecios.insertaValor("Empresa3", j);
+//				try {
+//					Thread.sleep(200);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
 }

@@ -1,6 +1,7 @@
 package stoxtreme.sistema_mensajeria.emisor;
 import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.StoxtremeMensajes;
+import stoxtreme.sistema_mensajeria.receptor.ReceptorMensajes;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -13,11 +14,15 @@ public class EmisorMensajes implements StoxtremeMensajes{
 	public static StoxtremeMensajes getInstance() {
 		return _instance;
 	}
+	public static void setReceptorLocal(ReceptorMensajes r){
+		_instance.receptor = r;
+	}
 	/**/
 	
 	private ArrayList listaMensajes;
 	private Hashtable usuarios;
-
+	private ReceptorMensajes receptor;
+	
 	public EmisorMensajes(){
 		listaMensajes= new ArrayList();
 		listaMensajes.add(new Mensaje("Hola mundo", "Tipo"));

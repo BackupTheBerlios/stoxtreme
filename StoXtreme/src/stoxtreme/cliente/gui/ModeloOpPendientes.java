@@ -19,11 +19,11 @@ import stoxtreme.interfaz_remota.Operacion;
 
 public class ModeloOpPendientes extends AbstractTableModel{
 	private static String[] nCol = {" ","IDOperacion", "Tipo", "Empresa", "Cantidad", "Precio"};
-	private Hashtable opPendientes;
+	private Hashtable<Integer, Operacion> opPendientes;
 	private ArrayList listaIDS;
 	
 	public ModeloOpPendientes(){
-		opPendientes = new Hashtable();
+		opPendientes = new Hashtable<Integer, Operacion>();
 		listaIDS = new ArrayList();
 	}
 	public int getRowCount() {
@@ -101,5 +101,12 @@ public class ModeloOpPendientes extends AbstractTableModel{
 	};
 	public DefaultTableCellRenderer getRenderer(){
 		return renderer;
+	}
+	public Operacion getOperacion(int idOp) {
+		return opPendientes.get(idOp);
+	}
+	public void quitaOperacion(int idOp) {
+		opPendientes.remove(idOp);
+		fireTableDataChanged();
 	}
 }
