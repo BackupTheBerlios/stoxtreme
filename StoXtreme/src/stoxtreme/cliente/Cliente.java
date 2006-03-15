@@ -51,18 +51,19 @@ public class Cliente implements IMensajeriaListener{
 		*/
 		
 		try{
-			Servidor serv = Servidor.getInstance();
-			serv.iniciarServidor();
-			serv.showGUI();
-			/*Dialogo para que el usuario se registre o se conecte,
-			 *si sale bien, se conectará al servidor.
-			DialogoInicial identificacion=new DialogoInicial();
+			//Servidor serv = Servidor.getInstance();
+			//serv.iniciarServidor();
+			//serv.showGUI();
+			//Dialogo para que el usuario se registre o se conecte,
+			//si sale bien, se conectará al servidor.
+			Cliente c = new Cliente();
+			DialogoInicial identificacion=new DialogoInicial(c);
 			identificacion.init();
 			identificacion.pack();
 			identificacion.setVisible(true);
-			identificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
-			Cliente c = new Cliente();
-			c.init("alonso", "alonso");
+			identificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			//c.init("alonso", "alonso");
 
 		}
 		catch(Exception e){
@@ -70,15 +71,16 @@ public class Cliente implements IMensajeriaListener{
 		}
 	}
 	
-	public void init(String usuario, String pass) throws Exception{
-		this.nUsuario = usuario; this.password = pass;
+	public void init(String usuario,String pass) throws Exception{
+		/*
 		boolean login = Servidor.getInstance().login(usuario, pass);
 		if(!login){
 			boolean reg = Servidor.getInstance().registro(usuario, pass);
 			if(!reg) throw new Exception("Fallo en el registro");
 			login = Servidor.getInstance().login(usuario, pass);
 			if(!login) throw new Exception("Fallo en el login");
-		}
+		}*/
+		this.nUsuario = usuario; this.password = pass;
 		
 		eBolsa = new EstadoBolsa();
 		opPendientes = new OperacionesPendientes();
