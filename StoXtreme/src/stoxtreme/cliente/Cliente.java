@@ -71,7 +71,7 @@ public class Cliente implements IMensajeriaListener{
 		}
 	}
 	
-	public void init(String usuario,String pass) throws Exception{
+	public void init(String usuario,String pass){
 		/*
 		boolean login = Servidor.getInstance().login(usuario, pass);
 		if(!login){

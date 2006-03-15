@@ -3,7 +3,6 @@ package stoxtreme.cliente.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,7 +19,6 @@ import javax.swing.UIManager;
 import stoxtreme.cliente.Cliente;
 import stoxtreme.servidor.Servidor;
 
-//TODO Casi todo, solo estan puestos los componentes
 
 public class DialogoInicial extends JFrame{
 	private JButton login;
@@ -102,18 +100,24 @@ public class DialogoInicial extends JFrame{
 		login.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String id=user.getText();
-				String psw=password.getPassword().toString();
-				boolean login=Servidor.getInstance().login(id,psw);
-				if (!login){
-					JOptionPane.showConfirmDialog(null, "Error al realizar el login");
-				}
-				else
-					try{
-						cliente.init(id,psw);
-					}
-					catch(Exception ex){
-						ex.printStackTrace();
-					}	
+				String psw=new String(password.getPassword());
+				if (id.equals(null)||psw.equals(null))
+					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
+							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
+				else{
+					//try{
+						boolean login=Servidor.getInstance().login(id,psw);
+						if (!login)
+							JOptionPane.showMessageDialog(null, "El usuario no existe o la contraseña es errónea",
+									"Error",JOptionPane.ERROR_MESSAGE);
+						else
+							cliente.init(id,psw);
+					//}
+					//catch(Exception ex){
+						JOptionPane.showMessageDialog(null, "El servidor parece estar caído. \n Inténtelo de nuevo más tarde",
+								"Error de conexión",JOptionPane.ERROR_MESSAGE);
+					//}
+				}	
 			}
 		});
 		registrar=new JButton();
@@ -124,20 +128,24 @@ public class DialogoInicial extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String id=user.getText();
 				String psw=password.getPassword().toString();
-				if (id.equals(null)||psw.equals(null))
-					JOptionPane.showConfirmDialog(null, "Por favor, rellene todos los campos");
+				if (id==null ||psw==null)
+					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
+							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
-					boolean registro=Servidor.getInstance().registro(id,psw);
-					if (!registro){
-						JOptionPane.showConfirmDialog(null, "Ya existe un usuario con ese nombre");
-					}
-					else
-						try{
+					try{
+						boolean registro=Servidor.getInstance().registro(id,psw);
+						if (!registro)
+							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nombre",
+								"Error",JOptionPane.ERROR_MESSAGE);
+						else{
+							Servidor.getInstance().login(id,psw);
 							cliente.init(id,psw);
 						}
-						catch(Exception ex){
-							ex.printStackTrace();
-						}
+					}
+					catch(Exception ex){
+						JOptionPane.showMessageDialog(null, "El servidor parece estar caído. \n Inténtelo de nuevo más tarde",
+								"Error de conexión",JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		});
@@ -145,4 +153,5 @@ public class DialogoInicial extends JFrame{
 		PButtons.add(registrar,BorderLayout.EAST);
 		return PButtons;
 	}
+
 }
