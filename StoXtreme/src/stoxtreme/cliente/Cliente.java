@@ -31,6 +31,7 @@ public class Cliente implements IMensajeriaListener{
 	OperacionesPendientes opPendientes;
 	CarteraAcciones cartera;
 	MainFrameCliente gui;
+	static DialogoInicial identificacion;
 	
 	public Cliente(){
 //		try {
@@ -51,19 +52,18 @@ public class Cliente implements IMensajeriaListener{
 		*/
 		
 		try{
-			//Servidor serv = Servidor.getInstance();
-			//serv.iniciarServidor();
-			//serv.showGUI();
-			//Dialogo para que el usuario se registre o se conecte,
-			//si sale bien, se conectará al servidor.
+			//TODO Mirar porque el login funciona si se inicia el servidor desde aqui,
+			//pero si se inicia como desde el main del servidor, peta (no detecta al servidor)
+			Servidor serv = Servidor.getInstance();
+			serv.iniciarServidor();
+			serv.showGUI();
+			
 			Cliente c = new Cliente();
-			DialogoInicial identificacion=new DialogoInicial(c);
+			identificacion=new DialogoInicial(c);
 			identificacion.init();
 			identificacion.pack();
 			identificacion.setVisible(true);
 			identificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
-			//c.init("alonso", "alonso");
 
 		}
 		catch(Exception e){
@@ -80,6 +80,7 @@ public class Cliente implements IMensajeriaListener{
 			login = Servidor.getInstance().login(usuario, pass);
 			if(!login) throw new Exception("Fallo en el login");
 		}*/
+		identificacion.dispose();
 		this.nUsuario = usuario; this.password = pass;
 		
 		eBolsa = new EstadoBolsa();

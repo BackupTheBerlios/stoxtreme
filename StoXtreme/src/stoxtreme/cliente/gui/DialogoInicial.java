@@ -101,22 +101,22 @@ public class DialogoInicial extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String id=user.getText();
 				String psw=new String(password.getPassword());
-				if (id.equals(null)||psw.equals(null))
+				if (id.equals("")||psw.equals(""))
 					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
-					//try{
+					try{
 						boolean login=Servidor.getInstance().login(id,psw);
 						if (!login)
 							JOptionPane.showMessageDialog(null, "El usuario no existe o la contraseña es errónea",
 									"Error",JOptionPane.ERROR_MESSAGE);
 						else
 							cliente.init(id,psw);
-					//}
-					//catch(Exception ex){
+					}
+					catch(Exception ex){
 						JOptionPane.showMessageDialog(null, "El servidor parece estar caído. \n Inténtelo de nuevo más tarde",
 								"Error de conexión",JOptionPane.ERROR_MESSAGE);
-					//}
+					}
 				}	
 			}
 		});
@@ -127,8 +127,8 @@ public class DialogoInicial extends JFrame{
 		registrar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String id=user.getText();
-				String psw=password.getPassword().toString();
-				if (id==null ||psw==null)
+				String psw=new String(password.getPassword());
+				if (id.equals("") ||psw.equals(""))
 					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
