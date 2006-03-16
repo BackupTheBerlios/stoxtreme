@@ -8,18 +8,17 @@
 package stoxtreme.interfaz_remota;
 
 public class Mensaje  implements java.io.Serializable {
-    private java.lang.String contenido;
-
-    private java.lang.String tipoMensaje;
-
+    private String contenido;
+    private String tipoMensaje;
+    private String destinatario;
+    public static final String GLOBAL="GLOBAL";
     public Mensaje() {
     }
 
-    public Mensaje(
-           java.lang.String contenido,
-           java.lang.String tipoMensaje) {
+    public Mensaje(String contenido, String tipoMensaje, String destinatario) {
            this.contenido = contenido;
            this.tipoMensaje = tipoMensaje;
+           this.destinatario = destinatario;
     }
 
 
@@ -61,7 +60,15 @@ public class Mensaje  implements java.io.Serializable {
     public void setTipoMensaje(java.lang.String tipoMensaje) {
         this.tipoMensaje = tipoMensaje;
     }
-
+    
+    public void setDestinatario(String destinatario){
+    	this.destinatario = destinatario;
+    }
+    
+    public String getDestinatario(){
+    	return destinatario;
+    }
+    
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof Mensaje)) return false;
@@ -79,7 +86,10 @@ public class Mensaje  implements java.io.Serializable {
               this.contenido.equals(other.getContenido()))) &&
             ((this.tipoMensaje==null && other.getTipoMensaje()==null) || 
              (this.tipoMensaje!=null &&
-              this.tipoMensaje.equals(other.getTipoMensaje())));
+              this.tipoMensaje.equals(other.getTipoMensaje()))) &&
+              ((this.destinatario==null && other.getDestinatario()==null) || 
+              (this.destinatario!=null &&
+               this.destinatario.equals(other.getDestinatario())));
         __equalsCalc = null;
         return _equals;
     }
@@ -96,6 +106,9 @@ public class Mensaje  implements java.io.Serializable {
         }
         if (getTipoMensaje() != null) {
             _hashCode += getTipoMensaje().hashCode();
+        }
+        if (getDestinatario() != null){
+        	_hashCode += getDestinatario().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -116,6 +129,12 @@ public class Mensaje  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("tipoMensaje");
         elemField.setXmlName(new javax.xml.namespace.QName("", "tipoMensaje"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://schemas.xmlsoap.org/soap/encoding/", "string"));
+        elemField.setNillable(true);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("destinatario");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "destinatario"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://schemas.xmlsoap.org/soap/encoding/", "string"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);

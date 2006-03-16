@@ -1,44 +1,72 @@
 package stoxtreme.sistema_mensajeria.emisor;
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import stoxtreme.interfaz_remota.Mensaje;
 
 
 public class AlmacenMensajes{
 	// Tabla que guarda el numero del ultimo mensaje global que ha leido el usuario
-	Hashtable<String, Integer> buzon;
-	// Vector de mensajes
-	ArrayList<Mensaje> mensajesGlobales;
-	int numMensajesGlobales;
+	// Local a cada usuario (no problema concurrencia)
+	private Hashtable<String, Integer> buzon;
+	// Vector de mensajes globales
+	private ArrayList<Mensaje> mensajesGlobales;
+	private int numMensajesGlobales;
 	// Tabla que guarda los mensajes privados
-	Hashtable<String, ArrayList<Mensaje>> mensajesPrivados;
-	ArrayList<Mensaje> listaActual;
-	Hashtable<String, Thread> esperando;
+	private Hashtable<String, ArrayList<Mensaje>> mensajesPrivados;
+	// Lista de todos usuarios esperando para los mensajes
+	private Hashtable<String, Object> esperando;
 	
 	public AlmacenMensajes(){
 		numMensajesGlobales = 0;
 		buzon = new Hashtable<String, Integer>();
 		mensajesGlobales = new ArrayList<Mensaje>();
 		mensajesPrivados = new Hashtable<String, ArrayList<Mensaje>>();
-		esperando = new Hashtable<String, Thread>();
+		esperando = new Hashtable<String, Object>();
 	}
 	
-	public synchronized boolean isNuevos(String ID){
+	private boolean isNuevos(String ID){
 		return buzon.get(ID) != numMensajesGlobales ||
 				mensajesPrivados.get(ID).size() != 0;
+	}
+	
+	public void altaUsuario(String ID){
+		buzon.put(ID, 0);
+		mensajesPrivados.put(ID, new ArrayList<Mensaje>());
+	}
+	
+	public void insertarMensaje(Mensaje m){
+		if (m.equals(Mensaje.GLOBAL)){
+			insertarMensajeGlobal(m);
+		}
+		else{
+			insertarMensajePrivado(m.getDestinatario(), m);
+		}
 	}
 	
 	public synchronized void insertarMensajeGlobal(Mensaje m){
 		mensajesGlobales.add(numMensajesGlobales, m);
 		numMensajesGlobales ++;
-		notifyAll();
+		Enumeration<String> ids = esperando.keys();
+		while(ids.hasMoreElements()){
+			Object o = esperando.get(ids.nextElement());
+			synchronized(o){
+				o.notify();
+			}
+		}
 	}
 	
 	public synchronized void insertarMensajePrivado(String ID, Mensaje m){
 		mensajesPrivados.get(ID).add(m);
-		//esperando.notify();
-		notifyAll();
+		if(esperando.contains(ID)){
+			Object o = esperando.get(ID);
+			synchronized(o){
+				o.notify();
+			}
+		}
 	}
 	
 	public synchronized void darAlta(String ID){
@@ -47,26 +75,68 @@ public class AlmacenMensajes{
 	}
 	
 	public synchronized Mensaje getSiguienteMensaje(String ID){
-		Mensaje m = null;
-		while(!isNuevos(ID)){
-			try {
-				esperando.put(ID, Thread.currentThread());
-				wait();
-			} catch(Exception e){
-				e.printStackTrace();
+		try {
+			Mensaje m = null;
+			Object cerrojo = new Object();
+			esperando.put(ID, cerrojo);
+			while(!isNuevos(ID)){
+				synchronized (cerrojo) {
+					cerrojo.wait();
+				}
 			}
-		}
-		esperando.remove(ID);
-		if(mensajesPrivados.get(ID).size() > 0){
-			m = mensajesPrivados.get(ID).remove(0);
-		}
-		else{ 
-			int ultimo = buzon.get(ID);
-			if(buzon.get(ID) < mensajesGlobales.size()){
-				m = mensajesGlobales.get(ultimo);
-				buzon.put(ID, ultimo+1);
+			esperando.remove(ID);
+			if(mensajesPrivados.get(ID).size() > 0){
+				m = mensajesPrivados.get(ID).remove(0);
 			}
+			else{ 
+				int ultimo = buzon.get(ID);
+				if(buzon.get(ID) < mensajesGlobales.size()){
+					m = mensajesGlobales.get(ultimo);
+					buzon.put(ID, ultimo+1);
+				}
+			}
+			return m;
+		} catch (InterruptedException e) {
+			return new Mensaje("ERROR", "ERROR", ID);
 		}
-		return m;
 	}
+	
+	public static void main(String[] args){
+		try {
+			AlmacenMensajes almacen = new AlmacenMensajes();
+			new Lector("alonso", almacen).start();
+			new Lector("itziar", almacen).start();
+			new Lector("ivan", almacen).start();
+			almacen.insertarMensaje(new Mensaje("HOLA", "MGLOBAL", Mensaje.GLOBAL));
+			System.out.println("Durmiendo global");
+			Thread.currentThread().sleep(1000);
+			System.out.println("Despierto global");
+			almacen.insertarMensaje(new Mensaje("ADIOS", "MGLOBAL", Mensaje.GLOBAL));
+			almacen.insertarMensaje(new Mensaje("HOLA", "MPRIV", "alonso"));
+			System.out.println("Durmiendo privado");
+			Thread.currentThread().sleep(1000);
+			System.out.println("despierto privado");
+			almacen.insertarMensaje(new Mensaje("ADIOS", "MPRIV", "alonso"));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static class Lector extends Thread{
+		AlmacenMensajes almacen;
+		String nombre;
+		public Lector(String nombre, AlmacenMensajes almacen){
+			this.almacen = almacen;
+			this.nombre = nombre;
+			almacen.altaUsuario(nombre);
+		}
+		public void run(){
+			Mensaje m = null;
+			do{
+				m = almacen.getSiguienteMensaje("alonso");
+				System.out.println("Mensaje("+m.getDestinatario()+")"+m.getTipoMensaje()+"-"+m.getContenido());
+			}
+			while(m!=null);
+		}
+	} 
 }

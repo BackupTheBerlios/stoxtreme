@@ -21,7 +21,8 @@ public class EmisorMensajes implements StoxtremeMensajes{
 	
 	public EmisorMensajes(){
 		listaMensajes= new ArrayList();
-		listaMensajes.add(new Mensaje("Hola mundo", "Tipo"));
+		listaMensajes.add(new Mensaje("Hola mundo", "Tipo", Mensaje.GLOBAL));
+		listaMensajes.add(new Mensaje("Hola mundo", "Tipo", "alonso"));
 		usuarios = new Hashtable();
 	}
 	
@@ -29,18 +30,24 @@ public class EmisorMensajes implements StoxtremeMensajes{
 		usuarios.put(usuario, new Integer(0));
 	}
 	
-	public void nuevoMensajeGlobal(Mensaje m){
+	public void nuevoMensaje(Mensaje m){
 		listaMensajes.add(m);
 	}
 	
 	public Mensaje getSiguienteMensaje(String usuario){
-		int ultimoIndice = ((Integer)usuarios.get(usuario)).intValue();
-		Mensaje m = null;
-		if(ultimoIndice < listaMensajes.size()-1){
+		try{
+			int ultimoIndice = ((Integer)usuarios.get(usuario)).intValue();
+			Mensaje m = null;
+			while(ultimoIndice == listaMensajes.size()-1){
+				wait();
+			}
 			m = (Mensaje)listaMensajes.get(ultimoIndice);
 			usuarios.put(usuario, new Integer(ultimoIndice+1));
+			return m;
 		}
-		return m;
+		catch(InterruptedException e){
+			return new Mensaje("Error en el mensaje", "ERROR", usuario);
+		}
 	}
 
 	public void enviaMensaje(Mensaje mensaje) throws RemoteException {

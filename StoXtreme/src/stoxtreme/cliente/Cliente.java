@@ -59,30 +59,29 @@ public class Cliente implements IMensajeriaListener{
 			serv.showGUI();
 			
 			Cliente c = new Cliente();
-			identificacion=new DialogoInicial(c);
-			identificacion.init();
-			identificacion.pack();
-			identificacion.setVisible(true);
-			identificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+//			identificacion=new DialogoInicial(c);
+//			identificacion.init();
+//			identificacion.pack();
+//			identificacion.setVisible(true);
+//			identificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			c.init("alonso", "alonso");
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	public void init(String usuario,String pass){
-		/*
+	public void init(String usuario, String pass) throws Exception{
 		boolean login = Servidor.getInstance().login(usuario, pass);
 		if(!login){
 			boolean reg = Servidor.getInstance().registro(usuario, pass);
 			if(!reg) throw new Exception("Fallo en el registro");
 			login = Servidor.getInstance().login(usuario, pass);
 			if(!login) throw new Exception("Fallo en el login");
-		}*/
+		}
 		
 		//Eliminamos el DialogoInicial porque ya he identificado al usuario
-		identificacion.dispose();
+//		identificacion.dispose();
 		
 		this.nUsuario = usuario; this.password = pass;
 		
@@ -113,6 +112,9 @@ public class Cliente implements IMensajeriaListener{
 			String empresa = valores[0];
 			double nuevoPrecio = Double.parseDouble(valores[1]);
 			eBolsa.cambiaValor(empresa, nuevoPrecio);
+		}
+		else{
+			System.out.println("Mensaje("+m.getTipoMensaje()+"): "+ m.getContenido());
 		}
 	}
 	
