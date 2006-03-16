@@ -28,7 +28,7 @@ public class AlmacenMensajes{
 		esperando = new Hashtable<String, Object>();
 	}
 	
-	private boolean isNuevos(String ID){
+	private synchronized boolean isNuevos(String ID){
 		return buzon.get(ID) != numMensajesGlobales ||
 				mensajesPrivados.get(ID).size() != 0;
 	}
@@ -74,7 +74,7 @@ public class AlmacenMensajes{
 		mensajesPrivados.put(ID, new ArrayList<Mensaje>());
 	}
 	
-	public synchronized Mensaje getSiguienteMensaje(String ID){
+	public Mensaje getSiguienteMensaje(String ID){
 		try {
 			Mensaje m = null;
 			Object cerrojo = new Object();
@@ -85,14 +85,16 @@ public class AlmacenMensajes{
 				}
 			}
 			esperando.remove(ID);
-			if(mensajesPrivados.get(ID).size() > 0){
-				m = mensajesPrivados.get(ID).remove(0);
-			}
-			else{ 
-				int ultimo = buzon.get(ID);
-				if(buzon.get(ID) < mensajesGlobales.size()){
-					m = mensajesGlobales.get(ultimo);
-					buzon.put(ID, ultimo+1);
+			synchronized(this){
+				if(mensajesPrivados.get(ID).size() > 0){
+					m = mensajesPrivados.get(ID).remove(0);
+				}
+				else{ 
+					int ultimo = buzon.get(ID);
+					if(buzon.get(ID) < mensajesGlobales.size()){
+						m = mensajesGlobales.get(ultimo);
+						buzon.put(ID, ultimo+1);
+					}
 				}
 			}
 			return m;
