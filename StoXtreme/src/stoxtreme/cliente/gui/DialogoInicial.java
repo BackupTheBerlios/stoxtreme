@@ -51,10 +51,9 @@ public class DialogoInicial extends JFrame{
 		this.add(principal);
 	}
 	
+	//Panel Principal
 	private Component getPanelPrincipal(){
 		principal=new JPanel(new BorderLayout());
-		//principal.setPreferredSize(new Dimension(300,200));
-		//Panel Principal
 		principal.add(this.getPUser(),BorderLayout.NORTH);
 		principal.add(this.getPPass(),BorderLayout.CENTER);
 		principal.add(this.getPButtons(),BorderLayout.SOUTH);
@@ -97,6 +96,7 @@ public class DialogoInicial extends JFrame{
 		login.setText("Login");
 		login.setToolTipText("Conecta a un usuario previamente registrado");
 		login.setPreferredSize(new Dimension(100,20));
+		//Login de un usario ya existente
 		login.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String id=user.getText();
@@ -120,10 +120,12 @@ public class DialogoInicial extends JFrame{
 				}	
 			}
 		});
+		
 		registrar=new JButton();
 		registrar.setText("Registrar");
 		registrar.setToolTipText("Registra a un nuevo usuario en el servidor y se conecta automaticamente");
 		registrar.setPreferredSize(new Dimension(100,20));
+		//Registro de un nuevo usuario
 		registrar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String id=user.getText();

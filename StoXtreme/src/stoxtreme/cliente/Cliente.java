@@ -80,7 +80,10 @@ public class Cliente implements IMensajeriaListener{
 			login = Servidor.getInstance().login(usuario, pass);
 			if(!login) throw new Exception("Fallo en el login");
 		}*/
+		
+		//Eliminamos el DialogoInicial porque ya he identificado al usuario
 		identificacion.dispose();
+		
 		this.nUsuario = usuario; this.password = pass;
 		
 		eBolsa = new EstadoBolsa();
