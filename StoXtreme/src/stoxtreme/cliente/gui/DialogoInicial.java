@@ -26,7 +26,7 @@ public class DialogoInicial extends JFrame{
 	private JTextField user;
 	private JPasswordField password;
 	private JLabel usuario;
-	private JLabel contraseña;
+	private JLabel pass;
 	private JPanel principal;
 	private Cliente cliente;
 	
@@ -40,7 +40,7 @@ public class DialogoInicial extends JFrame{
 	}
 	
 	public DialogoInicial(Cliente cliente){
-		super ("Identificación");
+		super ("Identificacion");
 		this.cliente=cliente;
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
@@ -57,7 +57,7 @@ public class DialogoInicial extends JFrame{
 		principal.add(this.getPUser(),BorderLayout.NORTH);
 		principal.add(this.getPPass(),BorderLayout.CENTER);
 		principal.add(this.getPButtons(),BorderLayout.SOUTH);
-		FakeInternalFrame frame = new FakeInternalFrame("Conéctese o cree una cuenta nueva", principal);
+		FakeInternalFrame frame = new FakeInternalFrame("Conï¿½ctese o cree una cuenta nueva", principal);
 		return frame;
 		
 	}
@@ -75,15 +75,15 @@ public class DialogoInicial extends JFrame{
 		return PUser;
 	}
 	
-	//Panel de la Contraseña
+	//Panel de la Contraseï¿½a
 	private Component getPPass(){
 		JPanel PPass=new JPanel(new BorderLayout());
 		PPass.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		contraseña=new JLabel("Contraseña");
+		pass=new JLabel("Contraseï¿½a");
 		password=new JPasswordField();
-		password.setToolTipText("Introduzca su contraseña");
+		password.setToolTipText("Introduzca su contraseï¿½a");
 		password.setPreferredSize(new Dimension(120,20));
-		PPass.add(contraseña,BorderLayout.WEST);
+		PPass.add(pass,BorderLayout.WEST);
 		PPass.add(password,BorderLayout.EAST);
 		return PPass;
 	}
@@ -108,14 +108,14 @@ public class DialogoInicial extends JFrame{
 					try{
 						boolean login=Servidor.getInstance().login(id,psw);
 						if (!login)
-							JOptionPane.showMessageDialog(null, "El usuario no existe o la contraseña es errónea",
+							JOptionPane.showMessageDialog(null, "El usuario no existe o la contraseï¿½a es errï¿½nea",
 									"Error",JOptionPane.ERROR_MESSAGE);
 						else
 							cliente.init(id,psw);
 					}
 					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, "El servidor parece estar caído. \n Inténtelo de nuevo más tarde",
-								"Error de conexión",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "El servidor parece estar caï¿½do. \n Intï¿½ntelo de nuevo mï¿½s tarde",
+								"Error de conexiï¿½n",JOptionPane.ERROR_MESSAGE);
 					}
 				}	
 			}
@@ -145,8 +145,8 @@ public class DialogoInicial extends JFrame{
 						}
 					}
 					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, "El servidor parece estar caído. \n Inténtelo de nuevo más tarde",
-								"Error de conexión",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "El servidor parece estar caï¿½do. \n Intï¿½ntelo de nuevo mï¿½s tarde",
+								"Error de conexiï¿½n",JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}

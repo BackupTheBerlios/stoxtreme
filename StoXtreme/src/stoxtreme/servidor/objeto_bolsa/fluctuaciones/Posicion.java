@@ -1,8 +1,8 @@
 package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
 
 /**
- * <p>Título: </p>
- * <p>Descripción: </p>
+ * <p>Tï¿½tulo: </p>
+ * <p>Descripciï¿½n: </p>
  * <p>Copyright: Copyright (c) 2005</p>
  * <p>Empresa: </p>
  * @author sin atribuir
@@ -19,7 +19,7 @@ public class Posicion {
   }
   public String getPrecio(){return idAgente;}
   public int getNumeroDeAcciones(){return numeroDeAcciones;}
-  public int getIdOperación(){return idOp;}
+  public int getIdOperacion(){return idOp;}
 
   public void setPrecio(String id){idAgente=id;}
   public void setNumeroDeAcciones(int nA){numeroDeAcciones=nA;}

@@ -100,7 +100,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
 	        		operacion=this.listaVentas;
 	        	else{
 	        		operacion=new Hashtable();
-	        		System.out.println("No existe la operación deseada");
+	        		System.out.println("No existe la operaciï¿½n deseada");
 	        	}
         	}
         	Enumeration claves=operacion.keys();
@@ -110,7 +110,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         		int i=1;
         		while(!encontrado&&i<cadena.size()){
         			pi=(Posicion)cadena.elementAt(i);
-        			if (pi.getIdOperación()==idOperacion){
+        			if (pi.getIdOperacion()==idOperacion){
         				encontrado=true;
         				cadena.remove(i);
         				String acciones=(String)cadena.firstElement();
@@ -123,7 +123,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         				}
         				else
         					cadena.setElementAt(acciones,0);
-        				System.out.println("se ha eliminado la operación "+idOperacion);
+        				System.out.println("se ha eliminado la operaciï¿½n "+idOperacion);
         			}
         			i++;
         		}
