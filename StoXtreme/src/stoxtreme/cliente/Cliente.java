@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.xml.rpc.ServiceException;
@@ -119,6 +120,14 @@ public class Cliente implements IMensajeriaListener{
 			String empresa = valores[0];
 			double nuevoPrecio = Double.parseDouble(valores[1]);
 			eBolsa.cambiaValor(empresa, nuevoPrecio);
+		}
+		else if(m.getTipoMensaje().equals("INFORMACION")){
+			if(gui!= null){
+				JOptionPane.showMessageDialog(gui,m.getContenido());
+			}
+			else{
+				System.out.println("Mensaje informacion: "+m.getContenido());
+			}
 		}
 		else{
 			System.out.println("Mensaje("+m.getTipoMensaje()+"): "+ m.getContenido());
