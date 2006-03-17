@@ -21,12 +21,18 @@ public class SistemaOperaciones /*implements RelojListener*/{
         //private Hashtable<Double, ArrayList<Object>> listaVentas;
         private Hashtable listaCompras;
         private Hashtable listaVentas;
-        public void paso(){
-
+        private int nAccionesVenta;
+        
+        public void paso(double nuevoPrecio){
+        	// TODO: IMPLEMENTAR EL CRUCE
+        	// Recorrer las operaciones a "nuevoPrecio"
+        	// Lo primero es cruzar con las acciones de la empresa 
+        	// ponerlo como un abanico de precios
         }
-        public SistemaOperaciones (){
+        public SistemaOperaciones (int nAccionesVenta){
           listaCompras=new Hashtable();
           listaVentas=new Hashtable();
+          this.nAccionesVenta = nAccionesVenta;
         }
         public SistemaOperaciones (Hashtable lC,Hashtable lV){
           this.listaCompras=lC;

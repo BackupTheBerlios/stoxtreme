@@ -52,7 +52,8 @@ public class DatosEmpresas {
 				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio
 				info=((Element)nl.item(i)).getTextContent().trim();
-				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info));
+				// TODO: FALTA LEER EL NUMERO INICIAL DE ACCIOENS!!!
+				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info, 1000));
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing

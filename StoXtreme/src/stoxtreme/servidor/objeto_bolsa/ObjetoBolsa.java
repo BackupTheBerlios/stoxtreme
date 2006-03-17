@@ -29,26 +29,29 @@ public class ObjetoBolsa implements RelojListener{
 	StoxtremeMensajes sisMensajes;
 	double cotizacion;
 	InformacionXML infoXML;
-	
+	int nAccionesInicial;
 	/*public ObjetoBolsa(String nombreEmpresa, double cotizacion, String Informacion,
 			SistemaEventos sistEventos, EmisorMensajes smg, VariablesSistema var){
 		sistemaOperaciones = new SistOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 	}*/
-	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion){
+	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion, int nAccionesInicial){
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
 		this.infoXML=new InformacionXML(informacion,nombreEmpresa);
 		//Se le pasa null xq el balance y las cuentas de momento no estan hechos
 		this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
-		
+		this.nAccionesInicial = nAccionesInicial;
 	}
 	
 	double v = 0.0;
 	public void paso(){
 		if(sistemaOperaciones != null && fluctuaciones !=null){
-			sistemaOperaciones.paso();
-			fluctuaciones.paso();
+			// Se calcula el nuevo precio de la empresa
+			double nPrecio = fluctuaciones.paso();
+			
+			// Se cruzan las operaciones
+			sistemaOperaciones.paso(nPrecio);
 		}
 	}
 	
@@ -80,7 +83,7 @@ public class ObjetoBolsa implements RelojListener{
 	}
 	public void setVariablesSistema(VariablesSistema variables, ParametrosServidor parametros) {
 		System.out.println("Pone variables "+ nombreEmpresa);
-		sistemaOperaciones = new SistemaOperaciones();
+		sistemaOperaciones = new SistemaOperaciones(nAccionesInicial);
 		fluctuaciones = new Fluctuaciones(variables,sistemaOperaciones, parametros.getTick(),this.cotizacion,nombreEmpresa);
 	}
 }

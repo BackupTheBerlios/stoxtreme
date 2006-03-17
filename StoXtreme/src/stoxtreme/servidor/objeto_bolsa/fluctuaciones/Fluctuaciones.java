@@ -62,11 +62,12 @@ public class Fluctuaciones {
       return ordV;
   }
   //cambiar para el proyecto total
-  public void paso(){
+  public double paso(){
     double nuevoValor=calculaValorTitulo();
     //System.out.print("El nuevo valor es="+nuevoValor);
     String nomEmpresa="PRECIO_"+empresa.toUpperCase();
     varS.cambiaVariable(nomEmpresa,new Double(nuevoValor));
+    return nuevoValor;
   }
   
   
