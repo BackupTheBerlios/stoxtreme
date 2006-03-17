@@ -6,6 +6,7 @@
 
 
 package stoxtreme.servidor.objeto_bolsa;
+import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.StoxtremeMensajes;
 //import stoxtreme.servidor.Reloj;
@@ -17,6 +18,7 @@ import stoxtreme.servidor.objeto_bolsa.fluctuaciones.Fluctuaciones;
 import stoxtreme.servidor.objeto_bolsa.fluctuaciones.SistemaOperaciones;
 import stoxtreme.servidor.objeto_bolsa.informacion.Informacion;
 import stoxtreme.servidor.objeto_bolsa.informacion.informacion_XML.InformacionXML;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 public class ObjetoBolsa implements RelojListener{
 	String nombreEmpresa;
@@ -41,6 +43,8 @@ public class ObjetoBolsa implements RelojListener{
 		this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
 		
 	}
+	
+	double v = 0.0;
 	public void paso(){
 		if(sistemaOperaciones != null && fluctuaciones !=null){
 			sistemaOperaciones.paso();
@@ -75,6 +79,7 @@ public class ObjetoBolsa implements RelojListener{
 		sistemaOperaciones.cancelaOperacion(idOperacion, tipoOp);
 	}
 	public void setVariablesSistema(VariablesSistema variables, ParametrosServidor parametros) {
+		System.out.println("Pone variables "+ nombreEmpresa);
 		sistemaOperaciones = new SistemaOperaciones();
 		fluctuaciones = new Fluctuaciones(variables,sistemaOperaciones, parametros.getTick(),this.cotizacion,nombreEmpresa);
 	}

@@ -13,6 +13,7 @@ import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.gestion_usuarios.GestionUsuarios;
 import stoxtreme.servidor.gui.MainFrameAdmin;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 import java.rmi.RemoteException;
 import java.util.Enumeration;
@@ -57,7 +58,9 @@ public class Servidor implements Administrador, Stoxtreme{
 		
 	}
 	public boolean login(String usr, String psw){
-		return gestorUsuarios.conectaUsuario(usr,psw);
+		boolean b = gestorUsuarios.conectaUsuario(usr,psw);
+		if(b) AlmacenMensajes.getInstance().altaUsuario(usr);
+		return b;
 	}
 	
 	public boolean registro(String usr, String psw){

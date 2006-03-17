@@ -25,10 +25,11 @@ public class EstadoBolsa extends ModeloTablaPrecioAcciones implements VariablesL
 
 	public void cambioEstadoVariable(String var, Object value) {
 		if(escucha.containsKey(var)){
-			super.cambiaPrecioAccion(escucha.get(var), ((Double)value).intValue());
-			// Notifica a quien interese
-			//Mensaje m = new Mensaje("","CAMBIO_PRECIO");
-			//AlmacenMensajes.getInstance().insertarMensajeGlobal(m);
+			super.cambiaPrecioAccion(escucha.get(var), ((Double)value).doubleValue());
+			// Notifica a todos los oyentes del sistema
+			String c = escucha.get(var)+","+((Double)value).toString();
+			Mensaje m = new Mensaje(c,"CAMBIO_PRECIO", Mensaje.GLOBAL);
+			AlmacenMensajes.getInstance().insertarMensajeGlobal(m);
 		}
 	}
 }

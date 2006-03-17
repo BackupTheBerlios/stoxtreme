@@ -58,13 +58,18 @@ public class Cliente implements IMensajeriaListener{
 			serv.iniciarServidor();
 			serv.showGUI();
 			
-			Cliente c = new Cliente();
+			Cliente cal = new Cliente();
+			Cliente cit = new Cliente();
+			Cliente civ = new Cliente();
+			
 //			identificacion=new DialogoInicial(c);
 //			identificacion.init();
 //			identificacion.pack();
 //			identificacion.setVisible(true);
 //			identificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			c.init("alonso", "alonso");
+			cal.init("alonso", "alonso");
+			cit.init("itziar", "itziar");
+			civ.init("ivan", "ivan");
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -84,7 +89,6 @@ public class Cliente implements IMensajeriaListener{
 //		identificacion.dispose();
 		
 		this.nUsuario = usuario; this.password = pass;
-		
 		eBolsa = new EstadoBolsa();
 		opPendientes = new OperacionesPendientes();
 		cartera = new CarteraAcciones();
@@ -93,6 +97,9 @@ public class Cliente implements IMensajeriaListener{
 		gui.pack();
 		gui.setVisible(true);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Lo ultimo que hacemos es dar de alta en el receptor
+		ReceptorMensajes receptor = new ReceptorMensajes(usuario, ReceptorMensajes.LOCAL);
+		receptor.addListener(this);
 	}
 	
 	public synchronized void onMensaje(Mensaje m){

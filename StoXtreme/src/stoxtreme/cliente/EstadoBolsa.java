@@ -13,6 +13,8 @@ public class EstadoBolsa {
 		ArrayList<String> empresas = new ArrayList<String>();
 		empresas.add("ENDESA");
 		empresas.add("REPSOL");
+		empresas.add("ANTENA3");
+		empresas.add("TELECINCO");
 		mAcciones = new ModeloPrecioAccionesGrafico(empresas);
 		mEmpresas = new ModeloEmpresas(empresas);
 	}

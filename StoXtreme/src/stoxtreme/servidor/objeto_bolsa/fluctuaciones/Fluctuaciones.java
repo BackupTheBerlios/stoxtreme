@@ -65,40 +65,48 @@ public class Fluctuaciones {
   public void paso(){
     double nuevoValor=calculaValorTitulo();
     //System.out.print("El nuevo valor es="+nuevoValor);
-    String nomEmpresa="EMPRESA_"+empresa.toUpperCase();
+    String nomEmpresa="PRECIO_"+empresa.toUpperCase();
     varS.cambiaVariable(nomEmpresa,new Double(nuevoValor));
   }
-  public double calculaValorTitulo(/*String nombreTitulo,double precioA*/){
-
-    Hashtable compra,venta;
-    Vector preciosCompra,preciosVenta;
-    Enumeration claves;
-    //Posicion aux,aux2;
-    String clave;
-    compra=filtrayOrdena(sisOp.getCompras());
-    venta=filtrayOrdena(sisOp.getVentas());
-    claves=compra.keys();
-    //if (compra.size() == venta.size() ){
-      int ordenesM=0;
-      int ordParcial;
-      double precioM=pActual;
-      while(claves.hasMoreElements()){
-        clave=(String)claves.nextElement();
-        if (venta.containsKey(clave)){
-          preciosCompra=(Vector)compra.get(clave);
-          preciosVenta=(Vector)venta.get(clave);
-            ordParcial=minimo(Integer.parseInt((String)preciosCompra.elementAt(0).toString()),
-                              Integer.parseInt((String)preciosVenta.elementAt(0).toString()));
-           //atencion esto se queda kon el primer minimo mirar a ver si keremos otros minimos
-            if (ordParcial>ordenesM){
-              ordenesM = ordParcial;
-              precioM=Double.parseDouble(clave);
-
-            }
-
-        }
-    }
-    return precioM;
+  
+  
+//  public double calculaValorTitulo(/*String nombreTitulo,double precioA*/){
+//
+//    Hashtable compra,venta;
+//    Vector preciosCompra,preciosVenta;
+//    Enumeration claves;
+//    //Posicion aux,aux2;
+//    String clave;
+//    compra=filtrayOrdena(sisOp.getCompras());
+//    venta=filtrayOrdena(sisOp.getVentas());
+//    claves=compra.keys();
+//    //if (compra.size() == venta.size() ){
+//      int ordenesM=0;
+//      int ordParcial;
+//      double precioM=pActual;
+//      while(claves.hasMoreElements()){
+//        clave=(String)claves.nextElement();
+//        if (venta.containsKey(clave)){
+//          preciosCompra=(Vector)compra.get(clave);
+//          preciosVenta=(Vector)venta.get(clave);
+//            ordParcial=minimo(Integer.parseInt((String)preciosCompra.elementAt(0).toString()),
+//                              Integer.parseInt((String)preciosVenta.elementAt(0).toString()));
+//           //atencion esto se queda kon el primer minimo mirar a ver si keremos otros minimos
+//            if (ordParcial>ordenesM){
+//              ordenesM = ordParcial;
+//              precioM=Double.parseDouble(clave);
+//
+//            }
+//
+//        }
+//    }
+//    return precioM;
+//  }
+  
+  // FIXME !!! CUIDADO!!!! QUE HE COMENTADO ESTO XA PROBARR!!!
+  public double calculaValorTitulo(){
+	  pActual *= 1.1;
+	  return pActual;
   }
   public static void main(String[] args) {
     Hashtable cT=new Hashtable();

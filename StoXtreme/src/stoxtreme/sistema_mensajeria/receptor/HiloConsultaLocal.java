@@ -16,12 +16,7 @@ public class HiloConsultaLocal extends Thread{
 			StoxtremeMensajes stoxtreme = AlmacenMensajes.getInstance();
 			while(true){
 				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());
-				if(m!=null){
-					receptor.notifica(m);
-				}
-				else{
-					Thread.sleep(500);
-				}
+				receptor.notifica(m);
 			}
 		}
 		catch(Exception e){
