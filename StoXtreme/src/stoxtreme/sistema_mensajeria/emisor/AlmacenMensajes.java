@@ -1,4 +1,5 @@
 package stoxtreme.sistema_mensajeria.emisor;
+import java.rmi.RemoteException;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -6,9 +7,15 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 import stoxtreme.interfaz_remota.Mensaje;
+import stoxtreme.interfaz_remota.StoxtremeMensajes;
 
-
-public class AlmacenMensajes{
+public class AlmacenMensajes implements StoxtremeMensajes{
+	/*Metodos estaticos para el acceso singletone*/
+	private static AlmacenMensajes _instance = new AlmacenMensajes();
+	public static AlmacenMensajes getInstance(){
+		return _instance;
+	}
+	/**/
 	// Tabla que guarda el numero del ultimo mensaje global que ha leido el usuario
 	// Local a cada usuario (no problema concurrencia)
 	private Hashtable<String, Integer> buzon;
@@ -20,7 +27,7 @@ public class AlmacenMensajes{
 	// Lista de todos usuarios esperando para los mensajes
 	private Hashtable<String, Object> esperando;
 	
-	public AlmacenMensajes(){
+	private AlmacenMensajes(){
 		numMensajesGlobales = 0;
 		buzon = new Hashtable<String, Integer>();
 		mensajesGlobales = new ArrayList<Mensaje>();
@@ -38,8 +45,8 @@ public class AlmacenMensajes{
 		mensajesPrivados.put(ID, new ArrayList<Mensaje>());
 	}
 	
-	public void insertarMensaje(Mensaje m){
-		if (m.equals(Mensaje.GLOBAL)){
+	public void enviaMensaje(Mensaje m){
+		if (m.getDestinatario().equals(Mensaje.GLOBAL)){
 			insertarMensajeGlobal(m);
 		}
 		else{
@@ -52,7 +59,9 @@ public class AlmacenMensajes{
 		numMensajesGlobales ++;
 		Enumeration<String> ids = esperando.keys();
 		while(ids.hasMoreElements()){
-			Object o = esperando.get(ids.nextElement());
+			String id = (String)ids.nextElement();
+			System.out.println("Despierto a: "+id);
+			Object o = esperando.get(id);
 			synchronized(o){
 				o.notify();
 			}
@@ -61,7 +70,8 @@ public class AlmacenMensajes{
 	
 	public synchronized void insertarMensajePrivado(String ID, Mensaje m){
 		mensajesPrivados.get(ID).add(m);
-		if(esperando.contains(ID)){
+		if(esperando.containsKey(ID)){
+			System.out.println("Despierto a: "+ID);
 			Object o = esperando.get(ID);
 			synchronized(o){
 				o.notify();
@@ -81,6 +91,7 @@ public class AlmacenMensajes{
 			esperando.put(ID, cerrojo);
 			while(!isNuevos(ID)){
 				synchronized (cerrojo) {
+					System.out.println("Espero("+ID+")");
 					cerrojo.wait();
 				}
 			}
@@ -105,20 +116,21 @@ public class AlmacenMensajes{
 	
 	public static void main(String[] args){
 		try {
-			AlmacenMensajes almacen = new AlmacenMensajes();
+			AlmacenMensajes almacen = AlmacenMensajes.getInstance();
 			new Lector("alonso", almacen).start();
 			new Lector("itziar", almacen).start();
 			new Lector("ivan", almacen).start();
-			almacen.insertarMensaje(new Mensaje("HOLA", "MGLOBAL", Mensaje.GLOBAL));
+			
+			almacen.enviaMensaje(new Mensaje("HOLA", "MGLOBAL", Mensaje.GLOBAL));
 			System.out.println("Durmiendo global");
 			Thread.currentThread().sleep(1000);
 			System.out.println("Despierto global");
-			almacen.insertarMensaje(new Mensaje("ADIOS", "MGLOBAL", Mensaje.GLOBAL));
-			almacen.insertarMensaje(new Mensaje("HOLA", "MPRIV", "alonso"));
+			almacen.enviaMensaje(new Mensaje("ADIOS", "MGLOBAL", Mensaje.GLOBAL));
+			almacen.enviaMensaje(new Mensaje("HOLA", "MPRIV", "alonso"));
 			System.out.println("Durmiendo privado");
 			Thread.currentThread().sleep(1000);
 			System.out.println("despierto privado");
-			almacen.insertarMensaje(new Mensaje("ADIOS", "MPRIV", "alonso"));
+			almacen.enviaMensaje(new Mensaje("ADIOS", "MPRIV", "alonso"));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -134,11 +146,11 @@ public class AlmacenMensajes{
 		}
 		public void run(){
 			Mensaje m = null;
-			do{
-				m = almacen.getSiguienteMensaje("alonso");
-				System.out.println("Mensaje("+m.getDestinatario()+")"+m.getTipoMensaje()+"-"+m.getContenido());
+			while(true){
+				m = almacen.getSiguienteMensaje(nombre);
+				System.out.println(nombre+":"+" mensaje("+m.getDestinatario()+")"+m.getTipoMensaje()+"-"+m.getContenido());
 			}
-			while(m!=null);
 		}
-	} 
+	}
+
 }

@@ -2,7 +2,7 @@ package stoxtreme.sistema_mensajeria.receptor;
 
 import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.StoxtremeMensajes;
-import stoxtreme.sistema_mensajeria.emisor.EmisorMensajes;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 public class HiloConsultaLocal extends Thread{
 	ReceptorMensajes receptor;
@@ -13,7 +13,7 @@ public class HiloConsultaLocal extends Thread{
 	
 	public void run(){
 		try{
-			StoxtremeMensajes stoxtreme = EmisorMensajes.getInstance();
+			StoxtremeMensajes stoxtreme = AlmacenMensajes.getInstance();
 			while(true){
 				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());
 				if(m!=null){

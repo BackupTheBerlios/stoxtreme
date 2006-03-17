@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.servidor.gui.ModeloTablaPrecioAcciones;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 public class EstadoBolsa extends ModeloTablaPrecioAcciones implements VariablesListener{
 	private Hashtable<String, String> escucha;
@@ -24,6 +26,9 @@ public class EstadoBolsa extends ModeloTablaPrecioAcciones implements VariablesL
 	public void cambioEstadoVariable(String var, Object value) {
 		if(escucha.containsKey(var)){
 			super.cambiaPrecioAccion(escucha.get(var), ((Double)value).intValue());
+			// Notifica a quien interese
+			//Mensaje m = new Mensaje("","CAMBIO_PRECIO");
+			//AlmacenMensajes.getInstance().insertarMensajeGlobal(m);
 		}
 	}
 }

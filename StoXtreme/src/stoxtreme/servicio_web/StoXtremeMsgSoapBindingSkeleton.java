@@ -10,7 +10,7 @@ package stoxtreme.servicio_web;
 import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.StoxtremeMensajes;
 import stoxtreme.servidor.Servidor;
-import stoxtreme.sistema_mensajeria.emisor.EmisorMensajes;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 public class StoXtremeMsgSoapBindingSkeleton implements stoxtreme.interfaz_remota.StoxtremeMensajes, org.apache.axis.wsdl.Skeleton {
     private stoxtreme.interfaz_remota.StoxtremeMensajes impl;
@@ -64,7 +64,7 @@ public class StoXtremeMsgSoapBindingSkeleton implements stoxtreme.interfaz_remot
         // Generado automaticamente
     	//this.impl = new stoxtreme.interfaz_remota.StoXtremeMsgSoapBindingImpl();
     	// Lo sobreescribimos
-    	this.impl = EmisorMensajes.getInstance();
+    	this.impl = AlmacenMensajes.getInstance();
     }
 
     public StoXtremeMsgSoapBindingSkeleton(stoxtreme.interfaz_remota.StoxtremeMensajes impl) {
