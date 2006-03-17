@@ -44,7 +44,9 @@ public class ObjetoCondicion {
 	public boolean evalua(){
 		if(valorCambiado){
 			try {
-				return e.evalua(vSistema);
+				boolean b = e.evalua(vSistema);
+				valorCambiado = false;
+				return b;
 			} catch (ParseException e) {
 				e.printStackTrace();
 				System.exit(-1);
