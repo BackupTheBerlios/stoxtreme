@@ -2,6 +2,8 @@ package stoxtreme.herramienta_agentes.agentes.interaccion_agentes;
 
 import java.util.ArrayList;
 
+import stoxtreme.herramienta_agentes.agentes.IDAgente;
+
 public class Mensaje {
 	// Tipo de acto de comunicacion
 	private Performative performative = null;

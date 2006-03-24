@@ -1,5 +1,7 @@
 package stoxtreme.herramienta_agentes.agentes.interaccion_agentes;
 
+import stoxtreme.herramienta_agentes.agentes.IDAgente;
+
 public class IDConversacion {
 	private static int ids = 0;
 	private String ID = new String("Conversation"+ (++ids));

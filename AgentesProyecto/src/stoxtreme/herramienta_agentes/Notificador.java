@@ -6,10 +6,12 @@ import java.util.Hashtable;
 
 
 public class Notificador {
-	Hashtable<String, ListenerNotificador> observadores;
+	// FIXME: Esto no deberia ser estatico
+	private static Hashtable<String, ListenerNotificador> observadores =
+		new Hashtable<String, ListenerNotificador>();
 	
 	public Notificador(){
-		observadores = new Hashtable<String, ListenerNotificador>();
+
 	}
 	
 	public void addListener(String id, ListenerNotificador a){

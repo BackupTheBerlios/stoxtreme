@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import stoxtreme.herramienta_agentes.MonitorAgentes;
+import stoxtreme.herramienta_agentes.agentes.IDAgente;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
-import stoxtreme.herramienta_agentes.agentes.decisiones.RecepcionMensaje;
 
 // Los buzones son objetos locales del agente, pero que se comunican entre
 // ellos mediante una instancia global

@@ -1,9 +1,9 @@
-package stoxtreme.herramienta_agentes.agentes.decisiones;
+package stoxtreme.herramienta_agentes.agentes.interaccion_agentes;
 
 import java.util.ArrayList;
 
 import stoxtreme.herramienta_agentes.agentes.Agente;
-import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Mensaje;
+import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 
 public abstract class RecepcionMensaje extends Decision{
 	protected ArrayList<Mensaje> listaMensajes;

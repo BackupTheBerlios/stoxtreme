@@ -20,4 +20,9 @@ public class IDAgente {
 	public String toString(){
 		return idUsuario+"#"+idAgente;
 	}
+	
+	public boolean equals(Object o){
+		return (o instanceof IDAgente) 
+			&& ((IDAgente)o).toString().equals(this.toString());
+	}
 }

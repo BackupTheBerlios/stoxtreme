@@ -3,11 +3,11 @@ package stoxtreme.herramienta_agentes.agentes;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import java.util.*;
-
 import stoxtreme.herramienta_agentes.*;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.*;
 import stoxtreme.herramienta_agentes.agentes.decisiones.*;
+import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
+import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Mensaje;
 // Primer prototipo de agente broker.
 // Inicialmente se le introduce el parametro correspondiente al tiempo de espera
 // El broker, esperará a que transcurran tiempoEspera ciclos de ejecución y cuando
@@ -18,11 +18,11 @@ import stoxtreme.herramienta_agentes.agentes.decisiones.*;
 // PostStep - Introduce la operación en el sistema correspondiendo con sus intenciones
 
 public class Agente extends Thread{
+	private BuzonMensajes buzon;
 	private IDAgente ID;
 	private Perceptor p;
 	private OperacionesPendientes opPendientes;
 	private ComportamientoAgente comportamiento;
-	private ArrayList<Decision> decisiones;
 	private MonitorAgentes monitor;
 	private boolean alive;
 	
@@ -33,6 +33,7 @@ public class Agente extends Thread{
 		p.setOperacionesPendientes(opPendientes);
 		this.monitor = monitor;
 		this.alive = true;
+		buzon = new BuzonMensajes(monitor, ID);
 	}
 	
 	public void addComportamiento(ComportamientoAgente c){
@@ -93,5 +94,10 @@ public class Agente extends Thread{
 	
 	public String getIDString(){
 		return ID.toString();
+	}
+	
+	public void enviarMensaje(Mensaje m){
+		m.setSender(ID);
+		buzon.send(m);
 	}
 }
