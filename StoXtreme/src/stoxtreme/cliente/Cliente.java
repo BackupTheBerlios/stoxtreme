@@ -137,4 +137,7 @@ public class Cliente implements IMensajeriaListener{
 	public String getNUsuario() {
 		return nUsuario;
 	}
+	public void deslogea() throws Exception{
+		servidor.login(nUsuario, password);
+	}
 }

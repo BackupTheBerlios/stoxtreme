@@ -61,6 +61,33 @@ public class MainFrameCliente extends JFrame{
 		tabbedPane.insertTab("Informacion", null, new JPanel(), null, 1);
 		tabbedPane.insertTab("Agentes", null, new JPanel(), null, 2);
 		getContentPane().add(tabbedPane);
+		this.addWindowListener(new WindowListener(){
+			public void windowOpened(WindowEvent e) {
+			}
+
+			public void windowClosing(WindowEvent e) {
+			}
+
+			public void windowClosed(WindowEvent e) {
+				try {
+					cliente.deslogea();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+
+			public void windowIconified(WindowEvent e) {
+			}
+
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			public void windowActivated(WindowEvent e) {
+			}
+
+			public void windowDeactivated(WindowEvent e) {
+			}
+		});
 	}
 	
 	public JSplitPane getPanelPrincipal(){
