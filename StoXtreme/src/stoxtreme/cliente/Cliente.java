@@ -46,7 +46,7 @@ public class Cliente implements IMensajeriaListener{
 		}
 	}
 	public static void main(String[] args) {
-		Cliente c = new Cliente("http://localhost:8080/axis/services/StoXtreme");
+		Cliente c = new Cliente("http://192.168.0.199:8080/axis/services/StoXtreme");
 		try {
 			c.init("alonso", "alonso");
 			ReceptorMensajes receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE);

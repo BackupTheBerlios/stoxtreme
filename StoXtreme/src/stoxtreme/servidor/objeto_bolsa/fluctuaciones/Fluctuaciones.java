@@ -20,6 +20,10 @@ public class Fluctuaciones {
   private VariablesSistema varS;
   private String empresa;
   
+  public static double redondeo(double numero, int nDecimales){
+	  return Math.floor((Math.pow(10, nDecimales)*numero)+0.5)/Math.pow(10, nDecimales);
+  }
+  
   public Fluctuaciones(VariablesSistema varSis,SistemaOperaciones sO,double nt,double pa,String emp) {
     sisOp=sO;
     tick=nt;
@@ -27,6 +31,7 @@ public class Fluctuaciones {
     varS=varSis;
     empresa=emp;
   }
+  
   public Fluctuaciones(SistemaOperaciones sO,double nt,double pa,String emp) {
 	    sisOp=sO;
 	    tick=nt;
@@ -101,13 +106,14 @@ public class Fluctuaciones {
 //
 //        }
 //    }
-//    return precioM;
+//    
+//    return redondeo(precioM, 2);
 //  }
   
   // FIXME !!! CUIDADO!!!! QUE HE COMENTADO ESTO XA PROBARR!!!
   public double calculaValorTitulo(){
 	  pActual *= 1.1;
-	  return pActual;
+	  return redondeo(pActual, 2);
   }
   public static void main(String[] args) {
     Hashtable cT=new Hashtable();
