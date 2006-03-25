@@ -33,56 +33,35 @@ public class Cliente implements IMensajeriaListener{
 	CarteraAcciones cartera;
 	MainFrameCliente gui;
 	static DialogoInicial identificacion;
+	private Stoxtreme servidor;
 	
-	public Cliente(){
-//		try {
-//			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
-//			servicio = locator.getStoXtreme();
-//		} catch (ServiceException e) {
-//			e.printStackTrace();
-//		}
-	}
-	public static void main(String[] args) {
-		/*
-		ClienteGUI gui = new ClienteGUI();
-		gui.init();
-		gui.setPreferredSize(new Dimension(300, 300));
-		gui.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-		gui.pack();
-		gui.setVisible(true);
-		*/
-		
+	public Cliente(String url){
 		try{
-			//TODO Mirar porque el login funciona si se inicia el servidor desde aqui,
-			//pero si se inicia como desde el main del servidor, peta (no detecta al servidor)
-			Servidor serv = Servidor.getInstance();
-			serv.iniciarServidor();
-			serv.showGUI();
-			
-			Cliente cal = new Cliente();
-			Cliente cit = new Cliente();
-			Cliente civ = new Cliente();
-			
-//			identificacion=new DialogoInicial(c);
-//			identificacion.init();
-//			identificacion.pack();
-//			identificacion.setVisible(true);
-//			identificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			cal.init("alonso", "alonso");
-			cit.init("itziar", "itziar");
-			civ.init("ivan", "ivan");
+			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
+			locator.setEndpointAddress("8080", url);
+			servidor = locator.getStoXtreme();
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
 	}
+	public static void main(String[] args) {
+		Cliente c = new Cliente("localhost");
+		try {
+			c.init("alonso", "alonso");
+			ReceptorMensajes receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE);
+			receptor.addListener(c);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void init(String usuario, String pass) throws Exception{
-		boolean login = Servidor.getInstance().login(usuario, pass);
+		boolean login = servidor.login(usuario, pass);
 		if(!login){
-			boolean reg = Servidor.getInstance().registro(usuario, pass);
+			boolean reg = servidor.registro(usuario, pass);
 			if(!reg) throw new Exception("Fallo en el registro");
-			login = Servidor.getInstance().login(usuario, pass);
+			login = servidor.login(usuario, pass);
 			if(!login) throw new Exception("Fallo en el login");
 		}
 		
@@ -99,8 +78,7 @@ public class Cliente implements IMensajeriaListener{
 		gui.setVisible(true);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Lo ultimo que hacemos es dar de alta en el receptor
-		ReceptorMensajes receptor = new ReceptorMensajes(usuario, ReceptorMensajes.LOCAL);
-		receptor.addListener(this);
+		
 	}
 	
 	public synchronized void onMensaje(Mensaje m){
@@ -134,13 +112,13 @@ public class Cliente implements IMensajeriaListener{
 		}
 	}
 	
-	public void insertarOperacion(Operacion op){
-		int idOp = Servidor.getInstance().insertarOperacion(nUsuario, op);
+	public void insertarOperacion(Operacion op)throws Exception{
+		int idOp = servidor.insertarOperacion(nUsuario, op);
 		opPendientes.inserta(idOp, op);
 	}
 	
-	public void cancelarOperacion(int op){
-		Servidor.getInstance().cancelarOperacion(nUsuario, op);
+	public void cancelarOperacion(int op)throws Exception{
+		servidor.cancelarOperacion(nUsuario, op);
 	}
 	
 	public void notificaOperacion(int idOp, int cantidad){
