@@ -22,12 +22,19 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados{
 	 * y que no estaba ya conectado.
 	 */
 	public boolean conectaUsuario(String id, String psw){
-		if (registrados.existeUsuario(id)&&registrados.compruebaPsw(id,psw)&&!conectados.yaConectado(id)){
+		//Si esta registrado y la contreseña coincide y no esta conectado,lo conecta
+		if (registrados.existeUsuario(id) && registrados.compruebaPsw(id,psw) && !conectados.yaConectado(id)){
 			conectados.insertaUsuario(id);
 			super.setEstadoUsuario(id, true);
 			return true;
+			//Si esta registrado y conectado y hace login otra vez, se desconecta
 		}else
-			return false;
+			if (registrados.existeUsuario(id) && conectados.yaConectado(id)){
+				conectados.quitarUsuario(id);
+				this.desconectaUsuario(id);
+				return true;
+			}else
+				return false;
 	}
 	
 	public boolean desconectaUsuario(String id){

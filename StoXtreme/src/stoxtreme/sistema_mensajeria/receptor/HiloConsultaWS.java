@@ -1,5 +1,7 @@
 package stoxtreme.sistema_mensajeria.receptor;
 
+import java.net.URL;
+
 import javax.xml.rpc.ServiceException;
 
 import stoxtreme.interfaz_remota.Mensaje;
@@ -20,9 +22,14 @@ public class HiloConsultaWS extends Thread{
 	public void run(){
 		try{
 			StoxtremeMensajesServiceLocator locator = new StoxtremeMensajesServiceLocator();
-			if(url!=null)
-				locator.setEndpointAddress("8080", url);
-			StoxtremeMensajes stoxtreme = locator.getStoXtremeMsg();
+			StoxtremeMensajes stoxtreme;
+			if(url!=null){
+				stoxtreme = locator.getStoXtremeMsg(new URL(url));
+			}
+			else{
+				stoxtreme = locator.getStoXtremeMsg();
+			}
+				
 			while(true){
 				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());
 				if(m!=null){
