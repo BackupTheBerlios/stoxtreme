@@ -1,6 +1,7 @@
 package stoxtreme.cliente;
 
 import java.awt.Dimension;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -38,15 +39,14 @@ public class Cliente implements IMensajeriaListener{
 	public Cliente(String url){
 		try{
 			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
-			locator.setEndpointAddress("8080", url);
-			servidor = locator.getStoXtreme();
+			servidor = locator.getStoXtreme(new URL(url));
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	public static void main(String[] args) {
-		Cliente c = new Cliente("localhost");
+		Cliente c = new Cliente("http://localhost:8080/axis/services/StoXtreme");
 		try {
 			c.init("alonso", "alonso");
 			ReceptorMensajes receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE);

@@ -139,7 +139,7 @@ public class Servidor implements Administrador, Stoxtreme{
 		reloj.addListener(variables);
 		
 		try{
-			sistEventos.insertarEvento("tiempo==5", "dihola_alonso", false);
+			//sistEventos.insertarEvento("tiempo==5", "dihola_alonso", false);
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
