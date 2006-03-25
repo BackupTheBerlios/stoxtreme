@@ -9,15 +9,19 @@ import stoxtreme.servicio_web.StoxtremeMensajesServiceLocator;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
 
 public class HiloConsultaWS extends Thread{
-	ReceptorMensajes receptor;
+	private ReceptorMensajes receptor;
+	private String url;
 	
-	public HiloConsultaWS(ReceptorMensajes mensajesWS){
+	public HiloConsultaWS(ReceptorMensajes mensajesWS, String url){
 		receptor = mensajesWS;
+		this.url = url;
 	}
 	
 	public void run(){
 		try{
 			StoxtremeMensajesServiceLocator locator = new StoxtremeMensajesServiceLocator();
+			if(url!=null)
+				locator.setEndpointAddress("8080", url);
 			StoxtremeMensajes stoxtreme = locator.getStoXtremeMsg();
 			while(true){
 				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());

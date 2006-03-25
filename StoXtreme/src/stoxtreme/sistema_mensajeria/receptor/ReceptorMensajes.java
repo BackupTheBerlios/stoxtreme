@@ -14,6 +14,9 @@ public class ReceptorMensajes{
 	private String usuario;
 	
 	public ReceptorMensajes(String usuario, int tipo){
+		this(usuario, tipo, null);
+	}
+	public ReceptorMensajes(String usuario, int tipo, String url){
 		listaOyentes = new ArrayList();
 		this.usuario = usuario;
 		if(tipo==LOCAL){
@@ -21,7 +24,7 @@ public class ReceptorMensajes{
 			hiloConsultaLocal.start();
 		}
 		else{
-			hiloConsultaWS = new HiloConsultaWS(this);
+			hiloConsultaWS = new HiloConsultaWS(this, url);
 			hiloConsultaWS.start();
 		}
 
