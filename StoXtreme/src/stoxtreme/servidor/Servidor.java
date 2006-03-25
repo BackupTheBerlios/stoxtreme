@@ -9,6 +9,7 @@ package stoxtreme.servidor;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Administrador;
 import stoxtreme.interfaz_remota.Stoxtreme;
+import stoxtreme.servicio_web.AdministradorServiceLocator;
 import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.gestion_usuarios.GestionUsuarios;
 import stoxtreme.servidor.gui.MainFrameAdmin;
@@ -82,10 +83,11 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	public static void main(String[] argv){
 		try {
+			AdministradorServiceLocator  locator= new AdministradorServiceLocator();
+			Administrador servidor =locator.getStoXtremeAdmin();
 			/*Lanzamiento estatico del servidor para pruebas*/
-			Servidor serv = Servidor.getInstance();
-			serv.iniciarServidor();
-			serv.showGUI();
+			servidor.iniciarServidor();
+			servidor.showGUI();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
