@@ -49,7 +49,7 @@ public class Cliente implements IMensajeriaListener{
 		Cliente c = new Cliente("http://192.168.0.199:8080/axis/services/StoXtreme");
 		try {
 			c.init("alonso", "alonso");
-			ReceptorMensajes receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE);
+			ReceptorMensajes receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, "http://192.168.0.199:8080/axis/services/StoXtremeMsg");
 			receptor.addListener(c);
 		} catch (Exception e) {
 			e.printStackTrace();
