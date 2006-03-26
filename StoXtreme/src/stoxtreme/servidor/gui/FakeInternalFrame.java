@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.LayoutManager;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -24,11 +25,13 @@ public class FakeInternalFrame extends JPanel{
 		this.add(getBarraTitulo(), BorderLayout.NORTH);
 		panelPrincipal.add(principal);
 		this.add(panelPrincipal, BorderLayout.CENTER);
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 	
 	public JPanel getBarraTitulo(){
 		JPanel panel = new JPanel();
 		panel.setBackground(colorRotulo);
+		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		JLabel tituloLabel = new JLabel(titulo);
 		tituloLabel.setForeground(Color.white);
 		panel.add(tituloLabel);

@@ -3,6 +3,7 @@ package stoxtreme.servidor.gestion_usuarios;
 import java.util.Enumeration;
 
 import stoxtreme.servidor.gui.ModeloListaUsuariosConectados;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 public class GestionUsuarios extends ModeloListaUsuariosConectados{
 	private UsuariosConectados conectados;
@@ -14,15 +15,18 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados{
 		registrados = new UsuariosRegistrados(fichReg);
 		
 		Enumeration<String> usrRegs = registrados.dameUsuarios();
-		while(usrRegs.hasMoreElements())
-			super.addUsuario(usrRegs.nextElement());
+		while(usrRegs.hasMoreElements()){
+			String id = usrRegs.nextElement();
+			super.addUsuario(id);
+			AlmacenMensajes.getInstance().altaUsuario(id);
+		}
 	}
 	
-	/* Comprueba que el usuario esta dado de alta, que la contraseña es correcta 
+	/* Comprueba que el usuario esta dado de alta, que la contraseï¿½a es correcta 
 	 * y que no estaba ya conectado.
 	 */
 	public boolean conectaUsuario(String id, String psw){
-		//Si esta registrado y la contreseña coincide y no esta conectado,lo conecta
+		//Si esta registrado y la contreseï¿½a coincide y no esta conectado,lo conecta
 		if (registrados.existeUsuario(id) && registrados.compruebaPsw(id,psw) && !conectados.yaConectado(id)){
 			conectados.insertaUsuario(id);
 			super.setEstadoUsuario(id, true);
@@ -41,7 +45,7 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados{
 		setEstadoUsuario(id, false);
 		return true;
 	}
-	/* Si el id de usuario no existe, se añade a la tabla hash
+	/* Si el id de usuario no existe, se aï¿½ade a la tabla hash
 	 * y al arbol DOM (para que los cambios queden reflejados
 	 * en el fichero registrados.xml)
 	 */
@@ -52,7 +56,8 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados{
 			//TODO es ineficiente que vuelque cada vez que se registra uno
 			//habria que hacerlo al salir del servidor
 			registrados.vuelcaEnFichero();
-			addUsuario(id);
+			super.addUsuario(id);
+			AlmacenMensajes.getInstance().altaUsuario(id);
 			return true;
 		}else
 			return false;

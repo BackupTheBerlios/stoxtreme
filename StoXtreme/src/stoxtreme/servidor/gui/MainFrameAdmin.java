@@ -103,19 +103,11 @@ public class MainFrameAdmin extends JFrame{
 		JScrollPane panelIzq = new JScrollPane(tablaVariables);
 		JPanel panelDer = new JPanel(new BorderLayout());
 		JPanel panelDerAbajo = new JPanel();
-		JButton botonInsertar = new JButton("InsertarEvento");
-		botonInsertar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				/*TODO METER DIALOGO PARA QUE EL X INSERTE EVENTO*/
-			}
-		});
+		JButton botonInsertar = new JButton(ModeloTablaEventos.INSERTAR_EVENTO);
+		botonInsertar.addActionListener(modeloEventos);
 		panelDerAbajo.add(botonInsertar);
-		JButton botonCancelar = new JButton("CancelarEvento");
-		botonCancelar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				/*TODO PUES LO MISMO XO CANCELANDO*/
-			}
-		});
+		JButton botonCancelar = new JButton(ModeloTablaEventos.CANCELAR_EVENTO);
+		botonCancelar.addActionListener(modeloEventos);
 		panelDerAbajo.add(botonCancelar);
 		
 		JTable tablaEventos = new JTable(modeloEventos);

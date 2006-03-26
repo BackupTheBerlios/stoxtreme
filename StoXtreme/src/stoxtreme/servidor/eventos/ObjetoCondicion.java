@@ -15,12 +15,13 @@ public class ObjetoCondicion {
 	private boolean unavez;
 	private Evaluador e;
 	private boolean valorCambiado;
+	private boolean activado;
 	
 	public ObjetoCondicion(String descripcion, VariablesSistema variables) throws ParseException{
-		this(descripcion, variables, false);
+		this(descripcion, variables, false, true);
 	}
 	
-	public ObjetoCondicion(String descripcion, VariablesSistema variables, boolean unavez) throws ParseException{
+	public ObjetoCondicion(String descripcion, VariablesSistema variables, boolean unavez, boolean activado) throws ParseException{
 		this.descripcion = descripcion;
 		this.unavez = unavez;
 		this.vSistema = variables;
@@ -34,8 +35,14 @@ public class ObjetoCondicion {
 			String vi = (String)variablesUsadas.get(i);
 		}
 		valorCambiado = false;
+		this.activado = activado;
 	}
-	
+	public boolean isActivado(){
+		return activado;
+	}
+	public void setActivado(boolean b){
+		this.activado = b;
+	}
 	public void cambiaVariable(String s, Object valor){
 		if(variablesUsadas.contains(s)){
 			valorCambiado = true;

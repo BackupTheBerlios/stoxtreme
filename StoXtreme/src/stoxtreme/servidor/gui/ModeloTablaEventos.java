@@ -1,14 +1,23 @@
 package stoxtreme.servidor.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-public class ModeloTablaEventos extends AbstractTableModel{
+import stoxtreme.servidor.Servidor;
+import stoxtreme.servidor.eventos.evaluador.ParseException;
+
+public abstract class ModeloTablaEventos extends AbstractTableModel implements ActionListener{
+	public static final String INSERTAR_EVENTO = "Insertar Evento";
+	public static final String CANCELAR_EVENTO = "Cancelar Evento";
 	private ArrayList<Evento> listaEventos;
 	private ArrayList<Boolean> eventosActivos;
 	
@@ -17,6 +26,9 @@ public class ModeloTablaEventos extends AbstractTableModel{
 		eventosActivos = new ArrayList<Boolean>();
 	}
 	
+	abstract public void cambiaSeleccion(String condicion, String accion, boolean valor);
+	abstract public void insertarEvento(String condicion, String  accion, boolean unaVez, boolean activo);
+
 	public String getColumnName(int columnIndex){
 		switch(columnIndex){
 			case 0: return "Condicion";
@@ -31,11 +43,20 @@ public class ModeloTablaEventos extends AbstractTableModel{
 	public int getColumnCount() {
 		return 3; 
 	}
-
+	
+	public void setValueAt(Object aValue, int row, int column){
+		if(column == 2){
+			cambiaSeleccion(listaEventos.get(row).getCondicion(), 
+					listaEventos.get(row).getAccion(),
+					((Boolean)aValue).booleanValue());
+			eventosActivos.set(row, (Boolean)aValue);
+		}
+	}
+	
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch(columnIndex){
-		case 0: return ((Evento)listaEventos.get(rowIndex)).getCondicion();
-		case 1: return ((Evento)listaEventos.get(rowIndex)).getAccion();
+		case 0: return listaEventos.get(rowIndex).getCondicion();
+		case 1: return listaEventos.get(rowIndex).getAccion();
 		default: return eventosActivos.get(rowIndex);
 		}
 	}
@@ -48,17 +69,12 @@ public class ModeloTablaEventos extends AbstractTableModel{
 		return columnIndex==2;
 	}
 	
-	public void addEvento(String condicion, String accion, boolean activo) {
+	public void addEvento(String condicion, String accion, boolean unavez, boolean activo) {
 		listaEventos.add(new Evento(condicion, accion));
 		eventosActivos.add(new Boolean(activo));
 		this.fireTableRowsInserted(listaEventos.size()-1, listaEventos.size()-1);
 	}
 	
-	public void setEventoActivo(int indice, boolean valor){
-		eventosActivos.set(indice, new Boolean(valor));
-		this.fireTableCellUpdated(indice, 2);
-	}
-
 	private class Evento{
 		private String condicion;
 		private String accion;
@@ -86,10 +102,26 @@ public class ModeloTablaEventos extends AbstractTableModel{
 	}
 
 	public void quitarEvento(String descripcion) {
+		boolean cambiado = false;
 		for(int i=listaEventos.size()-1; i>=0; i--){
 			if(listaEventos.get(i).getCondicion().equals(descripcion)){
 				listaEventos.remove(i);
+				cambiado = true;
 			}
+		}
+		if(cambiado) fireTableDataChanged();
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if(((JButton)e.getSource()).getText().equals(INSERTAR_EVENTO)){
+			DialogoInsercionEvento diag = new DialogoInsercionEvento(Servidor.getInstance().getGUI());
+			diag.setVisible(true);
+			if(diag.isAceptado()){
+				insertarEvento(diag.getCondicion(), diag.getEvento(),diag.isUnaVez(), diag.isIniciarActivo());
+			}
+		}
+		else if(((JButton)e.getSource()).getText().equals(CANCELAR_EVENTO)){
+			
 		}
 	}
 }

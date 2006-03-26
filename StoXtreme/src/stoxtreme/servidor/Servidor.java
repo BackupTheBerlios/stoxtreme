@@ -16,6 +16,7 @@ import stoxtreme.servidor.gui.MainFrameAdmin;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
+import java.awt.Frame;
 import java.rmi.RemoteException;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -60,7 +61,6 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	public boolean login(String usr, String psw){
 		boolean b = gestorUsuarios.conectaUsuario(usr,psw);
-		if(b) AlmacenMensajes.getInstance().altaUsuario(usr);
 		return b;
 	}
 	
@@ -82,17 +82,22 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	
 	public static void main(String[] argv){
+//		try {
+//			AdministradorServiceLocator  locator= new AdministradorServiceLocator();
+//			Administrador servidor =locator.getStoXtremeAdmin();
+//			/*Lanzamiento estatico del servidor para pruebas*/
+//			servidor.iniciarServidor();
+//			servidor.showGUI();
+//		} 
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		try {
-			AdministradorServiceLocator  locator= new AdministradorServiceLocator();
-			Administrador servidor =locator.getStoXtremeAdmin();
-			/*Lanzamiento estatico del servidor para pruebas*/
-			servidor.iniciarServidor();
-			servidor.showGUI();
-		} 
-		catch (Exception e) {
+			getInstance().iniciarServidor();
+			getInstance().showGUI();
+		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void iniciarServidor() throws RemoteException {
@@ -170,5 +175,11 @@ public class Servidor implements Administrador, Stoxtreme{
 	public void hideGUI() throws RemoteException {
 		// TODO Auto-generated method stub
 		guiAdmin.setVisible(false);
+	}
+	public VariablesSistema getVariablesSistema() {
+		return variables;
+	}
+	public Frame getGUI() {
+		return this.guiAdmin;
 	}
 }
