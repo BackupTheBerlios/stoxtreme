@@ -9,8 +9,7 @@ public class ReceptorMensajes{
 	public static final int LOCAL = 1;
 	public static final int WEB_SERVICE = 2;
 	private ArrayList<IMensajeriaListener> listaOyentes;
-	private HiloConsultaWS hiloConsultaWS;
-	private HiloConsultaLocal hiloConsultaLocal;
+	private Thread hiloConsulta;
 	private String usuario;
 	
 	public ReceptorMensajes(String usuario, int tipo){
@@ -20,14 +19,12 @@ public class ReceptorMensajes{
 		listaOyentes = new ArrayList();
 		this.usuario = usuario;
 		if(tipo==LOCAL){
-			hiloConsultaLocal = new HiloConsultaLocal(this);
-			hiloConsultaLocal.start();
+			hiloConsulta = new HiloConsultaLocal(this);
 		}
 		else{
-			hiloConsultaWS = new HiloConsultaWS(this, url);
-			hiloConsultaWS.start();
+			hiloConsulta = new HiloConsultaWS(this, url);
 		}
-
+		hiloConsulta.start();
 	}
 	
 	public void addListener(IMensajeriaListener l){
@@ -44,5 +41,8 @@ public class ReceptorMensajes{
 		while(it.hasNext()){
 			((IMensajeriaListener)it.next()).onMensaje(m);
 		}
+	}
+	public void paraReceptor() {
+		hiloConsulta.interrupt();
 	}
 }

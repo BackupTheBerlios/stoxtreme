@@ -35,9 +35,6 @@ public class HiloConsultaWS extends Thread{
 				if(m!=null){
 					receptor.notifica(m);
 				}
-				else{
-					Thread.sleep(500);
-				}
 			}
 		}
 		catch(Exception e){

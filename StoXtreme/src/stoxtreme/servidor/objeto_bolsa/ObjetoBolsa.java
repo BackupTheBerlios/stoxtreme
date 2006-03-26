@@ -72,10 +72,14 @@ public class ObjetoBolsa implements RelojListener{
 	}
 	
 	public void insertaOperacion(String IDAgente,int idOperacion, Operacion op){
-		if(op.getTipoOp()==Operacion.COMPRA)
-			sistemaOperaciones.introduceCompra(idOperacion, IDAgente, op.getPrecio(), op.getCantidad());
-		if(op.getTipoOp()==Operacion.VENTA)
-			sistemaOperaciones.introduceVenta(idOperacion, IDAgente, op.getPrecio(), op.getCantidad());
+		// TODO COMENTADO PARA PODER PROBAR COSAS
+//		if(op.getTipoOp()==Operacion.COMPRA)
+//			sistemaOperaciones.introduceCompra(idOperacion, IDAgente, op.getPrecio(), op.getCantidad());
+//		if(op.getTipoOp()==Operacion.VENTA)
+//			sistemaOperaciones.introduceVenta(idOperacion, IDAgente, op.getPrecio(), op.getCantidad());
+		// Notificamos siempre
+		String c = Integer.toString(op.getCantidad());
+		AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_OPERACION", IDAgente+","+c));
 	}
 	
 	public void cancelarOperacion(int idOperacion, String tipoOp){

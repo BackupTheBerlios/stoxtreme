@@ -72,7 +72,7 @@ public class Servidor implements Administrador, Stoxtreme{
 		System.out.println("USUARIO "+usuario+" INSERTA OPERACION");
 		IDS++;
 		String empresa = o.getEmpresa();
-		//objetosBolsa.get(empresa).insertaOperacion(usuario, IDS, o);
+		objetosBolsa.get(empresa).insertaOperacion(usuario, IDS, o);
 		regOperaciones.insertarOperacion(o);
 		return IDS;
 	}
@@ -97,7 +97,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	public void iniciarServidor() throws RemoteException {
 		// TODO Aqui debe ir toda la ejecucion
-		/* TODO: Añadir al reloj todos los listener
+		/* TODO: Aï¿½adir al reloj todos los listener
 		 * 	- Objetos Bolsa
 		 *  - Variables del sistema
 		 */

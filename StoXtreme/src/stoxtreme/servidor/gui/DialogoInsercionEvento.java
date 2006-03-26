@@ -10,6 +10,9 @@ public class DialogoInsercionEvento extends JDialog{
 	private JPanel panelPrincipal;
 	private DialogoInsercionEvento este;
 	
+	private String condicion;
+	private String evento;
+	
 	public DialogoInsercionEvento(Frame owner){
 		super(owner);
 		este = this;

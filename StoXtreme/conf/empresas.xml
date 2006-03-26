@@ -1,14 +1,14 @@
 <empresas>
  	<emp nombre="ENDESA" cotizacion="25.65" global="FALSE">
-		conf\endesa.xml 		
+		conf/endesa.xml 		
 	</emp>
  	<emp nombre="REPSOL" cotizacion="50.70" global="FALSE">
-		conf\repsol.xml 		
+		conf/repsol.xml 		
 	</emp>
  	<emp nombre="TELECINCO" cotizacion="15.30" global="FALSE">
-		conf\telecinco.xml 		
+		conf/telecinco.xml 		
 	</emp>
 	<emp nombre="ANTENA3" cotizacion="23.5" global="FALSE">
-		conf\antena3.xml 		
+		conf/antena3.xml 		
 	</emp>
 </empresas>

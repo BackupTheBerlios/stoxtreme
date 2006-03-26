@@ -66,14 +66,15 @@ public class MainFrameCliente extends JFrame{
 			}
 
 			public void windowClosing(WindowEvent e) {
-			}
-
-			public void windowClosed(WindowEvent e) {
 				try {
 					cliente.deslogea();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+			}
+
+			public void windowClosed(WindowEvent e) {
+				
 			}
 
 			public void windowIconified(WindowEvent e) {

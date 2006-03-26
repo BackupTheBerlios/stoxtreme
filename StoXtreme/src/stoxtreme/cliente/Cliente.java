@@ -26,6 +26,8 @@ import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 import stoxtreme.sistema_mensajeria.receptor.*;
 
 public class Cliente implements IMensajeriaListener{
+	private static final String URLAXIS = "http://localhost:8080/axis/services/";
+	
 	private String nUsuario;
 	private String password;
 	private Stoxtreme servicio;
@@ -33,8 +35,9 @@ public class Cliente implements IMensajeriaListener{
 	OperacionesPendientes opPendientes;
 	CarteraAcciones cartera;
 	MainFrameCliente gui;
-	static DialogoInicial identificacion;
+	private DialogoInicial identificacion;
 	private Stoxtreme servidor;
+	private ReceptorMensajes receptor;
 	
 	public Cliente(String url){
 		try{
@@ -46,7 +49,7 @@ public class Cliente implements IMensajeriaListener{
 		}
 	}
 	public static void main(String[] args) {
-		Cliente c = new Cliente("http://localhost:8080/axis/services/StoXtreme");
+		Cliente c = new Cliente(URLAXIS+"StoXtreme");
 		try {
 			c.init();
 		} catch (Exception e) {
@@ -71,6 +74,8 @@ public class Cliente implements IMensajeriaListener{
 			ini.setOperacion(0);
 			ini.setModal(true);
 			ini.setVisible(true);
+			// Pone la ventana siempre en lo mas alto
+			ini.setAlwaysOnTop(true);
 			int op =ini.getOperacion();
 			String user = ini.getusuario();
 			String psw = ini.getpass();
@@ -82,13 +87,13 @@ public class Cliente implements IMensajeriaListener{
 			//Si hace login
 			if(op==1){
 				if(user.equals("")||(psw.equals("")))
-					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
+					JOptionPane.showMessageDialog(ini, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
 					try{
 						boolean login=servidor.login(user,psw);
 						if (!login)
-							JOptionPane.showMessageDialog(null, "El usuario no existe o el password es erroneo",
+							JOptionPane.showMessageDialog(ini, "El usuario no existe o el password es erroneo",
 									"Error",JOptionPane.ERROR_MESSAGE);
 						else{
 							conectado=true;
@@ -96,7 +101,7 @@ public class Cliente implements IMensajeriaListener{
 							
 					}
 					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
+						JOptionPane.showMessageDialog(ini, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
 								"Error de conexion",JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -104,13 +109,13 @@ public class Cliente implements IMensajeriaListener{
 			//Si crea un nuevo usuario
 			if(op==2){
 				if (user.equals("") ||psw.equals(""))
-					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
+					JOptionPane.showMessageDialog(ini, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
 					try{
 						boolean registro=servidor.registro(user,psw);
 						if (!registro)
-							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nombre",
+							JOptionPane.showMessageDialog(ini, "Ya existe un usuario con ese nombre",
 								"Error",JOptionPane.ERROR_MESSAGE);
 						else{
 							servidor.login(user,psw);
@@ -118,7 +123,7 @@ public class Cliente implements IMensajeriaListener{
 						}
 					}
 					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
+						JOptionPane.showMessageDialog(ini, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
 								"Error de conexion",JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -133,9 +138,8 @@ public class Cliente implements IMensajeriaListener{
 		gui.init();
 		gui.pack();
 		gui.setVisible(true);
-		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Lo ultimo que hacemos es dar de alta en el receptor
-		ReceptorMensajes receptor = new ReceptorMensajes(nUsuario, ReceptorMensajes.WEB_SERVICE, "http://localhost:8080/axis/services/StoXtremeMsg");
+		receptor = new ReceptorMensajes(nUsuario, ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
 		receptor.addListener(this);
 		
 	}
@@ -199,7 +203,10 @@ public class Cliente implements IMensajeriaListener{
 	
 	//TODO que al cerrar la ventana del cliente se deslogee
 	public int deslogea() throws Exception{
+		System.out.println("Deslogea");
 		servidor.login(nUsuario, password);
+		receptor.paraReceptor();
+		
 		return 0;
 	}
 }
