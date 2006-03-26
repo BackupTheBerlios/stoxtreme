@@ -46,29 +46,86 @@ public class Cliente implements IMensajeriaListener{
 		}
 	}
 	public static void main(String[] args) {
-		Cliente c = new Cliente("http://192.168.0.199:8080/axis/services/StoXtreme");
+		Cliente c = new Cliente("http://localhost:8080/axis/services/StoXtreme");
 		try {
-			c.init("alonso", "alonso");
-			ReceptorMensajes receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, "http://192.168.0.199:8080/axis/services/StoXtremeMsg");
-			receptor.addListener(c);
+			c.init();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void init(String usuario, String pass) throws Exception{
-		boolean login = servidor.login(usuario, pass);
+	public void init() throws Exception{
+		/*boolean login = servidor.login(usuario, pass);
 		if(!login){
 			boolean reg = servidor.registro(usuario, pass);
 			if(!reg) throw new Exception("Fallo en el registro");
 			login = servidor.login(usuario, pass);
 			if(!login) throw new Exception("Fallo en el login");
-		}
+		}*/
 		
 		//Eliminamos el DialogoInicial porque ya he identificado al usuario
 //		identificacion.dispose();
+		boolean conectado=false;
+		DialogoInicial ini= new DialogoInicial();
+		while(!conectado){
+			ini.setOperacion(0);
+			ini.setModal(true);
+			ini.setVisible(true);
+			int op =ini.getOperacion();
+			String user = ini.getusuario();
+			String psw = ini.getpass();
+			
+			//Si cierra la ventana, salimos
+			if(op==0){
+				System.exit(0);
+			}
+			//Si hace login
+			if(op==1){
+				if(user.equals("")||(psw.equals("")))
+					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
+							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
+				else{
+					try{
+						boolean login=servidor.login(user,psw);
+						if (!login)
+							JOptionPane.showMessageDialog(null, "El usuario no existe o el password es erroneo",
+									"Error",JOptionPane.ERROR_MESSAGE);
+						else{
+							conectado=true;
+						}
+							
+					}
+					catch(Exception ex){
+						JOptionPane.showMessageDialog(null, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
+								"Error de conexion",JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+			//Si crea un nuevo usuario
+			if(op==2){
+				if (user.equals("") ||psw.equals(""))
+					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
+							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
+				else{
+					try{
+						boolean registro=servidor.registro(user,psw);
+						if (!registro)
+							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nombre",
+								"Error",JOptionPane.ERROR_MESSAGE);
+						else{
+							servidor.login(user,psw);
+							conectado=true;
+						}
+					}
+					catch(Exception ex){
+						JOptionPane.showMessageDialog(null, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
+								"Error de conexion",JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+			this.nUsuario = user; this.password = psw;
+		}
 		
-		this.nUsuario = usuario; this.password = pass;
 		eBolsa = new EstadoBolsa();
 		opPendientes = new OperacionesPendientes();
 		cartera = new CarteraAcciones();
@@ -78,6 +135,8 @@ public class Cliente implements IMensajeriaListener{
 		gui.setVisible(true);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Lo ultimo que hacemos es dar de alta en el receptor
+		ReceptorMensajes receptor = new ReceptorMensajes(nUsuario, ReceptorMensajes.WEB_SERVICE, "http://localhost:8080/axis/services/StoXtremeMsg");
+		receptor.addListener(this);
 		
 	}
 	
@@ -137,7 +196,10 @@ public class Cliente implements IMensajeriaListener{
 	public String getNUsuario() {
 		return nUsuario;
 	}
-	public void deslogea() throws Exception{
+	
+	//TODO que al cerrar la ventana del cliente se deslogee
+	public int deslogea() throws Exception{
 		servidor.login(nUsuario, password);
+		return 0;
 	}
 }
