@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,7 +21,7 @@ import stoxtreme.cliente.Cliente;
 import stoxtreme.servidor.Servidor;
 
 
-public class DialogoInicial extends JFrame{
+public class DialogoInicial extends JDialog{
 	private JButton login;
 	private JButton registrar;
 	private JTextField user;
@@ -28,27 +29,27 @@ public class DialogoInicial extends JFrame{
 	private JLabel usuario;
 	private JLabel pass;
 	private JPanel principal;
-	private Cliente cliente;
+	private String id;
+	private String psw;
+	private DialogoInicial inicial;
+	//0=Error (ha cerrado la ventana), 1=Login, 2=Registro
+	private int operacion;
 	
-	static{
-		try{
-			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
-		}
-		catch(Exception e){
-			
-		}
-	}
 	
-	public DialogoInicial(Cliente cliente){
-		super ("Identificacion");
-		this.cliente=cliente;
+	
+	public DialogoInicial(){
+		super();
+		this.init();
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
+		this.setTitle("Identificacion de usuario");
+		this.setSize(new Dimension(270,178));
+		inicial=this;
+		operacion=0;
 	}
 	
 	public void init(){
-		principal=(JPanel)this.getPanelPrincipal();
-		this.add(principal);
+		getContentPane().add(getPanelPrincipal());
 	}
 	
 	//Panel Principal
@@ -57,7 +58,7 @@ public class DialogoInicial extends JFrame{
 		principal.add(this.getPUser(),BorderLayout.NORTH);
 		principal.add(this.getPPass(),BorderLayout.CENTER);
 		principal.add(this.getPButtons(),BorderLayout.SOUTH);
-		FakeInternalFrame frame = new FakeInternalFrame("Con�ctese o cree una cuenta nueva", principal);
+		FakeInternalFrame frame = new FakeInternalFrame("Conectese o cree una cuenta nueva", principal);
 		return frame;
 		
 	}
@@ -79,9 +80,9 @@ public class DialogoInicial extends JFrame{
 	private Component getPPass(){
 		JPanel PPass=new JPanel(new BorderLayout());
 		PPass.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		pass=new JLabel("Contrase�a");
+		pass=new JLabel("Password");
 		password=new JPasswordField();
-		password.setToolTipText("Introduzca su contrase�a");
+		password.setToolTipText("Introduzca su password");
 		password.setPreferredSize(new Dimension(120,20));
 		PPass.add(pass,BorderLayout.WEST);
 		PPass.add(password,BorderLayout.EAST);
@@ -99,25 +100,26 @@ public class DialogoInicial extends JFrame{
 		//Login de un usario ya existente
 		login.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				String id=user.getText();
-				String psw=new String(password.getPassword());
-				if (id.equals("")||psw.equals(""))
+				id=user.getText();
+				psw=new String(password.getPassword());
+				operacion=1;
+				inicial.setVisible(false);
+				/*if (id.equals("")||psw.equals(""))
 					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
 					try{
 						boolean login=Servidor.getInstance().login(id,psw);
 						if (!login)
-							JOptionPane.showMessageDialog(null, "El usuario no existe o la contrase�a es err�nea",
+							JOptionPane.showMessageDialog(null, "El usuario no existe o el password es erroneo",
 									"Error",JOptionPane.ERROR_MESSAGE);
 						else
-							cliente.init(id,psw);
+							inicial.dispose();
 					}
 					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, "El servidor parece estar ca�do. \n Int�ntelo de nuevo m�s tarde",
-								"Error de conexi�n",JOptionPane.ERROR_MESSAGE);
-					}
-				}	
+						JOptionPane.showMessageDialog(null, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
+								"Error de conexion",JOptionPane.ERROR_MESSAGE);
+	}*/
 			}
 		});
 		
@@ -128,9 +130,11 @@ public class DialogoInicial extends JFrame{
 		//Registro de un nuevo usuario
 		registrar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				String id=user.getText();
-				String psw=new String(password.getPassword());
-				if (id.equals("") ||psw.equals(""))
+				id=user.getText();
+				psw=new String(password.getPassword());
+				operacion=2;
+				inicial.setVisible(false);
+/*				if (id.equals("") ||psw.equals(""))
 					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
@@ -141,14 +145,14 @@ public class DialogoInicial extends JFrame{
 								"Error",JOptionPane.ERROR_MESSAGE);
 						else{
 							Servidor.getInstance().login(id,psw);
-							cliente.init(id,psw);
+							inicial.dispose();
 						}
 					}
 					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, "El servidor parece estar ca�do. \n Int�ntelo de nuevo m�s tarde",
-								"Error de conexi�n",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
+								"Error de conexion",JOptionPane.ERROR_MESSAGE);
 					}
-				}
+				}*/
 			}
 		});
 		PButtons.add(login,BorderLayout.WEST);
@@ -156,4 +160,20 @@ public class DialogoInicial extends JFrame{
 		return PButtons;
 	}
 
+	public String getusuario() {
+		return id;
+	}
+
+	public String getpass() {
+		return psw;
+	}
+
+	public int getOperacion(){
+		return operacion;
+	}
+
+	public void setOperacion(int i) {
+		operacion=i;
+		
+	}
 }
