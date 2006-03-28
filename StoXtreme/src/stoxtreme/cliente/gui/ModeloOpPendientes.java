@@ -57,7 +57,8 @@ public class ModeloOpPendientes extends AbstractTableModel{
 		int i = listaIDS.indexOf(new Integer(idOp)); 
 		listaIDS.remove(i);
 		opPendientes.remove(new Integer(idOp));
-		fireTableRowsDeleted(i, i);
+		fireTableDataChanged();
+		//fireTableRowsDeleted(i, i);
 	}
 	
 	public boolean isCellEditable(int row, int col){
