@@ -12,9 +12,14 @@ public class Operacion {
 	private String IDAgente;
 	private int idOp;
 	
+	public static double redondeo(double numero, int nDecimales){
+		return Math.floor((Math.pow(10,nDecimales)*numero)+0.5)/Math.pow(10,nDecimales);
+	}
+	
 	public Operacion(String IDAgente, String empresa, int tipo, int numeroAcciones, double precio){
 		setTipo(tipo);
 		setNumeroAcciones(numeroAcciones);
+		precio = redondeo(precio, 2);
 		setPrecio(precio);
 		setEmpresa(empresa);
 		setIDAgente(IDAgente);
@@ -71,17 +76,19 @@ public class Operacion {
 	
 	public String toString(){
 		StringBuffer b = new StringBuffer();
-		b.append("Operacion: [");
-		b.append(empresa); b.append(",");
-		b.append(IDAgente); b.append(",");
+		b.append(idOp); b.append(": ");
+		b.append(IDAgente);
+		b.append("(");
 		if(tipo == COMPRA)
 			b.append("COMPRA");
 		else
 			b.append("VENTA");
-		b.append(",");
-		b.append(idOp); b.append(",");
+		b.append(")[");
+		
+		b.append(empresa); b.append(",");
+		
 		b.append(numeroAcciones); b.append(",");
-		b.append(precio); b.append(",");
+		b.append(precio); 
 		b.append("]");
 		return b.toString();
 	}

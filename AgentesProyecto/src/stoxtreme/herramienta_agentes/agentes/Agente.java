@@ -29,6 +29,7 @@ public class Agente extends Thread{
 	public Agente (MonitorAgentes monitor){
 		ID = new IDAgente();
 		p = new Perceptor();
+		monitor.getConexionBolsa().addNotificadorListener(ID.toString(), p);
 		opPendientes = new OperacionesPendientes();
 		p.setOperacionesPendientes(opPendientes);
 		this.monitor = monitor;

@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import stoxtreme.herramienta_agentes.agentes.Agente;
+import stoxtreme.herramienta_agentes.agentes.Perceptor;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 
 /* Objeto mediador entre los agentes y la herramienta agentes */
