@@ -43,6 +43,6 @@ public class ReceptorMensajes{
 		}
 	}
 	public void paraReceptor() {
-		hiloConsulta.interrupt();
+		((HiloConsultaWS)hiloConsulta).pararHilo();
 	}
 }

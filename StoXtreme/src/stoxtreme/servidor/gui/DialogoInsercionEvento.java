@@ -77,9 +77,9 @@ public class DialogoInsercionEvento extends JDialog implements ActionListener{
 	}
 	private Component getCheckUnaVez(){
 		JPanel panel = new JPanel();
-		JLabel labelUnavez = new JLabel("Â¿Ejecucion unica?");
+		JLabel labelUnavez = new JLabel("¿Ejecucion unica?");
 		checkUnaVez = new JCheckBox();
-		JLabel labelIniciarActivo = new JLabel("Â¿Iniciar activo?");
+		JLabel labelIniciarActivo = new JLabel("¿Iniciar activo?");
 		checkIniciarActivo = new JCheckBox();
 		checkIniciarActivo.setSelected(true);
 		panel.add(labelUnavez);

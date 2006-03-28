@@ -13,6 +13,7 @@ import stoxtreme.servicio_web.StoxtremeServiceLocator;
 public class HiloConsultaWS extends Thread{
 	private ReceptorMensajes receptor;
 	private String url;
+	private boolean parar = false;
 	
 	public HiloConsultaWS(ReceptorMensajes mensajesWS, String url){
 		receptor = mensajesWS;
@@ -30,7 +31,7 @@ public class HiloConsultaWS extends Thread{
 				stoxtreme = locator.getStoXtremeMsg();
 			}
 				
-			while(true){
+			while(!parar){
 				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());
 				if(m!=null){
 					receptor.notifica(m);
@@ -40,5 +41,9 @@ public class HiloConsultaWS extends Thread{
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public void pararHilo(){
+		parar = true;
 	}
 }

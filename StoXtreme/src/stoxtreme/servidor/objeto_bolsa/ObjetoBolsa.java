@@ -79,7 +79,7 @@ public class ObjetoBolsa implements RelojListener{
 //			sistemaOperaciones.introduceVenta(idOperacion, IDAgente, op.getPrecio(), op.getCantidad());
 		// Notificamos siempre
 		String c = Integer.toString(op.getCantidad());
-		AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_OPERACION", IDAgente+","+c));
+		//AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion)+","+c, "NOTIFICACION_OPERACION", IDAgente));
 	}
 	
 	public void cancelarOperacion(int idOperacion, String tipoOp){

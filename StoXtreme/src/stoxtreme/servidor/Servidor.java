@@ -69,11 +69,16 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	
 	public int insertarOperacion(String usuario, Operacion o){
-		System.out.println("USUARIO "+usuario+" INSERTA OPERACION");
-		IDS++;
-		String empresa = o.getEmpresa();
-		objetosBolsa.get(empresa).insertaOperacion(usuario, IDS, o);
-		regOperaciones.insertarOperacion(o);
+		try{
+			System.out.println("USUARIO "+usuario+" INSERTA OPERACION");
+			IDS++;
+			String empresa = o.getEmpresa();
+			objetosBolsa.get(empresa).insertaOperacion(usuario, IDS, o);
+			regOperaciones.insertarOperacion(o);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		return IDS;
 	}
 	
@@ -82,22 +87,22 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	
 	public static void main(String[] argv){
-//		try {
-//			AdministradorServiceLocator  locator= new AdministradorServiceLocator();
-//			Administrador servidor =locator.getStoXtremeAdmin();
-//			/*Lanzamiento estatico del servidor para pruebas*/
-//			servidor.iniciarServidor();
-//			servidor.showGUI();
-//		} 
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
 		try {
-			getInstance().iniciarServidor();
-			getInstance().showGUI();
-		} catch (RemoteException e) {
+			AdministradorServiceLocator  locator= new AdministradorServiceLocator();
+			Administrador servidor =locator.getStoXtremeAdmin();
+			/*Lanzamiento estatico del servidor para pruebas*/
+			servidor.iniciarServidor();
+			servidor.showGUI();
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
+//		try {
+//			getInstance().iniciarServidor();
+//			getInstance().showGUI();
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void iniciarServidor() throws RemoteException {

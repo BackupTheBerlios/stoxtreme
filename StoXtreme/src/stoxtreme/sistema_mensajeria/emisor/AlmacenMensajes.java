@@ -54,6 +54,14 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 		}
 	}
 	
+	public void pararHiloConsulta(String id){
+		if(esperando.containsKey(id)){
+			synchronized(esperando.get(id)){
+				esperando.get(id).notify();
+			}
+		}
+	}
+	
 	public synchronized void insertarMensajeGlobal(Mensaje m){
 		mensajesGlobales.add(numMensajesGlobales, m);
 		numMensajesGlobales ++;
@@ -69,6 +77,7 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 	}
 	
 	public synchronized void insertarMensajePrivado(String ID, Mensaje m){
+		System.out.println("Insertar mensaje para: "+ID);
 		mensajesPrivados.get(ID).add(m);
 		if(esperando.containsKey(ID)){
 			System.out.println("Despierto a: "+ID);
@@ -77,11 +86,6 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 				o.notify();
 			}
 		}
-	}
-	
-	public synchronized void darAlta(String ID){
-		buzon.put(ID, 0);
-		mensajesPrivados.put(ID, new ArrayList<Mensaje>());
 	}
 	
 	public Mensaje getSiguienteMensaje(String ID){
