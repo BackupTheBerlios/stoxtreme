@@ -9,13 +9,14 @@ import javax.swing.text.StyledDocument;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 
-public abstract class HerramientaAgentesPanel extends JPanel{
+public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private JSplitPane panelPrincipal;
-	private DefaultListModel modeloLista;
+	private PruebaListModel modeloLista;
 	private JList listaOpConfirmar;
 	private StyledDocument textoConsola;
 	
@@ -63,26 +64,29 @@ public abstract class HerramientaAgentesPanel extends JPanel{
 	}
 	private void doble_click_lista(){
 		int index = listaOpConfirmar.getSelectedIndex();
-		Object o = modeloLista.elementAt(index);
+		Object o = modeloLista.getElementAt(index);
+		modeloLista.remove(index);
+		
 		if(o instanceof Operacion){
 			String id = ((Operacion)o).getIDAgente();
 			int idOp = ((Operacion)o).getIDOp();
 			int cantidad = ((Operacion)o).getNumeroAcciones();
 			double precio = ((Operacion)o).getPrecio();
+			modeloLista.quitaCancelacion(idOp);
 			nOperacion(id, idOp, cantidad, precio);
 		}
 		else{
 			String id = ((Cancelacion)o).getID();
 			int idOp = ((Cancelacion)o).getIdOp();
+			modeloLista.quitaOperacion(idOp);
 			nCancelacion(id, idOp);
 		}
-		modeloLista.remove(index);
 	}
 	protected abstract void nOperacion(String id, int idOp, int cantidad, double precio);
 	protected abstract void nCancelacion(String id, int idOp);
 	
 	public Component getPanelSuperior(){
-		modeloLista = new DefaultListModel();
+		modeloLista = new PruebaListModel();
 		listaOpConfirmar = new JList(modeloLista);
 		
 		listaOpConfirmar.addMouseListener(new MouseAdapter(){
@@ -102,7 +106,7 @@ public abstract class HerramientaAgentesPanel extends JPanel{
 	private static final String ESTILO_ACCION = "regular";
 	private static final String nl = "\n";
 
-	public void insertarAccion(String idAgente, String accion){
+	public synchronized void insertarAccion(String idAgente, String accion){
 		try {
 			textoConsola.insertString(
 					textoConsola.getLength(),
@@ -119,7 +123,7 @@ public abstract class HerramientaAgentesPanel extends JPanel{
 		}
 	}
 	
-	public void insertarNotificacion(String idAgente, String notif){
+	public synchronized void insertarNotificacion(String idAgente, String notif){
 		try {
 			textoConsola.insertString(
 					textoConsola.getLength(),
@@ -166,6 +170,69 @@ public abstract class HerramientaAgentesPanel extends JPanel{
         
         s = doc.addStyle("red", regular);
         StyleConstants.setForeground(s, Color.red);
-        StyleConstants.setBackground(s, Color.red);
     }
+	
+	
+	private class PruebaListModel extends AbstractListModel{
+		private ArrayList<Object> lista = new ArrayList<Object>();
+		
+		public void addElement(Object o){
+			lista.add(o);
+			SwingUtilities.invokeLater(new IL(o, lista.size()-1, 2));
+		}
+		
+		public void quitaOperacion(int idOp) {
+			int i=0;
+			while(	
+					i<lista.size() &&
+					((lista.get(i) instanceof Cancelacion) 
+							||((Operacion)lista.get(i)).getIDOp() != idOp)
+				)i++;
+			
+			if(i<lista.size())
+				remove(i);
+		}
+
+		public void quitaCancelacion(int idOp) {
+			int i=0;
+			while(	
+					i<lista.size() &&
+					((lista.get(i) instanceof Operacion) 
+							||((Cancelacion)lista.get(i)).getIdOp() != idOp)
+				)i++;
+			
+			if(i<lista.size())
+				remove(i);
+		}
+
+		public void remove(int index){
+			Object o = lista.remove(index);
+			SwingUtilities.invokeLater(new IL(o, index, 1));
+		}
+		
+		private class IL implements Runnable{
+			Object o;
+			int index;
+			int tipo;
+			
+			public IL(Object o, int index, int tipo){
+				this.o = o;
+				this.index = index;
+				this.tipo = tipo;
+			}
+			public void run(){
+				if(tipo == 1)
+					fireIntervalRemoved(o, index, index);
+				else
+					fireIntervalAdded(o, index, index);
+			}
+		}
+		public Object getElementAt(int index) {
+			return lista.get(index);
+		}
+		
+		public int getSize() {
+			return lista.size();
+		}
+	}
 }
