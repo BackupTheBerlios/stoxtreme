@@ -201,12 +201,12 @@ public class Cliente implements IMensajeriaListener{
 		return nUsuario;
 	}
 	
-	//TODO que al cerrar la ventana del cliente se deslogee
-	public int deslogea() throws Exception{
+	public void deslogea() throws Exception{
 		System.out.println("Deslogea");
 		servidor.login(nUsuario, password);
+		System.out.println("Espero a que pare el receptor");
 		receptor.paraReceptor();
-		
-		return 0;
+		System.out.println("Fin del cliente.");
+		System.exit(0);
 	}
 }

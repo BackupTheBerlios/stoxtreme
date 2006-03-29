@@ -38,12 +38,12 @@ public class ModeloOpPendientes extends AbstractTableModel{
 	}
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch(columnIndex){
-		case 0: return null;
-		case 1: return listaIDS.get(rowIndex);
-		case 2: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getTipoOp()==Operacion.COMPRA?"COMPRA":"VENTA";
-		case 3: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getEmpresa();
-		case 4: return new Integer(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getCantidad());
-		default: return new Double(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getPrecio());
+			case 0: return null;
+			case 1: return listaIDS.get(rowIndex);
+			case 2: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getTipoOp()==Operacion.COMPRA?"COMPRA":"VENTA";
+			case 3: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getEmpresa();
+			case 4: return new Integer(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getCantidad());
+			default: return new Double(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getPrecio());
 		}
 	}
 	
@@ -105,9 +105,5 @@ public class ModeloOpPendientes extends AbstractTableModel{
 	}
 	public Operacion getOperacion(int idOp) {
 		return opPendientes.get(idOp);
-	}
-	public void quitaOperacion(int idOp) {
-		opPendientes.remove(idOp);
-		fireTableDataChanged();
 	}
 }

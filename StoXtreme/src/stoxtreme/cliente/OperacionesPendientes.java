@@ -27,6 +27,6 @@ public class OperacionesPendientes {
 	}
 
 	public void quitaOperacion(int idOp) {
-		mOpPendientes.quitaOperacion(idOp);
+		mOpPendientes.borrarOperacion(idOp);
 	}
 }

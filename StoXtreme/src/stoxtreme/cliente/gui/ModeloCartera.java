@@ -7,19 +7,19 @@ import javax.swing.table.AbstractTableModel;
 
 public class ModeloCartera extends AbstractTableModel{
 	private static String[] nCol = {"Empresa", "Numero Acciones"};
-	private ArrayList nombreEmpresas;
-	private Hashtable cartera;
+	private ArrayList<String> nombreEmpresas;
+	private Hashtable<String, Integer> cartera;
 	
 	public ModeloCartera(){
-		nombreEmpresas = new ArrayList();
-		cartera = new Hashtable();
+		nombreEmpresas = new ArrayList<String>();
+		cartera = new Hashtable<String, Integer>();
 	}
 	public int getRowCount() {
 		return nombreEmpresas.size();
 	}
 
 	public int getColumnCount() {
-		return nombreEmpresas.size();
+		return nCol.length;
 	}
 	
 	public String getColumnName(int index){
@@ -36,22 +36,29 @@ public class ModeloCartera extends AbstractTableModel{
 	public void insertarAcciones(String empresa, int numero){
 		int nAnterior = 0;
 		if(cartera.containsKey(empresa)){
-			nAnterior = ((Integer)cartera.get(empresa)).intValue();
-			cartera.put(empresa, new Integer(nAnterior+numero));
+			nAnterior = cartera.get(empresa).intValue();
+			cartera.put(empresa, nAnterior+numero);
 			fireTableCellUpdated(nombreEmpresas.indexOf(empresa), 1);
 		}
 		else{
 			nombreEmpresas.add(empresa);
-			cartera.put(empresa, new Integer(numero));
+			cartera.put(empresa, numero);
 			fireTableRowsInserted(nombreEmpresas.size()-1, nombreEmpresas.size()-1);
 		}
 	}
 	
-	public void sumaAcciones(String empresa, int numero){
-		
-	}
-	
 	public void restaAcciones(String empresa, int numero){
-		
+		int nAnterior = cartera.get(empresa);
+		if(nAnterior - numero == 0){
+			// Si no quedan acciones de esa empresa la borramos
+			int indiceAntiguo = nombreEmpresas.indexOf(empresa);
+			cartera.remove(empresa);
+			nombreEmpresas.remove(indiceAntiguo);
+			fireTableRowsDeleted(indiceAntiguo, indiceAntiguo);
+		}
+		else{
+			cartera.put(empresa, nAnterior-numero);
+			fireTableCellUpdated(nombreEmpresas.indexOf(empresa), 1);
+		}
 	}
 }

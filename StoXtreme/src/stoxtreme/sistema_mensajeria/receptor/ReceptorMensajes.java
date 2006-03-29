@@ -42,7 +42,8 @@ public class ReceptorMensajes{
 			((IMensajeriaListener)it.next()).onMensaje(m);
 		}
 	}
-	public void paraReceptor() {
+	public void paraReceptor() throws Exception{
 		((HiloConsultaWS)hiloConsulta).pararHilo();
+		hiloConsulta.join();
 	}
 }
