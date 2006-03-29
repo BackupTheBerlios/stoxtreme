@@ -16,17 +16,21 @@ public class MonitorAgentes extends Thread{
 	private PriorityQueue<Decision> colaPeticiones;
 	private int ciclo;
 	private ArrayList<Agente> listaAgentes;
+	private ArrayList<TimerListener> listaTimerListeners;
 	private boolean exit;
 	private Object esperaTimer;
 	private ConexionBolsa conexion;
+	private ConsolaAgentes consola;
 	
-	public MonitorAgentes(ConexionBolsa conexion){
+	public MonitorAgentes(ConexionBolsa conexion, ConsolaAgentes consola){
 		this.conexion = conexion;
+		this.consola = consola;
 		colaPeticiones = new PriorityQueue<Decision>();
 		ciclo = 0;
 		exit = false;
 		esperaTimer = new Object();
 		listaAgentes = new ArrayList<Agente>();
+		listaTimerListeners = new ArrayList<TimerListener>();
 		Timer t = new Timer(true);
 		TimerTask task = new TimerTask(){
 			public void run() { 
@@ -35,7 +39,7 @@ public class MonitorAgentes extends Thread{
 				}
 			}
 		};
-		t.schedule(task, new Date(), 1000);
+		t.schedule(task, new Date(), 200);
 	}
 	
 	public void addAgente(Agente a){
@@ -44,6 +48,14 @@ public class MonitorAgentes extends Thread{
 	
 	public void removeAgente(Agente a){
 		listaAgentes.remove(a);
+	}
+	
+	public void addTimerListener(TimerListener listener){
+		listaTimerListeners.add(listener);
+	}
+	
+	public void removeTimerListener(TimerListener listener){
+		listaTimerListeners.remove(listener);
 	}
 	
 	public synchronized void addDecision(Decision decision) {
@@ -77,11 +89,16 @@ public class MonitorAgentes extends Thread{
 				}
 			}
 			ciclo++;
-			System.out.println(ciclo);
+			Iterator<TimerListener>it = listaTimerListeners.iterator();
+			while(it.hasNext()) it.next().onTick(ciclo);
 		}
 	}
 
 	public ConexionBolsa getConexionBolsa() {
 		return conexion;
+	}
+	
+	public ConsolaAgentes getConsolaAgentes(){
+		return consola;
 	}
 }

@@ -48,8 +48,8 @@ public class OperacionesPendientes {
 		empresasPendientes.remove(idOp);
 	}
 
-	public boolean hayOperacionesPendientes() {
-		return !empresasPendientes.isEmpty();
+	public boolean hayOperacionesPendientes(String empresa) {
+		return empresasPendientes.contains(empresa);
 	}
 
 	public void restaAcciones(int idOp, int cantidad) {

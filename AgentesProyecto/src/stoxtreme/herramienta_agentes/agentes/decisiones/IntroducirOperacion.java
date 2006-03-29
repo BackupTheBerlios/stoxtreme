@@ -12,6 +12,9 @@ public class IntroducirOperacion extends Decision{
 	
 	public void ejecuta() {
 		agente.insertarOperacion(o);
-		System.out.println("Operacion "+o.getIDOp()+" "+o.getIDAgente());
+	}
+	
+	public String toString(){
+		return "Introducir operacion "+o.datosImportantes();
 	}
 }

@@ -25,7 +25,7 @@ public abstract class Decision implements Comparable{
 	}
 	
 	public String toString(){
-		return Integer.toString(tEjecucion);
+		return "Decision: " + Integer.toString(tEjecucion);
 	}
 	public abstract void ejecuta(); 
 }

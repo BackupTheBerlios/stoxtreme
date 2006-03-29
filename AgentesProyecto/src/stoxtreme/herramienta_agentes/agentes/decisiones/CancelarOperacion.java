@@ -10,7 +10,10 @@ public class CancelarOperacion extends Decision{
 	}
 	
 	public void ejecuta() {
-		System.out.println("Cancelar "+idOp);
 		agente.cancelarOperacion(idOp);
+	}
+	
+	public String toString(){
+		return "Cancela operacion "+idOp;
 	}
 }

@@ -60,6 +60,7 @@ public class Agente extends Thread{
 			while(itDec.hasNext()){
 				Decision actual = itDec.next();
 				monitor.addDecision(actual);
+				imprime(actual);
 			}
 			
 			try {
@@ -100,5 +101,9 @@ public class Agente extends Thread{
 	public void enviarMensaje(Mensaje m){
 		m.setSender(ID);
 		buzon.send(m);
+	}
+
+	public void imprime(Decision decision) {
+		monitor.getConsolaAgentes().insertarAccion(getIDString(), decision.toString());
 	}
 }

@@ -14,4 +14,8 @@ public class EnviarMensaje extends Decision{
 	public void ejecuta() {
 		agente.enviarMensaje(mensaje);
 	}
+	
+	public String toString(){
+		return "Envio un mensaje "+ mensaje;
+	}
 }

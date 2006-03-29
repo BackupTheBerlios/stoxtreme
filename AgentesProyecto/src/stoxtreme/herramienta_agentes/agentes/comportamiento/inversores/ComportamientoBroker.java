@@ -41,10 +41,11 @@ public class ComportamientoBroker extends ComportamientoAgente{
 	public ArrayList<Decision> tomaDecisiones() {
 		ArrayList<Decision> lista = listaDecisiones;
 		listaDecisiones = new ArrayList<Decision>();
+//		
+		//Genera una nueva operacion
+		String empresa = estadoBolsa.dameEmpresaAleatoria();
 		
-		if(!operacionesPendientes.hayOperacionesPendientes()){
-			// Genera una nueva operacion
-			String empresa = estadoBolsa.dameEmpresaAleatoria();
+		if(!operacionesPendientes.hayOperacionesPendientes(empresa)){
 			Operacion o;
 			int tipo = (int)(Math.random()*2 + 1);
 			
@@ -62,7 +63,7 @@ public class ComportamientoBroker extends ComportamientoAgente{
 		else{
 			int idOp =
 				operacionesPendientes.dameOperacionAleatoria();
-			if(!decisionesEsperaNotificacion.contains(-idOp)){
+			if(!decisionesEsperaNotificacion.containsKey(-idOp)){
 				if(numeroCancelaciones < modeloPsicologico.numeroMaximoCancelaciones()){
 					double precio = operacionesPendientes.getPrecioOperacion(idOp);
 					int tipo = operacionesPendientes.getTipoOperacion(idOp);
@@ -76,18 +77,14 @@ public class ComportamientoBroker extends ComportamientoAgente{
 						precio = precio*(1 - modeloPsicologico.porcentajeBajadaPrecio());
 						cantidad = modeloPsicologico.numeroVentaAcciones();
 					}
-					String empresa = operacionesPendientes.getEmpresaOperacion(idOp);
-		
 					Operacion op = new Operacion(agente.getIDString(), empresa, tipo, cantidad, precio);
 					generaDecisionAPartirNotificacion(-idOp, new IntroducirOperacion(agente, op));
-
-					
+					lista.add(new CancelarOperacion(agente, idOp));
+					numeroCancelaciones++;
 				}
 				else{
 					numeroCancelaciones = 0;
 				}
-				lista.add(new CancelarOperacion(agente, idOp));
-				numeroCancelaciones++;
 			}
 		}
 			

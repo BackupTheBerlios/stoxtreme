@@ -92,4 +92,21 @@ public class Operacion {
 		b.append("]");
 		return b.toString();
 	}
+	
+	public String datosImportantes(){
+		StringBuffer b = new StringBuffer();
+		b.append("[");
+		if(tipo == COMPRA)
+			b.append("COMPRA");
+		else
+			b.append("VENTA");
+		b.append("");
+		
+		b.append(empresa); b.append(",");
+		
+		b.append(numeroAcciones); b.append(",");
+		b.append(precio); 
+		b.append("]");
+		return b.toString();
+	}
 }

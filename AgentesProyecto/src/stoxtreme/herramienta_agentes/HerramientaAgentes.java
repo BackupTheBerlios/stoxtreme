@@ -1,10 +1,12 @@
 package stoxtreme.herramienta_agentes;
 
 import java.awt.Dimension;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.GeneradorParametrosPsicologicos;
@@ -16,15 +18,18 @@ import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente
 import stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoBroker;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.prueba.ComportamientoPrueba;
 
-public class HerramientaAgentes extends HerramientaAgentesPanel implements ConexionBolsa{
+public class HerramientaAgentes extends HerramientaAgentesPanel implements ConexionBolsa, TimerListener{
 	private static int IDS=0;
 	private ParametrosAgentes parametros;
 	private ArrayList<Agente> agentes;
 	private MonitorAgentes monitor;
 	private EstadoBolsa bolsa;
 	private Notificador notif;
+	JFrame frame;
 	
-	
+	public HerramientaAgentes(){
+		super();
+	}
 
 	public HerramientaAgentes(String nombreUsuario, EstadoBolsa bolsa, ParametrosAgentes parametros){
 		IDAgente.setUsuario(nombreUsuario);
@@ -46,9 +51,20 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Conex
 	}
 	
 	public void start(){
+		frame = new JFrame("Agentes: 0");
+		frame.setPreferredSize(new Dimension(400, 400));
+		
+		frame.getContentPane().add(this);
+		frame.pack();
+		frame.setVisible(true);
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 		//int nAgentes = (Integer)parametros.get(ParametrosAgentes.Parametro.NUM_AGENTES);
 		int nAgentes = 3;
-		monitor = new MonitorAgentes(this);
+		monitor = new MonitorAgentes(this, this);
+		monitor.addTimerListener(this);
 		monitor.start();
 		
 		GeneradorParametrosPsicologicos gPP = new GeneradorParametrosPsicologicos(nAgentes);
@@ -70,7 +86,6 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Conex
 		}
 	}
 	
-	
 	public static void main(String[] args){
 		ParametrosAgentes parametros = new ParametrosAgentes();
 		EstadoBolsa bolsa = new EstadoBolsa();
@@ -81,17 +96,8 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Conex
 		
 		HerramientaAgentes hAgentes = new HerramientaAgentes("alonso", bolsa, parametros);
 		
-		JFrame frame = new JFrame("Agentes");
-		frame.setPreferredSize(new Dimension(400, 400));
-		
-		frame.getContentPane().add(hAgentes);
-		frame.pack();
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		hAgentes.start();
 	}
-
 	public void addNotificadorListener(String id, ListenerNotificador n) {
 		notif.addListener(id, n);
 	}
@@ -102,5 +108,9 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Conex
 
 	protected void nCancelacion(String id, int idOp) {
 		notif.notificarCancelacion(id, idOp);
+	}
+
+	public void onTick(int tick) {
+		frame.setTitle("Agentes: "+tick);
 	}
 }

@@ -92,7 +92,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		listaOpConfirmar.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				if(e.getClickCount()==2){
+				if(e.getClickCount()>=2){
 					doble_click_lista();
 				}
 			}
