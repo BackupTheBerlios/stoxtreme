@@ -19,6 +19,7 @@ import stoxtreme.cliente.gui.ModeloCartera;
 import stoxtreme.cliente.gui.ModeloOpPendientes;
 import stoxtreme.cliente.gui.ModeloPrecioAccionesGrafico;
 import stoxtreme.cliente.gui.DialogoInicial;
+import stoxtreme.cliente.infoLocal.InfoLocal;
 import stoxtreme.interfaz_remota.*;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
 import stoxtreme.servidor.Servidor;
@@ -38,6 +39,7 @@ public class Cliente implements IMensajeriaListener{
 	private DialogoInicial identificacion;
 	private Stoxtreme servidor;
 	private ReceptorMensajes receptor;
+	private InfoLocal info;
 	
 	public Cliente(String url){
 		try{
@@ -86,12 +88,12 @@ public class Cliente implements IMensajeriaListener{
 			}
 			//Si hace login
 			if(op==1){
-				if(user.equals("")||(psw.equals("")))
+				if(user.trim().equals("")||(psw.trim().equals("")))
 					JOptionPane.showMessageDialog(ini, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
 					try{
-						boolean login=servidor.login(user,psw);
+						boolean login=servidor.login(user.trim(),psw.trim());
 						if (!login)
 							JOptionPane.showMessageDialog(ini, "El usuario no existe o el password es erroneo",
 									"Error",JOptionPane.ERROR_MESSAGE);
@@ -108,12 +110,12 @@ public class Cliente implements IMensajeriaListener{
 			}
 			//Si crea un nuevo usuario
 			if(op==2){
-				if (user.equals("") ||psw.equals(""))
+				if (user.trim().equals("") ||psw.trim().equals(""))
 					JOptionPane.showMessageDialog(ini, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
 					try{
-						boolean registro=servidor.registro(user,psw);
+						boolean registro=servidor.registro(user.trim(),psw.trim());
 						if (!registro)
 							JOptionPane.showMessageDialog(ini, "Ya existe un usuario con ese nombre",
 								"Error",JOptionPane.ERROR_MESSAGE);
@@ -130,10 +132,10 @@ public class Cliente implements IMensajeriaListener{
 			}
 			this.nUsuario = user; this.password = psw;
 		}
-		
 		eBolsa = new EstadoBolsa();
 		opPendientes = new OperacionesPendientes();
 		cartera = new CarteraAcciones();
+		info=new InfoLocal();
 		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa.getMAcciones());
 		gui.init();
 		gui.pack();
