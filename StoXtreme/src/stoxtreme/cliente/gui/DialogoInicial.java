@@ -43,7 +43,7 @@ public class DialogoInicial extends JDialog{
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setTitle("Identificacion de usuario");
-		this.setSize(new Dimension(270,178));
+		this.setSize(new Dimension(270,182));
 		inicial=this;
 		operacion=0;
 	}
