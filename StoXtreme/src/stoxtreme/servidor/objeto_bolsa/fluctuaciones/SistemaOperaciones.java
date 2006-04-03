@@ -44,7 +44,24 @@ public class SistemaOperaciones /*implements RelojListener*/{
         public Hashtable getVentas(){
           return listaVentas;
         }
+        public static double calculaPrecio(double precioA,double tick,double precioCliente){
+        	double auxTick=tick;
+        	if (precioA>precioCliente){
+        		auxTick=-auxTick;
+        	   	while(!(precioA+auxTick<precioCliente)){
+	        		auxTick-=tick;
+	        	}
+        	   	return (auxTick+precioA);
+        	}
+        	else{
+        		while(!(precioA+auxTick>precioCliente)){
+	        		auxTick+=tick;
+	        	}
+        	   	return (auxTick+precioA);
 
+        	}
+        }
+        //TODO falta mirar a ver si tengo por variable lo que necesito
         public void introduceCompra(int idOperacion, String agente,
                         double precio, int numAcciones) {
         	Vector compra=new Vector();
@@ -52,6 +69,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         	Posicion p1;
         	int idOp;
         	Integer num= new Integer(numAcciones);
+        	//preciodef=
         	if (listaCompras.containsKey(Double.toString(precio))){
         		compra=(Vector) listaCompras.get(Double.toString(precio));
         		accionesTotales=(Integer)compra.firstElement();
@@ -139,8 +157,8 @@ public class SistemaOperaciones /*implements RelojListener*/{
                 // todas
         }
         public static void main(String[] args) {
-            Hashtable cT=new Hashtable();
-            Hashtable vT=new Hashtable();
+            //Hashtable cT=new Hashtable();
+            //Hashtable vT=new Hashtable();
             //Double precio1=new Double(23.5f);
             //Double precio2=new Double(25.5);
             /*double precio1=(double)23.5;
@@ -170,8 +188,9 @@ public class SistemaOperaciones /*implements RelojListener*/{
             ventas2.add(v3);
             vT.put(Double.toString(precio1),ventas);
             vT.put(Double.toString(precio2),ventas2);*/
-            SistemaOperaciones so=new SistemaOperaciones(cT,vT);
-            so.introduceCompra(1,"Pako",23.4,35);
+            calculaPrecio(3.10,0.3,2.58);
+            //SistemaOperaciones so=new SistemaOperaciones(cT,vT);
+            //so.introduceCompra(1,"Pako",23.4,35);
             //so.cancelaOperacion(1,"Compra");
             //Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5);
             //fluctuaciones1.paso();

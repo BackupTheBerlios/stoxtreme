@@ -76,45 +76,88 @@ public class Fluctuaciones {
   }
   
   
-//  public double calculaValorTitulo(/*String nombreTitulo,double precioA*/){
-//
-//    Hashtable compra,venta;
-//    Vector preciosCompra,preciosVenta;
-//    Enumeration claves;
-//    //Posicion aux,aux2;
-//    String clave;
-//    compra=filtrayOrdena(sisOp.getCompras());
-//    venta=filtrayOrdena(sisOp.getVentas());
-//    claves=compra.keys();
-//    //if (compra.size() == venta.size() ){
-//      int ordenesM=0;
-//      int ordParcial;
-//      double precioM=pActual;
-//      while(claves.hasMoreElements()){
-//        clave=(String)claves.nextElement();
-//        if (venta.containsKey(clave)){
-//          preciosCompra=(Vector)compra.get(clave);
-//          preciosVenta=(Vector)venta.get(clave);
-//            ordParcial=minimo(Integer.parseInt((String)preciosCompra.elementAt(0).toString()),
-//                              Integer.parseInt((String)preciosVenta.elementAt(0).toString()));
-//           //atencion esto se queda kon el primer minimo mirar a ver si keremos otros minimos
-//            if (ordParcial>ordenesM){
-//              ordenesM = ordParcial;
-//              precioM=Double.parseDouble(clave);
-//
-//            }
-//
-//        }
-//    }
-//    
-//    return redondeo(precioM, 2);
-//  }
+  public double calculaValorTitulo(/*String nombreTitulo,double precioA*/){
+		boolean hayOperacion=false;
+	    Hashtable compra,venta;
+	    Vector preciosCompra,preciosVenta;
+	    Enumeration claves;
+	    //Posicion aux,aux2;
+	    String clave,claveFinal;
+	    compra=filtrayOrdena(sisOp.getCompras());
+	    venta=filtrayOrdena(sisOp.getVentas());
+	    claves=compra.keys();
+	    //if (compra.size() == venta.size() ){
+	    int ordenesM=0;
+	    int ordParcial;
+	    double precioM=pActual;
+	    claveFinal="";
+	    while(claves.hasMoreElements()){
+	      clave=(String)claves.nextElement();
+	      if (venta.containsKey(clave)){
+	        preciosCompra=(Vector)compra.get(clave);
+	        preciosVenta=(Vector)venta.get(clave);
+	        ordParcial=minimo(Integer.parseInt((String)preciosCompra.elementAt(0).toString()),
+	                              Integer.parseInt((String)preciosVenta.elementAt(0).toString()));
+	        //atencion esto se queda kon el primer minimo mirar a ver si keremos otros minimos
+	        if (ordParcial>ordenesM){
+	        	hayOperacion=true;
+	            ordenesM = ordParcial;
+	            precioM=Double.parseDouble(clave);
+	            claveFinal=clave;
+
+	        }
+	      }
+	    }
+	    if (hayOperacion){
+	    	preciosCompra=(Vector)compra.get(claveFinal);
+	        preciosVenta=(Vector)venta.get(claveFinal);
+	        int auxC=ordenesM,auxV=ordenesM;
+	        int indiceC=1,indiceV=1;
+	        Integer numAccionesC=(Integer)preciosCompra.firstElement();
+	        numAccionesC=Integer.valueOf(numAccionesC.intValue()-auxC);
+	        Integer numAccionesV=(Integer)preciosVenta.firstElement();
+	        numAccionesV=Integer.valueOf(numAccionesV.intValue()-auxV);
+	        while(auxC>0&&indiceC<preciosCompra.size()&&indiceV<preciosVenta.size()){
+	        	Posicion pC=(Posicion)preciosCompra.elementAt(indiceC);
+	        	Posicion pV=(Posicion)preciosVenta.elementAt(indiceV);
+	        	if (pC.getNumeroDeAcciones()<=auxC){	        		
+	        		auxC-=pC.getNumeroDeAcciones();
+	        		preciosCompra.remove(indiceC);
+	        		indiceC++;
+	        	}
+	        	else{
+	        		pC.numeroDeAcciones-=auxC;
+	        		auxC=0;
+	        	}
+	        	if (pV.getNumeroDeAcciones()<=auxV){
+	        		auxV-=pV.getNumeroDeAcciones();
+	        		preciosVenta.remove(indiceV);
+	        		indiceV++;
+	        	}
+	        	else{
+	        		pC.numeroDeAcciones-=auxV;
+	        		auxV=0;
+	        	}	        	
+	        }
+	        if (numAccionesC.intValue()==0){
+	        	compra.remove(claveFinal);
+	        }
+	        if (numAccionesV.intValue()==0){
+	        	venta.remove(claveFinal);
+	        }
+	    }
+	    return redondeo(precioM, 2);
+	  }
   
-  // FIXME !!! CUIDADO!!!! QUE HE COMENTADO ESTO XA PROBARR!!!
-  public double calculaValorTitulo(){
-	  pActual *= 1.1;
-	  return redondeo(pActual, 2);
-  }
+	  
+	  // FIXME !!! CUIDADO!!!! QUE HE COMENTADO ESTO XA PROBARR!!!
+	  /**
+	 * @return
+	 */
+	public double calculaValorTitulo2(){
+		  pActual *= 1.1;
+		  return redondeo(pActual, 2);
+	  }
   public static void main(String[] args) {
     Hashtable cT=new Hashtable();
     Hashtable vT=new Hashtable();
