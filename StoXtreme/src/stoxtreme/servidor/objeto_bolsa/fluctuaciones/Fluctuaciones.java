@@ -113,9 +113,9 @@ public class Fluctuaciones {
 	        preciosVenta=(Vector)venta.get(claveFinal);
 	        int auxC=ordenesM,auxV=ordenesM;
 	        int indiceC=1,indiceV=1;
-	        Integer numAccionesC=(Integer)preciosCompra.firstElement();
+	        Integer numAccionesC=(Integer)preciosCompra.elementAt(0);
 	        numAccionesC=Integer.valueOf(numAccionesC.intValue()-auxC);
-	        Integer numAccionesV=(Integer)preciosVenta.firstElement();
+	        Integer numAccionesV=(Integer)preciosVenta.elementAt(0);
 	        numAccionesV=Integer.valueOf(numAccionesV.intValue()-auxV);
 	        while(auxC>0&&indiceC<preciosCompra.size()&&indiceV<preciosVenta.size()){
 	        	Posicion pC=(Posicion)preciosCompra.elementAt(indiceC);
@@ -183,9 +183,9 @@ public class Fluctuaciones {
     v1=new Posicion("vendedor1",25,4);
     v2=new Posicion("vendedor2",10,5);
     v3=new Posicion("vendedor3",15,6);
-    ventas.add(Integer.toString(25));
+    ventas.add(new Integer(25));
     ventas.add(v1);
-    ventas2.add(Integer.toString(25));
+    ventas2.add(new Integer(25));
     ventas2.add(v2);
     ventas2.add(v3);
     vT.put(Double.toString(precio1),ventas);
