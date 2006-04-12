@@ -32,7 +32,6 @@ public class ParserInfoLocal {
 			String nombre=null;
 			double cotiz=0;
 			String info=null;
-			//Obtengo todas las empresas y creo un objeto bolsa para cada una
 			for (int i=0; nl!=null && i<nl.getLength();i++){
 				nombre=((Element)nl.item(i)).getAttribute("nombre");
 				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));

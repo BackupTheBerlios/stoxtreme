@@ -52,8 +52,8 @@ public class DatosEmpresas {
 				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio
 				info=((Element)nl.item(i)).getTextContent().trim();
-				// TODO: FALTA LEER EL NUMERO INICIAL DE ACCIOENS!!!
-				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info, 1000));
+				//el numero de acciones inicial se obtiene de infoBursatil
+				ht.put(nombre,new ObjetoBolsa(nombre,cotiz,info));
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing

@@ -29,19 +29,20 @@ public class ObjetoBolsa implements RelojListener{
 	StoxtremeMensajes sisMensajes;
 	double cotizacion;
 	InformacionXML infoXML;
+	//El numero de acciones inicial son las acciones que todavia no posee ningún agente
 	int nAccionesInicial;
 	/*public ObjetoBolsa(String nombreEmpresa, double cotizacion, String Informacion,
 			SistemaEventos sistEventos, EmisorMensajes smg, VariablesSistema var){
 		sistemaOperaciones = new SistOperaciones();
 		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
 	}*/
-	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion, int nAccionesInicial){
+	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion){
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
 		this.infoXML=new InformacionXML(informacion,nombreEmpresa);
 		//Se le pasa null xq el balance y las cuentas de momento no estan hechos
 		this.informacion=new Informacion(null,infoXML.getDatosBursatiles(),null);
-		this.nAccionesInicial = nAccionesInicial;
+		this.nAccionesInicial = new Integer(this.informacion.getIBursatil().getCapitalSocial().elementAt(2).toString());
 	}
 	
 	double v = 0.0;

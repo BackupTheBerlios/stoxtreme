@@ -1,10 +1,24 @@
 package stoxtreme.cliente;
 
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.Enumeration;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,6 +39,7 @@ import stoxtreme.servicio_web.StoxtremeServiceLocator;
 import stoxtreme.servidor.Servidor;
 import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 import stoxtreme.sistema_mensajeria.receptor.*;
+import sun.security.krb5.internal.crypto.f;
 
 public class Cliente implements IMensajeriaListener{
 	private static final String URLAXIS = "http://localhost:8080/axis/services/";
@@ -132,6 +147,15 @@ public class Cliente implements IMensajeriaListener{
 			}
 			this.nUsuario = user; this.password = psw;
 		}
+		URL url= new  URL("http://localhost:8080/StoXtreme/conf/empresas.xml");
+		FileOutputStream fos = new FileOutputStream(new File("src/stoxtreme/cliente/conf/empresas.xml")); 
+		InputStreamReader isr = new InputStreamReader(url.openStream());
+		int b;
+		char[] buff = new char[256];
+		
+		while( (b=isr.read(buff)) !=-1){
+			System.out.println(buff);
+		}
 		eBolsa = new EstadoBolsa();
 		opPendientes = new OperacionesPendientes();
 		cartera = new CarteraAcciones();
@@ -210,5 +234,8 @@ public class Cliente implements IMensajeriaListener{
 		receptor.paraReceptor();
 		System.out.println("Fin del cliente.");
 		System.exit(0);
+	}
+	public void obtenerFicheros(){
+		
 	}
 }
