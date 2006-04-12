@@ -236,6 +236,38 @@ public class Cliente implements IMensajeriaListener{
 		System.exit(0);
 	}
 	public void obtenerFicheros(){
-		
+		URL url;
+		FileOutputStream fos; 
+		InputStreamReader isr;
+		Reader in;
+		StringBuffer buffer;
+		OutputStreamWriter osw;
+		//Lista de nombres de ficheros de configuracion
+		String[] ficheros={"empresas","endesa","antena3","repsol","telecinco"};
+		int contador=0;
+		while(ficheros.length>contador){
+			try {
+				//TODO Cambiar la URL
+				url= new  URL("http://localhost:8080/"+ficheros[contador]+".jsp");
+				//TODO Cambiar la ruta de destino si procede
+				fos = new FileOutputStream(new File("src/stoxtreme/cliente/conf/"+ficheros[contador]+".jsp"));
+				isr = new InputStreamReader(url.openStream());
+				in = new BufferedReader(isr);
+				buffer = new StringBuffer();
+				int ch;
+				while((ch =in.read())>-1){
+					buffer.append((char)ch);
+				}
+				osw = new OutputStreamWriter(fos);
+				osw.append(buffer);
+				osw.close();
+				fos.close();
+				isr.close();
+			} 
+			 catch (Exception e) {
+				e.printStackTrace();
+			} 
+		contador++;
+		}
 	}
 }
