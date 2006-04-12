@@ -196,4 +196,20 @@ public class Fluctuaciones {
     fluctuaciones1.paso();
   }
 
+public double getPrecioActual() {
+	return pActual;
+}
+
+public void setPrecioActual(double actual) {
+	pActual = actual;
+}
+
+public double getTick() {
+	return tick;
+}
+
+public void setTick(double tick) {
+	this.tick = tick;
+}
+
 }

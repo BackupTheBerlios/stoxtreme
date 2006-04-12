@@ -63,14 +63,14 @@ public class SistemaOperaciones /*implements RelojListener*/{
         }
         //TODO falta mirar a ver si tengo por variable lo que necesito
         public void introduceCompra(int idOperacion, String agente,
-                        double precio, int numAcciones) {
+                        double precio, int numAcciones,double precioA,double tick) {
         	Vector compra=new Vector();
         	Integer accionesTotales;
         	Posicion p1;
         	int idOp;
         	Integer num= new Integer(numAcciones);
         	//preciodef=
-        	if (listaCompras.containsKey(Double.toString(precio))){
+        	if (listaCompras.containsKey(Double.toString(calculaPrecio(precioA,tick,precio)))){
         		compra=(Vector) listaCompras.get(Double.toString(precio));
         		accionesTotales=(Integer)compra.firstElement();
         		accionesTotales=Integer.valueOf(num.intValue()+accionesTotales.intValue());
@@ -88,14 +88,14 @@ public class SistemaOperaciones /*implements RelojListener*/{
         }
 
         public void introduceVenta(int idOperacion, String agente,
-                        double precio, int numAcciones) {
+                        double precio, int numAcciones,double precioA,double tick) {
         	Vector venta=new Vector();
         	Integer accionesTotales;
         	Posicion p1;
         	int idOp;
         	Integer num= new Integer(numAcciones);
         	if (listaVentas.containsKey(Double.toString(precio))){
-        		venta=(Vector) listaVentas.get(Double.toString(precio));
+        		venta=(Vector) listaVentas.get(Double.toString(calculaPrecio(precioA,tick,precio)));
         		accionesTotales=(Integer)venta.firstElement();
         		accionesTotales=Integer.valueOf(num.intValue()+accionesTotales.intValue());
         		venta.setElementAt(accionesTotales,idOperacion);
