@@ -9,9 +9,9 @@ package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
  * @version 1.0
  */
 public class Posicion {
-  String idAgente;
-  int numeroDeAcciones;
-  int idOp;
+  private String idAgente;
+  private int numeroDeAcciones;
+  private int idOp;
   public Posicion(String id, int nA,int iO) {
     idAgente=id;
     numeroDeAcciones=nA;
@@ -24,6 +24,11 @@ public class Posicion {
   public void setPrecio(String id){idAgente=id;}
   public void setNumeroDeAcciones(int nA){numeroDeAcciones=nA;}
   public void setIdOperacion(int iO){idOp=iO;}
+
+  public String getIDAgente() {
+	return idAgente;
+
+  }
 
 
 }

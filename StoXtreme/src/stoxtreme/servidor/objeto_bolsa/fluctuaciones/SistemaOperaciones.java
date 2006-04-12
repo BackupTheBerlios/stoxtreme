@@ -2,6 +2,9 @@ package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
 
 import java.util.*;
 
+import stoxtreme.interfaz_remota.Mensaje;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
+
 /*
  * - Todas las operaciones de una empresa llegan aqui
  * - Esta clase tiene (al menos) una lista de compras y una lista de ventas
@@ -22,6 +25,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         private Hashtable listaCompras;
         private Hashtable listaVentas;
         private int nAccionesVenta;
+        private double precioEstimado;
         
         public void paso(double nuevoPrecio){
         	// TODO: IMPLEMENTAR EL CRUCE
@@ -33,6 +37,8 @@ public class SistemaOperaciones /*implements RelojListener*/{
           listaCompras=new Hashtable();
           listaVentas=new Hashtable();
           this.nAccionesVenta = nAccionesVenta;
+          //this.precioEstimado=(nAccionesVenta%2)+0.5;
+          this.precioEstimado=1;
         }
         public SistemaOperaciones (Hashtable lC,Hashtable lV){
           this.listaCompras=lC;
@@ -195,4 +201,22 @@ public class SistemaOperaciones /*implements RelojListener*/{
             //Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5);
             //fluctuaciones1.paso();
           }
+		public int getAccionesVenta() {
+			return nAccionesVenta;
+		}
+		public void setAccionesVenta(int accionesVenta) {
+			nAccionesVenta = accionesVenta;
+		}
+		public double getPrecioEstimado() {
+			return precioEstimado;
+		}
+		public void setPrecioEstimado(double precioEstimado) {
+			this.precioEstimado = precioEstimado;
+		}
+		public void notificaOperacion(String idAgente, int idOperacion, int numAcciones) {
+			String tipo = "NOTIFICACION_OPERACION";
+			String contenido = idAgente+","+numAcciones;
+			Mensaje m = new Mensaje(contenido, tipo, idAgente);
+			AlmacenMensajes.getInstance().enviaMensaje(m);
+		}
 }

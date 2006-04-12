@@ -1,7 +1,9 @@
 package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
 import java.util.*;
 
+import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.servidor.VariablesSistema;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 /**
  * <p>Título: </p>
  * <p>Descripción: </p>
@@ -122,20 +124,24 @@ public class Fluctuaciones {
 	        	Posicion pV=(Posicion)preciosVenta.elementAt(indiceV);
 	        	if (pC.getNumeroDeAcciones()<=auxC){	        		
 	        		auxC-=pC.getNumeroDeAcciones();
+	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
 	        		preciosCompra.remove(indiceC);
-	        		indiceC++;
+	        		indiceC++;	        		
 	        	}
 	        	else{
-	        		pC.numeroDeAcciones-=auxC;
+	        		pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-auxC);
+	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),auxC);
 	        		auxC=0;
 	        	}
 	        	if (pV.getNumeroDeAcciones()<=auxV){
 	        		auxV-=pV.getNumeroDeAcciones();
+	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),pV.getNumeroDeAcciones());
 	        		preciosVenta.remove(indiceV);
 	        		indiceV++;
 	        	}
 	        	else{
-	        		pC.numeroDeAcciones-=auxV;
+	        		pV.setNumeroDeAcciones(pV.getNumeroDeAcciones()-auxV);
+	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),auxV);
 	        		auxV=0;
 	        	}	        	
 	        }
@@ -145,7 +151,34 @@ public class Fluctuaciones {
 	        if (numAccionesV.intValue()==0){
 	        	venta.remove(claveFinal);
 	        }
+	    }else {
+	    	boolean acabado=sisOp.getAccionesVenta()>0;
+	    	int i=1;
+	    	Vector auxV=(Vector)compra.get(Double.toString
+	    			(SistemaOperaciones.calculaPrecio
+	    					(pActual,tick,pActual+sisOp.getPrecioEstimado())));
+	    	if(sisOp.getAccionesVenta()>0 && auxV!=null && auxV.size()>0){
+	    		while(auxV.size()>0 && !acabado ){
+	    			Posicion pC=(Posicion)auxV.get(i);
+	    			if (pC.getNumeroDeAcciones()>sisOp.getAccionesVenta()){
+	    				pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-sisOp.getAccionesVenta());
+		        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),sisOp.getAccionesVenta());
+		        		sisOp.setAccionesVenta(0);
+		        		acabado=true;
+	    			}
+	    			else{
+	    				sisOp.setAccionesVenta(sisOp.getAccionesVenta()-pC.getNumeroDeAcciones());
+		        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
+		        		auxV.remove(i);
+		        		i++;
+	    			}
+	    				
+	    		}
+	    		precioM=SistemaOperaciones.calculaPrecio
+				(pActual,tick,pActual+sisOp.getPrecioEstimado());
+	    	}
 	    }
+	    	
 	    return redondeo(precioM, 2);
 	  }
   
