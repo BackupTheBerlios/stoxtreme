@@ -3,5 +3,19 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/StoXtreme"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/axis.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/axis-schema.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/commons-discovery-0.2.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/jaxrpc.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/jcommon-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/jfreechart-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/looks-2.0-beta.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/saaj.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/wsdl4j-1.5.1.jar"/>
+	<classpathentry kind="lib" path="/StoXtreme/lib/xercesImpl.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

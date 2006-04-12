@@ -10,6 +10,7 @@ import java.util.TimerTask;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.Perceptor;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
+import stoxtreme.interfaz_remota.Stoxtreme;
 
 /* Objeto mediador entre los agentes y la herramienta agentes */
 public class MonitorAgentes extends Thread{
@@ -19,10 +20,10 @@ public class MonitorAgentes extends Thread{
 	private ArrayList<TimerListener> listaTimerListeners;
 	private boolean exit;
 	private Object esperaTimer;
-	private ConexionBolsa conexion;
+	private Stoxtreme conexion;
 	private ConsolaAgentes consola;
 	
-	public MonitorAgentes(ConexionBolsa conexion, ConsolaAgentes consola){
+	public MonitorAgentes(Stoxtreme conexion, ConsolaAgentes consola){
 		this.conexion = conexion;
 		this.consola = consola;
 		colaPeticiones = new PriorityQueue<Decision>();
@@ -94,11 +95,15 @@ public class MonitorAgentes extends Thread{
 		}
 	}
 
-	public ConexionBolsa getConexionBolsa() {
+	public Stoxtreme getConexionBolsa() {
 		return conexion;
 	}
 	
 	public ConsolaAgentes getConsolaAgentes(){
 		return consola;
+	}
+
+	public void addNotificadorListener(String string, Perceptor p) {
+		
 	}
 }

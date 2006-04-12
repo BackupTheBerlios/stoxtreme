@@ -3,7 +3,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.HashSet;
 
-import stoxtreme.herramienta_agentes.Operacion;
+import stoxtreme.interfaz_remota.Operacion;
 
 public class OperacionesPendientes {
 	Hashtable<Integer, String> empresasPendientes;

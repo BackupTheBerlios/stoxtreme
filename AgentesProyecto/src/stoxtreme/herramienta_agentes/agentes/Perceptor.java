@@ -3,9 +3,9 @@ package stoxtreme.herramienta_agentes.agentes;
 import stoxtreme.herramienta_agentes.EstadoBolsa;
 import stoxtreme.herramienta_agentes.ListenerNotificador;
 import stoxtreme.herramienta_agentes.MonitorAgentes;
-import stoxtreme.herramienta_agentes.Operacion;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.EstadoCartera;
+import stoxtreme.interfaz_remota.Operacion;
 
 public class Perceptor implements ListenerNotificador{
 	private EstadoBolsa estadoBolsa = null;

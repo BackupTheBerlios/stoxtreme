@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import stoxtreme.herramienta_agentes.EstadoBolsa;
 import stoxtreme.herramienta_agentes.MonitorAgentes;
-import stoxtreme.herramienta_agentes.Operacion;
 import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
 import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
@@ -12,6 +11,7 @@ import stoxtreme.herramienta_agentes.agentes.decisiones.CancelarOperacion;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Espera;
 import stoxtreme.herramienta_agentes.agentes.decisiones.IntroducirOperacion;
+import stoxtreme.interfaz_remota.Operacion;
 
 
 public class ComportamientoBroker extends ComportamientoAgente{
@@ -25,7 +25,7 @@ public class ComportamientoBroker extends ComportamientoAgente{
 		double precio = modeloPsicologico.precioCompraAcciones( 
 			estadoBolsa.getPrecioActualEmpresa(empresa));
 						
-		return new Operacion(agente.getIDString(), empresa, tipoOp, cantidad, precio);
+		return new Operacion(agente.getIDString(), tipoOp, cantidad, empresa, precio);
 	}
 	
 	public Operacion generaVenta(String empresa){
@@ -35,7 +35,7 @@ public class ComportamientoBroker extends ComportamientoAgente{
 		double precio = modeloPsicologico.precioVentaAcciones( 
 			estadoBolsa.getPrecioActualEmpresa(empresa));
 						
-		return new Operacion(agente.getIDString(), empresa, tipoOp, cantidad, precio);	
+		return new Operacion(agente.getIDString(), tipoOp, cantidad, empresa, precio);	
 	}
 	
 	public ArrayList<Decision> tomaDecisiones() {
@@ -57,7 +57,7 @@ public class ComportamientoBroker extends ComportamientoAgente{
 				o = generaVenta(empresa);
 				//System.out.println("VENTA "+o.getIDAgente()+" "+o.getPrecio());
 			}
-			if(o.getNumeroAcciones() >0)
+			if(o.getCantidad() >0)
 				lista.add(new IntroducirOperacion(agente, o));
 		}
 		else{
@@ -77,7 +77,7 @@ public class ComportamientoBroker extends ComportamientoAgente{
 						precio = precio*(1 - modeloPsicologico.porcentajeBajadaPrecio());
 						cantidad = modeloPsicologico.numeroVentaAcciones();
 					}
-					Operacion op = new Operacion(agente.getIDString(), empresa, tipo, cantidad, precio);
+					Operacion op = new Operacion(agente.getIDString(), tipo, cantidad, empresa, precio);
 					generaDecisionAPartirNotificacion(-idOp, new IntroducirOperacion(agente, op));
 					lista.add(new CancelarOperacion(agente, idOp));
 					numeroCancelaciones++;

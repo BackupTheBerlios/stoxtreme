@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import stoxtreme.interfaz_remota.Operacion;
+
 
 public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private JSplitPane panelPrincipal;
@@ -68,12 +70,12 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		modeloLista.remove(index);
 		
 		if(o instanceof Operacion){
-			String id = ((Operacion)o).getIDAgente();
-			int idOp = ((Operacion)o).getIDOp();
-			int cantidad = ((Operacion)o).getNumeroAcciones();
+			String id = ((Operacion)o).getIdEmisor();
+			//int idOp = ((Operacion)o).getIDOp();
+			int cantidad = ((Operacion)o).getCantidad();
 			double precio = ((Operacion)o).getPrecio();
-			modeloLista.quitaCancelacion(idOp);
-			nOperacion(id, idOp, cantidad, precio);
+			//modeloLista.quitaCancelacion(idOp);
+			//nOperacion(id, idOp, cantidad, precio);
 		}
 		else{
 			String id = ((Cancelacion)o).getID();
@@ -186,7 +188,8 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 			while(	
 					i<lista.size() &&
 					((lista.get(i) instanceof Cancelacion) 
-							||((Operacion)lista.get(i)).getIDOp() != idOp)
+							//||((Operacion)lista.get(i)).getIDOp() != idOp
+					)
 				)i++;
 			
 			if(i<lista.size())

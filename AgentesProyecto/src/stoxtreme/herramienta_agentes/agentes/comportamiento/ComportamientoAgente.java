@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import stoxtreme.herramienta_agentes.EstadoBolsa;
-import stoxtreme.herramienta_agentes.Operacion;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.OperacionesPendientes;
 import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;

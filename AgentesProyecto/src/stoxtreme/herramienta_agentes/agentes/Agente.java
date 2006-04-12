@@ -1,13 +1,15 @@
 package stoxtreme.herramienta_agentes.agentes;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import stoxtreme.herramienta_agentes.*;
+import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.*;
 import stoxtreme.herramienta_agentes.agentes.decisiones.*;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Mensaje;
+import stoxtreme.interfaz_remota.Operacion;
 // Primer prototipo de agente broker.
 // Inicialmente se le introduce el parametro correspondiente al tiempo de espera
 // El broker, esperará a que transcurran tiempoEspera ciclos de ejecución y cuando
@@ -29,7 +31,7 @@ public class Agente extends Thread{
 	public Agente (MonitorAgentes monitor){
 		ID = new IDAgente();
 		p = new Perceptor();
-		monitor.getConexionBolsa().addNotificadorListener(ID.toString(), p);
+		monitor.addNotificadorListener(ID.toString(), p);
 		opPendientes = new OperacionesPendientes();
 		p.setOperacionesPendientes(opPendientes);
 		this.monitor = monitor;
@@ -80,18 +82,28 @@ public class Agente extends Thread{
 	}
 	public void insertarOperacion(Operacion o){
 		String empresa = o.getEmpresa();
-		int tipo = o.getTipo();
-		int numAcciones = o.getNumeroAcciones();
+		int tipo = o.getTipoOp();
+		int numAcciones = o.getCantidad();
 		double precio = o.getPrecio();
-		int i = monitor.getConexionBolsa().insertarOperacion(this.ID.toString(), o);
 		
-		if(i!= -1){
-			opPendientes.insertaOperacionPendiente(i, empresa, tipo, numAcciones, precio);
+		
+		try {
+			int i = monitor.getConexionBolsa().insertarOperacion(this.ID.toString(), o);
+			
+			if(i!= -1){
+				opPendientes.insertaOperacionPendiente(i, empresa, tipo, numAcciones, precio);
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	public void cancelarOperacion(int operacion){
-		monitor.getConexionBolsa().cancelaOperacion(operacion);
+		try {
+			monitor.getConexionBolsa().cancelarOperacion(this.ID.toString(),operacion);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getIDString(){

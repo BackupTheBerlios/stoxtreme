@@ -2,6 +2,7 @@ package stoxtreme.herramienta_agentes;
 
 import java.awt.Dimension;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -17,9 +18,11 @@ import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoBroker;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.prueba.ComportamientoPrueba;
+import stoxtreme.interfaz_remota.Operacion;
+import stoxtreme.interfaz_remota.Stoxtreme;
+import stoxtreme.servicio_web.StoxtremeServiceLocator;
 
-public class HerramientaAgentes extends HerramientaAgentesPanel implements ConexionBolsa, TimerListener{
-	private static int IDS=0;
+public class HerramientaAgentes extends HerramientaAgentesPanel implements TimerListener{
 	private ParametrosAgentes parametros;
 	private ArrayList<Agente> agentes;
 	private MonitorAgentes monitor;
@@ -38,19 +41,9 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Conex
 		this.notif = new Notificador();
 	}
 	
-	public int insertarOperacion(String id, Operacion o) {
-		o.setIDOp(IDS);
-		super.insertarOperacion(o);
-		mapIDPr.put(IDS, o.getIDAgente());
-		return IDS++;
-	}
-	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();
-	public void cancelaOperacion(int operacion) {
-		super.cancelarOperacion(mapIDPr.get(operacion), operacion);
-	}
 	
-	public void start(){
+	public void start(Stoxtreme servidor){
 		frame = new JFrame("Agentes: 0");
 		frame.setPreferredSize(new Dimension(400, 400));
 		
@@ -63,7 +56,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Conex
 		
 		//int nAgentes = (Integer)parametros.get(ParametrosAgentes.Parametro.NUM_AGENTES);
 		int nAgentes = 3;
-		monitor = new MonitorAgentes(this, this);
+		monitor = new MonitorAgentes(servidor, this);
 		monitor.addTimerListener(this);
 		monitor.start();
 		
@@ -86,17 +79,26 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Conex
 		}
 	}
 	
+	private static final String URLAXIS = "http://localhost:8080/axis/services/";
 	public static void main(String[] args){
-		ParametrosAgentes parametros = new ParametrosAgentes();
-		EstadoBolsa bolsa = new EstadoBolsa();
-		bolsa.insertaEmpresa("Empresa1", 10.0);
-		bolsa.insertaEmpresa("Empresa2", 20.0);
-		bolsa.insertaEmpresa("Empresa3", 30.0);
-		bolsa.insertaEmpresa("Empresa4", 40.0);
-		
-		HerramientaAgentes hAgentes = new HerramientaAgentes("alonso", bolsa, parametros);
-		
-		hAgentes.start();
+		try{
+			ParametrosAgentes parametros = new ParametrosAgentes();
+			EstadoBolsa bolsa = new EstadoBolsa();
+			bolsa.insertaEmpresa("ENDESA", 10.0);
+			bolsa.insertaEmpresa("TELECINCO", 20.0);
+			bolsa.insertaEmpresa("ANTENA3", 30.0);
+			bolsa.insertaEmpresa("REPSOL", 40.0);
+			
+			HerramientaAgentes hAgentes = new HerramientaAgentes("alonso", bolsa, parametros);
+			
+			
+			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
+			Stoxtreme stoxtreme = locator.getStoXtreme(new URL(URLAXIS+"StoXtreme"));
+			hAgentes.start(stoxtreme);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	public void addNotificadorListener(String id, ListenerNotificador n) {
 		notif.addListener(id, n);
