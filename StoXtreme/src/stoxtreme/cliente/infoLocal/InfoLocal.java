@@ -14,7 +14,7 @@ public class InfoLocal {
 	
 	public InfoLocal(){
 		parser=new ParserInfoLocal();
-		info=parser.creaInfoLocal("src/stoxtreme/cliente/conf/empresas.xml");
+		info=parser.creaInfoLocal("./conf/cliente/empresas.xml");
 	}
 	
 	public Double getPrecioInicial(String empresa){

@@ -1,0 +1,32 @@
+<info>
+	<empresa nombre="ANTENA3" grupo="Servicios de consumo">
+	 	<info_bursatil>
+			<capital_social capital="166668000" valor_nominal="0.75" num_acciones="222224000"/>
+	 		<participaciones> 
+				<accionista nombre="Planeta-De Agostini S.L." porcentaje="34.478"/>
+				<accionista nombre="SCH, S.A/Macame S.A." porcentaje="10"/>
+				<accionista nombre="RTL Group Communiations, S.L.U." porcentaje="17.270"/>
+				<accionista nombre="Bolsa" porcentaje="32.252"/>
+			</participaciones>
+	 		<ampliaciones>0</ampliaciones>
+	  		<archivo_historico>
+	  			FICHERO_HISTORICO.xml
+	  		</archivo_historico>
+		</info_bursatil>
+		<balances>
+			<balance fecha="FECHA">
+				<efectivo></efectivo>
+				<bienes></bienes>
+				<empleados></empleados>
+			</balance>
+		</balances>
+		<cuentas>
+			<cuenta fecha="FECHA">
+				<periodo> MENSUAL | TRIMESTRAL |ANUAL </periodo>
+				<ganancias>GANANCIAS</ganancias>
+				<perdidas>PERDIDAS</perdidas>
+			</cuenta>
+		</cuentas>
+		<perspectiva></perspectiva>
+	</empresa>
+</info>

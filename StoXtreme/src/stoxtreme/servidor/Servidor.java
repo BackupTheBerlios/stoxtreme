@@ -17,11 +17,25 @@ import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
+import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
+
+import org.apache.catalina.Context;
+import org.apache.catalina.Engine;
+import org.apache.catalina.Host;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.connector.Connector;
+import org.apache.catalina.startup.Embedded;
+import org.apache.log4j.PropertyConfigurator;
 
 public class Servidor implements Administrador, Stoxtreme{
 	/**/
@@ -54,6 +68,8 @@ public class Servidor implements Administrador, Stoxtreme{
 	private MainFrameAdmin guiAdmin;
 	// Estado de la bolsa
 	private EstadoBolsa estadoBolsa;
+	// Servidor Tomcat
+	private Embedded webServer;
 	
 	//Constructora
 	private Servidor(){
@@ -86,31 +102,53 @@ public class Servidor implements Administrador, Stoxtreme{
 		System.out.println("USUARIO "+usuario+" CANCELA OPERACION");
 	}
 	
-	public static void main(String[] argv){
-		try {
-			AdministradorServiceLocator  locator= new AdministradorServiceLocator();
-			Administrador servidor =locator.getStoXtremeAdmin();
-			/*Lanzamiento estatico del servidor para pruebas*/
-			servidor.iniciarServidor();
-			servidor.showGUI();
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-//		try {
-//			getInstance().iniciarServidor();
-//			getInstance().showGUI();
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		}
+	public void iniciarTomcat() throws Exception{
+		PropertyConfigurator.configure("conf/log4j.properties");
+		String path = new File(".").getAbsolutePath();
+		Host host = null;
+		Engine engine = null;
+		
+		System.setProperty("catalina.base", path);
+		
+		webServer = new Embedded();
+		engine = webServer.createEngine();
+		engine.setDefaultHost("localhost");
+		host = webServer.createHost("localhost", path+"/webapps");
+		host.setAutoDeploy(true);
+		host.setDeployOnStartup(true);
+		engine.addChild(host);
+		
+		//Context context = embedded.createContext("", path+"/webapps/ROOT");
+		Context axisContext = webServer.createContext("/axis", path+"/webapps/axis");
+		Context confContext = webServer.createContext("/Stoxtreme/config", path+"/conf");
+		
+		//host.addChild(context);
+		host.addChild(axisContext);
+		host.addChild(confContext);
+		
+		webServer.addEngine(engine);
+		
+		Connector connector = webServer.createConnector((InetAddress)null,8080,false);
+		webServer.addConnector(connector);
+		
+		webServer.start();
 	}
 	
-	public void iniciarServidor() throws RemoteException {
-		// TODO Aqui debe ir toda la ejecucion
-		/* TODO: A�adir al reloj todos los listener
-		 * 	- Objetos Bolsa
-		 *  - Variables del sistema
-		 */
+	public static void main(String[] argv){
+		try {
+			Servidor.getInstance().iniciarServidor();
+			Servidor.getInstance().showGUI();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void iniciarServidor() throws RemoteException{
+		try {
+			iniciarTomcat();
+		} catch (Exception e1) {
+			
+		}
 		guiAdmin = new MainFrameAdmin();
 		param = new ParametrosServidor();
 		gestorUsuarios=new GestionUsuarios(param.getFicheroRegistrados());
@@ -137,7 +175,15 @@ public class Servidor implements Administrador, Stoxtreme{
 		guiAdmin.setModeloPrecios(estadoBolsa);
 		guiAdmin.init();
 		/*TODO SALE AL CERRAR!!! CAMBIAR ESTO DESPUES DE PROBARLO*/
-		guiAdmin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		guiAdmin.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e) {
+				try {
+					pararServidor();
+				} catch (RemoteException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		reloj = new Reloj(param.getTiempo());
 		// Insertamos en el reloj los objetos bolsa
@@ -160,18 +206,26 @@ public class Servidor implements Administrador, Stoxtreme{
 		reloj.iniciarReloj();
 	}
 	
+
 	public void pararServidor() throws RemoteException {
 		// TODO Parar el Timer y destruir lo necesario
 		reloj.pararReloj();
+		try {
+			webServer.stop();
+		} catch (LifecycleException e) {
+			e.printStackTrace();
+		}
+		System.exit(0);
 	}
 	
 	public void iniciaSesion() throws RemoteException {
 		// TODO Mirar cual es la siguiente sesion (apertur, cierre)
-		reloj.reanudarReloj();
+
 	}
+
 	public void finalizaSesion() throws RemoteException {
 		// TODO Finaliza
-		reloj.pararReloj();
+		
 	}
 	public void showGUI() throws RemoteException {
 		// TODO solo un gui.show

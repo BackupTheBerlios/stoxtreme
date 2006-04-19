@@ -14,5 +14,24 @@
 	<classpathentry kind="lib" path="lib/saaj.jar"/>
 	<classpathentry kind="lib" path="lib/wsdl4j-1.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/looks-2.0-beta.jar"/>
+	<classpathentry kind="lib" path="lib/activation.jar"/>
+	<classpathentry kind="lib" path="lib/catalina.jar"/>
+	<classpathentry kind="lib" path="lib/catalina-optional.jar"/>
+	<classpathentry kind="lib" path="lib/commons-el.jar"/>
+	<classpathentry kind="lib" path="lib/commons-modeler.jar"/>
+	<classpathentry kind="lib" path="lib/jasper-compiler.jar"/>
+	<classpathentry kind="lib" path="lib/jasper-compiler-jdt.jar"/>
+	<classpathentry kind="lib" path="lib/jasper-runtime.jar"/>
+	<classpathentry kind="lib" path="lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="lib/naming-factory.jar"/>
+	<classpathentry kind="lib" path="lib/naming-resources.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/servlets-default.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-http.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat-util.jar"/>
+	<classpathentry kind="lib" path="lib/axis-ant.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +26,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.xml.rpc.ServiceException;
+
+import org.apache.log4j.PropertyConfigurator;
 
 import com.sun.corba.se.spi.ior.iiop.JavaCodebaseComponent;
 
@@ -57,6 +60,7 @@ public class Cliente implements IMensajeriaListener{
 	private InfoLocal info;
 	
 	public Cliente(String url){
+		
 		try{
 			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
 			servidor = locator.getStoXtreme(new URL(url));
@@ -66,6 +70,7 @@ public class Cliente implements IMensajeriaListener{
 		}
 	}
 	public static void main(String[] args) {
+		PropertyConfigurator.configure("conf/log4j.properties");
 		Cliente c = new Cliente(URLAXIS+"StoXtreme");
 		try {
 			c.init();
@@ -147,15 +152,7 @@ public class Cliente implements IMensajeriaListener{
 			}
 			this.nUsuario = user; this.password = psw;
 		}
-		URL url= new  URL("http://localhost:8080/StoXtreme/conf/empresas.xml");
-		FileOutputStream fos = new FileOutputStream(new File("src/stoxtreme/cliente/conf/empresas.xml")); 
-		InputStreamReader isr = new InputStreamReader(url.openStream());
-		int b;
-		char[] buff = new char[256];
-		
-		while( (b=isr.read(buff)) !=-1){
-			System.out.println(buff);
-		}
+		obtenerFicheros();
 		eBolsa = new EstadoBolsa();
 		opPendientes = new OperacionesPendientes();
 		cartera = new CarteraAcciones();
@@ -235,22 +232,26 @@ public class Cliente implements IMensajeriaListener{
 		System.out.println("Fin del cliente.");
 		System.exit(0);
 	}
-	public void obtenerFicheros(){
-		URL url;
-		FileOutputStream fos; 
-		InputStreamReader isr;
-		Reader in;
-		StringBuffer buffer;
-		OutputStreamWriter osw;
+	public void obtenerFicheros() throws Exception{
+		URL url = null;
+		FileOutputStream fos = null; 
+		InputStreamReader isr = null;
+		Reader in = null;
+		StringBuffer buffer = null;
+		OutputStreamWriter osw = null;
 		//Lista de nombres de ficheros de configuracion
 		String[] ficheros={"empresas","endesa","antena3","repsol","telecinco"};
 		int contador=0;
 		while(ficheros.length>contador){
 			try {
 				//TODO Cambiar la URL
-				url= new  URL("http://localhost:8080/"+ficheros[contador]+".jsp");
+				url= new  URL("http://localhost:8080/Stoxtreme/config/"+ficheros[contador]+".xml");
 				//TODO Cambiar la ruta de destino si procede
-				fos = new FileOutputStream(new File("src/stoxtreme/cliente/conf/"+ficheros[contador]+".jsp"));
+				
+				File f = new File("./conf/cliente/"+ficheros[contador]+".xml");
+				System.err.println(f.getAbsolutePath());
+				//f.createNewFile();
+				fos = new FileOutputStream(f);
 				isr = new InputStreamReader(url.openStream());
 				in = new BufferedReader(isr);
 				buffer = new StringBuffer();
@@ -260,14 +261,19 @@ public class Cliente implements IMensajeriaListener{
 				}
 				osw = new OutputStreamWriter(fos);
 				osw.append(buffer);
-				osw.close();
-				fos.close();
-				isr.close();
 			} 
 			 catch (Exception e) {
 				e.printStackTrace();
 			} 
-		contador++;
+			if(osw != null)
+				osw.close();
+			if(in != null)
+				in.close();
+			if(fos != null)
+				fos.close();
+			if(isr!=null)
+				isr.close();
+			contador++;
 		}
 	}
 }
