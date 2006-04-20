@@ -25,7 +25,7 @@ public class Reloj extends TimerTask{
 	}
 	
 	public void run(){
-		System.out.println("Reloj");
+		//System.out.println("Reloj");
 		Iterator i = oyentes.iterator();
 		while(i.hasNext()){
 			// TODO CUIDADO CON LA CONCURRENCIA EN ESTE METODO

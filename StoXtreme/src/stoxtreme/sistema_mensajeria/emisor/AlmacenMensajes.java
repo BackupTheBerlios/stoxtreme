@@ -77,10 +77,10 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 	}
 	
 	public synchronized void insertarMensajePrivado(String ID, Mensaje m){
-		System.out.println("Insertar mensaje para: "+ID);
+		//System.out.println("Insertar mensaje para: "+ID);
 		mensajesPrivados.get(ID).add(m);
 		if(esperando.containsKey(ID)){
-			System.out.println("Despierto a: "+ID);
+			//System.out.println("Despierto a: "+ID);
 			Object o = esperando.get(ID);
 			synchronized(o){
 				o.notify();
@@ -95,7 +95,7 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 			esperando.put(ID, cerrojo);
 			while(!isNuevos(ID)){
 				synchronized (cerrojo) {
-					System.out.println("Espero("+ID+")");
+//					System.out.println("Espero("+ID+")");
 					cerrojo.wait();
 				}
 			}
