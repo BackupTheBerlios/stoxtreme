@@ -82,8 +82,8 @@ public class ObjetoBolsa implements RelojListener{
 //		AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion)+","+c, "NOTIFICACION_OPERACION", IDAgente));
 	}
 	
-	public void cancelarOperacion(int idOperacion, String tipoOp){
-		sistemaOperaciones.cancelaOperacion(idOperacion, tipoOp);
+	public void cancelarOperacion(int idOperacion){
+		sistemaOperaciones.cancelaOperacion(idOperacion);
 	}
 	public void setVariablesSistema(VariablesSistema variables, ParametrosServidor parametros) {
 		System.out.println("Pone variables "+ nombreEmpresa);

@@ -26,6 +26,8 @@ public class SistemaOperaciones /*implements RelojListener*/{
         private Hashtable listaVentas;
         private int nAccionesVenta;
         private double precioEstimado;
+        private TreeSet idscompras;
+        private TreeSet idsventas;
         
         public void paso(double nuevoPrecio){
         	// TODO: IMPLEMENTAR EL CRUCE
@@ -39,6 +41,8 @@ public class SistemaOperaciones /*implements RelojListener*/{
           this.nAccionesVenta = nAccionesVenta;
           //this.precioEstimado=(nAccionesVenta%2)+0.5;
           this.precioEstimado=1;
+          idscompras = new TreeSet();
+          idsventas = new TreeSet();
         }
         public SistemaOperaciones (Hashtable lC,Hashtable lV){
           this.listaCompras=lC;
@@ -91,6 +95,8 @@ public class SistemaOperaciones /*implements RelojListener*/{
         		listaCompras.put(Double.toString(precio),compra);
         		
         	}
+        	
+        	idscompras.add(idOperacion);
         }
 
         public void introduceVenta(int idOperacion, String agente,
@@ -115,22 +121,26 @@ public class SistemaOperaciones /*implements RelojListener*/{
         		listaVentas.put(Double.toHexString(precio),venta);
         		
         	}
+        	idsventas.add(idOperacion);
         }
 
-        public void cancelaOperacion(int idOperacion, String tipoOp) {
+        public void cancelaOperacion(int idOperacion) {
         	Hashtable operacion;
         	boolean encontrado=false;
         	Vector cadena=new Vector();
         	Posicion pi;
-        	if (tipoOp.equals("Compra"))
+        	if (idscompras.contains(idOperacion)){
         		operacion=this.listaCompras;
+        		idscompras.remove(idOperacion);
+        	}
         	else{
-        	
-	        	if(tipoOp.equals("Venta"))
+	        	if(idsventas.contains(idOperacion)){
 	        		operacion=this.listaVentas;
+	        		idsventas.remove(idOperacion);
+	        	}
 	        	else{
-	        		operacion=new Hashtable();
-	        		System.out.println("No existe la operaci�n deseada");
+	        		System.out.println("No existe la operacion deseada");
+	        		return;
 	        	}
         	}
         	Enumeration claves=operacion.keys();
@@ -143,9 +153,9 @@ public class SistemaOperaciones /*implements RelojListener*/{
         			if (pi.getIdOperacion()==idOperacion){
         				encontrado=true;
         				cadena.remove(i);
-        				String acciones=(String)cadena.firstElement();
-        				acciones=Integer.toString(Integer.parseInt(acciones)-pi.getNumeroDeAcciones());
-        				if (acciones.equals("0")) {
+        				Integer acciones=(Integer)cadena.firstElement();
+        				acciones=new Integer(acciones.intValue()-pi.getNumeroDeAcciones());
+        				if (acciones.toString().equals("0")) {
         					cadena.removeAllElements(); 
         					//System.out.println(elemento);
         				    operacion.remove(elemento);
@@ -153,7 +163,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         				}
         				else
         					cadena.setElementAt(acciones,0);
-        				System.out.println("se ha eliminado la operaci�n "+idOperacion);
+        				System.out.println("se ha eliminado la operacion "+idOperacion);
         			}
         			i++;
         		}
