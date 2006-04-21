@@ -91,6 +91,7 @@ public class Servidor implements Administrador, Stoxtreme{
 			String empresa = o.getEmpresa();
 			objetosBolsa.get(empresa).insertaOperacion(usuario, IDS, o);
 			regOperaciones.insertarOperacion(o);
+			mapaIDs.put(IDS, objetosBolsa.get(empresa));
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -98,8 +99,14 @@ public class Servidor implements Administrador, Stoxtreme{
 		return IDS;
 	}
 	
-	public void cancelarOperacion(String usuario, int i){
-		System.out.println("USUARIO "+usuario+" CANCELA OPERACION");
+	private Hashtable<Integer, ObjetoBolsa> mapaIDs = new Hashtable<Integer,ObjetoBolsa>();
+	public void cancelarOperacion(String usuario, int idop){
+		try{
+			mapaIDs.get(idop).cancelarOperacion(idop);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void iniciarTomcat() throws Exception{
