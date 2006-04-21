@@ -45,7 +45,9 @@ import stoxtreme.sistema_mensajeria.receptor.*;
 import sun.security.krb5.internal.crypto.f;
 
 public class Cliente implements IMensajeriaListener{
-	private static final String URLAXIS = "http://localhost:8080/axis/services/";
+	private static final String URLBASE = "http://localhost:8080/";
+	private static final String URLAXIS = URLBASE+"axis/services/";
+	private static final String URLCONF = URLBASE+"Stoxtreme/config/";
 	
 	private String nUsuario;
 	private String password;
@@ -60,7 +62,6 @@ public class Cliente implements IMensajeriaListener{
 	private InfoLocal info;
 	
 	public Cliente(String url){
-		
 		try{
 			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
 			servidor = locator.getStoXtreme(new URL(url));
@@ -245,7 +246,7 @@ public class Cliente implements IMensajeriaListener{
 		while(ficheros.length>contador){
 			try {
 				//TODO Cambiar la URL
-				url= new  URL("http://localhost:8080/Stoxtreme/config/"+ficheros[contador]+".xml");
+				url= new  URL(URLCONF+ficheros[contador]+".xml");
 				//TODO Cambiar la ruta de destino si procede
 				
 				File f = new File("./conf/cliente/"+ficheros[contador]+".xml");
