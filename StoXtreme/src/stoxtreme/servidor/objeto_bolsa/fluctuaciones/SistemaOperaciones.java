@@ -81,18 +81,18 @@ public class SistemaOperaciones /*implements RelojListener*/{
         	Integer num= new Integer(numAcciones);
         	//preciodef=
         	if (listaCompras.containsKey(Double.toString(calculaPrecio(precioA,tick,precio)))){
-        		compra=(Vector) listaCompras.get(Double.toString(precio));
+        		compra=(Vector) listaCompras.get(Double.toString(calculaPrecio(precioA,tick,precio)));
         		accionesTotales=(Integer)compra.firstElement();
         		accionesTotales=Integer.valueOf(num.intValue()+accionesTotales.intValue());
-        		compra.setElementAt(accionesTotales,idOperacion);
-        		p1=new Posicion(agente,numAcciones,4);
+        		compra.setElementAt(accionesTotales,0);
+        		p1=new Posicion(agente,numAcciones,idOperacion);
         		compra.add(p1);
         	}
         	else{
-        		p1=new Posicion(agente,numAcciones,4);
+        		p1=new Posicion(agente,numAcciones,idOperacion);
         		compra.add(num);
         		compra.add(p1);
-        		listaCompras.put(Double.toString(precio),compra);
+        		listaCompras.put(Double.toString(calculaPrecio(precioA,tick,precio)),compra);
         		
         	}
         	
@@ -106,19 +106,19 @@ public class SistemaOperaciones /*implements RelojListener*/{
         	Posicion p1;
         	int idOp;
         	Integer num= new Integer(numAcciones);
-        	if (listaVentas.containsKey(Double.toString(precio))){
+        	if (listaVentas.containsKey(Double.toString(calculaPrecio(precioA,tick,precio)))){
         		venta=(Vector) listaVentas.get(Double.toString(calculaPrecio(precioA,tick,precio)));
         		accionesTotales=(Integer)venta.firstElement();
         		accionesTotales=Integer.valueOf(num.intValue()+accionesTotales.intValue());
-        		venta.setElementAt(accionesTotales,idOperacion);
+        		venta.setElementAt(accionesTotales,0);
         		p1=new Posicion(agente,numAcciones,idOperacion);
         		venta.add(p1);
         	}
         	else{
-        		p1=new Posicion(agente,numAcciones,4);
+        		p1=new Posicion(agente,numAcciones,idOperacion);
         		venta.add(num);
         		venta.add(p1);
-        		listaVentas.put(Double.toHexString(precio),venta);
+        		listaVentas.put(Double.toString(calculaPrecio(precioA,tick,precio)),venta);
         		
         	}
         	idsventas.add(idOperacion);

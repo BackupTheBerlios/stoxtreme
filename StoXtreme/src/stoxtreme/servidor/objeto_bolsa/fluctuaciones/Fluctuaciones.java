@@ -39,15 +39,15 @@ public class Fluctuaciones {
 	    tick=nt;
 	    pActual=pa;
 	    empresa=emp;
-	  }
+  }
   public Hashtable filtrayOrdena(Hashtable vTotal){
     Hashtable vFinal=new Hashtable();
     Vector listaValores;
     Enumeration listaClaves;
     double max, min;
     String claveI;
-    max= pActual + tick;
-    min= pActual - tick;
+    max= pActual + 10;
+    min= pActual - 10;
     listaClaves=vTotal.keys();
     while (listaClaves.hasMoreElements()){
       claveI=(String)listaClaves.nextElement();
@@ -192,7 +192,14 @@ public class Fluctuaciones {
 		  return redondeo(pActual, 2);
 	  }
   public static void main(String[] args) {
-    Hashtable cT=new Hashtable();
+	SistemaOperaciones so=new SistemaOperaciones(3);
+	Fluctuaciones fluc=new Fluctuaciones(so,0.3,25.3,"Sony-Ericson");
+	fluc.getSisOp().introduceCompra(1,"Agente Smith",27.6,40,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceVenta(5,"Agente Rocio",27.6,30,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceCompra(2,"Agente Pollo",27.6,20,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceVenta(7,"Agente Yo",28.6,15,fluc.getPrecioActual(),fluc.getTick());
+	fluc.paso();
+	/*Hashtable cT=new Hashtable();
     Hashtable vT=new Hashtable();
     //Double precio1=new Double(23.5f);
     //Double precio2=new Double(25.5);
@@ -226,7 +233,7 @@ public class Fluctuaciones {
     
     SistemaOperaciones so=new SistemaOperaciones(cT,vT);
     Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5,"GESSER");
-    fluctuaciones1.paso();
+    fluctuaciones1.paso();*/
   }
 
 public double getPrecioActual() {
@@ -243,6 +250,14 @@ public double getTick() {
 
 public void setTick(double tick) {
 	this.tick = tick;
+}
+
+public SistemaOperaciones getSisOp() {
+	return sisOp;
+}
+
+public void setSisOp(SistemaOperaciones sisOp) {
+	this.sisOp = sisOp;
 }
 
 }
