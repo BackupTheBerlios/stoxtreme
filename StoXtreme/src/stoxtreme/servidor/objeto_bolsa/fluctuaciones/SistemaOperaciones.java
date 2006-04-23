@@ -229,4 +229,10 @@ public class SistemaOperaciones /*implements RelojListener*/{
 			Mensaje m = new Mensaje(contenido, tipo, idAgente);
 			AlmacenMensajes.getInstance().enviaMensaje(m);
 		}
+		public void setListaCompras(Hashtable listaCompras) {
+			this.listaCompras = listaCompras;
+		}
+		public void setListaVentas(Hashtable listaVentas) {
+			this.listaVentas = listaVentas;
+		}
 }
