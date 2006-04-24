@@ -167,8 +167,8 @@ public class SistemaOperaciones /*implements RelojListener*/{
         				}
         				else
         					cadena.setElementAt(acciones,0);
-        				//System.out.println("se ha eliminado la operacion "+idOperacion);
-        				AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_CANCELACION", idAgente));
+        				System.out.println("se ha eliminado la operacion "+idOperacion);
+        				//AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_CANCELACION", idAgente));
         			}
         			i++;
         		}
@@ -232,9 +232,9 @@ public class SistemaOperaciones /*implements RelojListener*/{
 		public void setPrecioEstimado(double precioEstimado) {
 			this.precioEstimado = precioEstimado;
 		}
-		public void notificaOperacion(String idAgente, int idOperacion, int numAcciones) {
+		public void notificaOperacion(String idAgente, int idOperacion, int numAcciones,double precio) {
 			String tipo = "NOTIFICACION_OPERACION";
-			String contenido = idOperacion+","+numAcciones;
+			String contenido = idOperacion+","+numAcciones+","+precio;
 			Mensaje m = new Mensaje(contenido, tipo, idAgente);
 			AlmacenMensajes.getInstance().enviaMensaje(m);
 		}

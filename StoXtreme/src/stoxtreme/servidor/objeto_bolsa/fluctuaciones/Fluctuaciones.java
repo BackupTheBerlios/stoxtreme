@@ -130,27 +130,27 @@ public class Fluctuaciones {
 	        	if (pC.getNumeroDeAcciones()<=auxC){	        		
 	        		auxC-=pC.getNumeroDeAcciones();
 	        		System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
-	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
+	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones(),precioM);
 	        		preciosCompra.remove(indiceC);
 	        		indiceC++;	        		
 	        	}
 	        	else{
 	        		pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-auxC);
 	        		System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
-	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),auxC);
+	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),auxC,precioM);
 	        		auxC=0;
 	        	}
 	        	if (pV.getNumeroDeAcciones()<=auxV){
 	        		auxV-=pV.getNumeroDeAcciones();
 	        		System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
-	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),pV.getNumeroDeAcciones());
+	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),pV.getNumeroDeAcciones(),precioM);
 	        		preciosVenta.remove(indiceV);
 	        		indiceV++;
 	        	}
 	        	else{
 	        		pV.setNumeroDeAcciones(pV.getNumeroDeAcciones()-auxV);
 	        		System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
-	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),auxV);
+	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),auxV,precioM);
 	        		auxV=0;
 	        	}	        	
 	        }
@@ -183,13 +183,13 @@ public class Fluctuaciones {
 		    			if (pC.getNumeroDeAcciones()>sisOp.getAccionesVenta()){
 		    				pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-sisOp.getAccionesVenta());
 			        		System.out.println("He comprado "+(sisOp.getAccionesVenta()));
-		    				sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),sisOp.getAccionesVenta());
+		    				sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),sisOp.getAccionesVenta(),Double.parseDouble(claveFinal));
 			        		sisOp.setAccionesVenta(0);
 			        		acabado=true;
 		    			}
 		    			else{
 		    				sisOp.setAccionesVenta(sisOp.getAccionesVenta()-pC.getNumeroDeAcciones());
-			        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
+			        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones(),Double.parseDouble(claveFinal));
 		    				System.out.println("He comprado "+(pC.getNumeroDeAcciones()));
 			        		auxC.remove(i);
 			        		i++;
@@ -235,7 +235,8 @@ public static void main(String[] args) {
 	fluc.getSisOp().introduceVenta(5,"Agente Rocio",27.6,30,fluc.getPrecioActual(),fluc.getTick());
 	fluc.getSisOp().introduceCompra(2,"Agente Pollo",20.6,20,fluc.getPrecioActual(),fluc.getTick());
 	fluc.getSisOp().introduceVenta(7,"Agente Yo",28.6,15,fluc.getPrecioActual(),fluc.getTick());
-	fluc.paso();
+	fluc.getSisOp().cancelaOperacion(2,"Agente Pollo");
+	//fluc.paso();
 	/*Hashtable cT=new Hashtable();
     Hashtable vT=new Hashtable();
     //Double precio1=new Double(23.5f);
