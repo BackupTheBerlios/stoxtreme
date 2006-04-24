@@ -1,4 +1,5 @@
 package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
+
 import java.util.*;
 
 import javax.swing.JOptionPane;
@@ -128,27 +129,27 @@ public class Fluctuaciones {
 	        	Posicion pV=(Posicion)preciosVenta.elementAt(indiceV);
 	        	if (pC.getNumeroDeAcciones()<=auxC){	        		
 	        		auxC-=pC.getNumeroDeAcciones();
-	        		//System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
+	        		System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
 	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
 	        		preciosCompra.remove(indiceC);
 	        		indiceC++;	        		
 	        	}
 	        	else{
 	        		pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-auxC);
-	        		//System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
+	        		System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
 	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),auxC);
 	        		auxC=0;
 	        	}
 	        	if (pV.getNumeroDeAcciones()<=auxV){
 	        		auxV-=pV.getNumeroDeAcciones();
-	        		//System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
+	        		System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
 	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),pV.getNumeroDeAcciones());
 	        		preciosVenta.remove(indiceV);
 	        		indiceV++;
 	        	}
 	        	else{
 	        		pV.setNumeroDeAcciones(pV.getNumeroDeAcciones()-auxV);
-	        		//System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
+	        		System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
 	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),auxV);
 	        		auxV=0;
 	        	}	        	
@@ -159,48 +160,75 @@ public class Fluctuaciones {
 	        if (numAccionesV.intValue()==0){
 	        	venta.remove(claveFinal);
 	        }
-	    }else {
-	    	boolean acabado=sisOp.getAccionesVenta()>0;
-	    	int i=1;
-	    	Vector auxV=(Vector)compra.get(Double.toString
-	    			(SistemaOperaciones.calculaPrecio
-	    					(pActual,tick,pActual+sisOp.getPrecioEstimado())));
-	    	if(sisOp.getAccionesVenta()>0 && auxV!=null && auxV.size()>0){
-	    		while(auxV.size()>0 && !acabado ){
-	    			Posicion pC=(Posicion)auxV.get(i);
-	    			if (pC.getNumeroDeAcciones()>sisOp.getAccionesVenta()){
-	    				pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-sisOp.getAccionesVenta());
-		        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),sisOp.getAccionesVenta());
-		        		sisOp.setAccionesVenta(0);
-		        		acabado=true;
-	    			}
-	    			else{
-	    				sisOp.setAccionesVenta(sisOp.getAccionesVenta()-pC.getNumeroDeAcciones());
-		        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
-		        		auxV.remove(i);
-		        		i++;
-	    			}
-	    				
-	    		}
-	    		precioM=SistemaOperaciones.calculaPrecio
-				(pActual,tick,pActual+sisOp.getPrecioEstimado());
-	    	}
+	    }else{
+	    	claveFinal=buscaMayorVolumen(compra,compra.keys());
+	    	if (!claveFinal.equals("")){
+		    	boolean acabado=sisOp.getAccionesVenta()==0;
+		    	int i=1;
+	//	    	Vector auxV=(Vector)compra.get(Double.toString
+	//	    			(SistemaOperaciones.calculaPrecio
+	//	    					(pActual,tick,pActual+sisOp.getPrecioEstimado())));
+		    	Vector auxC=(Vector)compra.get(claveFinal);
+		    	Integer accionesTotales=(Integer)auxC.elementAt(0);
+		    	if (sisOp.getAccionesVenta()>accionesTotales.intValue())
+		    		accionesTotales=new Integer(0);
+		    	else{
+		    		accionesTotales=Integer.valueOf(accionesTotales.intValue()-sisOp.getAccionesVenta());
+		    		auxC.set(0,accionesTotales);
+		    	}
+		    	if(sisOp.getAccionesVenta()>0 && auxC!=null && auxC.size()>0){
+		    		i=1;
+		    		while(auxC.size()>0 && !acabado ){
+		    			Posicion pC=(Posicion)auxC.get(i);
+		    			if (pC.getNumeroDeAcciones()>sisOp.getAccionesVenta()){
+		    				pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-sisOp.getAccionesVenta());
+			        		System.out.println("He comprado "+(sisOp.getAccionesVenta()));
+		    				sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),sisOp.getAccionesVenta());
+			        		sisOp.setAccionesVenta(0);
+			        		acabado=true;
+		    			}
+		    			else{
+		    				sisOp.setAccionesVenta(sisOp.getAccionesVenta()-pC.getNumeroDeAcciones());
+			        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
+		    				System.out.println("He comprado "+(pC.getNumeroDeAcciones()));
+			        		auxC.remove(i);
+			        		i++;
+		    			}
+		    				
+		    		}
+		    		if(accionesTotales.intValue()==0)
+		    			auxC=null;
+		    		Hashtable aux=sisOp.getCompras();
+		    		aux.remove(claveFinal);
+		    		if (auxC!=null)
+		    			aux.put(claveFinal,auxC);
+		    		sisOp.setListaCompras(aux);
+		    		precioM=Double.parseDouble(claveFinal);
+	//	    		precioM=SistemaOperaciones.calculaPrecio
+	//				(pActual,tick,pActual+sisOp.getPrecioEstimado());
+		    	}
+		    }
 	    }
 	    sisOp.setListaCompras(compra);
 	    sisOp.setListaVentas(venta);
 	    return redondeo(precioM, 2);
+	  }	  
+
+  private static String buscaMayorVolumen(Hashtable compra, Enumeration claves) {
+	  String claveActual="";
+	  String claveSalida="";
+	  int volumen=0;
+	  while(claves.hasMoreElements()){
+		  claveActual=(String)claves.nextElement();
+		  if (((Integer)((Vector)compra.get(claveActual)).elementAt(0)).intValue()>volumen)
+			  claveSalida=claveActual;
 	  }
-  
-	  
-	  // FIXME !!! CUIDADO!!!! QUE HE COMENTADO ESTO XA PROBARR!!!
-	  /**
-	 * @return
-	 */
-	public double calculaValorTitulo2(){
-		  pActual *= 1.1;
-		  return redondeo(pActual, 2);
-	  }
-  public static void main(String[] args) {
+	return claveSalida;
+}
+
+
+
+public static void main(String[] args) {
 	SistemaOperaciones so=new SistemaOperaciones(3);
 	Fluctuaciones fluc=new Fluctuaciones(so,0.3,25.3,"Sony-Ericson");
 	//fluc.getSisOp().introduceCompra(1,"Agente Smith",27.6,40,fluc.getPrecioActual(),fluc.getTick());
