@@ -44,7 +44,7 @@ import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 import stoxtreme.sistema_mensajeria.receptor.*;
 import sun.security.krb5.internal.crypto.f;
 
-public class Cliente implements IMensajeriaListener{
+public class Cliente{
 	private static final String URLBASE = "http://localhost:8080/";
 	private static final String URLAXIS = URLBASE+"axis/services/";
 	private static final String URLCONF = URLBASE+"Stoxtreme/config/";
@@ -164,40 +164,11 @@ public class Cliente implements IMensajeriaListener{
 		gui.setVisible(true);
 		// Lo ultimo que hacemos es dar de alta en el receptor
 		receptor = new ReceptorMensajes(nUsuario, ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
-		receptor.addListener(this);
+		receptor.addListener(new ManejadorMensajes(this));
 		
 	}
 	
-	public synchronized void onMensaje(Mensaje m){
-		System.out.println("RECIBIDO MENSAJE " + m.getContenido());
-		if(m.getTipoMensaje().equals("NOTIFICACION_OPERACION")){
-			String[] valores = m.getContenido().split(",");
-			int idOp = Integer.parseInt(valores[0]);
-			int cantidad = Integer.parseInt(valores[1]);
-			notificaOperacion(idOp, cantidad);
-		}
-		else if(m.getTipoMensaje().equals("NOTIFICACION_CANCELACION")){
-			int idOp = Integer.parseInt(m.getContenido());
-			notificaCancelacion(idOp);
-		}
-		else if(m.getTipoMensaje().equals("CAMBIO_PRECIO")){
-			String[] valores = m.getContenido().split(",");
-			String empresa = valores[0];
-			double nuevoPrecio = Double.parseDouble(valores[1]);
-			eBolsa.cambiaValor(empresa, nuevoPrecio);
-		}
-		else if(m.getTipoMensaje().equals("INFORMACION")){
-			if(gui!= null){
-				JOptionPane.showMessageDialog(gui,m.getContenido());
-			}
-			else{
-				System.out.println("Mensaje informacion: "+m.getContenido());
-			}
-		}
-		else{
-			System.out.println("Mensaje("+m.getTipoMensaje()+"): "+ m.getContenido());
-		}
-	}
+	
 	
 	public void insertarOperacion(Operacion op)throws Exception{
 		int idOp = servidor.insertarOperacion(nUsuario, op);
@@ -275,6 +246,19 @@ public class Cliente implements IMensajeriaListener{
 			if(isr!=null)
 				isr.close();
 			contador++;
+		}
+	}
+	
+	public EstadoBolsa getEstadoBolsa() {
+		return eBolsa;
+	}
+	
+	public void informar(String contenido) {
+		if(gui!= null){
+			JOptionPane.showMessageDialog(gui,contenido);
+		}
+		else{
+			System.out.println("Mensaje informacion: "+contenido);
 		}
 	}
 }
