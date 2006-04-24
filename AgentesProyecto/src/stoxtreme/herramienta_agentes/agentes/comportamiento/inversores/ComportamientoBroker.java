@@ -15,6 +15,10 @@ import stoxtreme.interfaz_remota.Operacion;
 
 
 public class ComportamientoBroker extends ComportamientoAgente{
+	public static double redondeo(double numero, int nDecimales){
+		  return Math.floor((Math.pow(10, nDecimales)*numero)+0.5)/Math.pow(10, nDecimales);
+	}
+	
 	public ComportamientoBroker(EstadoBolsa bolsa, ParametrosSocial ps, ParametrosPsicologicos pp){
 		super(bolsa, ps, pp);
 	}
@@ -24,7 +28,7 @@ public class ComportamientoBroker extends ComportamientoAgente{
 		int cantidad = modeloPsicologico.numeroCompraAcciones();
 		double precio = modeloPsicologico.precioCompraAcciones( 
 			estadoBolsa.getPrecioActualEmpresa(empresa));
-						
+		precio = redondeo(precio,2);				
 		return new Operacion(agente.getIDString(), tipoOp, cantidad, empresa, precio);
 	}
 	
@@ -34,7 +38,7 @@ public class ComportamientoBroker extends ComportamientoAgente{
 		int cantidad = estadoCartera.numeroAccionesPosesion(empresa);
 		double precio = modeloPsicologico.precioVentaAcciones( 
 			estadoBolsa.getPrecioActualEmpresa(empresa));
-						
+		precio = redondeo(precio,2);				
 		return new Operacion(agente.getIDString(), tipoOp, cantidad, empresa, precio);	
 	}
 	
