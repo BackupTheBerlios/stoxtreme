@@ -1,6 +1,7 @@
 package stoxtreme.herramienta_agentes;
 
 import javax.swing.event.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
@@ -18,9 +19,12 @@ import stoxtreme.interfaz_remota.Operacion;
 
 public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private JSplitPane panelPrincipal;
+	private JScrollPane panelIzquierdo;
+	private JSplitPane panelDerecho;
 	private PruebaListModel modeloLista;
 	private JList listaOpConfirmar;
 	private StyledDocument textoConsola;
+	private HerramientaAgentesTableModel modeloTabla;
 	
 	public HerramientaAgentesPanel() {
 		try{
@@ -31,12 +35,24 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		}
 	}
 	
-	public void init(){
-		setLayout(new BorderLayout());
-		panelPrincipal = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 
-				getPanelSuperior(),
-				getPanelInferior());
+	public void init() throws Exception{
+		panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+				getPanelIzquierdo(), getPanelDerecho());
 		add(panelPrincipal);
+	}
+	
+	public Component getPanelIzquierdo(){
+		modeloTabla = new HerramientaAgentesTableModel();
+		panelIzquierdo = new JScrollPane(new JTable(modeloTabla));
+		return panelIzquierdo;
+	}
+	
+	public Component getPanelDerecho(){
+		setLayout(new BorderLayout());
+		panelDerecho = new JSplitPane(JSplitPane.VERTICAL_SPLIT, 
+				getPanelSuperiorDerecho(),
+				getPanelInferiorDerecho());
+		return(panelDerecho);
 	}
 	
 	public void insertarOperacion(Operacion op){
@@ -87,7 +103,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	protected abstract void nOperacion(String id, int idOp, int cantidad, double precio);
 	protected abstract void nCancelacion(String id, int idOp);
 	
-	public Component getPanelSuperior(){
+	public Component getPanelSuperiorDerecho(){
 		modeloLista = new PruebaListModel();
 		listaOpConfirmar = new JList(modeloLista);
 		
@@ -142,7 +158,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		}
 	}
 	
-	public Component getPanelInferior(){
+	public Component getPanelInferiorDerecho(){
 		JTextPane texto = new JTextPane();
 		textoConsola = texto.getStyledDocument();
 		addStylesToDocument(textoConsola);
@@ -236,6 +252,27 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		
 		public int getSize() {
 			return lista.size();
+		}
+	}
+	
+	public static void main(String[] args){
+		JFrame frame = new JFrame();
+		HerramientaAgentesPanel panel = new HerramientaAgentesPanel(){
+			protected void nOperacion(String id, int idOp, int cantidad, double precio) {
+				System.out.println("hola");
+			}
+			protected void nCancelacion(String id, int idOp) {
+				System.out.println("Adios");
+			}
+		};
+		frame.add(panel);
+		frame.setSize(new Dimension(800,600));
+		frame.setVisible(true);
+		
+		
+		for(int i=0; i<1000; i++){
+			String id= "Agente"+i;
+			panel.modeloTabla.insertar(id, "", "");
 		}
 	}
 }
