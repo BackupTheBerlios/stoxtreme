@@ -10,6 +10,7 @@ public class CancelarOperacion extends Decision{
 	}
 	
 	public void ejecuta() {
+		System.err.println(idOp);
 		agente.cancelarOperacion(idOp);
 	}
 	

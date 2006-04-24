@@ -85,7 +85,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 			ComportamientoAgente comportamiento1 = new ComportamientoBroker();
 			
 			Agente agente = new Agente(monitor.getConexionBolsa(), monitor.getConsolaAgentes(), ps, pp);
-			monitor.addNotificadorListener(agente.getIDString(), agente.getPerceptor());
+			notif.addListener(agente.getIDString(), agente.getPerceptor());
 			agente.addComportamiento(comportamiento1);
 			agente.start();
 		}
@@ -129,6 +129,25 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	}
 
 	public void onMensaje(Mensaje m) {
-		System.out.println(m.getContenido());
+		System.out.println(m.getTipoMensaje()+" "+m.getContenido());
+		if(m.getTipoMensaje().equals("NOTIFICACION_OPERACION")){
+			String[] mss = m.getContenido().split(",");
+			int idOp = Integer.parseInt(mss[0]);
+			int cantidad = Integer.parseInt(mss[1]);
+			double precio = Double.parseDouble(mss[2]);
+			notif.notificar(m.getDestinatario(), idOp, cantidad, precio);
+		}
+		else if(m.getTipoMensaje().equals("NOTIFICACION_CANCELACION")){
+			int idOp = Integer.parseInt(m.getContenido());
+			notif.notificarCancelacion(m.getDestinatario(), idOp);
+		}
+		else if(m.getTipoMensaje().equals("CAMBIO_PRECIO")){
+			String[] mss = m.getContenido().split(",");
+			String empresa = mss[0];
+			double precio = Double.parseDouble(mss[1]);
+		}
+		else{
+			
+		}
 	}
 }

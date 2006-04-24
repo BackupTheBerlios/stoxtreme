@@ -102,8 +102,4 @@ public class MonitorAgentes extends Thread{
 	public ConsolaAgentes getConsolaAgentes(){
 		return consola;
 	}
-
-	public void addNotificadorListener(String string, Perceptor p) {
-		
-	}
 }

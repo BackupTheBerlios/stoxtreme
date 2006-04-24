@@ -11,6 +11,14 @@ public class IntroducirOperacion extends Decision{
 	}
 	
 	public void ejecuta() {
+		String tipo;
+		if(o.getTipoOp() == Operacion.COMPRA){
+			tipo = "compra";
+		}
+		else{
+			tipo = "Venta";
+		}
+		System.err.println(tipo+" "+o.getPrecio()+" "+o.getCantidad());
 		agente.insertarOperacion(o);
 	}
 	
