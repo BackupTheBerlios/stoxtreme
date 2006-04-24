@@ -9,11 +9,13 @@ public class OperacionesPendientes {
 	Hashtable<Integer, String> empresasPendientes;
 	Hashtable<Integer, OperacionLocal> comprasPendientes;
 	Hashtable<Integer, OperacionLocal> ventasPendientes;
+	HashSet<Integer> cancelacionPendiente;
 	
 	public OperacionesPendientes(){
 		empresasPendientes = new Hashtable<Integer, String>();
 		comprasPendientes = new Hashtable<Integer, OperacionLocal>();
 		ventasPendientes = new Hashtable<Integer, OperacionLocal>();
+		cancelacionPendiente = new HashSet<Integer>();
 	}
 	
 	public void insertaOperacionPendiente(int operacion, String empresa, int tipoOp, int numAcciones, double precio){
@@ -25,10 +27,16 @@ public class OperacionesPendientes {
 		else{ // Operacion.VENTA
 			tabla = ventasPendientes;
 		}
-		
 		tabla.put(operacion, new OperacionLocal(empresa, numAcciones, precio));
 	}
 	
+	public void insertarCancelacionPendiente(int nCancelacion){
+		cancelacionPendiente.add(nCancelacion);
+	}
+	
+	public boolean isPendienteCancelacion(int nCancelacion){
+		return cancelacionPendiente.contains(nCancelacion);
+	}
 	public String getEmpresaOperacion(int idOp) {
 		return empresasPendientes.get(idOp);
 	}
@@ -46,6 +54,7 @@ public class OperacionesPendientes {
 		comprasPendientes.remove(idOp);
 		ventasPendientes.remove(idOp);
 		empresasPendientes.remove(idOp);
+		cancelacionPendiente.remove(-idOp);
 	}
 
 	public boolean hayOperacionesPendientes(String empresa) {
@@ -68,13 +77,14 @@ public class OperacionesPendientes {
 
 	public int dameOperacionAleatoria() {
 		Enumeration<Integer> enu = empresasPendientes.keys();
-		int n = (int)(Math.random()*empresasPendientes.size());
-		
-		for(int i=1; i<n; i++){ // Avanza n-1
-			enu.nextElement();
+		int n = (int)(Math.random()*(double)empresasPendientes.size());
+
+		int actual = -1;
+		for(int i=0; i<=n; i++){ // Avanza n-1
+			actual = enu.nextElement();
 		}
 		
-		return enu.nextElement();
+		return actual;
 	}
 
 	public double getPrecioOperacion(int idOp) {

@@ -10,15 +10,15 @@ import stoxtreme.herramienta_agentes.agentes.decisiones.*;
 import stoxtreme.interfaz_remota.Operacion;
 
 public class ComportamientoPrueba extends ComportamientoAgente{
-	public ComportamientoPrueba(EstadoBolsa estadoBolsa, ParametrosSocial ps, ParametrosPsicologicos pp) {
-		super(estadoBolsa, ps, pp);
+	public ComportamientoPrueba() {
+		super();
 	}
 	
-	public ArrayList<Decision> tomaDecisiones() {
+	public ArrayList<Decision> generacionDecisiones() {
 		ArrayList<Decision> decisiones = new ArrayList<Decision>();
 		//if(estadoBolsa.getPrecioActualEmpresa("Endesa")>10.0)
-		decisiones.add(new IntroducirOperacion(agente, new Operacion(agente.getIDString(), Operacion.COMPRA, 100, "Endesa", 10.0)));
-		decisiones.add(new Espera(agente, 10));
+		decisiones.add(new IntroducirOperacion(new Operacion(null,Operacion.COMPRA, 100, "Endesa", 10.0)));
+		decisiones.add(new Espera(10));
 		return decisiones;
 	}
 }

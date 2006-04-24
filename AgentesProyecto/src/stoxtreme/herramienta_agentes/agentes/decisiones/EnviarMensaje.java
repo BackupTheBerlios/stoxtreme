@@ -6,8 +6,8 @@ import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Mensaje;
 public class EnviarMensaje extends Decision{
 	private Mensaje mensaje;
 	
-	public EnviarMensaje(Agente a, Mensaje m){
-		super(a, 0);
+	public EnviarMensaje(Mensaje m){
+		super();
 		this.mensaje = m;
 	}
 	

@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import stoxtreme.cliente.ManejadorMensajes;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.GeneradorParametrosPsicologicos;
 import stoxtreme.herramienta_agentes.agentes.GeneradorParametrosSocial;
@@ -18,16 +19,22 @@ import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoBroker;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.prueba.ComportamientoPrueba;
+import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
+import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
+import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Stoxtreme;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
+import stoxtreme.sistema_mensajeria.IMensajeriaListener;
+import stoxtreme.sistema_mensajeria.receptor.ReceptorMensajes;
 
-public class HerramientaAgentes extends HerramientaAgentesPanel implements TimerListener{
+public class HerramientaAgentes extends HerramientaAgentesPanel implements TimerListener,IMensajeriaListener{
 	private ParametrosAgentes parametros;
 	private ArrayList<Agente> agentes;
 	private MonitorAgentes monitor;
 	private EstadoBolsa bolsa;
 	private Notificador notif;
+	private ReceptorMensajes receptor;
 	JFrame frame;
 	
 	public HerramientaAgentes(){
@@ -39,6 +46,8 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		this.parametros = parametros;
 		this.bolsa = bolsa;
 		this.notif = new Notificador();
+		receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
+		receptor.addListener(this);
 	}
 	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();
@@ -59,6 +68,8 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		monitor = new MonitorAgentes(servidor, this);
 		monitor.addTimerListener(this);
 		monitor.start();
+		Decision.setMonitor(monitor);
+		BuzonMensajes.setMonitor(monitor);
 		
 		GeneradorParametrosPsicologicos gPP = new GeneradorParametrosPsicologicos(nAgentes);
 		gPP.generarTiempoEspera(20.0, 5.0);
@@ -71,9 +82,10 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 			String id = "Agente"+i;
 			ParametrosPsicologicos pp = gPP.get(i);
 			ParametrosSocial ps = gPS.get(i);
-			ComportamientoAgente comportamiento1 = new ComportamientoBroker(bolsa, ps, pp);
+			ComportamientoAgente comportamiento1 = new ComportamientoBroker();
 			
-			Agente agente = new Agente(monitor);
+			Agente agente = new Agente(monitor.getConexionBolsa(), monitor.getConsolaAgentes(), ps, pp);
+			monitor.addNotificadorListener(agente.getIDString(), agente.getPerceptor());
 			agente.addComportamiento(comportamiento1);
 			agente.start();
 		}
@@ -83,7 +95,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	public static void main(String[] args){
 		try{
 			ParametrosAgentes parametros = new ParametrosAgentes();
-			EstadoBolsa bolsa = new EstadoBolsa();
+			EstadoBolsa bolsa = EstadoBolsa.getInstanciaGlobal();
 			bolsa.insertaEmpresa("ENDESA", 10.0);
 			bolsa.insertaEmpresa("TELECINCO", 20.0);
 			bolsa.insertaEmpresa("ANTENA3", 30.0);
@@ -114,5 +126,9 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 
 	public void onTick(int tick) {
 		frame.setTitle("Agentes: "+tick);
+	}
+
+	public void onMensaje(Mensaje m) {
+		System.out.println(m.getContenido());
 	}
 }

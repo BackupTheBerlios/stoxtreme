@@ -8,8 +8,8 @@ import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 public abstract class RecepcionMensaje extends Decision{
 	protected ArrayList<Mensaje> listaMensajes;
 	
-	public RecepcionMensaje(Agente agente){
-		super(agente, 0);
+	public RecepcionMensaje(){
+		super();
 		listaMensajes = new ArrayList<Mensaje>();
 	}
 	

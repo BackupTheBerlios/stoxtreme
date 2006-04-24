@@ -30,13 +30,13 @@ public class BuzonMensajes {
 	private ArrayList<RecepcionesPendientes> recepcionesPendientes;
 	
 	
-	public BuzonMensajes(MonitorAgentes monitor, IDAgente id){
+	public BuzonMensajes(IDAgente id){
 		this.recepcionesPendientes = new ArrayList<RecepcionesPendientes>();
 		this.mensajes = new ArrayList<Mensaje>();
 		this.propietarioBuzon = id;
 		buzones.put(id, this);
 		if(monitorAgentes == null)
-			monitorAgentes = monitor;
+			monitorAgentes = _monitor;
 	}
 	
 	public void send(Mensaje m){
@@ -142,5 +142,10 @@ public class BuzonMensajes {
 		else{
 			return new ArrayList<IDAgente>();
 		}
+	}
+
+	private static MonitorAgentes _monitor;
+	public static void setMonitor(MonitorAgentes monitor) {
+		_monitor = monitor;
 	}
 }

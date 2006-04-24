@@ -1,14 +1,23 @@
 package stoxtreme.herramienta_agentes.agentes.decisiones;
+import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 
 public abstract class Decision implements Comparable{
+	private static MonitorAgentes _monitor;
+	public static void setMonitor(MonitorAgentes monitor){
+		_monitor = monitor;
+	}
+	
 	private int tEspera;
 	private int tEjecucion;
 	protected Agente agente;
 	
-	public Decision(Agente agente, int tEspera){
+	public Decision(){
+		this.tEspera = 1;
+	}
+	
+	public Decision(int tEspera){
 		this.tEspera = tEspera;
-		this.agente = agente;
 	}
 	
 	public int compareTo(Object o){
@@ -26,6 +35,14 @@ public abstract class Decision implements Comparable{
 	
 	public String toString(){
 		return "Decision: " + Integer.toString(tEjecucion);
+	}
+	
+	public void insertarEnMonitor(){
+		_monitor.addDecision(this);
+	}
+	
+	public void setAgente(Agente agente){
+		this.agente = agente;
 	}
 	public abstract void ejecuta(); 
 }

@@ -4,12 +4,17 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import stoxtreme.herramienta_agentes.ConexionBolsa;
+import stoxtreme.herramienta_agentes.ConsolaAgentes;
+import stoxtreme.herramienta_agentes.EstadoBolsa;
 import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.*;
 import stoxtreme.herramienta_agentes.agentes.decisiones.*;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Mensaje;
 import stoxtreme.interfaz_remota.Operacion;
+import stoxtreme.interfaz_remota.Stoxtreme;
+import stoxtreme.servidor.Servidor;
 // Primer prototipo de agente broker.
 // Inicialmente se le introduce el parametro correspondiente al tiempo de espera
 // El broker, esperará a que transcurran tiempoEspera ciclos de ejecución y cuando
@@ -20,32 +25,55 @@ import stoxtreme.interfaz_remota.Operacion;
 // PostStep - Introduce la operación en el sistema correspondiendo con sus intenciones
 
 public class Agente extends Thread{
-	private BuzonMensajes buzon;
 	private IDAgente ID;
 	private Perceptor p;
+	private BuzonMensajes buzon;
 	private OperacionesPendientes opPendientes;
 	private ComportamientoAgente comportamiento;
-	private MonitorAgentes monitor;
+	private BuzonMensajes buzonMensajes;
+	private ModeloSocial modeloSocial;
+	private ModeloPsicologico modeloPsicologico;
+	private EstadoBolsa estadoBolsa;
+	private EstadoCartera estadoCartera;
 	private boolean alive;
+	private Stoxtreme conexionBolsa;
+	private ConsolaAgentes consolaAgentes;
 	
-	public Agente (MonitorAgentes monitor){
+	public Agente (Stoxtreme conexionBolsa, ConsolaAgentes consolaAgentes, ParametrosSocial ps, ParametrosPsicologicos pp){
 		ID = new IDAgente();
 		p = new Perceptor();
-		monitor.addNotificadorListener(ID.toString(), p);
+		
+		modeloSocial = new ModeloSocial(ps);
+		modeloPsicologico = new ModeloPsicologico(pp);
+		estadoBolsa = EstadoBolsa.getInstanciaGlobal();
+		estadoCartera = new EstadoCartera();
+		
+		this.conexionBolsa = conexionBolsa;
+		this.consolaAgentes = consolaAgentes;
+//		monitor.addNotificadorListener(ID.toString(), p);
+		
 		opPendientes = new OperacionesPendientes();
 		p.setOperacionesPendientes(opPendientes);
-		this.monitor = monitor;
+		p.setEstadoBolsa(estadoBolsa);
+		p.setEstadoCartera(estadoCartera);
+		
 		this.alive = true;
-		buzon = new BuzonMensajes(monitor, ID);
+		buzon = new BuzonMensajes(ID);
 	}
 	
 	public void addComportamiento(ComportamientoAgente c){
 		this.comportamiento = c;
-		p.setEstadoBolsa(comportamiento.getEstadoBolsa());
-		p.setEstadoCartera(comportamiento.getCartera());
-		p.setGeneradorDecisiones(comportamiento);
+		p.addGeneradorDecisiones(comportamiento);
+		
+		comportamiento.setModeloPsicologico(modeloPsicologico);
+		comportamiento.setModeloSocial(modeloSocial);
+		comportamiento.setEstadoBolsa(estadoBolsa);
+		comportamiento.setEstadoCartera(estadoCartera);
 		comportamiento.setOperacionesPendientes(opPendientes);
-		comportamiento.setAgente(this);
+		
+		Decision d = comportamiento.getDecisionEspera();
+		d.setAgente(this);
+		d.insertarEnMonitor();
 	}
 
 	// Analiza los cambios en la bolsa y cambia la estrategia
@@ -55,13 +83,16 @@ public class Agente extends Thread{
 			// decisiones
 			ArrayList<Decision> decisiones;
 			synchronized(this){
-				decisiones = comportamiento.tomaDecisiones();
+				decisiones = comportamiento.generacionDecisiones();
+				Decision espera = comportamiento.getDecisionEspera();
+				decisiones.add(espera);
 			}
 			
 			Iterator<Decision> itDec = decisiones.iterator();
 			while(itDec.hasNext()){
 				Decision actual = itDec.next();
-				monitor.addDecision(actual);
+				actual.setAgente(this);
+				actual.insertarEnMonitor();
 				imprime(actual);
 			}
 			
@@ -88,7 +119,7 @@ public class Agente extends Thread{
 		
 		
 		try {
-			int i = monitor.getConexionBolsa().insertarOperacion(this.ID.toString(), o);
+			int i = conexionBolsa.insertarOperacion(this.ID.toString(), o);
 			
 			if(i!= -1){
 				opPendientes.insertaOperacionPendiente(i, empresa, tipo, numAcciones, precio);
@@ -100,7 +131,7 @@ public class Agente extends Thread{
 	
 	public void cancelarOperacion(int operacion){
 		try {
-			monitor.getConexionBolsa().cancelarOperacion(this.ID.toString(),operacion);
+			conexionBolsa.cancelarOperacion(this.ID.toString(),operacion);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -116,6 +147,10 @@ public class Agente extends Thread{
 	}
 
 	public void imprime(Decision decision) {
-		monitor.getConsolaAgentes().insertarAccion(getIDString(), decision.toString());
+		consolaAgentes.insertarAccion(getIDString(), decision.toString());
+	}
+
+	public Perceptor getPerceptor() {
+		return p;
 	}
 }

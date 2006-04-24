@@ -5,8 +5,8 @@ import stoxtreme.interfaz_remota.Operacion;
 public class IntroducirOperacion extends Decision{
 	private Operacion o;
 	
-	public IntroducirOperacion(Agente a, Operacion op){
-		super(a, 1);
+	public IntroducirOperacion(Operacion op){
+		super();
 		o = op;
 	}
 	
@@ -16,5 +16,10 @@ public class IntroducirOperacion extends Decision{
 	
 	public String toString(){
 		return "Introducir operacion "+o;
+	}
+	
+	public void setAgente(Agente agente) {
+		super.setAgente(agente);
+		o.setIdEmisor(agente.getIDString());
 	}
 }

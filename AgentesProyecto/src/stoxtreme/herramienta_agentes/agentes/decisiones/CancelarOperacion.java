@@ -4,8 +4,8 @@ import stoxtreme.herramienta_agentes.agentes.Agente;
 public class CancelarOperacion extends Decision{
 	private int idOp;
 	
-	public CancelarOperacion(Agente a, int idOperacion){
-		super(a, 1);
+	public CancelarOperacion(int idOperacion){
+		super();
 		idOp = idOperacion;
 	}
 	

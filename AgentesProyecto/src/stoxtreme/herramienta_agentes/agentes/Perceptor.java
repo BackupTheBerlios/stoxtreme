@@ -1,5 +1,7 @@
 package stoxtreme.herramienta_agentes.agentes;
 
+import java.util.ArrayList;
+
 import stoxtreme.herramienta_agentes.EstadoBolsa;
 import stoxtreme.herramienta_agentes.ListenerNotificador;
 import stoxtreme.herramienta_agentes.MonitorAgentes;
@@ -11,7 +13,11 @@ public class Perceptor implements ListenerNotificador{
 	private EstadoBolsa estadoBolsa = null;
 	private EstadoCartera estadoCartera = null;
 	private OperacionesPendientes opPendientes = null;
-	private ComportamientoAgente gDecisiones = null;
+	private ArrayList<ComportamientoAgente> gDecisiones = null;
+	
+	public Perceptor() {
+		gDecisiones = new ArrayList<ComportamientoAgente>();
+	}
 	
 	public void setEstadoBolsa(EstadoBolsa estado){
 		estadoBolsa = estado;
@@ -25,8 +31,8 @@ public class Perceptor implements ListenerNotificador{
 		this.opPendientes = opPendientes;
 	}
 	
-	public void setGeneradorDecisiones(ComportamientoAgente gDeci){
-		this.gDecisiones = gDeci;
+	public void addGeneradorDecisiones(ComportamientoAgente gDeci){
+		this.gDecisiones.add(gDeci);
 	}
 	
 	public void onCambioPrecioAccion(String empresa, double nuevoPrecio) {
@@ -35,7 +41,7 @@ public class Perceptor implements ListenerNotificador{
 
 	public void onNotificacionOp(int idOp, int cantidad, double precio) {
 		if(	estadoBolsa != null && estadoCartera != null &&
-			opPendientes != null && gDecisiones != null){
+			opPendientes != null && gDecisiones.size()!=0){
 			String empresa = opPendientes.getEmpresaOperacion(idOp);
 			int tipoOp = opPendientes.getTipoOperacion(idOp);
 					
@@ -54,6 +60,8 @@ public class Perceptor implements ListenerNotificador{
 
 	public void onCancelacionOp(int idOp) {
 		opPendientes.cancelaOp(idOp);
-		gDecisiones.notifica(-idOp);
+		for(int i=0; i<gDecisiones.size(); i++){
+			gDecisiones.get(i).notifica(-idOp);
+		}
 	}
 }

@@ -4,8 +4,8 @@ import stoxtreme.herramienta_agentes.agentes.Agente;
 
 public class Espera extends Decision{
 
-	public Espera(Agente a, int tiempoEspera){
-		super(a, tiempoEspera);
+	public Espera(int tiempoEspera){
+		super(tiempoEspera);
 	}
 	
 	public void ejecuta() {

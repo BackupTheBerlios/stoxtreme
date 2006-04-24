@@ -3,6 +3,7 @@ package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
 import java.util.*;
 
 import stoxtreme.interfaz_remota.Mensaje;
+import stoxtreme.servidor.Servidor;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 /*

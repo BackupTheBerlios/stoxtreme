@@ -15,21 +15,16 @@ import stoxtreme.interfaz_remota.Operacion;
 
 
 public class ComportamientoBroker extends ComportamientoAgente{
-	public static double redondeo(double numero, int nDecimales){
-		  return Math.floor((Math.pow(10, nDecimales)*numero)+0.5)/Math.pow(10, nDecimales);
+	public double redondeo(double numero, int nDecimales){
+		return Math.floor((Math.pow(10, nDecimales)*numero)+0.5)/Math.pow(10, nDecimales);
 	}
-	
-	public ComportamientoBroker(EstadoBolsa bolsa, ParametrosSocial ps, ParametrosPsicologicos pp){
-		super(bolsa, ps, pp);
-	}
-	
 	public Operacion generaCompra(String empresa){
 		int tipoOp = Operacion.COMPRA;
 		int cantidad = modeloPsicologico.numeroCompraAcciones();
 		double precio = modeloPsicologico.precioCompraAcciones( 
 			estadoBolsa.getPrecioActualEmpresa(empresa));
 		precio = redondeo(precio,2);				
-		return new Operacion(agente.getIDString(), tipoOp, cantidad, empresa, precio);
+		return new Operacion(null, tipoOp, cantidad, empresa, precio);
 	}
 	
 	public Operacion generaVenta(String empresa){
@@ -39,13 +34,12 @@ public class ComportamientoBroker extends ComportamientoAgente{
 		double precio = modeloPsicologico.precioVentaAcciones( 
 			estadoBolsa.getPrecioActualEmpresa(empresa));
 		precio = redondeo(precio,2);				
-		return new Operacion(agente.getIDString(), tipoOp, cantidad, empresa, precio);	
+		return new Operacion(null, tipoOp, cantidad, empresa, precio);	
 	}
 	
-	public ArrayList<Decision> tomaDecisiones() {
+	public ArrayList<Decision> generacionDecisiones() {
 		ArrayList<Decision> lista = listaDecisiones;
 		listaDecisiones = new ArrayList<Decision>();
-//		
 		//Genera una nueva operacion
 		String empresa = estadoBolsa.dameEmpresaAleatoria();
 		
@@ -62,13 +56,16 @@ public class ComportamientoBroker extends ComportamientoAgente{
 				//System.out.println("VENTA "+o.getIDAgente()+" "+o.getPrecio());
 			}
 			if(o.getCantidad() >0)
-				lista.add(new IntroducirOperacion(agente, o));
+				lista.add(new IntroducirOperacion(o));
 		}
 		else{
-			int idOp =
-				operacionesPendientes.dameOperacionAleatoria();
-			if(!decisionesEsperaNotificacion.containsKey(-idOp)){
-				if(numeroCancelaciones < modeloPsicologico.numeroMaximoCancelaciones()){
+			int idOp = operacionesPendientes.dameOperacionAleatoria();
+
+			if(!operacionesPendientes.isPendienteCancelacion(-idOp)){
+				lista.add(new CancelarOperacion(idOp));
+				// Una cancelacion es una operacion pendiente
+				
+				if(numeroCancelaciones < modeloPsicologico.numeroMaximoCancelaciones()) {
 					double precio = operacionesPendientes.getPrecioOperacion(idOp);
 					int tipo = operacionesPendientes.getTipoOperacion(idOp);
 				
@@ -81,18 +78,15 @@ public class ComportamientoBroker extends ComportamientoAgente{
 						precio = precio*(1 - modeloPsicologico.porcentajeBajadaPrecio());
 						cantidad = modeloPsicologico.numeroVentaAcciones();
 					}
-					Operacion op = new Operacion(agente.getIDString(), tipo, cantidad, empresa, precio);
-					generaDecisionAPartirNotificacion(-idOp, new IntroducirOperacion(agente, op));
-					lista.add(new CancelarOperacion(agente, idOp));
+					Operacion op = new Operacion(null, tipo, cantidad, empresa, precio);
+					generaDecisionAPartirNotificacion(-idOp, new IntroducirOperacion(op));
 					numeroCancelaciones++;
 				}
-				else{
+				else {
 					numeroCancelaciones = 0;
 				}
 			}
 		}
-			
-		lista.add(new Espera(agente, (int)Math.floor(modeloPsicologico.getTiempoEspera())));
 		return lista;
 	}
 }
