@@ -85,6 +85,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	
 	public int insertarOperacion(String usuario, Operacion o){
+		
 		try{
 			System.out.println("USUARIO "+usuario+" INSERTA OPERACION");
 			IDS++;

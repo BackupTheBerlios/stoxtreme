@@ -125,19 +125,22 @@ public class SistemaOperaciones /*implements RelojListener*/{
         	idsventas.add(idOperacion);
         }
 
-        public void cancelaOperacion(int idOperacion) {
+        public void cancelaOperacion(int idOperacion, String idAgente) {
         	Hashtable operacion;
         	boolean encontrado=false;
+        	boolean esCompra;
         	Vector cadena=new Vector();
         	Posicion pi;
         	if (idscompras.contains(idOperacion)){
         		operacion=this.listaCompras;
+        		esCompra=true;
         		idscompras.remove(idOperacion);
         	}
         	else{
 	        	if(idsventas.contains(idOperacion)){
 	        		operacion=this.listaVentas;
 	        		idsventas.remove(idOperacion);
+	        		esCompra=false;
 	        	}
 	        	else{
 	        		System.out.println("No existe la operacion deseada");
@@ -164,11 +167,16 @@ public class SistemaOperaciones /*implements RelojListener*/{
         				}
         				else
         					cadena.setElementAt(acciones,0);
-        				System.out.println("se ha eliminado la operacion "+idOperacion);
+        				//System.out.println("se ha eliminado la operacion "+idOperacion);
+        				AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_CANCELACION", idAgente));
         			}
         			i++;
         		}
         	}
+        	if(esCompra)
+        		listaCompras=operacion;
+        	else
+        		listaVentas=operacion;
                 // Tiene que BUSCAR la operacion a cancelar si hace falta
                 // se almacenaran las cancelaciones y cuando pase un tiempo se efectuaran
                 // todas

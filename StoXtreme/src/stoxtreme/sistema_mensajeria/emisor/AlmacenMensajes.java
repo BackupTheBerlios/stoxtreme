@@ -77,11 +77,16 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 	}
 	
 	public synchronized void insertarMensajePrivado(String ID, Mensaje m){
+		String usuario = ID;
+		if(ID.contains("#")){
+			String[] s = ID.split("#");
+			usuario = s[0];
+		}
 		//System.out.println("Insertar mensaje para: "+ID);
-		mensajesPrivados.get(ID).add(m);
-		if(esperando.containsKey(ID)){
+		mensajesPrivados.get(usuario).add(m);
+		if(esperando.containsKey(usuario)){
 			//System.out.println("Despierto a: "+ID);
-			Object o = esperando.get(ID);
+			Object o = esperando.get(usuario);
 			synchronized(o){
 				o.notify();
 			}

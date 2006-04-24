@@ -6,6 +6,8 @@
 
 
 package stoxtreme.servidor.objeto_bolsa;
+import java.util.Hashtable;
+
 import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.StoxtremeMensajes;
@@ -72,7 +74,9 @@ public class ObjetoBolsa implements RelojListener{
 		return this.informacion;
 	}
 	
+	private Hashtable<Integer, String> mapaOpsAgentes = new Hashtable<Integer,String>(); 
 	public void insertaOperacion(String IDAgente,int idOperacion, Operacion op){
+		mapaOpsAgentes.put(idOperacion, IDAgente);
 		if(op.getTipoOp()==Operacion.COMPRA)
 			sistemaOperaciones.introduceCompra(idOperacion, IDAgente, op.getPrecio(), op.getCantidad(),fluctuaciones.getPrecioActual(),fluctuaciones.getTick());
 		if(op.getTipoOp()==Operacion.VENTA)
@@ -83,7 +87,8 @@ public class ObjetoBolsa implements RelojListener{
 	}
 	
 	public void cancelarOperacion(int idOperacion){
-		sistemaOperaciones.cancelaOperacion(idOperacion);
+		sistemaOperaciones.cancelaOperacion(idOperacion, mapaOpsAgentes.get(idOperacion));
+		mapaOpsAgentes.remove(idOperacion);
 	}
 	public void setVariablesSistema(VariablesSistema variables, ParametrosServidor parametros) {
 		System.out.println("Pone variables "+ nombreEmpresa);
