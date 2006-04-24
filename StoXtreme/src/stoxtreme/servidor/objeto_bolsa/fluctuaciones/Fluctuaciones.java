@@ -233,8 +233,10 @@ public static void main(String[] args) {
 	Fluctuaciones fluc=new Fluctuaciones(so,0.3,25.3,"Sony-Ericson");
 	//fluc.getSisOp().introduceCompra(1,"Agente Smith",27.6,40,fluc.getPrecioActual(),fluc.getTick());
 	fluc.getSisOp().introduceVenta(5,"Agente Rocio",27.6,30,fluc.getPrecioActual(),fluc.getTick());
-	fluc.getSisOp().introduceCompra(2,"Agente Pollo",20.6,20,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceCompra(2,"Agente Pollo",27.6,20,fluc.getPrecioActual(),fluc.getTick());
 	fluc.getSisOp().introduceVenta(7,"Agente Yo",28.6,15,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().cancelaOperacion(9,"loko");
+	fluc.paso();
 	fluc.getSisOp().cancelaOperacion(2,"Agente Pollo");
 	//fluc.paso();
 	/*Hashtable cT=new Hashtable();

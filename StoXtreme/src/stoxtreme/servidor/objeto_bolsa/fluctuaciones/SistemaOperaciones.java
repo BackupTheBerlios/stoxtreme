@@ -156,14 +156,14 @@ public class SistemaOperaciones /*implements RelojListener*/{
         			pi=(Posicion)cadena.elementAt(i);
         			if (pi.getIdOperacion()==idOperacion){
         				encontrado=true;
-        				cadena.remove(i);
+        				//cadena.remove(i);
         				Integer acciones=(Integer)cadena.firstElement();
         				acciones=new Integer(acciones.intValue()-pi.getNumeroDeAcciones());
         				if (acciones.toString().equals("0")) {
         					cadena.removeAllElements(); 
         					//System.out.println(elemento);
         				    operacion.remove(elemento);
-        				    cadena.removeAllElements();
+        				    //cadena.removeAllElements();
         				}
         				else
         					cadena.setElementAt(acciones,0);
