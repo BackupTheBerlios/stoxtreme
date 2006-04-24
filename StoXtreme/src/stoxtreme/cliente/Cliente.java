@@ -135,20 +135,26 @@ public class Cliente{
 					JOptionPane.showMessageDialog(ini, "Por favor, rellene todos los campos",
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
-					try{
-						boolean registro=servidor.registro(user.trim(),psw.trim());
-						if (!registro)
-							JOptionPane.showMessageDialog(ini, "Ya existe un usuario con ese nombre",
-								"Error",JOptionPane.ERROR_MESSAGE);
-						else{
-							servidor.login(user,psw);
-							conectado=true;
+					if(!validar(user.trim()) || !validar(psw.trim()))
+						JOptionPane.showMessageDialog(ini, "Su nombre de usuario o password \n contienen caracteres no validos. \n Solo pueden tener numeros, letras y '_'",
+								"Revise sus datos",JOptionPane.WARNING_MESSAGE);
+					else{
+						try{
+							boolean registro=servidor.registro(user.trim(),psw.trim());
+							if (!registro)
+								JOptionPane.showMessageDialog(ini, "Ya existe un usuario con ese nombre",
+									"Error",JOptionPane.ERROR_MESSAGE);
+							else{
+								servidor.login(user,psw);
+								conectado=true;
+							}
+						}
+						catch(Exception ex){
+							JOptionPane.showMessageDialog(ini, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
+									"Error de conexion",JOptionPane.ERROR_MESSAGE);
 						}
 					}
-					catch(Exception ex){
-						JOptionPane.showMessageDialog(ini, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
-								"Error de conexion",JOptionPane.ERROR_MESSAGE);
-					}
+					
 				}
 			}
 			this.nUsuario = user; this.password = psw;
@@ -247,6 +253,17 @@ public class Cliente{
 				isr.close();
 			contador++;
 		}
+	}
+	
+	public boolean validar (String s){
+		boolean valido=true;
+		final char[] chars = s.toCharArray();
+		for (int x = 0; x < chars.length; x++) {
+			final char c = chars[x];
+			if (!((c >= 'a') && (c <= 'z')) && !((c >= 'A') && (c <= 'Z')) && !((c >= '0') && (c <= '9')) && !(c=='_'))
+				valido=false;				 
+		}
+		return valido;
 	}
 	
 	public EstadoBolsa getEstadoBolsa() {
