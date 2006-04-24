@@ -225,7 +225,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
 		}
 		public void notificaOperacion(String idAgente, int idOperacion, int numAcciones) {
 			String tipo = "NOTIFICACION_OPERACION";
-			String contenido = idAgente+","+numAcciones;
+			String contenido = idOperacion+","+numAcciones;
 			Mensaje m = new Mensaje(contenido, tipo, idAgente);
 			AlmacenMensajes.getInstance().enviaMensaje(m);
 		}

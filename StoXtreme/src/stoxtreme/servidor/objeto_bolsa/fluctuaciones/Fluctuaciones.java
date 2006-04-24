@@ -128,28 +128,28 @@ public class Fluctuaciones {
 	        	Posicion pV=(Posicion)preciosVenta.elementAt(indiceV);
 	        	if (pC.getNumeroDeAcciones()<=auxC){	        		
 	        		auxC-=pC.getNumeroDeAcciones();
-	        		System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
-	        		//sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
+	        		//System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
+	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones());
 	        		preciosCompra.remove(indiceC);
 	        		indiceC++;	        		
 	        	}
 	        	else{
 	        		pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-auxC);
-	        		System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
-	        		//sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),auxC);
+	        		//System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
+	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),auxC);
 	        		auxC=0;
 	        	}
 	        	if (pV.getNumeroDeAcciones()<=auxV){
 	        		auxV-=pV.getNumeroDeAcciones();
-	        		System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
-	        		//sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),pV.getNumeroDeAcciones());
+	        		//System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
+	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),pV.getNumeroDeAcciones());
 	        		preciosVenta.remove(indiceV);
 	        		indiceV++;
 	        	}
 	        	else{
 	        		pV.setNumeroDeAcciones(pV.getNumeroDeAcciones()-auxV);
-	        		System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
-	        		//sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),auxV);
+	        		//System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
+	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),auxV);
 	        		auxV=0;
 	        	}	        	
 	        }
