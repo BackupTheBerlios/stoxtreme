@@ -162,7 +162,7 @@ public class Fluctuaciones {
 	        }
 	    }else{
 	    	claveFinal=buscaMayorVolumen(compra,compra.keys());
-	    	if (!claveFinal.equals("")){
+	    	if (!claveFinal.equals("")&&sisOp.getAccionesVenta()>0){
 		    	boolean acabado=sisOp.getAccionesVenta()==0;
 		    	int i=1;
 	//	    	Vector auxV=(Vector)compra.get(Double.toString
@@ -178,7 +178,8 @@ public class Fluctuaciones {
 		    	}
 		    	if(sisOp.getAccionesVenta()>0 && auxC!=null && auxC.size()>0){
 		    		i=1;
-		    		while(auxC.size()>0 && !acabado ){
+		    		System.out.println("tamaño vector compras"+auxC.size()+"\n");
+		    		while(auxC.size()>i && !acabado ){
 		    			Posicion pC=(Posicion)auxC.get(i);
 		    			if (pC.getNumeroDeAcciones()>sisOp.getAccionesVenta()){
 		    				pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-sisOp.getAccionesVenta());
