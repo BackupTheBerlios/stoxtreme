@@ -74,7 +74,7 @@ public class Fluctuaciones {
   //cambiar para el proyecto total
   public double paso(){
     double nuevoValor=calculaValorTitulo();
-    //System.out.print("El nuevo valor es="+nuevoValor+" de "+empresa+"\n");
+    System.out.print("El nuevo valor es="+nuevoValor+" de "+empresa+"\n");
     String nomEmpresa="PRECIO_"+empresa.toUpperCase();
     varS.cambiaVariable(nomEmpresa,new Double(nuevoValor));
     return nuevoValor;
@@ -212,6 +212,7 @@ public class Fluctuaciones {
 	    }
 	    sisOp.setListaCompras(compra);
 	    sisOp.setListaVentas(venta);
+	    System.out.println("Empresa "+empresa+ " precio:"+precioM);
 	    return redondeo(precioM, 2);
 	  }	  
 
