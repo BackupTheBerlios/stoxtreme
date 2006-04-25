@@ -74,7 +74,7 @@ public class Fluctuaciones {
   //cambiar para el proyecto total
   public double paso(){
     double nuevoValor=calculaValorTitulo();
-    //System.out.print("El nuevo valor es="+nuevoValor);
+    //System.out.print("El nuevo valor es="+nuevoValor+" de "+empresa+"\n");
     String nomEmpresa="PRECIO_"+empresa.toUpperCase();
     varS.cambiaVariable(nomEmpresa,new Double(nuevoValor));
     return nuevoValor;
@@ -192,7 +192,7 @@ public class Fluctuaciones {
 			        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones(),Double.parseDouble(claveFinal));
 		    				System.out.println("He comprado "+(pC.getNumeroDeAcciones()));
 			        		auxC.remove(i);
-			        		i++;
+			        		//i++;
 		    			}
 		    				
 		    		}
@@ -229,12 +229,14 @@ public class Fluctuaciones {
 
 
 public static void main(String[] args) {
-	SistemaOperaciones so=new SistemaOperaciones(3);
+	SistemaOperaciones so=new SistemaOperaciones(90);
 	Fluctuaciones fluc=new Fluctuaciones(so,0.3,25.3,"Sony-Ericson");
 	//fluc.getSisOp().introduceCompra(1,"Agente Smith",27.6,40,fluc.getPrecioActual(),fluc.getTick());
-	fluc.getSisOp().introduceVenta(5,"Agente Rocio",27.6,30,fluc.getPrecioActual(),fluc.getTick());
+	//fluc.getSisOp().introduceVenta(5,"Agente Rocio",27.6,30,fluc.getPrecioActual(),fluc.getTick());
 	fluc.getSisOp().introduceCompra(2,"Agente Pollo",27.6,20,fluc.getPrecioActual(),fluc.getTick());
-	fluc.getSisOp().introduceVenta(7,"Agente Yo",28.6,15,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceCompra(3,"Agente Pollo2",27.6,20,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceCompra(5,"Agente Pollo3",27.6,70,fluc.getPrecioActual(),fluc.getTick());
+	//fluc.getSisOp().introduceVenta(7,"Agente Yo",28.6,15,fluc.getPrecioActual(),fluc.getTick());
 	fluc.getSisOp().cancelaOperacion(9,"loko");
 	fluc.paso();
 	fluc.getSisOp().cancelaOperacion(2,"Agente Pollo");
