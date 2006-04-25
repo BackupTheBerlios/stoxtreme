@@ -22,15 +22,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableModel;
-
-import stoxtreme.interfaz_remota.Operacion;
 
 public class MainFrameAdmin extends JFrame{
 	private ModeloTablaOperaciones modeloOperaciones; 

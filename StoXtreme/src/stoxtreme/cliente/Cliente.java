@@ -1,48 +1,15 @@
 package stoxtreme.cliente;
 
-import java.awt.Dimension;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.Enumeration;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import javax.swing.JFrame;
+import java.io.*;
+import java.net.*;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import javax.xml.rpc.ServiceException;
-
 import org.apache.log4j.PropertyConfigurator;
-
-import com.sun.corba.se.spi.ior.iiop.JavaCodebaseComponent;
-
 import stoxtreme.cliente.gui.MainFrameCliente;
-import stoxtreme.cliente.gui.ModeloCartera;
-import stoxtreme.cliente.gui.ModeloOpPendientes;
-import stoxtreme.cliente.gui.ModeloPrecioAccionesGrafico;
 import stoxtreme.cliente.gui.DialogoInicial;
 import stoxtreme.cliente.infoLocal.InfoLocal;
 import stoxtreme.interfaz_remota.*;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
-import stoxtreme.servidor.Servidor;
-import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 import stoxtreme.sistema_mensajeria.receptor.*;
-import sun.security.krb5.internal.crypto.f;
 
 public class Cliente{
 	private static final String URLBASE = "http://localhost:8080/";
