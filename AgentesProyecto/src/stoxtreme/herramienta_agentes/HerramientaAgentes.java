@@ -48,13 +48,13 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		this.notif = new Notificador();
 		receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
 		receptor.addListener(this);
+		agentes = new ArrayList<Agente>();
 	}
 	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();
 	
 	public void start(Stoxtreme servidor){
 		frame = new JFrame("Agentes: 0");
-		frame.setPreferredSize(new Dimension(400, 400));
 		
 		frame.getContentPane().add(this);
 		frame.pack();
@@ -88,7 +88,9 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 			notif.addListener(agente.getIDString(), agente.getPerceptor());
 			agente.addComportamiento(comportamiento1);
 			agente.start();
+			agentes.add(agente);
 		}
+		super.addListaAgentes(agentes);
 	}
 	
 	private static final String URLAXIS = "http://localhost:8080/axis/services/";

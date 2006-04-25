@@ -38,6 +38,7 @@ public class Agente extends Thread{
 	private boolean alive;
 	private Stoxtreme conexionBolsa;
 	private ConsolaAgentes consolaAgentes;
+	private double ganancias = 0.0;
 	
 	public Agente (Stoxtreme conexionBolsa, ConsolaAgentes consolaAgentes, ParametrosSocial ps, ParametrosPsicologicos pp){
 		ID = new IDAgente();
@@ -152,5 +153,18 @@ public class Agente extends Thread{
 
 	public Perceptor getPerceptor() {
 		return p;
+	}
+	
+	
+	public String getEstado(){
+		return "TODO!! ESTADO!!!";
+	}
+	
+	public String getStringComportamiento(){
+		return this.comportamiento.getClass().toString();
+	}
+	
+	public double getGanancias(){
+		return this.ganancias;
 	}
 }

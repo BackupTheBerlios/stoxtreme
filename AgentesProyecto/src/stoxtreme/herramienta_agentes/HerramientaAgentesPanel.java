@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.interfaz_remota.Operacion;
 
 
@@ -24,6 +25,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	private PruebaListModel modeloLista;
 	private JList listaOpConfirmar;
 	private StyledDocument textoConsola;
+	private JTable tablaAgentes;
 	private HerramientaAgentesTableModel modeloTabla;
 	
 	public HerramientaAgentesPanel() {
@@ -39,12 +41,20 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				getPanelIzquierdo(), getPanelDerecho());
 		add(panelPrincipal);
+		panelPrincipal.setSize(new Dimension(800,800));
+		panelPrincipal.setDividerLocation(500);
+		
 	}
 	
 	public Component getPanelIzquierdo(){
-		modeloTabla = new HerramientaAgentesTableModel();
-		panelIzquierdo = new JScrollPane(new JTable(modeloTabla));
+		modeloTabla = new HerramientaAgentesTableModel(new ArrayList<Agente>());
+		tablaAgentes = new JTable(modeloTabla);
+		panelIzquierdo = new JScrollPane(tablaAgentes);
 		return panelIzquierdo;
+	}
+
+	public void addListaAgentes(ArrayList<Agente> listaAgentes){
+		modeloTabla.setAgentes(listaAgentes);
 	}
 	
 	public Component getPanelDerecho(){
@@ -268,11 +278,5 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		frame.add(panel);
 		frame.setSize(new Dimension(800,600));
 		frame.setVisible(true);
-		
-		
-		for(int i=0; i<1000; i++){
-			String id= "Agente"+i;
-			panel.modeloTabla.insertar(id, "", "");
-		}
 	}
 }
