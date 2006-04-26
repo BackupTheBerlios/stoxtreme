@@ -18,7 +18,6 @@ public class ComportamientoPrueba extends ComportamientoAgente{
 		ArrayList<Decision> decisiones = new ArrayList<Decision>();
 		//if(estadoBolsa.getPrecioActualEmpresa("Endesa")>10.0)
 		decisiones.add(new IntroducirOperacion(new Operacion(null,Operacion.COMPRA, 100, "Endesa", 10.0)));
-		decisiones.add(new Espera(10));
 		return decisiones;
 	}
 }
