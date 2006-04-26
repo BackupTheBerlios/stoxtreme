@@ -2,8 +2,7 @@ package stoxtreme.cliente.infoLocal;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -14,8 +13,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import stoxtreme.cliente.infoLocal.InfoLocal;
 
 public class ParserInfoLocal {
 	
@@ -54,5 +51,46 @@ public class ParserInfoLocal {
 	       ioe.printStackTrace();
 	    }
 		return ht;
+	}
+	
+	public DatoHistorico creaDatoHistorico(String empresa, String fecha){
+		String fichero=new String("./conf/cliente/"+empresa+".xml");
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DatoHistorico dt= new DatoHistorico();
+		try {
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document document = builder.parse(new File(fichero));
+			NodeList nl = document.getElementsByTagName("fecha");
+//			String nombre=null;
+//			double cotiz=0;
+//			String info=null;
+			for (int i=0; nl!=null && i<nl.getLength();i++){
+				if(((Element)nl.item(i)).getAttribute("fecha").equals(fecha)){
+					dt.setEfectivo(new Double(((Element)nl.item(i)).getElementsByTagName("efectivo").toString().trim()));
+					dt.setEmpresa(empresa);
+					dt.setFecha("");
+					dt.setPrecioCierre(new Double(2));
+					dt.setPrecioInicio(new Double(2));
+					dt.setPrecioMaximo(new Double(2));
+					dt.setPrecioMedio(new Double(2));
+					dt.setPrecioMinimo(new Double(2));
+					dt.setVolumen(new Integer(2).intValue());
+				}
+			}
+	    } catch (SAXException sxe) {
+	       // Error generated during parsing
+	       Exception  x = sxe;
+	       if (sxe.getException() != null)
+	           x = sxe.getException();
+	       x.printStackTrace();
+
+	    } catch (ParserConfigurationException pce) {
+	       // Parser with specified options can't be built
+	       pce.printStackTrace();
+	    } catch (IOException ioe) {
+	       // I/O error
+	       ioe.printStackTrace();
+	    }
+		return dt;
 	}
 }
