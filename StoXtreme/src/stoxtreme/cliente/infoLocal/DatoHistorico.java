@@ -1,7 +1,5 @@
 package stoxtreme.cliente.infoLocal;
 
-import java.util.Date;
-
 public class DatoHistorico {
 	private String empresa; 
 	private String fecha;
@@ -15,15 +13,9 @@ public class DatoHistorico {
 	
 	
 	public DatoHistorico(){
+		
 	}
-	
-	public DatoHistorico getDato(String empresa, String fecha){
-		ParserInfoLocal parser=new ParserInfoLocal();
-		DatoHistorico dh=new DatoHistorico();
-		dh=parser.creaDatoHistorico(empresa, fecha);
-		return dh;
-	}
-	
+
 	//setters
 	public void setEmpresa(String e){
 		this.empresa=e;

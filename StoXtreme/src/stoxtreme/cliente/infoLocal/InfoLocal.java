@@ -10,10 +10,10 @@ import stoxtreme.cliente.infoLocal.ParserInfoLocal;
 public class InfoLocal {
 	
 	private Hashtable<String,Double> info;
-	private ParserInfoLocal parser;
+	
 	
 	public InfoLocal(){
-		parser=new ParserInfoLocal();
+		ParserInfoLocal parser=new ParserInfoLocal();
 		info=parser.creaInfoLocal("./conf/cliente/empresas.xml");
 	}
 	
