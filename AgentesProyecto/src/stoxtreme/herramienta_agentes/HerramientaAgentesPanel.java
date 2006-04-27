@@ -28,6 +28,11 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	private JTable tablaAgentes;
 	private HerramientaAgentesTableModel modeloTabla;
 	
+	private JButton botonParar;
+	private JButton botonEliminar;
+	private JButton botonEditar;
+	private JButton botonInsertar;
+	
 	public HerramientaAgentesPanel() {
 		try{
 			init();
@@ -47,12 +52,35 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	}
 	
 	public Component getPanelIzquierdo(){
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(getPanelIzquierdoArriba(), BorderLayout.CENTER);
+		panel.add(getPanelIzquierdoAbajo(), BorderLayout.SOUTH);
+		return panel;
+	}
+	
+	public Component getPanelIzquierdoArriba(){
 		modeloTabla = new HerramientaAgentesTableModel(new ArrayList<Agente>());
 		tablaAgentes = new JTable(modeloTabla);
 		panelIzquierdo = new JScrollPane(tablaAgentes);
 		return panelIzquierdo;
 	}
+	
+	public Component getPanelIzquierdoAbajo(){
+		JPanel panel = new JPanel();
+		
+		botonParar = new JButton("Parar seleccionados");
+		botonEliminar = new JButton("Eliminar seleccionados");
+		botonEditar = new JButton("Editar agente");
+		botonInsertar = new JButton("Insertar Agentes");
 
+		panel.add(botonParar);
+		panel.add(botonEliminar);
+		panel.add(botonEditar);
+		panel.add(botonInsertar);
+		
+		return panel;
+	}
+	
 	public void addListaAgentes(ArrayList<Agente> listaAgentes){
 		modeloTabla.setAgentes(listaAgentes);
 	}

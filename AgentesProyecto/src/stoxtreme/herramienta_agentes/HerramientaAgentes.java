@@ -54,13 +54,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();
 	
 	public void start(Stoxtreme servidor){
-		frame = new JFrame("Agentes: 0");
 		
-		frame.getContentPane().add(this);
-		frame.pack();
-		frame.setVisible(true);
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 		//int nAgentes = (Integer)parametros.get(ParametrosAgentes.Parametro.NUM_AGENTES);
@@ -105,10 +99,17 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 			
 			HerramientaAgentes hAgentes = new HerramientaAgentes("alonso", bolsa, parametros);
 			
+			JFrame frame = new JFrame("Agentes: 0");
 			
-			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
-			Stoxtreme stoxtreme = locator.getStoXtreme(new URL(URLAXIS+"StoXtreme"));
-			hAgentes.start(stoxtreme);
+			frame.getContentPane().add(hAgentes);
+			frame.setSize(new Dimension(800, 600));
+			frame.setVisible(true);
+			
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
+//			Stoxtreme stoxtreme = locator.getStoXtreme(new URL(URLAXIS+"StoXtreme"));
+			//hAgentes.start(stoxtreme);
+			
 		}
 		catch(Exception e){
 			e.printStackTrace();
