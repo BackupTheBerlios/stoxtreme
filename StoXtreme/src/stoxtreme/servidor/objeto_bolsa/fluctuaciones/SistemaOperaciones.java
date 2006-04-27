@@ -143,7 +143,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
 	        		esCompra=false;
 	        	}
 	        	else{
-	        		System.out.println("No existe la operacion deseada");
+	        		System.out.println("No existe la operacion deseada "+idOperacion);
 	        		return;
 	        	}
         	}
@@ -168,7 +168,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         				else
         					cadena.setElementAt(acciones,0);
         				System.out.println("se ha eliminado la operacion "+idOperacion);
-        				//AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_CANCELACION", idAgente));
+        				AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_CANCELACION", idAgente));
         			}
         			i++;
         		}
