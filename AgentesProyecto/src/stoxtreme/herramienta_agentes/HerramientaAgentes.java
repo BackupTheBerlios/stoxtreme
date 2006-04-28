@@ -106,9 +106,9 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 			frame.setVisible(true);
 			
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
-//			Stoxtreme stoxtreme = locator.getStoXtreme(new URL(URLAXIS+"StoXtreme"));
-			//hAgentes.start(stoxtreme);
+			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
+			Stoxtreme stoxtreme = locator.getStoXtreme(new URL(URLAXIS+"StoXtreme"));
+			hAgentes.start(stoxtreme);
 			
 		}
 		catch(Exception e){

@@ -47,7 +47,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 				getPanelIzquierdo(), getPanelDerecho());
 		add(panelPrincipal);
 		panelPrincipal.setSize(new Dimension(800,800));
-		panelPrincipal.setDividerLocation(500);
+		panelPrincipal.setDividerLocation(400);
 		
 	}
 	
@@ -68,9 +68,9 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	public Component getPanelIzquierdoAbajo(){
 		JPanel panel = new JPanel();
 		
-		botonParar = new JButton("Parar seleccionados");
-		botonEliminar = new JButton("Eliminar seleccionados");
-		botonEditar = new JButton("Editar agente");
+		botonParar = new JButton("Parar");
+		botonEliminar = new JButton("Eliminar");
+		botonEditar = new JButton("Editar");
 		botonInsertar = new JButton("Insertar Agentes");
 
 		panel.add(botonParar);
