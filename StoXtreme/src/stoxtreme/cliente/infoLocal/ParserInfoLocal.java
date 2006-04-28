@@ -2,6 +2,9 @@ package stoxtreme.cliente.infoLocal;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -51,7 +54,9 @@ public class ParserInfoLocal {
 	    }
 		return ht;
 	}
-	
+	/*Si no encuentra un dato en el historico con la fecha solicitada
+	 * devuelve el dato del dia mas proximo.
+	 */
 	public DatoHistorico getDatoHistorico(String empresa, String fecha){
 		String fichero=new String("./conf/cliente/"+empresa+".xml");
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -60,8 +65,25 @@ public class ParserInfoLocal {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(new File(fichero));
 			NodeList nl = document.getElementsByTagName("fecha");
-			for (int i=0; nl!=null && i<nl.getLength();i++){
-				if(((Element)nl.item(i)).getAttribute("fecha").trim().equals(fecha)){
+			SimpleDateFormat df=new SimpleDateFormat("dd/MM/aaaa");
+			Date dEntrada=new Date();
+			Date dDato=new Date();
+			Boolean encontrado=false;
+			int i=0;
+			try{
+				dEntrada= df.parse("fecha");
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			while(!encontrado && i<nl.getLength()){
+				try {
+					dDato=df.parse(((Element)nl.item(i)).getAttribute("fecha").trim());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				//Nos quedamos con el dato de fecha igual o mayor que la de entrada 
+				//compareTo devuelve 0 si son iguales, <0 si es menor la 1a y >0 si es mayor la 1a
+				if(dDato.compareTo(dEntrada)>=0){
 					dt.setEfectivo(new Double(((Element)nl.item(i)).getElementsByTagName("efectivo").item(0).getTextContent().toString()));
 					dt.setEmpresa(empresa);
 					dt.setFecha(fecha);
@@ -71,7 +93,9 @@ public class ParserInfoLocal {
 					dt.setPrecioMedio(new Double(((Element)nl.item(i)).getElementsByTagName("precio_medio").item(0).getTextContent().toString()));
 					dt.setPrecioMinimo(new Double(((Element)nl.item(i)).getElementsByTagName("precio_minimo").item(0).getTextContent().toString()));
 					dt.setVolumen(new Integer(((Element)nl.item(i)).getElementsByTagName("volumen").item(0).getTextContent().toString()));
+					encontrado=true;
 				}
+				i++;
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
