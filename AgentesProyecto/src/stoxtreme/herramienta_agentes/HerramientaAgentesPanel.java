@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import stoxtreme.cliente.gui.FakeInternalFrame;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.interfaz_remota.Operacion;
 
@@ -53,9 +54,10 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	
 	public Component getPanelIzquierdo(){
 		JPanel panel = new JPanel(new BorderLayout());
+		FakeInternalFrame frame = new FakeInternalFrame("Agentes en el sistema", panel);
 		panel.add(getPanelIzquierdoArriba(), BorderLayout.CENTER);
 		panel.add(getPanelIzquierdoAbajo(), BorderLayout.SOUTH);
-		return panel;
+		return frame;
 	}
 	
 	public Component getPanelIzquierdoArriba(){
@@ -154,7 +156,8 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 			}
 		});
 		JScrollPane scrollPane = new JScrollPane(listaOpConfirmar);
-		return scrollPane;
+		FakeInternalFrame frame = new FakeInternalFrame("Operaciones pendientes", scrollPane);
+		return frame;
 	}
 	
 	private static final String ESTILO_IDAGENTE = "bold";
@@ -201,7 +204,8 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		textoConsola = texto.getStyledDocument();
 		addStylesToDocument(textoConsola);
 		JScrollPane panel = new JScrollPane(texto);
-		return panel;
+		FakeInternalFrame frame = new FakeInternalFrame("Acciones de los agentes",panel);
+		return frame;
 	}
 	
 	private void addStylesToDocument(StyledDocument doc) {
