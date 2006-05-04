@@ -82,7 +82,9 @@ public class ModeloOpPendientes extends AbstractTableModel{
 			return " ";
 		}
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showConfirmDialog(b, "Esta seguro?");
+			if(JOptionPane.showConfirmDialog(b, "Esta seguro?")==JOptionPane.OK_OPTION){
+				
+			}
 		}
 		
 	}
