@@ -12,14 +12,14 @@ import stoxtreme.cliente.infoLocal.InfoLocal;
 public class EstadoBolsa {
 	private Hashtable<String,Double> precios;
 	private ModeloPrecioAccionesGrafico mAcciones;
-	private ArrayList<String> empresas = new ArrayList<String>();
+	private ArrayList<String> empresas;
 	private ModeloEmpresas mEmpresas;
 	
 	public EstadoBolsa(InfoLocal info){
-		mAcciones = new ModeloPrecioAccionesGrafico(empresas);
+		this.empresas = info.getEmpresas(); 
+		mAcciones = new ModeloPrecioAccionesGrafico(info.getEmpresas());
 		mEmpresas = new ModeloEmpresas(info);
 		precios = new Hashtable<String,Double>();
-		this.empresas = info.getEmpresas(); 
 	}
 
 	public ModeloPrecioAccionesGrafico getMAcciones() {

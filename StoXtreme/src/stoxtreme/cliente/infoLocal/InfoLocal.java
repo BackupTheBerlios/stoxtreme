@@ -16,7 +16,7 @@ public class InfoLocal {
 	public InfoLocal(){
 		ParserInfoLocal parser=new ParserInfoLocal();
 		info=parser.creaInfoLocal("./conf/cliente/empresas.xml");
-		
+		empresas = new ArrayList<String>();
 		Enumeration<String> es = info.keys();
 		
 		while(es.hasMoreElements()){

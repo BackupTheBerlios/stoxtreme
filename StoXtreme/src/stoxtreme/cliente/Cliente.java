@@ -130,11 +130,17 @@ public class Cliente{
 			this.nUsuario = user; this.password = psw;
 		}
 		
+		System.err.println("Obteniendo ficheros");
 		this.obtenerFicheros();
+		System.err.println("Creando Operaciones Pendientes");
 		opPendientes = new OperacionesPendientes();
+		System.err.println("Creando Cartera");
 		cartera = new CarteraAcciones();
+		System.err.println("Creando Estado de la Bolsa");
 		eBolsa = new EstadoBolsa(new InfoLocal());
+		System.err.println("Creando Parametros");
 		ParametrosAgentes parametros = new ParametrosAgentes();
+		System.err.println("Creando Agentes");
 		hAgentes = new HerramientaAgentes(nUsuario, eBolsa, parametros);
 		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa.getMAcciones());
 		gui.init();

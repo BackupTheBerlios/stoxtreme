@@ -19,7 +19,6 @@ public class ModeloEmpresas extends DefaultComboBoxModel{
 		
 		for(int i=0; i<nombreEmpresas.size(); i++){
 			String nEmp = (String)nombreEmpresas.get(i);
-			nombreEmpresas.add(nEmp);
 			ValoresEmpresa vemp = new ValoresEmpresa(nEmp, 1);
 			vemp.insertarSiguienteValor(info.getPrecioInicial(nEmp));
 			empresas.put(nEmp, vemp);
