@@ -33,5 +33,6 @@
 	<classpathentry kind="lib" path="lib/tomcat-http.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-util.jar"/>
 	<classpathentry kind="lib" path="lib/axis-ant.jar"/>
+	<classpathentry kind="lib" path="lib/colt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
