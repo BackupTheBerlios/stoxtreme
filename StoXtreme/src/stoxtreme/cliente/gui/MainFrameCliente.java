@@ -25,7 +25,8 @@ public class MainFrameCliente extends JFrame{
 	private ModeloOpPendientes modeloOpPendientes;
 	private ModeloPrecioAccionesGrafico modeloPrecios;
 	private Cliente cliente;
-	
+	public boolean volumen;
+	public boolean estocastico;
 	private JTable tablaArribaIzq; // Asociada al combo de tipos
 	private ChartPanel chartPanel; // Asociada al combo de empresas
 	private XYPlot chartPlot;
@@ -35,6 +36,8 @@ public class MainFrameCliente extends JFrame{
 	private JTextField cantidadSeleccionada;
 	private JComboBox tipoSeleccionado;
 	private JComboBox empresaSeleccionada;
+	private JSplitPane split_graficas;
+	private Hashtable graficas=new Hashtable();
 	
 	static{
 		try{
@@ -53,6 +56,8 @@ public class MainFrameCliente extends JFrame{
 		this.modeloCartera = modeloCartera;
 		this.modeloOpPendientes = modeloOpPendientes;
 		this.modeloPrecios = modeloPrecios;
+		this.volumen =false;
+		this.estocastico =false;
 	}
 	
 	public void init(){
@@ -157,11 +162,89 @@ public class MainFrameCliente extends JFrame{
 	}
 
 	private Component getPanelDerechaArriba() {
+		MenuShortcut s=new MenuShortcut(37);
+		MenuItem vol=new MenuItem("Volumen",s);
+		MenuItem esto=new MenuItem("Estocastico");
+		Menu indicadores= new Menu("Indicadores");
+		vol.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				pinta_actionPerformed(event);
+			}
+		    }				    
+		    );
+		esto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				pinta_actionPerformed(event);
+			}
+		    }				    
+		    );
+		Menu help= new Menu("Ayuda");
+		indicadores.add(vol);
+		indicadores.add(esto);
+		MenuBar barra=new MenuBar();
+		barra.add(indicadores);
+		barra.setHelpMenu(help);
+		split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+//		JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		graficas.put("normal",getChartPanel());		
+		split_graficas.add(getChartPanel());
+		int tam=split_graficas.size().height-split_graficas.size().height/6;
+		split_graficas.setDividerLocation(200);
 		FakeInternalFrame frame = new FakeInternalFrame("Precio Accion", getChartPanel());
 		frame.setPreferredSize(new Dimension(500, 450));
+		this.setMenuBar(barra);
 		return frame;
 	}
-	
+	private JPanel getChartPanel2(){
+//		DateAxis ejeX = new DateAxis();
+//		Calendar c1 = Calendar.getInstance();
+//		c1.set(Calendar.AM_PM, Calendar.AM);
+//		c1.set(Calendar.HOUR, 8);
+//		c1.set(Calendar.MINUTE, 30);
+//		Calendar c2 = Calendar.getInstance();
+//		c2.set(Calendar.AM_PM, Calendar.PM);
+//		c2.set(Calendar.HOUR, 5);
+//		c2.set(Calendar.MINUTE, 30);
+//		ejeX.setMaximumDate(c2.getTime());
+//		ejeX.setMinimumDate(c1.getTime());
+//		
+//		NumberAxis ejeY = new NumberAxis();
+//		ejeY.setRange(new Range(0, 540));
+//		
+//		chartPlot = new XYPlot(
+//				modeloPrecios.getPreciosSeleccionados(), 
+//				ejeX, ejeY,new XYLineAndShapeRenderer(true, false));
+//		JFreeChart chart = new JFreeChart(chartPlot);
+//		ChartPanel panel = new ChartPanel(chart);
+		JPanel panel = new JPanel();
+		panel.add(new JButton("hola"));
+		return panel;
+	}
+	private JPanel getChartPanel3(){
+//		DateAxis ejeX = new DateAxis();
+//		Calendar c1 = Calendar.getInstance();
+//		c1.set(Calendar.AM_PM, Calendar.AM);
+//		c1.set(Calendar.HOUR, 8);
+//		c1.set(Calendar.MINUTE, 30);
+//		Calendar c2 = Calendar.getInstance();
+//		c2.set(Calendar.AM_PM, Calendar.PM);
+//		c2.set(Calendar.HOUR, 5);
+//		c2.set(Calendar.MINUTE, 30);
+//		ejeX.setMaximumDate(c2.getTime());
+//		ejeX.setMinimumDate(c1.getTime());
+//		
+//		NumberAxis ejeY = new NumberAxis();
+//		ejeY.setRange(new Range(0, 540));
+//		
+//		chartPlot = new XYPlot(
+//				modeloPrecios.getPreciosSeleccionados(), 
+//				ejeX, ejeY,new XYLineAndShapeRenderer(true, false));
+//		JFreeChart chart = new JFreeChart(chartPlot);
+//		ChartPanel panel = new ChartPanel(chart);
+		JPanel panel = new JPanel();
+		panel.add(new JButton("Pako"));
+		return panel;
+	}
 	private ChartPanel getChartPanel(){
 		DateAxis ejeX = new DateAxis();
 		Calendar c1 = Calendar.getInstance();
@@ -297,7 +380,55 @@ public class MainFrameCliente extends JFrame{
 		return frame;
 	}
 
-	
+	private void pinta_actionPerformed(ActionEvent e){
+		System.out.println(e.getActionCommand());
+		//JOptionPane.showMessageDialog(tablaArribaIzq,null,"Has pulsado el volumen",JOptionPane.CANCEL_OPTION);
+	    if (e.getActionCommand().equals("Volumen")){
+			if(volumen ) {
+		    volumen = false;
+		    split_graficas.remove((Component)graficas.get("volumen"));
+		    graficas.remove("volumen");
+		    }
+		    else {
+		    volumen = true;
+		    JPanel p=getChartPanel2();
+		    graficas.put("volumen",p);
+		    //split_graficas.add(p);
+		    }
+	    }
+	    if (e.getActionCommand().equals("Estocastico")){
+		    if(estocastico) {
+			    estocastico = false;
+			    split_graficas.remove((Component)graficas.get("estocastico"));
+			    graficas.remove("estocastico");
+			    }
+			    else {
+			    estocastico = true;
+			    JPanel p=getChartPanel2();
+			    graficas.put("estocastico",p);
+			    //split_graficas.add(p);
+			 }
+	    }
+	    JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+	    if (volumen && estocastico){
+			aux.add(getChartPanel2());
+			aux.setDividerLocation(120);
+			aux.setBottomComponent(getChartPanel3());
+			split_graficas.setBottomComponent(aux);
+		}
+		else
+			if (volumen)
+				split_graficas.setBottomComponent(getChartPanel2());
+			else{
+				if(estocastico)
+					split_graficas.setBottomComponent(getChartPanel3());
+				if(!volumen && !estocastico){
+//					split_graficas=null;
+//					split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+					split_graficas.remove(2);
+				}
+			}
+	}
 //	public static void main(String[] args){
 //		ArrayList lEmpresas = new ArrayList();
 //		lEmpresas.add("Empresa1");
