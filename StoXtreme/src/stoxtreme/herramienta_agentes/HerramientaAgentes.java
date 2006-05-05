@@ -9,7 +9,9 @@ import java.util.Hashtable;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import stoxtreme.cliente.EstadoBolsa;
 import stoxtreme.cliente.ManejadorMensajes;
+import stoxtreme.cliente.gui.HerramientaAgentesPanel;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.GeneradorParametrosPsicologicos;
 import stoxtreme.herramienta_agentes.agentes.GeneradorParametrosSocial;
@@ -32,31 +34,28 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	private ParametrosAgentes parametros;
 	private ArrayList<Agente> agentes;
 	private MonitorAgentes monitor;
-	private EstadoBolsa bolsa;
 	private Notificador notif;
-	private ReceptorMensajes receptor;
 	JFrame frame;
 	
 	public HerramientaAgentes(){
 		super();
 	}
 
-	public HerramientaAgentes(String nombreUsuario, EstadoBolsa bolsa, ParametrosAgentes parametros){
+	public HerramientaAgentes(
+			String nombreUsuario, 
+			EstadoBolsa bolsa, 
+			ParametrosAgentes parametros){
 		IDAgente.setUsuario(nombreUsuario);
 		this.parametros = parametros;
-		this.bolsa = bolsa;
 		this.notif = new Notificador();
-		receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
-		receptor.addListener(this);
+		//receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
+//		receptor.addListener(this);
 		agentes = new ArrayList<Agente>();
 	}
 	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();
 	
-	public void start(Stoxtreme servidor){
-		
-		
-		
+	public void start(Stoxtreme servidor, EstadoBolsa eBolsa){
 		//int nAgentes = (Integer)parametros.get(ParametrosAgentes.Parametro.NUM_AGENTES);
 		int nAgentes = 3;
 		monitor = new MonitorAgentes(servidor, this);
@@ -78,7 +77,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 			ParametrosSocial ps = gPS.get(i);
 			ComportamientoAgente comportamiento1 = new ComportamientoBroker();
 			
-			Agente agente = new Agente(monitor.getConexionBolsa(), monitor.getConsolaAgentes(), ps, pp);
+			Agente agente = new Agente(monitor.getConexionBolsa(), eBolsa, monitor.getConsolaAgentes(), ps, pp);
 			notif.addListener(agente.getIDString(), agente.getPerceptor());
 			agente.addComportamiento(comportamiento1);
 			agente.start();
@@ -87,34 +86,34 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		super.addListaAgentes(agentes);
 	}
 	
-	private static final String URLAXIS = "http://localhost:8080/axis/services/";
-	public static void main(String[] args){
-		try{
-			ParametrosAgentes parametros = new ParametrosAgentes();
-			EstadoBolsa bolsa = EstadoBolsa.getInstanciaGlobal();
-			bolsa.insertaEmpresa("ENDESA", 10.0);
-			bolsa.insertaEmpresa("TELECINCO", 20.0);
-			bolsa.insertaEmpresa("ANTENA3", 30.0);
-			bolsa.insertaEmpresa("REPSOL", 40.0);
-			
-			HerramientaAgentes hAgentes = new HerramientaAgentes("alonso", bolsa, parametros);
-			
-			JFrame frame = new JFrame("Agentes: 0");
-			
-			frame.getContentPane().add(hAgentes);
-			frame.setSize(new Dimension(800, 600));
-			frame.setVisible(true);
-			
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
-			Stoxtreme stoxtreme = locator.getStoXtreme(new URL(URLAXIS+"StoXtreme"));
-			hAgentes.start(stoxtreme);
-			
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
+	//private static final String URLAXIS = "http://localhost:8080/axis/services/";
+//	public static void main(String[] args){
+//		try{
+//			ParametrosAgentes parametros = new ParametrosAgentes();
+//			EstadoBolsa bolsa = EstadoBolsa.getInstanciaGlobal();
+//			bolsa.insertaEmpresa("ENDESA", 10.0);
+//			bolsa.insertaEmpresa("TELECINCO", 20.0);
+//			bolsa.insertaEmpresa("ANTENA3", 30.0);
+//			bolsa.insertaEmpresa("REPSOL", 40.0);
+//			
+//			HerramientaAgentes hAgentes = new HerramientaAgentes("alonso", bolsa, parametros);
+//			
+//			JFrame frame = new JFrame("Agentes: 0");
+//			
+//			frame.getContentPane().add(hAgentes);
+//			frame.setSize(new Dimension(800, 600));
+//			frame.setVisible(true);
+//			
+//			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
+//			Stoxtreme stoxtreme = locator.getStoXtreme(new URL(URLAXIS+"StoXtreme"));
+//			hAgentes.start(stoxtreme);
+//			
+//		}
+//		catch(Exception e){
+//			e.printStackTrace();
+//		}
+//	}
 	public void addNotificadorListener(String id, ListenerNotificador n) {
 		notif.addListener(id, n);
 	}

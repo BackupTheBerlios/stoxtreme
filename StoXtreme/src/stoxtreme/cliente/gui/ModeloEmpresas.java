@@ -5,23 +5,28 @@ import java.util.Hashtable;
 
 import javax.swing.DefaultComboBoxModel;
 
+import stoxtreme.cliente.infoLocal.InfoLocal;
+
 public class ModeloEmpresas extends DefaultComboBoxModel{
-	private Hashtable empresas;
-	private ArrayList nombreEmpresas;
+	private Hashtable<String,ValoresEmpresa> empresas;
+	private ArrayList<String> nombreEmpresas;
 	private String empresaFocus;
 	private ValoresEmpresa valorFocus;
 	
-	public ModeloEmpresas(ArrayList nEmpresas){
-		empresas = new Hashtable();
-		nombreEmpresas = new ArrayList(nEmpresas.size());
-		for(int i=0; i<nEmpresas.size(); i++){
-			String nEmp = (String)nEmpresas.get(i);
+	public ModeloEmpresas(InfoLocal info){
+		empresas = new Hashtable<String,ValoresEmpresa>();
+		this.nombreEmpresas = info.getEmpresas();
+		
+		for(int i=0; i<nombreEmpresas.size(); i++){
+			String nEmp = (String)nombreEmpresas.get(i);
 			nombreEmpresas.add(nEmp);
-			empresas.put(nEmp, new ValoresEmpresa(nEmp, 1));
+			ValoresEmpresa vemp = new ValoresEmpresa(nEmp, 1);
+			vemp.insertarSiguienteValor(info.getPrecioInicial(nEmp));
+			empresas.put(nEmp, vemp);
 		}
 		
-		empresaFocus = (String)nombreEmpresas.get(0);
-		valorFocus = (ValoresEmpresa)empresas.get(nombreEmpresas.get(0));
+		empresaFocus = nombreEmpresas.get(0);
+		valorFocus = empresas.get(nombreEmpresas.get(0));
 	}
 	
 	public void insertaValor(String empresa, double valor){

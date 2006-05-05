@@ -2,7 +2,7 @@ package stoxtreme.herramienta_agentes.agentes;
 
 import java.util.ArrayList;
 
-import stoxtreme.herramienta_agentes.EstadoBolsa;
+import stoxtreme.cliente.EstadoBolsa;
 import stoxtreme.herramienta_agentes.ListenerNotificador;
 import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
@@ -10,17 +10,12 @@ import stoxtreme.herramienta_agentes.agentes.comportamiento.EstadoCartera;
 import stoxtreme.interfaz_remota.Operacion;
 
 public class Perceptor implements ListenerNotificador{
-	private EstadoBolsa estadoBolsa = null;
 	private EstadoCartera estadoCartera = null;
 	private OperacionesPendientes opPendientes = null;
 	private ArrayList<ComportamientoAgente> gDecisiones = null;
 	
 	public Perceptor() {
 		gDecisiones = new ArrayList<ComportamientoAgente>();
-	}
-	
-	public void setEstadoBolsa(EstadoBolsa estado){
-		estadoBolsa = estado;
 	}
 	
 	public void setEstadoCartera(EstadoCartera estado){
@@ -35,12 +30,12 @@ public class Perceptor implements ListenerNotificador{
 		this.gDecisiones.add(gDeci);
 	}
 	
-	public void onCambioPrecioAccion(String empresa, double nuevoPrecio) {
-		estadoBolsa.cambioPrecioAccion(empresa, nuevoPrecio);
-	}
+//	public void onCambioPrecioAccion(String empresa, double nuevoPrecio) {
+//		estadoBolsa.cambioPrecioAccion(empresa, nuevoPrecio);
+//	}
 
 	public void onNotificacionOp(int idOp, int cantidad, double precio) {
-		if(	estadoBolsa != null && estadoCartera != null &&
+		if(estadoCartera != null &&
 			opPendientes != null && gDecisiones.size()!=0){
 			String empresa = opPendientes.getEmpresaOperacion(idOp);
 			int tipoOp = opPendientes.getTipoOperacion(idOp);

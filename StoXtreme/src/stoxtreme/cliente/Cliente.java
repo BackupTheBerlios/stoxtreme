@@ -7,6 +7,8 @@ import org.apache.log4j.PropertyConfigurator;
 import stoxtreme.cliente.gui.MainFrameCliente;
 import stoxtreme.cliente.gui.DialogoInicial;
 import stoxtreme.cliente.infoLocal.InfoLocal;
+import stoxtreme.herramienta_agentes.HerramientaAgentes;
+import stoxtreme.herramienta_agentes.ParametrosAgentes;
 import stoxtreme.interfaz_remota.*;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
 import stoxtreme.sistema_mensajeria.receptor.*;
@@ -19,14 +21,24 @@ public class Cliente{
 	private String nUsuario;
 	private String password;
 	private Stoxtreme servicio;
-	EstadoBolsa eBolsa;
-	OperacionesPendientes opPendientes;
-	CarteraAcciones cartera;
-	MainFrameCliente gui;
+	private EstadoBolsa eBolsa;
+	private OperacionesPendientes opPendientes;
+	private CarteraAcciones cartera;
+	private MainFrameCliente gui;
 	private DialogoInicial identificacion;
 	private Stoxtreme servidor;
 	private ReceptorMensajes receptor;
-	private InfoLocal info;
+	private HerramientaAgentes hAgentes;
+	
+	public static void main(String[] args) {
+		PropertyConfigurator.configure("conf/log4j.properties");
+		Cliente c = new Cliente(URLAXIS+"StoXtreme");
+		try {
+			c.init();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Cliente(String url){
 		try{
@@ -34,15 +46,6 @@ public class Cliente{
 			servidor = locator.getStoXtreme(new URL(url));
 		}
 		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	public static void main(String[] args) {
-		PropertyConfigurator.configure("conf/log4j.properties");
-		Cliente c = new Cliente(URLAXIS+"StoXtreme");
-		try {
-			c.init();
-		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -126,11 +129,13 @@ public class Cliente{
 			}
 			this.nUsuario = user; this.password = psw;
 		}
-		obtenerFicheros();
-		eBolsa = new EstadoBolsa();
+		
+		this.obtenerFicheros();
 		opPendientes = new OperacionesPendientes();
 		cartera = new CarteraAcciones();
-		info=new InfoLocal();
+		eBolsa = new EstadoBolsa(new InfoLocal());
+		ParametrosAgentes parametros = new ParametrosAgentes();
+		hAgentes = new HerramientaAgentes(nUsuario, eBolsa, parametros);
 		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa.getMAcciones());
 		gui.init();
 		gui.pack();
@@ -138,10 +143,11 @@ public class Cliente{
 		// Lo ultimo que hacemos es dar de alta en el receptor
 		receptor = new ReceptorMensajes(nUsuario, ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
 		receptor.addListener(new ManejadorMensajes(this));
-		
 	}
 	
-	
+	public void iniciarHerramientaAgentes(){
+		hAgentes.start(servidor, eBolsa);
+	}
 	
 	public void insertarOperacion(Operacion op)throws Exception{
 		int idOp = servidor.insertarOperacion(nUsuario, op);

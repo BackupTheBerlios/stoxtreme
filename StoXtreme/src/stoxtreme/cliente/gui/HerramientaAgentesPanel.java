@@ -1,4 +1,4 @@
-package stoxtreme.herramienta_agentes;
+package stoxtreme.cliente.gui;
 
 import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import stoxtreme.cliente.gui.FakeInternalFrame;
+import stoxtreme.herramienta_agentes.ConsolaAgentes;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.interfaz_remota.Operacion;
 

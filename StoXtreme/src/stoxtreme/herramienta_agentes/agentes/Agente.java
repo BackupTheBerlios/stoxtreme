@@ -4,9 +4,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import stoxtreme.herramienta_agentes.ConexionBolsa;
+import stoxtreme.cliente.EstadoBolsa;
 import stoxtreme.herramienta_agentes.ConsolaAgentes;
-import stoxtreme.herramienta_agentes.EstadoBolsa;
 import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.*;
 import stoxtreme.herramienta_agentes.agentes.decisiones.*;
@@ -33,20 +32,20 @@ public class Agente extends Thread{
 	private BuzonMensajes buzonMensajes;
 	private ModeloSocial modeloSocial;
 	private ModeloPsicologico modeloPsicologico;
-	private EstadoBolsa estadoBolsa;
 	private EstadoCartera estadoCartera;
 	private boolean alive;
 	private Stoxtreme conexionBolsa;
 	private ConsolaAgentes consolaAgentes;
 	private double ganancias = 0.0;
+	private EstadoBolsa estadoBolsa;
 	
-	public Agente (Stoxtreme conexionBolsa, ConsolaAgentes consolaAgentes, ParametrosSocial ps, ParametrosPsicologicos pp){
+	public Agente (Stoxtreme conexionBolsa, EstadoBolsa estado, ConsolaAgentes consolaAgentes, ParametrosSocial ps, ParametrosPsicologicos pp){
 		ID = new IDAgente();
 		p = new Perceptor();
 		
 		modeloSocial = new ModeloSocial(ps);
 		modeloPsicologico = new ModeloPsicologico(pp);
-		estadoBolsa = EstadoBolsa.getInstanciaGlobal();
+		estadoBolsa = estado;
 		estadoCartera = new EstadoCartera();
 		
 		this.conexionBolsa = conexionBolsa;
@@ -55,7 +54,7 @@ public class Agente extends Thread{
 		
 		opPendientes = new OperacionesPendientes();
 		p.setOperacionesPendientes(opPendientes);
-		p.setEstadoBolsa(estadoBolsa);
+//		p.setEstadoBolsa(estadoBolsa);
 		p.setEstadoCartera(estadoCartera);
 		
 		this.alive = true;
@@ -68,7 +67,7 @@ public class Agente extends Thread{
 		
 		comportamiento.setModeloPsicologico(modeloPsicologico);
 		comportamiento.setModeloSocial(modeloSocial);
-		comportamiento.setEstadoBolsa(estadoBolsa);
+		//comportamiento.setEstadoBolsa(estadoBolsa);
 		comportamiento.setEstadoCartera(estadoCartera);
 		comportamiento.setOperacionesPendientes(opPendientes);
 		

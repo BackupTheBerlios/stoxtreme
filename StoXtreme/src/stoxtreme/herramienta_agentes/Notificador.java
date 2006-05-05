@@ -18,11 +18,11 @@ public class Notificador {
 		observadores.put(id, a);
 	}
 	
-	public void cambioPrecioAccion(String empresa, double nuevoPrecioAccion){
-		Enumeration<ListenerNotificador> e = observadores.elements();
-		while (e.hasMoreElements())
-			e.nextElement().onCambioPrecioAccion(empresa, nuevoPrecioAccion);
-	}
+//	public void cambioPrecioAccion(String empresa, double nuevoPrecioAccion){
+//		Enumeration<ListenerNotificador> e = observadores.elements();
+//		while (e.hasMoreElements())
+//			e.nextElement().onCambioPrecioAccion(empresa, nuevoPrecioAccion);
+//	}
 	
 	public void notificar(String id, int idOp, int cantidad, double precio){
 		observadores.get(id).onNotificacionOp(idOp, cantidad, precio);

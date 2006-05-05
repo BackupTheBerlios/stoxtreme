@@ -1,4 +1,4 @@
-package stoxtreme.herramienta_agentes;
+package stoxtreme.cliente.gui;
 
 import java.util.ArrayList;
 import java.util.TreeMap;

@@ -1,22 +1,25 @@
 package stoxtreme.cliente;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+
+import cern.jet.random.engine.MersenneTwister;
 
 import stoxtreme.cliente.gui.ModeloEmpresas;
 import stoxtreme.cliente.gui.ModeloPrecioAccionesGrafico;
+import stoxtreme.cliente.infoLocal.InfoLocal;
 
 public class EstadoBolsa {
+	private Hashtable<String,Double> precios;
 	private ModeloPrecioAccionesGrafico mAcciones;
+	private ArrayList<String> empresas = new ArrayList<String>();
 	private ModeloEmpresas mEmpresas;
 	
-	public EstadoBolsa(){
-		ArrayList<String> empresas = new ArrayList<String>();
-		empresas.add("ENDESA");
-		empresas.add("REPSOL");
-		empresas.add("ANTENA3");
-		empresas.add("TELECINCO");
+	public EstadoBolsa(InfoLocal info){
 		mAcciones = new ModeloPrecioAccionesGrafico(empresas);
-		mEmpresas = new ModeloEmpresas(empresas);
+		mEmpresas = new ModeloEmpresas(info);
+		precios = new Hashtable<String,Double>();
+		this.empresas = info.getEmpresas(); 
 	}
 
 	public ModeloPrecioAccionesGrafico getMAcciones() {
@@ -38,5 +41,13 @@ public class EstadoBolsa {
 	public void cambiaValor(String empresa, double nuevoPrecio) {
 		mAcciones.insertaValor(empresa, nuevoPrecio);
 	}
-	
+
+	public double getPrecioActualEmpresa(String empresa) {
+		return precios.get(empresa);
+	}
+
+	public String dameEmpresaAleatoria() {
+		int i = MersenneTwister.makeDefault().nextInt();
+		return empresas.get(i);
+	}
 }

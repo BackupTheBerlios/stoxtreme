@@ -2,7 +2,6 @@ package stoxtreme.herramienta_agentes.agentes.comportamiento.prueba;
 
 import java.util.ArrayList;
 
-import stoxtreme.herramienta_agentes.EstadoBolsa;
 import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
 import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
