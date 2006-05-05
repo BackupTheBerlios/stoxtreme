@@ -38,6 +38,7 @@ public class MainFrameCliente extends JFrame{
 	private JComboBox empresaSeleccionada;
 	private JSplitPane split_graficas;
 	private Hashtable graficas=new Hashtable();
+	private HerramientaAgentesPanel panelAgentes;
 	
 	static{
 		try{
@@ -47,10 +48,12 @@ public class MainFrameCliente extends JFrame{
 			
 		}
 	}
-	public MainFrameCliente(Cliente cliente,
+	public MainFrameCliente(
+			Cliente cliente,
 			ModeloCartera modeloCartera,
 			ModeloOpPendientes modeloOpPendientes,
-			ModeloPrecioAccionesGrafico modeloPrecios){
+			ModeloPrecioAccionesGrafico modeloPrecios,
+			HerramientaAgentesPanel panelAgentes){
 		super("Stock Xtreme");
 		this.cliente = cliente;
 		this.modeloCartera = modeloCartera;
@@ -58,40 +61,23 @@ public class MainFrameCliente extends JFrame{
 		this.modeloPrecios = modeloPrecios;
 		this.volumen =false;
 		this.estocastico =false;
+		this.panelAgentes = panelAgentes;
+		panelAgentes.setCliente(cliente);
 	}
 	
 	public void init(){
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.insertTab("Principal", null, getPanelPrincipal(), null, 0);
 		tabbedPane.insertTab("Informacion", null, new JPanel(), null, 1);
-		tabbedPane.insertTab("Agentes", null, new JPanel(), null, 2);
+		tabbedPane.insertTab("Agentes", null, panelAgentes, null, 2);
 		getContentPane().add(tabbedPane);
-		this.addWindowListener(new WindowListener(){
-			public void windowOpened(WindowEvent e) {
-			}
-
+		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
 				try {
 					cliente.deslogea();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-			}
-
-			public void windowClosed(WindowEvent e) {
-				
-			}
-
-			public void windowIconified(WindowEvent e) {
-			}
-
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			public void windowActivated(WindowEvent e) {
-			}
-
-			public void windowDeactivated(WindowEvent e) {
 			}
 		});
 	}

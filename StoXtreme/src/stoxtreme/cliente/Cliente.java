@@ -142,7 +142,7 @@ public class Cliente{
 		ParametrosAgentes parametros = new ParametrosAgentes();
 		System.err.println("Creando Agentes");
 		hAgentes = new HerramientaAgentes(nUsuario, eBolsa, parametros);
-		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa.getMAcciones());
+		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa.getMAcciones(), hAgentes);
 		gui.init();
 		gui.pack();
 		gui.setVisible(true);
@@ -256,5 +256,9 @@ public class Cliente{
 		else{
 			System.out.println("Mensaje informacion: "+contenido);
 		}
+	}
+
+	public void detenerHerramientaAgentes() {
+		// TODO Auto-generated method stub
 	}
 }

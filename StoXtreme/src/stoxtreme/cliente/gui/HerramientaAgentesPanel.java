@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import stoxtreme.cliente.Cliente;
 import stoxtreme.herramienta_agentes.ConsolaAgentes;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.interfaz_remota.Operacion;
@@ -29,10 +30,13 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	private JTable tablaAgentes;
 	private HerramientaAgentesTableModel modeloTabla;
 	
-	private JButton botonParar;
+	private JButton botonIniciarParar;
 	private JButton botonEliminar;
 	private JButton botonEditar;
 	private JButton botonInsertar;
+	private Cliente cliente;
+	
+	private boolean parado = true;
 	
 	public HerramientaAgentesPanel() {
 		try{
@@ -67,21 +71,86 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		return panelIzquierdo;
 	}
 	
+	private JPanel panelBotonesNormal;
+	
 	public Component getPanelIzquierdoAbajo(){
-		JPanel panel = new JPanel();
+		panelBotonesNormal = new JPanel();
 		
-		botonParar = new JButton("Parar");
+		botonIniciarParar = new JButton("Iniciar");
 		botonEliminar = new JButton("Eliminar");
+		botonEliminar.setEnabled(false);
 		botonEditar = new JButton("Editar");
+		botonEditar.setEnabled(false);
 		botonInsertar = new JButton("Insertar Agentes");
+		botonInsertar.setEnabled(false);
 
-		panel.add(botonParar);
-		panel.add(botonEliminar);
-		panel.add(botonEditar);
-		panel.add(botonInsertar);
+		panelBotonesNormal.add(botonIniciarParar);
+		panelBotonesNormal.add(botonEliminar);
+		panelBotonesNormal.add(botonEditar);
+		panelBotonesNormal.add(botonInsertar);
 		
-		return panel;
+		// Setea los botones
+		botonEditar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				botonEditar_actionPerformed(e);
+			}
+		});
+		
+		botonEliminar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				botonEliminar_actionPerformed(e);
+			}
+		});
+		
+		botonInsertar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				botonInsertar_actionPerformed(e);
+			}
+		});
+		
+		botonIniciarParar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if("Iniciar".equals(((JButton)e.getSource()).getText())){
+					botonIniciar_actionPerformed(e);
+				}
+				else{
+					botonParar_actionPerformed(e);
+				}
+			}
+		});
+		
+		return panelBotonesNormal;
 	}
+	
+	public void botonParar_actionPerformed(ActionEvent e){
+		cliente.detenerHerramientaAgentes();
+		botonIniciarParar.setText("Iniciar");
+		botonEditar.setEnabled(false);
+		botonEliminar.setEnabled(false);
+		botonInsertar.setEnabled(false);
+	}
+
+	private void botonIniciar_actionPerformed(ActionEvent e){
+		cliente.iniciarHerramientaAgentes();
+		botonIniciarParar.setText("Parar");
+		botonEditar.setEnabled(true);
+		botonEliminar.setEnabled(true);
+		botonInsertar.setEnabled(true);
+	}
+	
+	private void botonEliminar_actionPerformed(ActionEvent e){
+		
+	}
+	
+	private void botonEditar_actionPerformed(ActionEvent e){
+		
+	}
+	
+	private void botonInsertar_actionPerformed(ActionEvent e){
+		
+	}
+
+	
 	
 	public void addListaAgentes(ArrayList<Agente> listaAgentes){
 		modeloTabla.setAgentes(listaAgentes);
@@ -310,5 +379,9 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		frame.add(panel);
 		frame.setSize(new Dimension(800,600));
 		frame.setVisible(true);
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }
