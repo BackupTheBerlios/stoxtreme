@@ -22,7 +22,7 @@ import stoxtreme.interfaz_remota.Operacion;
 
 public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private JSplitPane panelPrincipal;
-	private JScrollPane panelIzquierdo;
+	private JScrollPane panelIzquierdoArriba;
 	private JSplitPane panelDerecho;
 	private PruebaListModel modeloLista;
 	private JList listaOpConfirmar;
@@ -30,7 +30,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	private JTable tablaAgentes;
 	private HerramientaAgentesTableModel modeloTabla;
 	
-	private JButton botonIniciarParar;
+	private JButton botonIniciarPararSistema;
 	private JButton botonEliminar;
 	private JButton botonEditar;
 	private JButton botonInsertar;
@@ -51,24 +51,24 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				getPanelIzquierdo(), getPanelDerecho());
 		add(panelPrincipal);
-		panelPrincipal.setSize(new Dimension(800,800));
-		panelPrincipal.setDividerLocation(400);
+		//panelPrincipal.setSize(new Dimension(800,800));
+		//panelPrincipal.setDividerLocation(400);
 		
 	}
 	
 	public Component getPanelIzquierdo(){
 		JPanel panel = new JPanel(new BorderLayout());
-		FakeInternalFrame frame = new FakeInternalFrame("Agentes en el sistema", panel);
 		panel.add(getPanelIzquierdoArriba(), BorderLayout.CENTER);
 		panel.add(getPanelIzquierdoAbajo(), BorderLayout.SOUTH);
+		FakeInternalFrame frame = new FakeInternalFrame("Agentes en el sistema", panel);
 		return frame;
 	}
 	
 	public Component getPanelIzquierdoArriba(){
-		modeloTabla = new HerramientaAgentesTableModel(new ArrayList<Agente>());
+		modeloTabla = new HerramientaAgentesTableModel();
 		tablaAgentes = new JTable(modeloTabla);
-		panelIzquierdo = new JScrollPane(tablaAgentes);
-		return panelIzquierdo;
+		panelIzquierdoArriba = new JScrollPane(tablaAgentes);
+		return panelIzquierdoArriba;
 	}
 	
 	private JPanel panelBotonesNormal;
@@ -76,7 +76,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	public Component getPanelIzquierdoAbajo(){
 		panelBotonesNormal = new JPanel();
 		
-		botonIniciarParar = new JButton("Iniciar");
+		botonIniciarPararSistema = new JButton("Iniciar Sistema");
 		botonEliminar = new JButton("Eliminar");
 		botonEliminar.setEnabled(false);
 		botonEditar = new JButton("Editar");
@@ -84,7 +84,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		botonInsertar = new JButton("Insertar Agentes");
 		botonInsertar.setEnabled(false);
 
-		panelBotonesNormal.add(botonIniciarParar);
+		panelBotonesNormal.add(botonIniciarPararSistema);
 		panelBotonesNormal.add(botonEliminar);
 		panelBotonesNormal.add(botonEditar);
 		panelBotonesNormal.add(botonInsertar);
@@ -108,9 +108,9 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 			}
 		});
 		
-		botonIniciarParar.addActionListener(new ActionListener(){
+		botonIniciarPararSistema.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				if("Iniciar".equals(((JButton)e.getSource()).getText())){
+				if("Iniciar Sistema".equals(((JButton)e.getSource()).getText())){
 					botonIniciar_actionPerformed(e);
 				}
 				else{
@@ -124,7 +124,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	
 	public void botonParar_actionPerformed(ActionEvent e){
 		cliente.detenerHerramientaAgentes();
-		botonIniciarParar.setText("Iniciar");
+		botonIniciarPararSistema.setText("Iniciar Sistema");
 		botonEditar.setEnabled(false);
 		botonEliminar.setEnabled(false);
 		botonInsertar.setEnabled(false);
@@ -132,7 +132,7 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 
 	private void botonIniciar_actionPerformed(ActionEvent e){
 		cliente.iniciarHerramientaAgentes();
-		botonIniciarParar.setText("Parar");
+		botonIniciarPararSistema.setText("Parar Sistema");
 		botonEditar.setEnabled(true);
 		botonEliminar.setEnabled(true);
 		botonInsertar.setEnabled(true);
@@ -367,18 +367,23 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	}
 	
 	public static void main(String[] args){
+		try {
+			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		JFrame frame = new JFrame();
-		HerramientaAgentesPanel panel = new HerramientaAgentesPanel(){
+		frame.add(new HerramientaAgentesPanel(){
 			protected void nOperacion(String id, int idOp, int cantidad, double precio) {
-				System.out.println("hola");
 			}
+
 			protected void nCancelacion(String id, int idOp) {
-				System.out.println("Adios");
 			}
-		};
-		frame.add(panel);
+		});
 		frame.setSize(new Dimension(800,600));
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void setCliente(Cliente cliente) {

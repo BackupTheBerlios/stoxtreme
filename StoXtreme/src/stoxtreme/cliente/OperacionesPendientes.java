@@ -29,4 +29,8 @@ public class OperacionesPendientes {
 	public void quitaOperacion(int idOp) {
 		mOpPendientes.borrarOperacion(idOp);
 	}
+
+	public boolean estaPendiente(int idOp) {
+		return mOpPendientes.contains(idOp);
+	}
 }

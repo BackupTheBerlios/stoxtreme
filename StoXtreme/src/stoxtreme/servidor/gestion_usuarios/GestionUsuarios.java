@@ -2,6 +2,7 @@ package stoxtreme.servidor.gestion_usuarios;
 
 import java.util.Enumeration;
 
+import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.servidor.gui.ModeloListaUsuariosConectados;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
@@ -43,6 +44,7 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados{
 	
 	public boolean desconectaUsuario(String id){
 		setEstadoUsuario(id, false);
+		AlmacenMensajes.getInstance().enviaMensaje(new Mensaje("FIN", "FIN", id));
 		return true;
 	}
 	/* Si el id de usuario no existe, se a�ade a la tabla hash

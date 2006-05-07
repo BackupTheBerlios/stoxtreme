@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.swing.JFrame;
+import javax.swing.UIManager;
 import javax.swing.table.AbstractTableModel;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 
 public class HerramientaAgentesTableModel extends AbstractTableModel{
-	private static String[] columnas = {"","IDAgente", "Estado Actual", "Comportamiento", "Ganancias"};
+	private static String[] columnas = {" ","IDAgente", "Estado Actual", "Comportamiento", "Ganancias"};
 	private TreeSet<Integer> seleccionadas = new TreeSet<Integer>();
 	private ArrayList<Agente> elementos = new ArrayList<Agente>(); 
 
-	public HerramientaAgentesTableModel(ArrayList<Agente> agentes) {
-		elementos = agentes;
-	}
-	
 	public void setAgentes(ArrayList<Agente> agentes){
 		elementos = agentes;
 		fireTableDataChanged();
@@ -34,11 +32,11 @@ public class HerramientaAgentesTableModel extends AbstractTableModel{
 	
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		if(columnIndex==0){
-			if(seleccionadas.contains(columnIndex)){
-				seleccionadas.remove(columnIndex);
+			if(seleccionadas.contains(rowIndex)){
+				seleccionadas.remove(rowIndex);
 			}
 			else{
-				seleccionadas.add(columnIndex);
+				seleccionadas.add(rowIndex);
 			}
 		}
 	}

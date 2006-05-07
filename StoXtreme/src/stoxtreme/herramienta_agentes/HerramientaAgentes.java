@@ -127,7 +127,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	}
 
 	public void onTick(int tick) {
-		frame.setTitle("Agentes: "+tick);
+		//frame.setTitle("Agentes: "+tick);
 	}
 
 	public void onMensaje(Mensaje m) {

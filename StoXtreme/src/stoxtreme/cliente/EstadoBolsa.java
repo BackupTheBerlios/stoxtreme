@@ -20,6 +20,10 @@ public class EstadoBolsa {
 		mAcciones = new ModeloPrecioAccionesGrafico(info.getEmpresas());
 		mEmpresas = new ModeloEmpresas(info);
 		precios = new Hashtable<String,Double>();
+		
+		for(int i=0; i<empresas.size(); i++){
+			precios.put(empresas.get(i), info.getPrecioInicial(empresas.get(i)));
+		}
 	}
 
 	public ModeloPrecioAccionesGrafico getMAcciones() {
@@ -47,7 +51,7 @@ public class EstadoBolsa {
 	}
 
 	public String dameEmpresaAleatoria() {
-		int i = MersenneTwister.makeDefault().nextInt();
+		int i = (int)(MersenneTwister.makeDefault().nextDouble()*empresas.size());
 		return empresas.get(i);
 	}
 }

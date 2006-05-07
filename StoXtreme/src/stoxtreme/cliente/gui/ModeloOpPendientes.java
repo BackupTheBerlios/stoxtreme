@@ -108,4 +108,7 @@ public class ModeloOpPendientes extends AbstractTableModel{
 	public Operacion getOperacion(int idOp) {
 		return opPendientes.get(idOp);
 	}
+	public boolean contains(int idOp) {
+		return opPendientes.containsKey(idOp);
+	}
 }

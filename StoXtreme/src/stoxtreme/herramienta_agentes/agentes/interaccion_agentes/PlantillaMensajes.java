@@ -15,7 +15,7 @@ public class PlantillaMensajes{
 		map = new EnumMap<Campos, Object>(Campos.class);
 	}
 	
-	public boolean coincide(Mensaje m){
+	public boolean coincide(MensajeACL m){
 		boolean coincide = true;
 		
 		if(map.containsKey(Campos.PERFORMATIVE)){

@@ -10,7 +10,7 @@ import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.*;
 import stoxtreme.herramienta_agentes.agentes.decisiones.*;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
-import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Mensaje;
+import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.MensajeACL;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Stoxtreme;
 import stoxtreme.servidor.Servidor;
@@ -67,7 +67,7 @@ public class Agente extends Thread{
 		
 		comportamiento.setModeloPsicologico(modeloPsicologico);
 		comportamiento.setModeloSocial(modeloSocial);
-		//comportamiento.setEstadoBolsa(estadoBolsa);
+		comportamiento.setEstadoBolsa(estadoBolsa);
 		comportamiento.setEstadoCartera(estadoCartera);
 		comportamiento.setOperacionesPendientes(opPendientes);
 		
@@ -141,7 +141,7 @@ public class Agente extends Thread{
 		return ID.toString();
 	}
 	
-	public void enviarMensaje(Mensaje m){
+	public void enviarMensaje(MensajeACL m){
 		m.setSender(ID);
 		buzon.send(m);
 	}

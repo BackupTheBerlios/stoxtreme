@@ -40,14 +40,6 @@ public class MainFrameCliente extends JFrame{
 	private Hashtable graficas=new Hashtable();
 	private HerramientaAgentesPanel panelAgentes;
 	
-	static{
-		try{
-			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
-		}
-		catch(Exception e){
-			
-		}
-	}
 	public MainFrameCliente(
 			Cliente cliente,
 			ModeloCartera modeloCartera,

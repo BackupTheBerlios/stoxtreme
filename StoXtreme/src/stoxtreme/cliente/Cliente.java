@@ -1,8 +1,12 @@
 package stoxtreme.cliente;
 
+import java.awt.Dimension;
 import java.io.*;
 import java.net.*;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import org.apache.log4j.PropertyConfigurator;
 import stoxtreme.cliente.gui.MainFrameCliente;
 import stoxtreme.cliente.gui.DialogoInicial;
@@ -29,6 +33,14 @@ public class Cliente{
 	private Stoxtreme servidor;
 	private ReceptorMensajes receptor;
 	private HerramientaAgentes hAgentes;
+	
+	static{
+		try {
+			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
 	
 	public static void main(String[] args) {
 		PropertyConfigurator.configure("conf/log4j.properties");
@@ -165,16 +177,18 @@ public class Cliente{
 	}
 	
 	public void notificaOperacion(int idOp, int cantidad){
-		if(idOp>0){
+		if(opPendientes.estaPendiente(idOp)){
 			Operacion o = opPendientes.dameOperacion(idOp);
 			cartera.actualiza(o, cantidad);
+			int vOp = Math.abs(idOp);
+			opPendientes.quitaOperacion(vOp);
 		}
-		int vOp = Math.abs(idOp);
-		opPendientes.quitaOperacion(vOp);
 	}
 	
 	public void notificaCancelacion(int idOp){
-		opPendientes.quitaOperacion(idOp);
+		if(opPendientes.estaPendiente(idOp)){
+			opPendientes.quitaOperacion(idOp);
+		}
 	}
 	
 	public String getNUsuario() {

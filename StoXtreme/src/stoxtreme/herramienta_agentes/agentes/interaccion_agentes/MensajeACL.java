@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import stoxtreme.herramienta_agentes.agentes.IDAgente;
 
-public class Mensaje {
+public class MensajeACL {
 	// Tipo de acto de comunicacion
 	private Performative performative = null;
 	// Protocolo
@@ -35,8 +35,8 @@ public class Mensaje {
 	
 	// Constructores de los mensajes
 	
-	public Mensaje createResponse(Performative performative){
-		Mensaje m = new Mensaje();
+	public MensajeACL createResponse(Performative performative){
+		MensajeACL m = new MensajeACL();
 		m.setIn_reply_to(reply_with);
 		m.setPerformative(performative);
 		// El protocolo es el mismo si es una respuesta

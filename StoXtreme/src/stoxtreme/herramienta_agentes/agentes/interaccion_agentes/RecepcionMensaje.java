@@ -6,18 +6,18 @@ import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 
 public abstract class RecepcionMensaje extends Decision{
-	protected ArrayList<Mensaje> listaMensajes;
+	protected ArrayList<MensajeACL> listaMensajes;
 	
 	public RecepcionMensaje(){
 		super();
-		listaMensajes = new ArrayList<Mensaje>();
+		listaMensajes = new ArrayList<MensajeACL>();
 	}
 	
-	public void addMensaje(Mensaje m){
+	public void addMensaje(MensajeACL m){
 		listaMensajes.add(m);
 	}
 	
-	public void removeMensaje(Mensaje m){
+	public void removeMensaje(MensajeACL m){
 		listaMensajes.remove(m);
 	}
 }

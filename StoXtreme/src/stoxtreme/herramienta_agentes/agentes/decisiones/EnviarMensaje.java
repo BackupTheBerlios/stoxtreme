@@ -1,12 +1,12 @@
 package stoxtreme.herramienta_agentes.agentes.decisiones;
 
 import stoxtreme.herramienta_agentes.agentes.Agente;
-import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Mensaje;
+import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.MensajeACL;
 
 public class EnviarMensaje extends Decision{
-	private Mensaje mensaje;
+	private MensajeACL mensaje;
 	
-	public EnviarMensaje(Mensaje m){
+	public EnviarMensaje(MensajeACL m){
 		super();
 		this.mensaje = m;
 	}

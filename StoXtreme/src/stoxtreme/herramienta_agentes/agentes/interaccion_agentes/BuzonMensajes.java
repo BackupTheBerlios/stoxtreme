@@ -24,7 +24,7 @@ public class BuzonMensajes {
 	
 	// METODOS DE CADA BUZON
 	// Mensajes ordenados
-	private ArrayList<Mensaje> mensajes;
+	private ArrayList<MensajeACL> mensajes;
 	// Acciones a al espera de mensajes
 	private IDAgente propietarioBuzon;
 	private ArrayList<RecepcionesPendientes> recepcionesPendientes;
@@ -32,14 +32,14 @@ public class BuzonMensajes {
 	
 	public BuzonMensajes(IDAgente id){
 		this.recepcionesPendientes = new ArrayList<RecepcionesPendientes>();
-		this.mensajes = new ArrayList<Mensaje>();
+		this.mensajes = new ArrayList<MensajeACL>();
 		this.propietarioBuzon = id;
 		buzones.put(id, this);
 		if(monitorAgentes == null)
 			monitorAgentes = _monitor;
 	}
 	
-	public void send(Mensaje m){
+	public void send(MensajeACL m){
 		ArrayList<IDAgente> ids = m.getReceiver();
 		if(ids.contains(IDAgente.BROADCAST)){
 			Enumeration<IDAgente> keysBuzones = buzones.keys();
@@ -60,7 +60,7 @@ public class BuzonMensajes {
 	
 	// Si al insertar un mensaje modifica alguna condicion inserta en el planificador
 	// la accion correspondiente
-	private void insertaMensaje(Mensaje m){
+	private void insertaMensaje(MensajeACL m){
 		mensajes.add(m);
 		
 		Iterator<RecepcionesPendientes> it = recepcionesPendientes.iterator();

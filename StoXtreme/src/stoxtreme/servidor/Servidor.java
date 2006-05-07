@@ -28,6 +28,7 @@ import java.util.Hashtable;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Engine;
@@ -44,7 +45,13 @@ public class Servidor implements Administrador, Stoxtreme{
 	public static Servidor getInstance(){
 		return _instance;
 	}
-	
+	static{
+		try {
+			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
 	/**/
 	private static int IDS = 0;
 	/* COMPONENTES DEL SERVIDOR */
