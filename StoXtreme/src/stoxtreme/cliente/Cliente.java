@@ -74,13 +74,17 @@ public class Cliente{
 		//Eliminamos el DialogoInicial porque ya he identificado al usuario
 //		identificacion.dispose();
 		boolean conectado=false;
-		DialogoInicial ini= new DialogoInicial();
+		Object despertador = new Object();
+		DialogoInicial ini= new DialogoInicial(despertador);
 		while(!conectado){
 			ini.setOperacion(0);
-			ini.setModal(true);
 			ini.setVisible(true);
-			// Pone la ventana siempre en lo mas alto
-			ini.setAlwaysOnTop(true);
+			
+			synchronized (despertador) {
+				despertador.wait();
+			}
+			
+			///
 			int op =ini.getOperacion();
 			String user = ini.getusuario();
 			String psw = ini.getpass();

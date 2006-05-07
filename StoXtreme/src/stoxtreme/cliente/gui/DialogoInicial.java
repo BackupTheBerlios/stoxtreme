@@ -3,8 +3,11 @@ package stoxtreme.cliente.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,7 +24,7 @@ import stoxtreme.cliente.Cliente;
 import stoxtreme.servidor.Servidor;
 
 
-public class DialogoInicial extends JDialog{
+public class DialogoInicial extends JFrame{
 	private JButton login;
 	private JButton registrar;
 	private JTextField user;
@@ -34,16 +37,28 @@ public class DialogoInicial extends JDialog{
 	private DialogoInicial inicial;
 	//0=Error (ha cerrado la ventana), 1=Login, 2=Registro
 	private int operacion;
+	private Object despertador;
 	
-	
-	
-	public DialogoInicial(){
+	private void cerrarVentana() {
+		synchronized (despertador) {
+			despertador.notify();
+		}
+	}
+	public DialogoInicial(Object despertador){
 		super();
+		this.despertador = despertador;
 		this.init();
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setTitle("Identificacion de usuario");
 		this.setSize(new Dimension(270,182));
+		
+		this.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e) {
+				cerrarVentana();
+			}
+		});
+		
 		inicial=this;
 		operacion=0;
 	}
@@ -55,14 +70,18 @@ public class DialogoInicial extends JDialog{
 	//Panel Principal
 	private Component getPanelPrincipal(){
 		principal=new JPanel(new BorderLayout());
-		principal.add(this.getPUser(),BorderLayout.NORTH);
-		principal.add(this.getPPass(),BorderLayout.CENTER);
+		principal.add(getCentralPanel(), BorderLayout.CENTER);
 		principal.add(this.getPButtons(),BorderLayout.SOUTH);
 		FakeInternalFrame frame = new FakeInternalFrame("Conectese o cree una cuenta nueva", principal);
 		return frame;
 		
 	}
-	
+	private Component getCentralPanel(){
+		JPanel panel = new JPanel(new GridLayout(2,1));
+		panel.add(this.getPUser());
+		panel.add(this.getPPass());
+		return panel;
+	}
 	//Panel del Nombre de Usuario
 	private Component getPUser(){
 		JPanel PUser=new JPanel(new BorderLayout());
@@ -89,6 +108,23 @@ public class DialogoInicial extends JDialog{
 		return PPass;
 	}
 	
+	public void botonLogin_actionPerformed(ActionEvent e){
+		id=user.getText();
+		psw=new String(password.getPassword());
+		operacion=1;
+		inicial.setVisible(false);
+		synchronized (despertador) {
+			despertador.notify();
+		}
+	}
+	
+	public void botonRegistrar_actionPerformed(ActionEvent e){
+		id=user.getText();
+		psw=new String(password.getPassword());
+		operacion=2;
+		inicial.setVisible(false);
+	}
+	
 	//Panel de los botones
 	private Component getPButtons(){
 		JPanel PButtons=new JPanel(new BorderLayout());
@@ -100,26 +136,7 @@ public class DialogoInicial extends JDialog{
 		//Login de un usario ya existente
 		login.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				id=user.getText();
-				psw=new String(password.getPassword());
-				operacion=1;
-				inicial.setVisible(false);
-				/*if (id.equals("")||psw.equals(""))
-					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
-							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
-				else{
-					try{
-						boolean login=Servidor.getInstance().login(id,psw);
-						if (!login)
-							JOptionPane.showMessageDialog(null, "El usuario no existe o el password es erroneo",
-									"Error",JOptionPane.ERROR_MESSAGE);
-						else
-							inicial.dispose();
-					}
-					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
-								"Error de conexion",JOptionPane.ERROR_MESSAGE);
-	}*/
+				botonLogin_actionPerformed(e);
 			}
 		});
 		
@@ -130,29 +147,7 @@ public class DialogoInicial extends JDialog{
 		//Registro de un nuevo usuario
 		registrar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				id=user.getText();
-				psw=new String(password.getPassword());
-				operacion=2;
-				inicial.setVisible(false);
-/*				if (id.equals("") ||psw.equals(""))
-					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos",
-							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
-				else{
-					try{
-						boolean registro=Servidor.getInstance().registro(id,psw);
-						if (!registro)
-							JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nombre",
-								"Error",JOptionPane.ERROR_MESSAGE);
-						else{
-							Servidor.getInstance().login(id,psw);
-							inicial.dispose();
-						}
-					}
-					catch(Exception ex){
-						JOptionPane.showMessageDialog(null, "El servidor parece estar caido. \n Intentelo de nuevo mas tarde",
-								"Error de conexion",JOptionPane.ERROR_MESSAGE);
-					}
-				}*/
+				botonRegistrar_actionPerformed(e);
 			}
 		});
 		PButtons.add(login,BorderLayout.WEST);
@@ -176,4 +171,80 @@ public class DialogoInicial extends JDialog{
 		operacion=i;
 		
 	}
+	
+//	private static class Ventanuco extends JFrame{
+//		JButton botonAceptar = new JButton("Aceptar");
+//		JButton botonCancelar = new JButton("Canclear");
+//		boolean aceptado = false;
+//		Object despertador;
+//		
+//		public Ventanuco(Object despertador) {
+//			this.despertador = despertador;
+//			try{
+//				init();
+//			}
+//			catch(Exception e){
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		public void init(){
+//			add(getPanelPrincipal());
+//		}
+//		private void botonAceptar_actionPerformed(ActionEvent e) {
+//			this.setVisible(false);
+//			aceptado = true;
+//			synchronized (despertador) {
+//				despertador.notify();
+//			}
+//		}
+//		
+//		private void botonCancelar_actionPerformed(ActionEvent e) {
+//			this.setVisible(false);
+//			aceptado = false;
+//			synchronized (despertador) {
+//				despertador.notify();
+//			}
+//		}
+//		
+//		public Component getPanelPrincipal(){
+//			JPanel panel = new JPanel();
+//			botonAceptar.addActionListener(new ActionListener(){
+//				public void actionPerformed(ActionEvent e){
+//					botonAceptar_actionPerformed(e);
+//				}
+//			});
+//			
+//			botonCancelar.addActionListener(new ActionListener(){
+//				public void actionPerformed(ActionEvent e){
+//					botonCancelar_actionPerformed(e);
+//				}
+//			});
+//			
+//			panel.add(botonAceptar);
+//			panel.add(botonCancelar);
+//			return panel;
+//		}
+//		public boolean isAceptado(){
+//			return aceptado;
+//		}
+//	}
+//	
+//	public static void main(String[] args) {
+//		Object o = new Object();
+//		Ventanuco f = new Ventanuco(o);
+//		f.pack();
+//		f.setVisible(true);
+//		
+//		try {
+//			synchronized(o){
+//				o.wait();
+//			}
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		System.err.println("NOOOOO");
+//		System.exit(1);
+//	}
 }
