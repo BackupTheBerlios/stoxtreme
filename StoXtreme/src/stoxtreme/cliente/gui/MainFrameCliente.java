@@ -22,11 +22,13 @@ import stoxtreme.interfaz_remota.Operacion;
 
 public class MainFrameCliente extends JFrame{
 	private ModeloCartera modeloCartera;
+	//private JTabbedPane tabbedPane;
 	private ModeloOpPendientes modeloOpPendientes;
 	private ModeloPrecioAccionesGrafico modeloPrecios;
 	private Cliente cliente;
 	public boolean volumen;
 	public boolean estocastico;
+	public int contadorGraficas=1;
 	private JTable tablaArribaIzq; // Asociada al combo de tipos
 	private ChartPanel chartPanel; // Asociada al combo de empresas
 	private XYPlot chartPlot;
@@ -38,32 +40,42 @@ public class MainFrameCliente extends JFrame{
 	private JComboBox empresaSeleccionada;
 	private JSplitPane split_graficas;
 	private Hashtable graficas=new Hashtable();
-	private HerramientaAgentesPanel panelAgentes;
+	private HerramientaAgentesPanel hAgentes;
 	
-	public MainFrameCliente(
-			Cliente cliente,
+	public MainFrameCliente(Cliente cliente,
 			ModeloCartera modeloCartera,
 			ModeloOpPendientes modeloOpPendientes,
-			ModeloPrecioAccionesGrafico modeloPrecios,
-			HerramientaAgentesPanel panelAgentes){
+			ModeloPrecioAccionesGrafico modeloPrecios,HerramientaAgentesPanel hAgentes){
 		super("Stock Xtreme");
 		this.cliente = cliente;
+		hAgentes.setCliente(cliente);
 		this.modeloCartera = modeloCartera;
 		this.modeloOpPendientes = modeloOpPendientes;
 		this.modeloPrecios = modeloPrecios;
 		this.volumen =false;
 		this.estocastico =false;
-		this.panelAgentes = panelAgentes;
-		panelAgentes.setCliente(cliente);
+		this.hAgentes=hAgentes;
 	}
 	
+	public MainFrameCliente(ModeloCartera cartera2, ModeloOpPendientes opPendientes, ModeloPrecioAccionesGrafico precios) {
+		super("Stock Xtreme");
+		this.cliente =null;
+		this.modeloCartera = cartera2;
+		this.modeloOpPendientes = opPendientes;
+		this.modeloPrecios = precios;
+		this.volumen =false;
+		this.estocastico =false;
+	}
+
 	public void init(){
 		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane = new JTabbedPane();
 		tabbedPane.insertTab("Principal", null, getPanelPrincipal(), null, 0);
 		tabbedPane.insertTab("Informacion", null, new JPanel(), null, 1);
-		tabbedPane.insertTab("Agentes", null, panelAgentes, null, 2);
+		tabbedPane.insertTab("Agentes", null, hAgentes, null, 2);
 		getContentPane().add(tabbedPane);
 		this.addWindowListener(new WindowAdapter(){
+
 			public void windowClosing(WindowEvent e) {
 				try {
 					cliente.deslogea();
@@ -71,6 +83,7 @@ public class MainFrameCliente extends JFrame{
 					e1.printStackTrace();
 				}
 			}
+
 		});
 	}
 	
@@ -86,7 +99,69 @@ public class MainFrameCliente extends JFrame{
 
 		return panel;
 	}
-
+	
+	private void opPend_actionPerformed(ActionEvent e) {
+		opPend.setSelected(true);
+		cartera.setSelected(false);
+		tablaArribaIzq.setModel(modeloOpPendientes);
+		tablaArribaIzq.getColumnModel().getColumn(0).setCellRenderer(modeloOpPendientes.getRenderer());
+		tablaArribaIzq.getColumnModel().getColumn(0).setCellEditor(modeloOpPendientes.getEditor());
+		tablaArribaIzq.getColumn(tablaArribaIzq.getColumnName(0)).setMaxWidth(10);
+	}
+	
+	private void pinta_actionPerformed(ActionEvent e){
+		System.out.println(e.getActionCommand());
+		//JOptionPane.showMessageDialog(tablaArribaIzq,null,"Has pulsado el volumen",JOptionPane.CANCEL_OPTION);
+	    if (e.getActionCommand().equals("Volumen")){
+			if(volumen ) {
+		    volumen = false;
+		    contadorGraficas--;
+		    split_graficas.remove((Component)graficas.get("volumen"));
+		    graficas.remove("volumen");
+		    }
+		    else {
+		    volumen = true;
+		    contadorGraficas++;
+		    JPanel p=getChartPanel2();
+		    graficas.put("volumen",p);
+		    //split_graficas.add(p);
+		    }
+	    }
+	    if (e.getActionCommand().equals("Estocastico")){
+		    if(estocastico) {
+			    estocastico = false;
+			    contadorGraficas--;
+			    split_graficas.remove((Component)graficas.get("estocastico"));
+			    graficas.remove("estocastico");
+			    }
+			    else {
+			    estocastico = true;
+			    contadorGraficas++;
+			    JPanel p=getChartPanel2();
+			    graficas.put("estocastico",p);
+			    //split_graficas.add(p);
+			 }
+	    }
+	    JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+	    if (volumen && estocastico){
+			aux.add(getChartPanel2());
+			aux.setDividerLocation(120);
+			aux.setBottomComponent(getChartPanel3());
+			split_graficas.setBottomComponent(aux);
+		}
+		else
+			if (volumen)
+				split_graficas.setBottomComponent(getChartPanel2());
+			else{
+				if(estocastico)
+					split_graficas.setBottomComponent(getChartPanel3());
+				if(!volumen && !estocastico){
+//					split_graficas=null;
+//					split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+					split_graficas.remove(2);
+				}
+			}
+	}
 	private Component getPanelIzquierdaArriba() {
 		JPanel panel = new JPanel(new BorderLayout());
 		JPanel panelArriba = new JPanel();
@@ -95,12 +170,7 @@ public class MainFrameCliente extends JFrame{
 		cartera = new JRadioButton();
 		opPend.setAction(new AbstractAction(){
 			public void actionPerformed(ActionEvent e) {
-				opPend.setSelected(true);
-				cartera.setSelected(false);
-				tablaArribaIzq.setModel(modeloOpPendientes);
-				tablaArribaIzq.getColumnModel().getColumn(0).setCellRenderer(modeloOpPendientes.getRenderer());
-				tablaArribaIzq.getColumnModel().getColumn(0).setCellEditor(modeloOpPendientes.getEditor());
-				tablaArribaIzq.getColumn(tablaArribaIzq.getColumnName(0)).setMaxWidth(10);
+				opPend_actionPerformed(e);
 			}
 		});
 		
@@ -161,15 +231,38 @@ public class MainFrameCliente extends JFrame{
 		indicadores.add(esto);
 		MenuBar barra=new MenuBar();
 		barra.add(indicadores);
-		barra.setHelpMenu(help);
+		barra.setHelpMenu(help);	
 		split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 //		JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		graficas.put("normal",getChartPanel());		
+		graficas.put("normal",getChartPanel());
+		
 		split_graficas.add(getChartPanel());
 		int tam=split_graficas.size().height-split_graficas.size().height/6;
 		split_graficas.setDividerLocation(200);
-		FakeInternalFrame frame = new FakeInternalFrame("Precio Accion", getChartPanel());
+		//panel1.add(getChartPanel());
+//		if (volumen)
+//			elegidos.setElementAt(new String("Si"),1);
+//		else
+//			elegidos.setElementAt(new String("No"),1);
+//		if (estocastico)
+//			elegidos.setElementAt(new String("Si"),2);
+//		else
+//			elegidos.setElementAt(new String("No"),2);
+//		if (volumen && estocastico){
+//			aux.add(getChartPanel2());
+//			aux.setDividerLocation(120);
+//			aux.setBottomComponent(getChartPanel3());
+//			split_graficas.setBottomComponent(aux);
+//		}
+//		else
+//			if (volumen)
+//				split_graficas.setBottomComponent(getChartPanel2());
+//			else if (estocastico)
+//					split_graficas.setBottomComponent(getChartPanel3());
+//		if (volumen)
+		FakeInternalFrame frame = new FakeInternalFrame("Precio Accion", split_graficas);
 		frame.setPreferredSize(new Dimension(500, 450));
+		
 		this.setMenuBar(barra);
 		return frame;
 	}
@@ -246,7 +339,18 @@ public class MainFrameCliente extends JFrame{
 		ChartPanel panel = new ChartPanel(chart);
 		return panel;
 	}
-	
+	class OyenteMenú implements ActionListener
+	{
+
+	public void actionPerformed (ActionEvent e)
+	{
+	System.out.println(e.getActionCommand()); 	
+	if (e.getActionCommand().compareTo("Volumen")==0) volumen=true;
+
+	}
+
+	}
+
 	private boolean seleccionado = false;
 	private Component getPanelIzquierdaAbajo() {
 		JPanel panel = new JPanel(new GridLayout(5, 1));
@@ -358,92 +462,44 @@ public class MainFrameCliente extends JFrame{
 		return frame;
 	}
 
-	private void pinta_actionPerformed(ActionEvent e){
-		System.out.println(e.getActionCommand());
-		//JOptionPane.showMessageDialog(tablaArribaIzq,null,"Has pulsado el volumen",JOptionPane.CANCEL_OPTION);
-	    if (e.getActionCommand().equals("Volumen")){
-			if(volumen ) {
-		    volumen = false;
-		    split_graficas.remove((Component)graficas.get("volumen"));
-		    graficas.remove("volumen");
-		    }
-		    else {
-		    volumen = true;
-		    JPanel p=getChartPanel2();
-		    graficas.put("volumen",p);
-		    //split_graficas.add(p);
-		    }
-	    }
-	    if (e.getActionCommand().equals("Estocastico")){
-		    if(estocastico) {
-			    estocastico = false;
-			    split_graficas.remove((Component)graficas.get("estocastico"));
-			    graficas.remove("estocastico");
-			    }
-			    else {
-			    estocastico = true;
-			    JPanel p=getChartPanel2();
-			    graficas.put("estocastico",p);
-			    //split_graficas.add(p);
-			 }
-	    }
-	    JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-	    if (volumen && estocastico){
-			aux.add(getChartPanel2());
-			aux.setDividerLocation(120);
-			aux.setBottomComponent(getChartPanel3());
-			split_graficas.setBottomComponent(aux);
-		}
-		else
-			if (volumen)
-				split_graficas.setBottomComponent(getChartPanel2());
-			else{
-				if(estocastico)
-					split_graficas.setBottomComponent(getChartPanel3());
-				if(!volumen && !estocastico){
-//					split_graficas=null;
-//					split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-					split_graficas.remove(2);
+	
+	public static void main(String[] args){
+		ArrayList lEmpresas = new ArrayList();
+		lEmpresas.add("Empresa1");
+		lEmpresas.add("Empresa2");
+		lEmpresas.add("Empresa3");
+		ModeloOpPendientes mOpPendientes = new ModeloOpPendientes();
+		ModeloCartera mCartera = new ModeloCartera();
+		ModeloPrecioAccionesGrafico mPrecios = new ModeloPrecioAccionesGrafico(lEmpresas);
+		//Cliente p=new Cliente("Pako");
+		MainFrameCliente gui = new MainFrameCliente(mCartera, mOpPendientes, mPrecios);
+		gui.init();
+		gui.pack();
+		gui.setVisible(true);
+		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.COMPRA, 100, "Empresa1", 10.0f), 10);
+		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.VENTA, 100, "Empresa2", 10.0f), 50);
+		
+		mCartera.insertarAcciones("Empresa1", 100);
+		mCartera.insertarAcciones("Empresa2", 200);
+		
+		int i=0;
+		int j=270;
+		while(true){
+			i++;
+			j+=(Math.random()>0.5?1:-1);
+			if(i<540){
+				mPrecios.insertaValor("Empresa1", i);
+				mPrecios.insertaValor("Empresa2", 540-i);
+				mPrecios.insertaValor("Empresa3", j);
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
+		}
 	}
-//	public static void main(String[] args){
-//		ArrayList lEmpresas = new ArrayList();
-//		lEmpresas.add("Empresa1");
-//		lEmpresas.add("Empresa2");
-//		lEmpresas.add("Empresa3");
-//		ModeloOpPendientes mOpPendientes = new ModeloOpPendientes();
-//		ModeloCartera mCartera = new ModeloCartera();
-//		ModeloPrecioAccionesGrafico mPrecios = new ModeloPrecioAccionesGrafico(lEmpresas);
-//
-//		MainFrameCliente gui = new MainFrameCliente(mCartera, mOpPendientes, mPrecios);
-//		gui.init();
-//		gui.pack();
-//		gui.setVisible(true);
-//		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		
-		
-//		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.COMPRA, 100, "Empresa1", 10.0f), 10);
-//		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.VENTA, 100, "Empresa2", 10.0f), 50);
-//		
-//		mCartera.insertarAcciones("Empresa1", 100);
-//		mCartera.insertarAcciones("Empresa2", 200);
-//		
-//		int i=0;
-//		int j=270;
-//		while(true){
-//			i++;
-//			j+=(Math.random()>0.5?1:-1);
-//			if(i<540){
-//				mPrecios.insertaValor("Empresa1", i);
-//				mPrecios.insertaValor("Empresa2", 540-i);
-//				mPrecios.insertaValor("Empresa3", j);
-//				try {
-//					Thread.sleep(200);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	}
 }
