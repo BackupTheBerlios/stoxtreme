@@ -18,6 +18,7 @@ import org.jfree.data.xy.*;
 import org.jfree.date.SerialDateUtilities;
 
 import stoxtreme.cliente.Cliente;
+import stoxtreme.cliente.infoLocal.InfoLocal;
 import stoxtreme.interfaz_remota.Operacion;
 
 public class MainFrameCliente extends JFrame{
@@ -25,6 +26,7 @@ public class MainFrameCliente extends JFrame{
 	//private JTabbedPane tabbedPane;
 	private ModeloOpPendientes modeloOpPendientes;
 	private ModeloPrecioAccionesGrafico modeloPrecios;
+	private InfoLocal info=new InfoLocal();
 	private Cliente cliente;
 	public boolean volumen;
 	public boolean estocastico;
@@ -71,7 +73,7 @@ public class MainFrameCliente extends JFrame{
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane = new JTabbedPane();
 		tabbedPane.insertTab("Principal", null, getPanelPrincipal(), null, 0);
-		tabbedPane.insertTab("Informacion", null, new JPanel(), null, 1);
+		tabbedPane.insertTab("Informacion", null, getPanelInfo(), null, 1);
 		tabbedPane.insertTab("Agentes", null, hAgentes, null, 2);
 		getContentPane().add(tabbedPane);
 		this.addWindowListener(new WindowAdapter(){
@@ -85,6 +87,60 @@ public class MainFrameCliente extends JFrame{
 			}
 
 		});
+	}
+	
+	public JSplitPane getPanelInfo(){
+		JSplitPane panelInfo=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,getPanelEmpresas(),getVisualizador());
+	return panelInfo;
+	}
+	
+	public JPanel getPanelEmpresas(){
+		JPanel panelEmpresas=new JPanel();
+		panelEmpresas.setLayout(new BoxLayout(panelEmpresas,BoxLayout.Y_AXIS));
+		String[] headers = {" ","Empresa"};
+		JTable tabla=new JTable(35,2);
+		tabla.setSelectionBackground((new Color(130,130,200)).brighter());
+		JPanel dateSelector= new JPanel();
+		JPanel daySelector= new JPanel(new BorderLayout());
+		JPanel monthSelector= new JPanel(new BorderLayout());
+		JPanel yearSelector= new JPanel(new BorderLayout());
+		JPanel botonHistorico=new JPanel();
+		JPanel fechaHistorico=new JPanel();
+		String[] anyos = {"2004","2005"};
+		String[] meses = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio",
+				"Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+		String[] dias = {"01","02","03","04","05","06","07","08","09","10","11","12",
+				"13","14","15","16","17","18","19","20","21","22","23","24","25","26",
+				"27","28","29","30","31"};
+		JLabel a=new JLabel("Año");
+		JLabel m=new JLabel("Mes");
+		JLabel d=new JLabel("Dia");
+		JComboBox anyo=new JComboBox(anyos);
+		JComboBox mes=new JComboBox(meses);
+		JComboBox dia=new JComboBox(dias);
+		daySelector.add(dia,BorderLayout.SOUTH);
+		daySelector.add(d,BorderLayout.CENTER);
+		monthSelector.add(mes,BorderLayout.SOUTH);
+		monthSelector.add(m,BorderLayout.CENTER);
+		yearSelector.add(anyo,BorderLayout.SOUTH);
+		yearSelector.add(a,BorderLayout.CENTER);
+		fechaHistorico.add(daySelector);
+		fechaHistorico.add(monthSelector);
+		fechaHistorico.add(yearSelector);
+		botonHistorico.add(new JButton("Consultar Historico"));
+		dateSelector.add(fechaHistorico);
+		dateSelector.add(botonHistorico);
+		panelEmpresas.add(new JScrollPane(tabla));
+		panelEmpresas.add(new FakeInternalFrame("Seleccionar Fecha",dateSelector));
+		panelEmpresas.add(botonHistorico);
+		panelEmpresas.setSize(200,600);
+		return new FakeInternalFrame("Empresas",panelEmpresas);
+	}
+	
+	public JPanel getVisualizador(){
+		JPanel visio =new JPanel();
+		visio.setSize(600,600);
+		return visio;
 	}
 	
 	public JSplitPane getPanelPrincipal(){
