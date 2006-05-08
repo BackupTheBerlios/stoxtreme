@@ -123,6 +123,9 @@ public class DialogoInicial extends JFrame{
 		psw=new String(password.getPassword());
 		operacion=2;
 		inicial.setVisible(false);
+		synchronized (despertador) {
+			despertador.notify();
+		}
 	}
 	
 	//Panel de los botones
