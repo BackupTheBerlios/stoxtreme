@@ -30,7 +30,7 @@ import stoxtreme.servicio_web.StoxtremeServiceLocator;
 import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 import stoxtreme.sistema_mensajeria.receptor.ReceptorMensajes;
 
-public class HerramientaAgentes extends HerramientaAgentesPanel implements TimerListener,IMensajeriaListener{
+public class HerramientaAgentes extends HerramientaAgentesPanel implements TimerListener{
 	private ParametrosAgentes parametros;
 	private ArrayList<Agente> agentes;
 	private MonitorAgentes monitor;
@@ -118,38 +118,25 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		notif.addListener(id, n);
 	}
 
-	protected void nOperacion(String id, int idOp, int cantidad, double precio) {
-		notif.notificar(id, idOp, cantidad, precio);
-	}
-
-	protected void nCancelacion(String id, int idOp) {
-		notif.notificarCancelacion(id, idOp);
-	}
+//	protected void nOperacion(String id, int idOp, int cantidad, double precio) {
+//		notif.notificar(id, idOp, cantidad, precio);
+//	}
+//
+//	protected void nCancelacion(String id, int idOp) {
+//		notif.notificarCancelacion(id, idOp);
+//	}
 
 	public void onTick(int tick) {
 		//frame.setTitle("Agentes: "+tick);
 	}
 
-	public void onMensaje(Mensaje m) {
-		System.out.println(m.getTipoMensaje()+" "+m.getContenido());
-		if(m.getTipoMensaje().equals("NOTIFICACION_OPERACION")){
-			String[] mss = m.getContenido().split(",");
-			int idOp = Integer.parseInt(mss[0]);
-			int cantidad = Integer.parseInt(mss[1]);
-			double precio = Double.parseDouble(mss[2]);
-			notif.notificar(m.getDestinatario(), idOp, cantidad, precio);
-		}
-		else if(m.getTipoMensaje().equals("NOTIFICACION_CANCELACION")){
-			int idOp = Integer.parseInt(m.getContenido());
-			notif.notificarCancelacion(m.getDestinatario(), idOp);
-		}
-		else if(m.getTipoMensaje().equals("CAMBIO_PRECIO")){
-			String[] mss = m.getContenido().split(",");
-			String empresa = mss[0];
-			double precio = Double.parseDouble(mss[1]);
-		}
-		else{
-			
-		}
+	public void notificarOperacion(String idDestino, int idOp, int cantidad, double precio) {
+		notif.notificar(idDestino, idOp, cantidad, precio);
+		insertarNotificacion(idDestino, "Operacion efectuada: "+idOp+"("+cantidad+","+precio+")");
+	}
+
+	public void notificarCancelacion(String idDestino, int idOp) {
+		notif.notificarCancelacion(idDestino, idOp);
+		insertarNotificacion(idDestino, "Cancelacion efectuada: "+idOp);
 	}
 }

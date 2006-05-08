@@ -180,18 +180,24 @@ public class Cliente{
 		servidor.cancelarOperacion(nUsuario, op);
 	}
 	
-	public void notificaOperacion(int idOp, int cantidad){
-		if(opPendientes.estaPendiente(idOp)){
+	public void notificaOperacion(String idDestino, int idOp, int cantidad, double precio){
+		if(nUsuario.equals(idDestino)){
 			Operacion o = opPendientes.dameOperacion(idOp);
 			cartera.actualiza(o, cantidad);
 			int vOp = Math.abs(idOp);
 			opPendientes.quitaOperacion(vOp);
 		}
+		else{
+			hAgentes.notificarOperacion(idDestino, idOp, cantidad, precio);
+		}
 	}
 	
-	public void notificaCancelacion(int idOp){
-		if(opPendientes.estaPendiente(idOp)){
+	public void notificaCancelacion(String idDestino, int idOp){
+		if(nUsuario.equals(idDestino)){
 			opPendientes.quitaOperacion(idOp);
+		}
+		else{
+			hAgentes.notificarCancelacion(idDestino, idOp);
 		}
 	}
 	

@@ -10,17 +10,18 @@ public class ManejadorMensajes implements IMensajeriaListener{
 	}
 	
 	public synchronized void onMensaje(Mensaje m){
-		System.out.println("RECIBIDO MENSAJE " + m.getContenido());
+		System.out.println("RECIBIDO MENSAJE " +m.getDestinatario()+" "+ m.getContenido());
 		
 		if(m.getTipoMensaje().equals("NOTIFICACION_OPERACION")){
-			String[] valores = m.getContenido().split(",");
-			int idOp = Integer.parseInt(valores[0]);
-			int cantidad = Integer.parseInt(valores[1]);
-			cliente.notificaOperacion(idOp, cantidad);
+			String[] mss = m.getContenido().split(",");
+			int idOp = Integer.parseInt(mss[0]);
+			int cantidad = Integer.parseInt(mss[1]);
+			double precio = Double.parseDouble(mss[2]);
+			cliente.notificaOperacion(m.getDestinatario(), idOp, cantidad, precio);
 		}
 		else if(m.getTipoMensaje().equals("NOTIFICACION_CANCELACION")){
 			int idOp = Integer.parseInt(m.getContenido());
-			cliente.notificaCancelacion(idOp);
+			cliente.notificaCancelacion(m.getDestinatario(), idOp);
 		}
 		else if(m.getTipoMensaje().equals("CAMBIO_PRECIO")){
 			String[] valores = m.getContenido().split(",");

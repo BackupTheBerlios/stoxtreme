@@ -20,14 +20,14 @@ import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.interfaz_remota.Operacion;
 
 
-public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
+public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private JSplitPane panelPrincipal;
 	private JScrollPane panelIzquierdoArriba;
 	private JSplitPane panelDerecho;
-	private PruebaListModel modeloLista;
-	private JList listaOpConfirmar;
-	private StyledDocument textoConsola;
 	private JTable tablaAgentes;
+	
+	private StyledDocument textoNotificacion;
+	private StyledDocument textoConsola;
 	private HerramientaAgentesTableModel modeloTabla;
 	
 	private JButton botonIniciarPararSistema;
@@ -51,9 +51,8 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				getPanelIzquierdo(), getPanelDerecho());
 		add(panelPrincipal);
-		//panelPrincipal.setSize(new Dimension(800,800));
-		//panelPrincipal.setDividerLocation(400);
 		
+		panelDerecho.setDividerLocation(250);
 	}
 	
 	public Component getPanelIzquierdo(){
@@ -164,68 +163,21 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		return(panelDerecho);
 	}
 	
-	public void insertarOperacion(Operacion op){
-		modeloLista.addElement(op);
+	public Component getPanelInferiorDerecho(){
+		JTextPane texto = new JTextPane();
+		textoConsola = texto.getStyledDocument();
+		addStylesToDocument(textoConsola);
+		JScrollPane panel = new JScrollPane(texto);
+		FakeInternalFrame frame = new FakeInternalFrame("Acciones de los agentes",panel);
+		return frame;
 	}
-	
-	public void cancelarOperacion(String id, int idOp){
-		modeloLista.addElement(new Cancelacion(id, idOp));
-	}
-	
-	private class Cancelacion{
-		private String id;
-		private int idOp;
-		public Cancelacion(String id, int idOperacion){
-			this.id = id;
-			this.idOp = idOperacion;
-		}
-		public int getIdOp(){
-			return this.idOp;
-		}
-		public String getID(){
-			return this.id;
-		}
-		public String toString(){
-			return "Cancelacion operacion: "+Integer.toString(idOp);
-		}
-	}
-	private void doble_click_lista(){
-		int index = listaOpConfirmar.getSelectedIndex();
-		Object o = modeloLista.getElementAt(index);
-		modeloLista.remove(index);
-		
-		if(o instanceof Operacion){
-			String id = ((Operacion)o).getIdEmisor();
-			//int idOp = ((Operacion)o).getIDOp();
-			int cantidad = ((Operacion)o).getCantidad();
-			double precio = ((Operacion)o).getPrecio();
-			//modeloLista.quitaCancelacion(idOp);
-			//nOperacion(id, idOp, cantidad, precio);
-		}
-		else{
-			String id = ((Cancelacion)o).getID();
-			int idOp = ((Cancelacion)o).getIdOp();
-			modeloLista.quitaOperacion(idOp);
-			nCancelacion(id, idOp);
-		}
-	}
-	protected abstract void nOperacion(String id, int idOp, int cantidad, double precio);
-	protected abstract void nCancelacion(String id, int idOp);
 	
 	public Component getPanelSuperiorDerecho(){
-		modeloLista = new PruebaListModel();
-		listaOpConfirmar = new JList(modeloLista);
-		
-		listaOpConfirmar.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
-				if(e.getClickCount()>=2){
-					doble_click_lista();
-				}
-			}
-		});
-		JScrollPane scrollPane = new JScrollPane(listaOpConfirmar);
-		FakeInternalFrame frame = new FakeInternalFrame("Operaciones pendientes", scrollPane);
+		JTextPane texto = new JTextPane();
+		textoNotificacion = texto.getStyledDocument();
+		addStylesToDocument(textoNotificacion);
+		JScrollPane panel = new JScrollPane(texto);
+		FakeInternalFrame frame = new FakeInternalFrame("Notificaciones de los agentes",panel);
 		return frame;
 	}
 	
@@ -253,29 +205,22 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 	
 	public synchronized void insertarNotificacion(String idAgente, String notif){
 		try {
-			textoConsola.insertString(
-					textoConsola.getLength(),
+			textoNotificacion.insertString(
+					textoNotificacion.getLength(),
 					idAgente+": ",
-					textoConsola.getStyle(ESTILO_IDAGENTE)
+					textoNotificacion.getStyle(ESTILO_IDAGENTE)
 			);
-			textoConsola.insertString(
-					textoConsola.getLength(),
+			textoNotificacion.insertString(
+					textoNotificacion.getLength(),
 					notif+nl,
-					textoConsola.getStyle(ESTILO_NOTIFICACION)
+					textoNotificacion.getStyle(ESTILO_NOTIFICACION)
 			);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public Component getPanelInferiorDerecho(){
-		JTextPane texto = new JTextPane();
-		textoConsola = texto.getStyledDocument();
-		addStylesToDocument(textoConsola);
-		JScrollPane panel = new JScrollPane(texto);
-		FakeInternalFrame frame = new FakeInternalFrame("Acciones de los agentes",panel);
-		return frame;
-	}
+	
 	
 	private void addStylesToDocument(StyledDocument doc) {
         //Initialize some styles.
@@ -302,70 +247,6 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
     }
 	
 	
-	private class PruebaListModel extends AbstractListModel{
-		private ArrayList<Object> lista = new ArrayList<Object>();
-		
-		public void addElement(Object o){
-			lista.add(o);
-			SwingUtilities.invokeLater(new IL(o, lista.size()-1, 2));
-		}
-		
-		public void quitaOperacion(int idOp) {
-			int i=0;
-			while(	
-					i<lista.size() &&
-					((lista.get(i) instanceof Cancelacion) 
-							//||((Operacion)lista.get(i)).getIDOp() != idOp
-					)
-				)i++;
-			
-			if(i<lista.size())
-				remove(i);
-		}
-
-		public void quitaCancelacion(int idOp) {
-			int i=0;
-			while(	
-					i<lista.size() &&
-					((lista.get(i) instanceof Operacion) 
-							||((Cancelacion)lista.get(i)).getIdOp() != idOp)
-				)i++;
-			
-			if(i<lista.size())
-				remove(i);
-		}
-
-		public void remove(int index){
-			Object o = lista.remove(index);
-			SwingUtilities.invokeLater(new IL(o, index, 1));
-		}
-		
-		private class IL implements Runnable{
-			Object o;
-			int index;
-			int tipo;
-			
-			public IL(Object o, int index, int tipo){
-				this.o = o;
-				this.index = index;
-				this.tipo = tipo;
-			}
-			public void run(){
-				if(tipo == 1)
-					fireIntervalRemoved(o, index, index);
-				else
-					fireIntervalAdded(o, index, index);
-			}
-		}
-		public Object getElementAt(int index) {
-			return lista.get(index);
-		}
-		
-		public int getSize() {
-			return lista.size();
-		}
-	}
-	
 	public static void main(String[] args){
 		try {
 			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
@@ -374,13 +255,10 @@ public abstract class HerramientaAgentesPanel extends JPanel implements ConsolaA
 		}
 		
 		JFrame frame = new JFrame();
-		frame.add(new HerramientaAgentesPanel(){
-			protected void nOperacion(String id, int idOp, int cantidad, double precio) {
-			}
-
-			protected void nCancelacion(String id, int idOp) {
-			}
-		});
+		HerramientaAgentesPanel hp = new HerramientaAgentesPanel();
+		frame.add(hp);
+		hp.insertarNotificacion("Agente", "Notif");
+		hp.insertarAccion("Agente", "Accion");
 		frame.setSize(new Dimension(800,600));
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
