@@ -395,7 +395,7 @@ public class MainFrameCliente extends JFrame{
 		ChartPanel panel = new ChartPanel(chart);
 		return panel;
 	}
-	class OyenteMenú implements ActionListener
+	class OyenteMenu implements ActionListener
 	{
 
 	public void actionPerformed (ActionEvent e)
