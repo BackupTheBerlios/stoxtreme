@@ -53,6 +53,8 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		add(panelPrincipal);
 		
 		panelDerecho.setDividerLocation(250);
+		tablaAgentes.getColumnModel().getColumn(4).setPreferredWidth(30);
+		tablaAgentes.getColumnModel().getColumn(0).setMaxWidth(7);
 	}
 	
 	public Component getPanelIzquierdo(){
