@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 
@@ -68,10 +69,11 @@ public class ParserInfoLocal {
 			SimpleDateFormat df=new SimpleDateFormat("dd/MM/aaaa");
 			Date dEntrada=new Date();
 			Date dDato=new Date();
+
 			Boolean encontrado=false;
 			int i=0;
 			try{
-				dEntrada= df.parse("fecha");
+				dEntrada= df.parse(fecha);
 			}catch(Exception e){
 				e.printStackTrace();
 			}
