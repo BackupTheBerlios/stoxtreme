@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.util.EventObject;
 import java.util.Vector;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,7 +22,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
+
+import stoxtreme.servidor.Servidor;
 
 public class MainFrameAdmin extends JFrame{
 	private ModeloTablaOperaciones modeloOperaciones; 
@@ -35,6 +39,7 @@ public class MainFrameAdmin extends JFrame{
 	private FakeInternalFrame panelDerecha;
 	private FakeInternalFrame panelIzqArriba;
 	private FakeInternalFrame panelIzqAbajo;
+	private Servidor servidor;
 	
 	static{
 		try{
@@ -50,12 +55,71 @@ public class MainFrameAdmin extends JFrame{
 	}
 	public void init(){
 		JTabbedPane tabbed = new JTabbedPane();
-		tabbed.insertTab("Control", null, getPanelControl(), "Control de los usuarios", 0);
-		tabbed.insertTab("Eventos", null, getPanelEventos(), "Control de los eventos", 1);
+		tabbed.insertTab("Sesion", null, getPanelSesion(), "Control de la sesion", 0);
+		tabbed.insertTab("Control", null, getPanelControl(), "Control de los usuarios", 1);
+		tabbed.insertTab("Eventos", null, getPanelEventos(), "Control de los eventos", 2);
 		getContentPane().add(tabbed);
 		setSize(new Dimension(800, 600));
 	}
 	
+	private Component getPanelSesion() {
+		JSplitPane sesion = new JSplitPane(
+				JSplitPane.HORIZONTAL_SPLIT,
+				getListaSesiones(),
+				getOpcionesSesion()
+		);
+		return sesion;
+	}
+	private Component getOpcionesSesion() {
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(new JScrollPane(getPanelOpcionesSuperior()), BorderLayout.CENTER);
+		panel.add(getPanelOpcionesInferior(), BorderLayout.SOUTH);
+		FakeInternalFrame fr = new FakeInternalFrame("Configuracion de la sesion",panel);
+		
+		return fr;
+	}
+	
+	private Component getPanelOpcionesInferior() {
+		JPanel panel = new JPanel();
+		JButton boton1 = new JButton("Iniciar nueva sesion");
+		panel.add(boton1);
+		JButton boton2 = new JButton("Cerrar sesion antigua");
+		panel.add(boton2);
+		JButton boton3 = new JButton("Finalizar preapertura");
+		panel.add(boton3);
+		JButton boton4 = new JButton("Finalizar sesion");
+		panel.add(boton4);
+		return panel;
+	}
+	
+	private Component getPanelOpcionesSuperior() {
+		int c = 100;
+		JPanel panel = new JPanel(new GridLayout(100, 1));
+		panel.add(new ElementoConfig("Numero de empresas", false));
+		return panel;
+	}
+	
+	private class ElementoConfig extends JPanel{
+		JTextField field;
+		public ElementoConfig(String label, boolean filechooser) {
+			add(new JLabel(label));
+			field = new JTextField(50-label.length());
+			add(field);
+			
+			if(filechooser){
+				JButton boton = new JButton("...");
+				add(boton);
+			}
+		}
+	}
+	
+	DefaultListModel modeloSesiones;
+	private Component getListaSesiones() {
+		modeloSesiones = new DefaultListModel();  
+		JScrollPane panel = new JScrollPane(new JList(modeloSesiones));
+		FakeInternalFrame fr = new FakeInternalFrame("Historico de sesiones", panel);
+		return fr;
+	}
 	public Component getPanelControl(){
 		JScrollPane panelScrollDerecha = new JScrollPane(new JTable(modeloOperaciones));
 		panelScrollDerecha.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -145,5 +209,11 @@ public class MainFrameAdmin extends JFrame{
 	}
 	public void setModeloVariables(ModeloTablaVariables modeloVariables) {
 		this.modeloVariables = modeloVariables;
+	}
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
+	}
+	public Servidor getServidor(){
+		return servidor;
 	}
 }

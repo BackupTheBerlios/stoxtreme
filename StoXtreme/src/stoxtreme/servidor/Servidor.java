@@ -188,6 +188,7 @@ public class Servidor implements Administrador, Stoxtreme{
 		variables.addListener(estadoBolsa);
 		variables.insertaPrecios(objetosBolsa);
 		guiAdmin.setModeloPrecios(estadoBolsa);
+		guiAdmin.setServidor(this);
 		guiAdmin.init();
 		/*TODO SALE AL CERRAR!!! CAMBIAR ESTO DESPUES DE PROBARLO*/
 		guiAdmin.addWindowListener(new WindowAdapter(){
