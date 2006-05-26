@@ -56,12 +56,17 @@ public class MainFrameAdmin extends JFrame{
 	public void init(){
 		JTabbedPane tabbed = new JTabbedPane();
 		tabbed.insertTab("Sesion", null, getPanelSesion(), "Control de la sesion", 0);
-		tabbed.insertTab("Control", null, getPanelControl(), "Control de los usuarios", 1);
+		tabbed.insertTab("Evolución bolsa", null, getPanelControl(), "Control de los usuarios", 1);
 		tabbed.insertTab("Eventos", null, getPanelEventos(), "Control de los eventos", 2);
+		tabbed.insertTab("Control de Agentes", null, getPanelAgentes(), "Control de los agentes",3);
 		getContentPane().add(tabbed);
 		setSize(new Dimension(800, 600));
 	}
 	
+	private Component getPanelAgentes() {
+		JPanel panel = new JPanel();
+		return panel;
+	}
 	private Component getPanelSesion() {
 		JSplitPane sesion = new JSplitPane(
 				JSplitPane.HORIZONTAL_SPLIT,
@@ -94,8 +99,14 @@ public class MainFrameAdmin extends JFrame{
 	
 	private Component getPanelOpcionesSuperior() {
 		int c = 100;
-		JPanel panel = new JPanel(new GridLayout(100, 1));
-		panel.add(new ElementoConfig("Numero de empresas", false));
+		JPanel panel = new JPanel(new GridLayout(13, 1));
+		panel.add(new ElementoConfig("Numero de empresas        ", false));
+		panel.add(new ElementoConfig("Velocidad de simulación   ", false));
+		panel.add(new ElementoConfig("Tiempo de fluctuacion     ", false));
+		panel.add(new ElementoConfig("Sesión continua           ", false));
+		panel.add(new ElementoConfig("Etapa de preapertura      ", false));
+		panel.add(new ElementoConfig("Etapa de cierre           ", false));
+		panel.add(new ElementoConfig("Directorio de Información ", true));
 		return panel;
 	}
 	
