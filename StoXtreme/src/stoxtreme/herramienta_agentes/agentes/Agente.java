@@ -11,6 +11,8 @@ import stoxtreme.herramienta_agentes.agentes.comportamiento.*;
 import stoxtreme.herramienta_agentes.agentes.decisiones.*;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.MensajeACL;
+import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.PlantillaMensajes;
+import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.RecepcionMensaje;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Stoxtreme;
 import stoxtreme.servidor.Servidor;
@@ -21,7 +23,6 @@ public class Agente extends Thread{
 	private BuzonMensajes buzon;
 	private OperacionesPendientes opPendientes;
 	private ComportamientoAgente comportamiento;
-	private BuzonMensajes buzonMensajes;
 	private ModeloSocial modeloSocial;
 	private ModeloPsicologico modeloPsicologico;
 	private EstadoCartera estadoCartera;
@@ -62,6 +63,7 @@ public class Agente extends Thread{
 		comportamiento.setEstadoBolsa(estadoBolsa);
 		comportamiento.setEstadoCartera(estadoCartera);
 		comportamiento.setOperacionesPendientes(opPendientes);
+		comportamiento.configureAll();
 		
 		Decision d = comportamiento.getDecisionEspera();
 		d.setAgente(this);
@@ -75,7 +77,8 @@ public class Agente extends Thread{
 			// decisiones
 			ArrayList<Decision> decisiones;
 			synchronized(this){
-				decisiones = comportamiento.generacionDecisiones();
+				comportamiento.generaDecisionesAll();
+				decisiones = comportamiento.getDecisiones();
 				Decision espera = comportamiento.getDecisionEspera();
 				decisiones.add(espera);
 			}
@@ -100,8 +103,8 @@ public class Agente extends Thread{
 	}
 	
 	
-	public void setAlive(){
-		alive = false;
+	public void setAlive(boolean estado){
+		alive = estado;
 	}
 	public void insertarOperacion(Operacion o){
 		if(alive){
@@ -137,7 +140,7 @@ public class Agente extends Thread{
 	
 	public void abandonarModelo(){
 		if(alive){
-			
+			setAlive(false);
 		}
 	}
 	
@@ -154,9 +157,8 @@ public class Agente extends Thread{
 		return p;
 	}
 	
-	
 	public String getEstado(){
-		return "TODO!! ESTADO!!!";
+		return comportamiento.getEstadoComportamiento();
 	}
 	
 	public String getStringComportamiento(){
@@ -165,5 +167,28 @@ public class Agente extends Thread{
 	
 	public double getGanancias(){
 		return this.ganancias;
+	}
+
+	public void altaServicio(String servicio) {
+		buzon.altaServicio(ID, servicio);
+	}
+
+	public void bajaServicio(String servicio) {
+		buzon.bajaServicio(ID, servicio);
+	}
+
+	public IDAgente getIDAgente() {
+		return ID;
+	}
+
+	public void recibeMensaje(int n, PlantillaMensajes p2, RecepcionMensaje r) {
+		buzon.receive(n, p2, r);
+	}
+
+	public void requestServicio(String servicio, ArrayList<IDAgente> proveedores) {
+		 ArrayList<IDAgente> lista = buzon.getAgentesServicio(servicio);
+		 for(int i=0; i<lista.size(); i++){
+			 proveedores.add(lista.get(i));
+		 }
 	}
 }

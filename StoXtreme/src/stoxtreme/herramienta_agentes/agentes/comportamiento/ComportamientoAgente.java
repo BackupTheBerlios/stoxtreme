@@ -5,12 +5,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import stoxtreme.cliente.EstadoBolsa;
-import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.OperacionesPendientes;
-import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
-import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
-import stoxtreme.herramienta_agentes.agentes.decisiones.*;
-
+import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
+import stoxtreme.herramienta_agentes.agentes.decisiones.Espera;
 
 public abstract class ComportamientoAgente {
 	protected EstadoBolsa estadoBolsa;
@@ -19,15 +16,15 @@ public abstract class ComportamientoAgente {
 	protected ModeloPsicologico modeloPsicologico;
 	protected OperacionesPendientes operacionesPendientes;
 	protected Hashtable<Integer, Decision> decisionesEsperaNotificacion;
-	protected ArrayList<Decision> listaDecisiones;
 	protected int numeroCancelaciones = 0;
 	private ArrayList<ComportamientoAgente> subComportamientos;
+	protected ArrayList<Decision> decisiones;
+	protected String estado = "Desconocido";
 	
 	public ComportamientoAgente() {
 		decisionesEsperaNotificacion = new Hashtable<Integer, Decision>();
-		listaDecisiones = new ArrayList<Decision>();
 		numeroCancelaciones = 0;
-		subComportamientos = new ArrayList<ComportamientoAgente>();
+		decisiones = new ArrayList<Decision>();
 	}
 
 	public EstadoBolsa getEstadoBolsa() {
@@ -48,18 +45,24 @@ public abstract class ComportamientoAgente {
 		}
 	}
 	
-	public ArrayList<Decision> generaDecisiones(){
-		ArrayList<Decision> d = generacionDecisiones();
+	public void configureAll(){
+		configure();
 		if(subComportamientos != null){
 			Iterator<ComportamientoAgente> it = subComportamientos.iterator();
 			while(it.hasNext()){
-				d.addAll(it.next().generaDecisiones());
+				it.next().configureAll();
 			}
 		}
-		return d;
 	}
-	
-	abstract public ArrayList<Decision> generacionDecisiones();
+	public void generaDecisionesAll(){
+		generacionDecisiones();
+		if(subComportamientos != null){
+			Iterator<ComportamientoAgente> it = subComportamientos.iterator();
+			while(it.hasNext()){
+				it.next().generaDecisionesAll();
+			}
+		}
+	}
 	
 	public void addComportamiento(ComportamientoAgente c){
 		if(subComportamientos == null)
@@ -85,7 +88,7 @@ public abstract class ComportamientoAgente {
 	public void notifica(int notificacion){
 		if(decisionesEsperaNotificacion.containsKey(notificacion)){
 			Decision d = decisionesEsperaNotificacion.remove(notificacion);
-			listaDecisiones.add(d);
+			decisiones.add(d);
 		}
 		// Avisa a todos los subcomportamientos
 		if(subComportamientos!= null){
@@ -155,4 +158,22 @@ public abstract class ComportamientoAgente {
 			}
 		}
 	}
+	
+	public ArrayList<Decision> getDecisiones(){
+		if(subComportamientos != null){
+			Iterator<ComportamientoAgente> its = subComportamientos.iterator();
+			ArrayList<Decision> decSubs = its.next().getDecisiones();
+			decisiones.addAll(decSubs);
+			decSubs.clear();
+		}
+		return decisiones;
+	}
+	
+	public String getEstadoComportamiento(){
+		return estado;
+	}
+
+	abstract public void generacionDecisiones();
+	abstract public void configure();
 }
+	

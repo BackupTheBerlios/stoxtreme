@@ -36,9 +36,10 @@ public class ComportamientoBroker extends ComportamientoAgente{
 		return new Operacion(null, tipoOp, cantidad, empresa, precio);	
 	}
 	
-	public ArrayList<Decision> generacionDecisiones() {
-		ArrayList<Decision> lista = listaDecisiones;
-		listaDecisiones = new ArrayList<Decision>();
+	public void configure() {
+	}
+
+	public void generacionDecisiones() {
 		//Genera una nueva operacion
 		String empresa = estadoBolsa.dameEmpresaAleatoria();
 		
@@ -48,20 +49,22 @@ public class ComportamientoBroker extends ComportamientoAgente{
 			
 			if(tipo == Operacion.COMPRA || !estadoCartera.tieneAccionesPosesion(empresa)){
 				o = generaCompra(empresa);
+				estado ="Genero compra";
 				//System.out.println("COMPRA "+o.getIDAgente()+" "+o.getPrecio());
 			}
 			else{ // No tiene acciones de esa empresa
 				o = generaVenta(empresa);
+				estado ="Genero venta";
 				//System.out.println("VENTA "+o.getIDAgente()+" "+o.getPrecio());
 			}
 			if(o.getCantidad() >0)
-				lista.add(new IntroducirOperacion(o));
+				decisiones.add(new IntroducirOperacion(o));
 		}
 		else{
 			int idOp = operacionesPendientes.dameOperacionAleatoria();
 
 			if(!operacionesPendientes.isPendienteCancelacion(-idOp)){
-				lista.add(new CancelarOperacion(idOp));
+				decisiones.add(new CancelarOperacion(idOp));
 				// Una cancelacion es una operacion pendiente
 				
 				if(numeroCancelaciones < modeloPsicologico.numeroMaximoCancelaciones()) {
@@ -79,6 +82,7 @@ public class ComportamientoBroker extends ComportamientoAgente{
 					}
 					Operacion op = new Operacion(null, tipo, cantidad, empresa, precio);
 					generaDecisionAPartirNotificacion(-idOp, new IntroducirOperacion(op));
+					estado = "Genera cancelacion";
 					numeroCancelaciones++;
 				}
 				else {
@@ -86,6 +90,9 @@ public class ComportamientoBroker extends ComportamientoAgente{
 				}
 			}
 		}
-		return lista;
+	}
+
+	public String getEstadoComportamiento() {
+		return estado;
 	}
 }
