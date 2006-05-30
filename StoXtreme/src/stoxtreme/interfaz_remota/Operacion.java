@@ -284,4 +284,23 @@ public class Operacion  implements java.io.Serializable {
             _javaType, _xmlType, typeDesc);
     }
 
+    public String toString(){
+    	StringBuffer buf = new StringBuffer();
+    	// COMPRA-22(Endesa, 100, 22.0)
+    	if(tipoOp == COMPRA){
+    		buf.append("COMPRA-");
+    	}
+    	else{
+    		buf.append("VENTA-");
+    	}
+    	buf.append(idEmisor);
+    	buf.append("(");
+    	buf.append(empresa);
+    	buf.append(",");
+    	buf.append(cantidad);
+    	buf.append(",");
+    	buf.append(precio);
+    	buf.append(")");
+    	return buf.toString();
+    }
 }

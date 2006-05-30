@@ -285,4 +285,9 @@ public class Cliente{
 	public void detenerHerramientaAgentes() {
 		// TODO Auto-generated method stub
 	}
+
+	public void reanudarHerramientaAgentes() {
+		// TODO Auto-generated method stub
+		
+	}
 }

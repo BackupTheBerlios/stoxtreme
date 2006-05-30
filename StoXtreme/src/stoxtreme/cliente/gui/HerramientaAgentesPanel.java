@@ -17,6 +17,7 @@ import javax.swing.*;
 import stoxtreme.cliente.Cliente;
 import stoxtreme.herramienta_agentes.ConsolaAgentes;
 import stoxtreme.herramienta_agentes.agentes.Agente;
+import stoxtreme.herramienta_agentes.agentes.IDAgente;
 import stoxtreme.interfaz_remota.Operacion;
 
 
@@ -33,7 +34,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private JButton botonIniciarPararSistema;
 	private JButton botonEliminar;
 	private JButton botonEditar;
-	private JButton botonInsertar;
+	private JButton botonConsultaConfig;
 	private Cliente cliente;
 	
 	private boolean parado = true;
@@ -82,40 +83,42 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		botonEliminar.setEnabled(false);
 		botonEditar = new JButton("Editar");
 		botonEditar.setEnabled(false);
-		botonInsertar = new JButton("Insertar Agentes");
-		botonInsertar.setEnabled(false);
+		botonConsultaConfig = new JButton("Consultar configuración");
 
 		panelBotonesNormal.add(botonIniciarPararSistema);
 		panelBotonesNormal.add(botonEliminar);
 		panelBotonesNormal.add(botonEditar);
-		panelBotonesNormal.add(botonInsertar);
+		panelBotonesNormal.add(botonConsultaConfig);
 		
 		// Setea los botones
 		botonEditar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				botonEditar_actionPerformed(e);
+				botonEditar_actionPerformed();
 			}
 		});
 		
 		botonEliminar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				botonEliminar_actionPerformed(e);
+				botonEliminar_actionPerformed();
 			}
 		});
 		
-		botonInsertar.addActionListener(new ActionListener(){
+		botonConsultaConfig.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				botonInsertar_actionPerformed(e);
+				botonConsultaConfig_actionPerformed();
 			}
 		});
 		
 		botonIniciarPararSistema.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if("Iniciar Sistema".equals(((JButton)e.getSource()).getText())){
-					botonIniciar_actionPerformed(e);
+					botonIniciar_actionPerformed();
+				}
+				else if("Reanudar Sistema".equals(((JButton)e.getSource()).getText())){
+					botonReanudar_actionPerformed();
 				}
 				else{
-					botonParar_actionPerformed(e);
+					botonParar_actionPerformed();
 				}
 			}
 		});
@@ -123,36 +126,40 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		return panelBotonesNormal;
 	}
 	
-	public void botonParar_actionPerformed(ActionEvent e){
+	public void botonParar_actionPerformed(){
 		cliente.detenerHerramientaAgentes();
-		botonIniciarPararSistema.setText("Iniciar Sistema");
-		botonEditar.setEnabled(false);
-		botonEliminar.setEnabled(false);
-		botonInsertar.setEnabled(false);
+		botonIniciarPararSistema.setText("Reanudar Sistema");
 	}
 
-	private void botonIniciar_actionPerformed(ActionEvent e){
+	private void botonIniciar_actionPerformed(){
 		cliente.iniciarHerramientaAgentes();
 		botonIniciarPararSistema.setText("Parar Sistema");
 		botonEditar.setEnabled(true);
 		botonEliminar.setEnabled(true);
-		botonInsertar.setEnabled(true);
 	}
 	
-	private void botonEliminar_actionPerformed(ActionEvent e){
+	private void botonReanudar_actionPerformed() {
+		cliente.reanudarHerramientaAgentes();
+		botonIniciarPararSistema.setText("Parar Sistema");
+	}
+	
+	private void botonEliminar_actionPerformed(){
+		// Cogemos los agentes seleccionados y los eliminamos
+		// de la bolsa
+		ArrayList<Agente> selec = modeloTabla.dameSeleccionados();
+		for (Agente agente : selec) {
+			agente.abandonarModelo();
+		}
+	}
+	
+	private void botonEditar_actionPerformed(){
 		
 	}
 	
-	private void botonEditar_actionPerformed(ActionEvent e){
-		
-	}
-	
-	private void botonInsertar_actionPerformed(ActionEvent e){
+	private void botonConsultaConfig_actionPerformed(){
 		
 	}
 
-	
-	
 	public void addListaAgentes(ArrayList<Agente> listaAgentes){
 		modeloTabla.setAgentes(listaAgentes);
 	}

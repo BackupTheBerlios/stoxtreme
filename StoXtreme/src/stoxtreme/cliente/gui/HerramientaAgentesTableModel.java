@@ -1,6 +1,7 @@
 package stoxtreme.cliente.gui;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -58,5 +59,13 @@ public class HerramientaAgentesTableModel extends AbstractTableModel{
 			case 4: return new Double(elementos.get(rowIndex).getGanancias());
 			default: return"";
 		}
+	}
+	public ArrayList<Agente> dameSeleccionados() {
+		ArrayList<Agente> ret = new ArrayList(seleccionadas.size());
+		Iterator<Integer> it = seleccionadas.iterator();
+		while(it.hasNext()){
+			ret.add(elementos.get(it.next()));
+		}
+		return ret;
 	}
 }
