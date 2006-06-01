@@ -139,4 +139,12 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		notif.notificarCancelacion(idDestino, idOp);
 		insertarNotificacion(idDestino, "Cancelacion efectuada: "+idOp);
 	}
+
+	public void pausarAgentes() {
+		monitor.pausar();
+	}
+
+	public void reanudarAgentes() {
+		monitor.reanudar();
+	}
 }

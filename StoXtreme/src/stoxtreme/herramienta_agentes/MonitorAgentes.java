@@ -19,6 +19,7 @@ public class MonitorAgentes extends Thread{
 	private ArrayList<Agente> listaAgentes;
 	private ArrayList<TimerListener> listaTimerListeners;
 	private boolean exit;
+	private boolean pausa;
 	private Object esperaTimer;
 	private Stoxtreme conexion;
 	private ConsolaAgentes consola;
@@ -26,6 +27,7 @@ public class MonitorAgentes extends Thread{
 	public MonitorAgentes(Stoxtreme conexion, ConsolaAgentes consola){
 		this.conexion = conexion;
 		this.consola = consola;
+		this.pausa = false;
 		colaPeticiones = new PriorityQueue<Decision>();
 		ciclo = 0;
 		exit = false;
@@ -76,10 +78,16 @@ public class MonitorAgentes extends Thread{
 	public void run(){
 		while(!exit){
 			try {
-				ejecutaPeticiones();
-				synchronized(esperaTimer){
-					esperaTimer.wait();
+				if(!pausa){
+					ejecutaPeticiones();
+					synchronized(esperaTimer){
+						esperaTimer.wait();
+					}
+					ciclo++;
+					Iterator<TimerListener>it = listaTimerListeners.iterator();
+					while(it.hasNext()) it.next().onTick(ciclo);
 				}
+
 			} catch (InterruptedException e) {
 				synchronized(this){
 					exit = true;
@@ -89,9 +97,6 @@ public class MonitorAgentes extends Thread{
 					e.printStackTrace();
 				}
 			}
-			ciclo++;
-			Iterator<TimerListener>it = listaTimerListeners.iterator();
-			while(it.hasNext()) it.next().onTick(ciclo);
 		}
 	}
 
@@ -101,5 +106,13 @@ public class MonitorAgentes extends Thread{
 	
 	public ConsolaAgentes getConsolaAgentes(){
 		return consola;
+	}
+	
+	public void pausar(){
+		this.pausa = true;
+	}
+	
+	public void reanudar(){
+		this.pausa = false;
 	}
 }

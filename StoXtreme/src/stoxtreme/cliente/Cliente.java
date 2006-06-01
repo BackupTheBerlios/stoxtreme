@@ -283,11 +283,10 @@ public class Cliente{
 	}
 
 	public void detenerHerramientaAgentes() {
-		// TODO Auto-generated method stub
+		hAgentes.pausarAgentes();
 	}
 
 	public void reanudarHerramientaAgentes() {
-		// TODO Auto-generated method stub
-		
+		hAgentes.reanudarAgentes();
 	}
 }
