@@ -87,12 +87,15 @@ public class PanelConfigAgentes extends JPanel{
 	}
 
 	private Component getPanelIzquierdaArriba() {
-		JSplitPane panel = new JSplitPane(
-			JSplitPane.VERTICAL_SPLIT,
-			getPanelIzquierdaArribaArriba(),
-			getPanelIzquierdaArribaAbajo()
-		);
-		panel.setDividerLocation(300);
+		
+//		JSplitPane panel = new JSplitPane(
+//			JSplitPane.VERTICAL_SPLIT,
+//			getPanelIzquierdaArribaArriba(),
+//			getPanelIzquierdaArribaAbajo()
+//		);
+		JPanel panel = new JPanel(new GridLayout(2,1));
+		panel.add(getPanelIzquierdaArribaArriba());
+		panel.add(getPanelIzquierdaArribaAbajo());
 		return panel;
 	}
 	

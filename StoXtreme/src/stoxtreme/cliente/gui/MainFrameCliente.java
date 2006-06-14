@@ -70,12 +70,16 @@ public class MainFrameCliente extends JFrame{
 	}
 
 	public void init(){
+		JPanel panel = new JPanel(new BorderLayout());
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane = new JTabbedPane();
 		tabbedPane.insertTab("Principal", null, getPanelPrincipal(), null, 0);
 		tabbedPane.insertTab("Informacion", null, getPanelInfo(), null, 1);
 		tabbedPane.insertTab("Agentes", null, hAgentes, null, 2);
-		getContentPane().add(tabbedPane);
+		
+		panel.add(tabbedPane, BorderLayout.CENTER);
+		panel.add(new PanelCotizaciones(), BorderLayout.SOUTH);
+		getContentPane().add(panel);
 		this.addWindowListener(new WindowAdapter(){
 
 			public void windowClosing(WindowEvent e) {
