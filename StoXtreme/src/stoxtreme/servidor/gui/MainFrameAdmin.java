@@ -64,8 +64,7 @@ public class MainFrameAdmin extends JFrame{
 	}
 	
 	private Component getPanelAgentes() {
-		JPanel panel = new JPanel();
-		return panel;
+		return new PanelConfigAgentes();
 	}
 	private Component getPanelSesion() {
 		JSplitPane sesion = new JSplitPane(
