@@ -25,7 +25,7 @@ public class FakeInternalFrame extends JPanel{
 		this.add(getBarraTitulo(), BorderLayout.NORTH);
 		panelPrincipal.add(principal);
 		this.add(panelPrincipal, BorderLayout.CENTER);
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		//this.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 	
 	public JPanel getBarraTitulo(){

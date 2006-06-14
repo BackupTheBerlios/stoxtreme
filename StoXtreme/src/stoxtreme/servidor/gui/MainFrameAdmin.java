@@ -3,12 +3,14 @@ package stoxtreme.servidor.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.Vector;
 
@@ -23,6 +25,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.Spring;
+import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 
 import stoxtreme.servidor.Servidor;
@@ -97,18 +101,32 @@ public class MainFrameAdmin extends JFrame{
 	}
 	
 	private Component getPanelOpcionesSuperior() {
-		int c = 100;
-		JPanel panel = new JPanel(new GridLayout(13, 1));
-		panel.add(new ElementoConfig("Numero de empresas        ", false));
-		panel.add(new ElementoConfig("Velocidad de simulación   ", false));
-		panel.add(new ElementoConfig("Tiempo de fluctuacion     ", false));
-		panel.add(new ElementoConfig("Sesión continua           ", false));
-		panel.add(new ElementoConfig("Etapa de preapertura      ", false));
-		panel.add(new ElementoConfig("Etapa de cierre           ", false));
-		panel.add(new ElementoConfig("Directorio de Información ", true));
-		return panel;
+		ArrayList<String> ops = new ArrayList<String>();
+		ops.add("Numero de empresas");
+		ops.add("Velocidad de simulación");
+		ops.add("Tiempo de fluctuacion");
+		ops.add("Sesión continua");
+		ops.add("Etapa de preapertura");
+		ops.add("Etapa de cierre");
+		ops.add("Directorio de Información");
+		ops.add("Directorio de Información");
+		ops.add("Directorio de Información");
+		ops.add("Directorio de Información");
+		ops.add("Directorio de Información");
+		ops.add("Directorio de Información");
+		ops.add("Directorio de Información");
+		ops.add("Directorio de Información");
+		ops.add("Directorio de Información");
+		
+		PanelOpciones opciones = new PanelOpciones(ops){
+			protected void ejecuta(String opcion) {
+				
+			}
+		};
+		return opciones;
 	}
-	
+
+		
 	private class ElementoConfig extends JPanel{
 		JTextField field;
 		public ElementoConfig(String label, boolean filechooser) {
