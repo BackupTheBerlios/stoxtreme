@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<agentes>
+	<distribuciones_probabilidad>
+		<dist_uniforme id="uniforme1" media="20.0" desviacion_tipica="10.0"></dist_uniforme>
+		<dist_uniforme id="uniforme2" media="50.0" desviacion_tipica="20.0"></dist_uniforme>
+		<dist_uniforme id="uniforme3" media="10.0" desviacion_tipica="5.0"></dist_uniforme>
+	</distribuciones_probabilidad>
+	
+	<modelos>
+		<modelo_psicologico id="psicologico1">
+			<parametro_modelo tipo="tiempo_espera">
+				<distribucion>uniforme2</distribucion>
+			</parametro_modelo>
+			<parametro_modelo tipo="numero_maximo_acciones_compra">
+				<valor>1000</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="numero_minimo_acciones_compra">
+				<valor>50</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="numero_maximo_acciones_venta">
+				<valor>1000</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="numero_minimo_acciones_venta">
+				<valor>50</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="numero_maximo_cancelaciones">
+				<valor>30</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="porcentaje_maximo_compra">
+				<valor>0.1</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="porcentaje_maximo_venta">
+				<valor>0.1</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="porcentaje_minimo_compra">
+				<valor>0.01</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="porcentaje_minimo_venta">
+				<valor>0.01</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="porcentaje_subida_precio">
+				<valor>0.1</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="porcentaje_bajada_precio">
+				<valor>0.01</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="precio_recomendacion">
+				<valor>100.0</valor>
+			</parametro_modelo>
+			<parametro_modelo tipo="precio_compra_recomendacion">
+				<valor>110.0</valor>
+			</parametro_modelo>
+		</modelo_psicologico>
+		
+		<modelo_social id="social1">
+			<parametro_modelo tipo="fiabilidad_rumor">
+				<valor>0.9</valor>
+			</parametro_modelo>
+			
+			<parametro_modelo tipo="numero_conocidos">
+				<distribucion>uniforme3</distribucion>
+			</parametro_modelo>
+		</modelo_social>
+    </modelos>
+    
+	<comportamientos>
+		
+		<comportamiento 
+			id="agentes_principal" 
+			tipo_comportamiento="bolsa_repast.agentes.comportamiento.inversores.ComportamientoAleatorio" 
+			modelo_psicologico="psicologico1" 
+			modelo_social="social1" 
+			porcentaje="70"
+		>
+			<comportamiento id="sc1" tipo_comportamiento="bolsa_repast.agentes.comportamiento.inversores.ComportamientoCompraRecomendacion"/>
+			<comportamiento id="sc2" tipo_comportamiento="bolsa_repast.agentes.comportamiento.inversores.ComportamientoRumor"/>
+		</comportamiento>
+		
+		<comportamiento 
+			id="agentes_ruido" 
+			tipo_comportamiento="bolsa_repast.agentes.comportamiento.inversores.ComportamientoAleatorio"
+			modelo_psicologico="psicologico1" 
+			modelo_social="social1" 
+			porcentaje="15"
+		/>
+		
+		<comportamiento 
+			id="emisor_rumores" 
+			tipo_comportamiento="bolsa_repast.agentes.comportamiento.informadores.AgenteRumores"
+			modelo_psicologico="psicologico1" 
+			modelo_social="social1" 
+			porcentaje="5"
+		/>
+		
+		<comportamiento 
+			id="agentes_tecnicos" 
+			tipo_comportamiento="bolsa_repast.agentes.comportamiento.informadores.AgenteAnalisisTecnico"
+			modelo_psicologico="psicologico1" 
+			modelo_social="social1" 
+			porcentaje="5"
+		/>
+		
+		<comportamiento 
+			id="agentes_fundamental" 
+			tipo_comportamiento="bolsa_repast.agentes.comportamiento.informadores.AgenteAnalisisFundamental"
+			modelo_psicologico="psicologico1" 
+			modelo_social="social1" 
+			porcentaje="5"
+		/>
+	</comportamientos>
+</agentes>
