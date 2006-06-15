@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.TableColumnModelListener;
@@ -50,13 +51,14 @@ public class PanelConfigAgentes extends JPanel{
 	}
 	
 	private Component getPanelDerecho() {
-		JSplitPane split = new JSplitPane(
-				JSplitPane.VERTICAL_SPLIT,
-				new FakeInternalFrame("Edicion",getPanelEditor()),
-				getPanelDerechaAbajo()
-		);
-		split.setDividerLocation(300);
-		return split;
+//		JSplitPane split = new JSplitPane(
+//				JSplitPane.VERTICAL_SPLIT,
+//				new FakeInternalFrame("Edicion",getPanelEditor()),
+//				getPanelDerechaAbajo()
+//		);
+//		split.setDividerLocation(300);
+//		return split;
+		return new FakeInternalFrame("Edicion",getPanelEditor());
 	}
 
 	private Component getPanelDerechaAbajo() {
@@ -100,9 +102,19 @@ public class PanelConfigAgentes extends JPanel{
 	}
 	
 	private Component getPanelIzquierdaArribaAbajo() {
-		JPanel panel = new JPanel();
-		FakeInternalFrame frame = new FakeInternalFrame("Distribuciones", panel);
+		JTabbedPane panel = new JTabbedPane();
+		panel.insertTab("Social", null, getPanelModeloSocial(), "Modelo Social", 0);
+		panel.insertTab("Psicologico", null, getPanelModeloSocial(), "Modelo Psicologico", 1);
+		panel.insertTab("Distribuciones", null, getPanelDistribuciones(), "Distribuciones de probabilidad", 2);
+		FakeInternalFrame frame = new FakeInternalFrame("Modelo", panel);
+		
 		return frame;
+	}
+
+	private Component getPanelDistribuciones() {
+		JPanel panel = new JPanel();
+		
+		return panel;
 	}
 
 	private Component getPanelIzquierdaArribaArriba() {
