@@ -54,4 +54,8 @@ public class EstadoBolsa {
 		int i = (int)(MersenneTwister.makeDefault().nextDouble()*empresas.size());
 		return empresas.get(i);
 	}
+
+	public ArrayList<String> getEmpresas() {
+		return this.empresas;
+	}
 }
