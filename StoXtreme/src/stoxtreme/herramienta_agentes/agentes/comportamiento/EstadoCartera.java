@@ -18,7 +18,7 @@ public class EstadoCartera {
 
 	public void quitaAcciones(String empresa, int cantidad) {
 		int n = 0;
-		if(cartera.contains(empresa)){
+		if(cartera.containsKey(empresa)){
 			n = cartera.get(empresa);
 		}
 		cartera.put(empresa, cantidad-n);
