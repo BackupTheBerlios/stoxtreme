@@ -69,7 +69,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	private GestionUsuarios gestorUsuarios;
 	// Parametros del sistema
 	private ParametrosServidor param;
-	// Registro Operaciones
+	// Registro Operaciones	
 	private RegistroOperaciones regOperaciones;
 	// Interfaz grafica
 	private MainFrameAdmin guiAdmin;
