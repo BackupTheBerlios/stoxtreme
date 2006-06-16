@@ -1,4 +1,7 @@
 package stoxtreme.servidor.gui;
+import stoxtreme.servidor.gui.ComboTextoCellEditor;
+import stoxtreme.servidor.gui.EditorTableModel;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -75,8 +78,26 @@ public class PanelConfigAgentes extends JPanel{
 		return panel;
 	}
 	
+	public void actualiza2(){
+		tabla.repaint();
+	}
+	JTable tabla;
+	
 	private Component getPanelEditor() {
-		JTable tabla = new JTable(new EditorTableModel(EditorTableModel.MODELO_PSICOLOGICO));
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(EditorTableModel.params_psicologicos.length, EditorTableModel.params_psicologicos);
+		
+		EditorTableModel modelo = new EditorTableModel(EditorTableModel.MODELO_PSICOLOGICO, editor){
+			public void actualiza() {
+				actualiza2();
+			}
+		};
+		
+		tabla = new JTable(modelo);
+		tabla.getColumnModel().getColumn(1).setCellEditor(editor);
+		tabla.getColumnModel().getColumn(1).setCellRenderer(editor);
+		
+		tabla.getColumn(tabla.getColumnName(2)).setMaxWidth(60);
+		tabla.getColumn(tabla.getColumnName(1)).setMaxWidth(120);
 		JScrollPane panel = new JScrollPane(tabla);
 		return panel;
 	}

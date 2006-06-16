@@ -1,19 +1,32 @@
 package stoxtreme.servidor.gui;
+import java.awt.Component;
 import java.util.Hashtable;
+import java.util.TreeSet;
 
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ModeloPsicologico;
 
-public class EditorTableModel extends AbstractTableModel{
+public abstract class EditorTableModel extends AbstractTableModel implements TableCellRenderer{
 	public static int MODELO_PSICOLOGICO = 0;
 	public static int MODELO_SOCIAL = 1;
 	
 	private Hashtable<String, String> valores;
+	private TreeSet<String> distribuidas;
+	private ComboTextoCellEditor editor;
+	
 	private int tipo;
 	
-	private String[] params_psicologicos = {
+	private static String[] columnas = {
+		"Parametro","Valor","Distribucion"	
+	};
+	
+	public static String[] params_psicologicos = {
 		"tiempo_espera",
 		"numero_maximo_acciones_compra",
 		"numero_minimo_acciones_compra",
@@ -30,14 +43,24 @@ public class EditorTableModel extends AbstractTableModel{
 		"precio_compra_recomendacion"
 	};
 	
-	private String[] params_social = {
+	public static String[] params_social = {
 		"fiabilidad_rumor",
 		"numero_conocidos"
 	};
+	
+	private String[] distribuciones = {
+		"uniforme1", "normal2", "binomial3"	
+	};
 
-	public EditorTableModel(int tipo){
+	public EditorTableModel(int tipo, ComboTextoCellEditor editor2){
 		this.tipo = tipo;
-		valores = new Hashtable();
+		valores = new Hashtable<String, String>();
+		distribuidas = new TreeSet<String>();
+		this.editor = editor2;
+	}
+	
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return columnIndex != 0;
 	}
 	
 	public int getRowCount() {
@@ -50,9 +73,9 @@ public class EditorTableModel extends AbstractTableModel{
 	}
 
 	public int getColumnCount() {
-		return 2;
+		return 3;
 	}
-
+	
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if(columnIndex == 0){
 			if(tipo == MODELO_PSICOLOGICO){
@@ -62,7 +85,7 @@ public class EditorTableModel extends AbstractTableModel{
 				return params_social[rowIndex];
 			}
 		}
-		else {
+		else if(columnIndex == 1){
 			String clave;
 			if(tipo == MODELO_PSICOLOGICO){
 				clave = params_psicologicos[rowIndex];
@@ -72,14 +95,84 @@ public class EditorTableModel extends AbstractTableModel{
 			}
 			return valores.get(clave);
 		}
+		else{
+			if(tipo == MODELO_PSICOLOGICO){
+				return distribuidas.contains(params_psicologicos[rowIndex]);
+			}
+			else{
+				return distribuidas.contains(params_social[rowIndex]);
+			}
+		}
+	}
+	
+	public String getColumnName(int column) {
+		return columnas[column];
+	}
+	
+	public Class<?> getColumnClass(int columnIndex) {
+		return (columnIndex!=2)?Object.class:Boolean.class;
+	}
+	
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		if("".equals(aValue)){
+			return;
+		}
+		if(columnIndex == 1){
+			if(tipo == MODELO_PSICOLOGICO){
+				valores.put(params_psicologicos[rowIndex], aValue.toString());
+			}
+			else{
+				valores.put(params_social[rowIndex], aValue.toString());
+			}
+			System.out.println(aValue);
+		}
+		else if(columnIndex == 2){
+			if(tipo == MODELO_PSICOLOGICO){
+				if(distribuidas.contains(params_psicologicos[rowIndex])){
+					distribuidas.remove(params_psicologicos[rowIndex]);
+					editor.setTexto(rowIndex);
+				}
+				else{
+					distribuidas.add(params_psicologicos[rowIndex]);
+					editor.setCombo(rowIndex);
+				}
+			}
+			else{
+				if(distribuidas.contains(params_social[rowIndex])){
+					distribuidas.remove(params_social[rowIndex]);
+					editor.setTexto(rowIndex);
+				}
+				else{
+					distribuidas.add(params_social[rowIndex]);
+					editor.setCombo(rowIndex);
+				}
+			}
+		}
+		actualiza();
 	}
 
-	public String getColumnName(int column) {
-		if(column == 0){
-			return "Parametro";
+	public boolean isDistribucion(int row) {
+		if(tipo == MODELO_PSICOLOGICO){
+			return distribuidas.contains(params_psicologicos[row]);
 		}
 		else{
-			return "Valor";
+			return distribuidas.contains(params_social[row]);
 		}
 	}
+
+	public Component getTableCellRendererComponent(
+			JTable table, Object value, 
+			boolean isSelected, boolean hasFocus, 
+			int row, int column) {
+		String v;
+		if(tipo == MODELO_PSICOLOGICO){
+			v = valores.get(params_psicologicos[row]);
+		}
+		else{
+			v = valores.get(params_social[row]);
+		}
+		return new JLabel(v);
+	}
+	
+	public abstract void actualiza();
 }
