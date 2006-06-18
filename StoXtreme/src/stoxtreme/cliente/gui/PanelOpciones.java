@@ -1,4 +1,4 @@
-package stoxtreme.servidor.gui;
+package stoxtreme.cliente.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -32,7 +32,7 @@ public class PanelOpciones extends JPanel{
 		this(claves, new ArrayList<String>(), new ArrayList<String>());
 	}
 	public PanelOpciones(ArrayList<String> claves, ArrayList<String> passw){
-		this(claves, new ArrayList<String>(), new ArrayList<String>());
+		this(claves, passw, new ArrayList<String>());
 	}
 	
 	public PanelOpciones(

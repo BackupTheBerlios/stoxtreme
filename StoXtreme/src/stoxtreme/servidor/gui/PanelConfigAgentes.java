@@ -144,10 +144,10 @@ public class PanelConfigAgentes extends JPanel{
 		ops.add("Fichero de historicos");
 		ops.add("Mas opciones");
 		ops.add("Cosas varias");
-		ops.add("Otra opcion");
-		ops.add("Otra opcion");
-		ops.add("Otra opcion");
-		ops.add("Otra opcion");
+		ops.add("Otra opcion1");
+		ops.add("Otra opcion2");
+		ops.add("Otra opcion3");
+		ops.add("Otra opcion5");
 		
 		PanelOpciones panel = new PanelOpciones(ops){
 			protected void ejecuta(String opcion) {

@@ -108,15 +108,15 @@ public class MainFrameAdmin extends JFrame{
 		ops.add("Sesión continua");
 		ops.add("Etapa de preapertura");
 		ops.add("Etapa de cierre");
-		ops.add("Directorio de Información");
-		ops.add("Directorio de Información");
-		ops.add("Directorio de Información");
-		ops.add("Directorio de Información");
-		ops.add("Directorio de Información");
-		ops.add("Directorio de Información");
-		ops.add("Directorio de Información");
-		ops.add("Directorio de Información");
-		ops.add("Directorio de Información");
+		ops.add("Directorio de Información1");
+		ops.add("Directorio de Información2");
+		ops.add("Directorio de Información3");
+		ops.add("Directorio de Información4");
+		ops.add("Directorio de Información5");
+		ops.add("Directorio de Información6");
+		ops.add("Directorio de Información7");
+		ops.add("Directorio de Información8");
+		ops.add("Directorio de Información9");
 		
 		PanelOpciones opciones = new PanelOpciones(ops){
 			protected void ejecuta(String opcion) {
