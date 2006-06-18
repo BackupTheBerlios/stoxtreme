@@ -158,7 +158,7 @@ public class Cliente{
 		ParametrosAgentes parametros = new ParametrosAgentes();
 		System.err.println("Creando Agentes");
 		hAgentes = new HerramientaAgentes(nUsuario, eBolsa, parametros);
-		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa.getMAcciones(), hAgentes);
+		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa, hAgentes);
 		gui.init();
 		gui.pack();
 		gui.setVisible(true);

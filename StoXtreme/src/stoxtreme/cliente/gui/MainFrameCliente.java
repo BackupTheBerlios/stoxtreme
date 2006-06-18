@@ -18,6 +18,7 @@ import org.jfree.data.xy.*;
 import org.jfree.date.SerialDateUtilities;
 
 import stoxtreme.cliente.Cliente;
+import stoxtreme.cliente.EstadoBolsa;
 import stoxtreme.cliente.infoLocal.InfoLocal;
 import stoxtreme.interfaz_remota.Operacion;
 
@@ -43,17 +44,19 @@ public class MainFrameCliente extends JFrame{
 	private JSplitPane split_graficas;
 	private Hashtable graficas=new Hashtable();
 	private HerramientaAgentesPanel hAgentes;
+	private EstadoBolsa eBolsa;
 	
 	public MainFrameCliente(Cliente cliente,
 			ModeloCartera modeloCartera,
 			ModeloOpPendientes modeloOpPendientes,
-			ModeloPrecioAccionesGrafico modeloPrecios,HerramientaAgentesPanel hAgentes){
+			EstadoBolsa eBolsa,HerramientaAgentesPanel hAgentes){
 		super("Stock Xtreme");
 		this.cliente = cliente;
 		hAgentes.setCliente(cliente);
+		this.eBolsa = eBolsa;
 		this.modeloCartera = modeloCartera;
 		this.modeloOpPendientes = modeloOpPendientes;
-		this.modeloPrecios = modeloPrecios;
+		this.modeloPrecios = eBolsa.getMAcciones();
 		this.volumen =false;
 		this.estocastico =false;
 		this.hAgentes=hAgentes;
@@ -78,7 +81,7 @@ public class MainFrameCliente extends JFrame{
 		tabbedPane.insertTab("Agentes", null, hAgentes, null, 2);
 		
 		panel.add(tabbedPane, BorderLayout.CENTER);
-		panel.add(new PanelCotizaciones(), BorderLayout.SOUTH);
+		panel.add(new PanelCotizaciones(eBolsa), BorderLayout.SOUTH);
 		getContentPane().add(panel);
 		this.addWindowListener(new WindowAdapter(){
 

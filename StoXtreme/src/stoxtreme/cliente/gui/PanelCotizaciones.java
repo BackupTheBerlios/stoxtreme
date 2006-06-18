@@ -2,6 +2,7 @@ package stoxtreme.cliente.gui;
 
 import javax.swing.*;
 
+import stoxtreme.cliente.EstadoBolsa;
 import sun.security.krb5.internal.crypto.g;
 
 import java.awt.*;
@@ -11,33 +12,34 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class PanelCotizaciones extends JPanel implements ActionListener{
-	private static final String empresas[] = 
-	{	"ANTENA 3","ABERTIS","ACS","ACERINOX","ALTADIS","ACCIONA","BBVA","BANKINTER","CINTRA",
-		"ENDESA","ENAGAS","FCC","GRUPO FERROVIAL","GAMESA","GAS NATURAL","IBERDROLA","IBERIA",
-		"INDRA SISTEMAS","INDITEX","ARCELOR","CORP MAPFRE","METROVACESA","BANCO POPULAR","PRISA",
-		"RED ELECTRICA ESP","REPSOL YPF","BANCO SABADELL","BSCH","SOGECABLE","SACYR VALLEHERMOSO",
-		"TELEFONICA","TELEF.MOVILES","TELECINCO","TPI","UNION FENOSA"
-	};
+//	private static final String empresas[] = 
+//	{	"ANTENA 3","ABERTIS","ACS","ACERINOX","ALTADIS","ACCIONA","BBVA","BANKINTER","CINTRA",
+//		"ENDESA","ENAGAS","FCC","GRUPO FERROVIAL","GAMESA","GAS NATURAL","IBERDROLA","IBERIA",
+//		"INDRA SISTEMAS","INDITEX","ARCELOR","CORP MAPFRE","METROVACESA","BANCO POPULAR","PRISA",
+//		"RED ELECTRICA ESP","REPSOL YPF","BANCO SABADELL","BSCH","SOGECABLE","SACYR VALLEHERMOSO",
+//		"TELEFONICA","TELEF.MOVILES","TELECINCO","TPI","UNION FENOSA"
+//	};
 	
+	ArrayList<String> empresas;
 	private double[] cotizaciones;
 	
 	private ArrayList listaMovimientos;
 	private int siguienteIndice;
 	
-	public PanelCotizaciones(){
+	private EstadoBolsa bolsa;
+	
+	public PanelCotizaciones(EstadoBolsa bolsa){
 		setPreferredSize(new Dimension(getWidth(), 30));
-		cotizaciones = new double[empresas.length];
+		empresas = bolsa.getEmpresas();
+		this.bolsa = bolsa;
+		cotizaciones = new double[empresas.size()];
 		
-		for(int i=0; i<empresas.length; i++){
-			if(i%2 == 0)
-				cotizaciones[i] = 0.12;
-			else
-				cotizaciones[i] = -0.12;
+		for(int i=0; i<empresas.size(); i++){
+			cotizaciones[i] = bolsa.getPrecioActualEmpresa(empresas.get(i));
 		}
 		
 		siguienteIndice = 1;
 		listaMovimientos = new ArrayList();
-		
 		
 		Timer timer = new Timer(100,this);
 		timer.start();
@@ -51,7 +53,7 @@ public class PanelCotizaciones extends JPanel implements ActionListener{
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		if(listaMovimientos.size()==0){
-			listaMovimientos.add(new PrecioGraficoMoviendose(empresas[0], cotizaciones[0], this));
+			listaMovimientos.add(new PrecioGraficoMoviendose(empresas.get(0), bolsa.getPorcentajeDiferencia(empresas.get(0)), this));
 		}
 		
 		for (int i=listaMovimientos.size()-1; i>=0; i--){
@@ -60,8 +62,8 @@ public class PanelCotizaciones extends JPanel implements ActionListener{
 			
 			// Ultimo indice
 			if(i==listaMovimientos.size()-1 && etiqueta.dentro()){
-				listaMovimientos.add(new PrecioGraficoMoviendose(empresas[siguienteIndice], cotizaciones[siguienteIndice], this));
-				siguienteIndice = (siguienteIndice+1)%empresas.length;
+				listaMovimientos.add(new PrecioGraficoMoviendose(empresas.get(siguienteIndice), bolsa.getPorcentajeDiferencia(empresas.get(siguienteIndice)), this));
+				siguienteIndice = (siguienteIndice+1)%empresas.size();
 			}
 			
 			// Primer indice

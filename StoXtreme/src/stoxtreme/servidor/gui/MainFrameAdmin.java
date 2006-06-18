@@ -1,39 +1,28 @@
 package stoxtreme.servidor.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.Vector;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.Spring;
-import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 
 import stoxtreme.servidor.Servidor;
 
+@SuppressWarnings("serial")
 public class MainFrameAdmin extends JFrame{
 	private ModeloTablaOperaciones modeloOperaciones; 
 	private ModeloListaUsuariosConectados modeloUsuarios; 
@@ -44,7 +33,6 @@ public class MainFrameAdmin extends JFrame{
 	private JSplitPane panelPrincipal;
 	private JSplitPane panelSecundario;
 	private FakeInternalFrame panelDerecha;
-	private FakeInternalFrame panelIzqArriba;
 	private FakeInternalFrame panelIzqAbajo;
 	private Servidor servidor;
 	
@@ -73,6 +61,7 @@ public class MainFrameAdmin extends JFrame{
 	private Component getPanelAgentes() {
 		return new PanelConfigAgentes();
 	}
+	
 	private Component getPanelSesion() {
 		JPanel panelIzquierdo = new JPanel(new GridLayout(2,1, 20, 20));
 		
@@ -92,12 +81,6 @@ public class MainFrameAdmin extends JFrame{
 		sesion.add(panelIzquierdo, BorderLayout.WEST);
 		sesion.add(getOpcionesSesion());
 		
-//		JSplitPane sesion = new JSplitPane(
-//				JSplitPane.HORIZONTAL_SPLIT,
-//				grafico,
-//				getListaSesiones(),
-//				getOpcionesSesion()
-//		);
 		return sesion;
 	}
 	private Component getOpcionesSesion() {
@@ -105,20 +88,23 @@ public class MainFrameAdmin extends JFrame{
 		panel.add(new JScrollPane(getPanelOpcionesSuperior()), BorderLayout.CENTER);
 		//panel.add(getPanelOpcionesInferior(), BorderLayout.SOUTH);
 		FakeInternalFrame fr = new FakeInternalFrame("Configuracion de la sesion",panel);
-		
 		return fr;
 	}
 	
 	private Component getPanelOpcionesInferior() {
-		JPanel panel = new JPanel(new GridLayout(4,1, 20, 20));
-		JButton boton1 = new JButton("Iniciar nueva sesion");
-		panel.add(boton1);
-		JButton boton2 = new JButton("Cerrar sesion antigua");
-		panel.add(boton2);
-		JButton boton3 = new JButton("Finalizar preapertura");
-		panel.add(boton3);
-		JButton boton4 = new JButton("Finalizar sesion");
-		panel.add(boton4);
+		JPanel panel = new JPanel(new BorderLayout());
+		JList lista = new JList(modeloUsuarios);
+		lista.setCellRenderer(modeloUsuarios.getListCellRenderer());
+		JScrollPane panelScrollIzqArriba = new JScrollPane(lista);
+		
+		panelScrollIzqArriba.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		FakeInternalFrame panelIzqArriba = new FakeInternalFrame("Usuarios", panelScrollIzqArriba);
+		
+		panel.add(panelIzqArriba);
+		
+		panelIzqArriba.setPreferredSize(new Dimension(250, 300));
+		JButton boton = new JButton("Iniciar Simulacion");
+		panel.add(boton, BorderLayout.SOUTH);
 		return panel;
 	}
 	
@@ -152,38 +138,14 @@ public class MainFrameAdmin extends JFrame{
 	}
 
 		
-	private class ElementoConfig extends JPanel{
-		JTextField field;
-		public ElementoConfig(String label, boolean filechooser) {
-			add(new JLabel(label));
-			field = new JTextField(50-label.length());
-			add(field);
-			
-			if(filechooser){
-				JButton boton = new JButton("...");
-				add(boton);
-			}
-		}
-	}
-	
 	DefaultListModel modeloSesiones;
-	private Component getListaSesiones() {
-		modeloSesiones = new DefaultListModel();  
-		JScrollPane panel = new JScrollPane(new JList(modeloSesiones));
-		FakeInternalFrame fr = new FakeInternalFrame("Historico de sesiones", panel);
-		return fr;
-	}
+
 	public Component getPanelControl(){
 		JScrollPane panelScrollDerecha = new JScrollPane(new JTable(modeloOperaciones));
 		panelScrollDerecha.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panelDerecha = new FakeInternalFrame("Log de Operaciones", panelScrollDerecha);
 		
-		JList lista = new JList(modeloUsuarios);
-		lista.setCellRenderer(modeloUsuarios.getListCellRenderer());
 		
-		JScrollPane panelScrollIzqArriba = new JScrollPane(lista);
-		panelScrollIzqArriba.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		panelIzqArriba = new FakeInternalFrame("Usuarios", panelScrollIzqArriba);
 		
 		JTable tablaPrecios = new JTable(modeloPrecios);
 		tablaPrecios.getColumn(tablaPrecios.getColumnName(1)).setCellRenderer(modeloPrecios.getRenderer());
@@ -192,13 +154,12 @@ public class MainFrameAdmin extends JFrame{
 		panelScrollIzqAbajo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panelIzqAbajo = new FakeInternalFrame("Precios en bolsa", panelScrollIzqAbajo);
 		
-		panelSecundario = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelIzqAbajo, panelIzqArriba);
-		panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelSecundario, panelDerecha);
+		//panelSecundario = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelIzqAbajo, panelIzqArriba);
+		panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelIzqAbajo, panelDerecha);
 		
 		panelPrincipal.setDividerLocation(300);
-		panelSecundario.setDividerLocation(300);
+		//panelSecundario.setDividerLocation(300);
 		
-		panelIzqArriba.setPreferredSize(new Dimension(250, 300));
 		panelIzqAbajo.setPreferredSize(new Dimension(250, 300));
 		panelDerecha.setPreferredSize(new Dimension(550, 600));
 		

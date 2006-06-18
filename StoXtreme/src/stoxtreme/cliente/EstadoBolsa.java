@@ -10,7 +10,8 @@ import stoxtreme.cliente.gui.ModeloPrecioAccionesGrafico;
 import stoxtreme.cliente.infoLocal.InfoLocal;
 
 public class EstadoBolsa {
-	private Hashtable<String,Double> precios;
+	private Hashtable<String,Double> preciosIniciales;
+	private Hashtable<String,Double> preciosActuales;
 	private ModeloPrecioAccionesGrafico mAcciones;
 	private ArrayList<String> empresas;
 	private ModeloEmpresas mEmpresas;
@@ -19,10 +20,12 @@ public class EstadoBolsa {
 		this.empresas = info.getEmpresas(); 
 		mAcciones = new ModeloPrecioAccionesGrafico(info.getEmpresas());
 		mEmpresas = new ModeloEmpresas(info);
-		precios = new Hashtable<String,Double>();
+		preciosIniciales = new Hashtable<String,Double>();
+		preciosActuales = new Hashtable<String,Double>();
 		
 		for(int i=0; i<empresas.size(); i++){
-			precios.put(empresas.get(i), info.getPrecioInicial(empresas.get(i)));
+			preciosIniciales.put(empresas.get(i), info.getPrecioInicial(empresas.get(i)));
+			preciosActuales.put(empresas.get(i), info.getPrecioInicial(empresas.get(i)));
 		}
 	}
 
@@ -47,7 +50,7 @@ public class EstadoBolsa {
 	}
 
 	public double getPrecioActualEmpresa(String empresa) {
-		return precios.get(empresa);
+		return preciosActuales.get(empresa);
 	}
 
 	public String dameEmpresaAleatoria() {
@@ -57,5 +60,13 @@ public class EstadoBolsa {
 
 	public ArrayList<String> getEmpresas() {
 		return this.empresas;
+	}
+	
+	public double getPorcentajeDiferencia(String empresa){
+		double inicial = preciosIniciales.get(empresa);
+		double actual = preciosActuales.get(empresa);
+		
+		double diferencia = (actual - inicial)/actual;
+		return diferencia;
 	}
 }
