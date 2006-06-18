@@ -5,6 +5,7 @@ import stoxtreme.servidor.gui.EditorTableModel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -18,16 +19,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import stoxtreme.servidor.gui.FakeInternalFrame;
 
 public class PanelConfigAgentes extends JPanel{
-	DefaultTableModel modeloTabla = new DefaultTableModel();
+	private DefaultTableModel modeloTabla = new DefaultTableModel();
+	private DefaultListModel modeloListaSocial = new DefaultListModel();
+	private DefaultListModel modeloListaPsicologica = new DefaultListModel();
+	private DefaultListModel modeloListaDistribucion = new DefaultListModel();
+	private DefaultTreeModel modeloComportamientos = new DefaultTreeModel(new DefaultMutableTreeNode("Comportamientos"));
 	
 	public PanelConfigAgentes(){
 		try{
@@ -50,6 +58,7 @@ public class PanelConfigAgentes extends JPanel{
 			getPanelIzquierdo(),
 			getPanelDerecho()
 		);
+		panel.setDividerLocation(350);
 		return panel;
 	}
 	
@@ -62,13 +71,6 @@ public class PanelConfigAgentes extends JPanel{
 //		split.setDividerLocation(300);
 //		return split;
 		return new FakeInternalFrame("Edicion",getPanelEditor());
-	}
-
-	private Component getPanelDerechaAbajo() {
-		JPanel panel = new JPanel(new GridLayout(1, 2));
-		panel.add(new FakeInternalFrame("Modelo Psicologico",getPanelModeloPsicologico()));
-		panel.add(new FakeInternalFrame("Modelo Social",getPanelModeloSocial()));
-		return panel;
 	}
 
 	private Component getPanelBotones() {
@@ -97,7 +99,7 @@ public class PanelConfigAgentes extends JPanel{
 		tabla.getColumnModel().getColumn(1).setCellRenderer(editor);
 		
 		tabla.getColumn(tabla.getColumnName(2)).setMaxWidth(60);
-		tabla.getColumn(tabla.getColumnName(1)).setMaxWidth(120);
+
 		JScrollPane panel = new JScrollPane(tabla);
 		return panel;
 	}
@@ -124,55 +126,86 @@ public class PanelConfigAgentes extends JPanel{
 	
 	private Component getPanelIzquierdaArribaAbajo() {
 		JTabbedPane panel = new JTabbedPane();
-		panel.insertTab("Social", null, getPanelModeloSocial(), "Modelo Social", 0);
-		panel.insertTab("Psicologico", null, getPanelModeloSocial(), "Modelo Psicologico", 1);
-		panel.insertTab("Distribuciones", null, getPanelDistribuciones(), "Distribuciones de probabilidad", 2);
+		panel.insertTab("Comportamientos", null, getPanelComportamientos(), "Comportamientos", 0);
+		panel.insertTab("Social", null, getPanelModeloSocial(), "Modelo Social", 1);
+		panel.insertTab("Psicologico", null, getPanelModeloPsicologico(), "Modelo Psicologico", 2);
+		panel.insertTab("Distribuciones", null, getPanelDistribuciones(), "Distribuciones de probabilidad", 3);
 		FakeInternalFrame frame = new FakeInternalFrame("Modelo", panel);
 		
 		return frame;
 	}
+	
+	
+	private Component getPanelComportamientos() {
+		JPanel panel = new JPanel(new BorderLayout());
+		JTree arbolComportamientos = new JTree(modeloComportamientos);
+		JScrollPane scroll = new JScrollPane(arbolComportamientos);
+		
+		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
+		botones.add(new JButton("+"));
+		botones.add(new JButton("-"));
+		
+		panel.add(scroll, BorderLayout.CENTER);
+		panel.add(botones, BorderLayout.SOUTH);
+		return panel;
+	}
 
 	private Component getPanelDistribuciones() {
-		JPanel panel = new JPanel();
-		
+		JPanel panel = new JPanel(new BorderLayout());
+		JList lista = new JList(modeloListaDistribucion); 
+		JScrollPane scroll = new JScrollPane(lista);
+		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		botones.add(new JButton("+"));
+		botones.add(new JButton("-"));
+		panel.add(scroll, BorderLayout.CENTER);
+		panel.add(botones, BorderLayout.SOUTH);
 		return panel;
 	}
 
 	private Component getPanelIzquierdaArribaArriba() {
 		ArrayList<String> ops = new ArrayList<String>();
 		ops.add("Numero de agentes");
-		ops.add("Fichero de historicos");
-		ops.add("Mas opciones");
-		ops.add("Cosas varias");
-		ops.add("Otra opcion1");
-		ops.add("Otra opcion2");
-		ops.add("Otra opcion3");
-		ops.add("Otra opcion5");
+		ops.add("Velocidad del sistema");
+		ops.add("Dinero inicial");
+		ops.add("Gasto máximo");
+		ops.add("Ratio respawn");
+		ops.add("Atenuacion rumor");
+		ops.add("Fichero historicos");
+		ops.add("Ficheros informacion");
 		
-		PanelOpciones panel = new PanelOpciones(ops){
-			protected void ejecuta(String opcion) {
-				
-			}
-		};
+		ArrayList<String> choosers = new ArrayList<String>();
+		choosers.add("Fichero historicos");
+		choosers.add("Ficheros informacion");
+		
+		PanelOpciones panel = new PanelOpciones(ops, null, choosers);
 		FakeInternalFrame frame = new FakeInternalFrame("Parametros", panel);
 		
 		return frame;
 	}
 
-	private DefaultListModel modeloListaSocial = new DefaultListModel();
-	private DefaultListModel modeloListaPsicologica = new DefaultListModel();
 	
 	private Component getPanelModeloSocial() {
+		JPanel panel = new JPanel(new BorderLayout());
 		JList lista = new JList(modeloListaSocial); 
-		JScrollPane panel = new JScrollPane(lista);
-		
+		JScrollPane scroll = new JScrollPane(lista);
+		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		botones.add(new JButton("+"));
+		botones.add(new JButton("-"));
+		panel.add(scroll, BorderLayout.CENTER);
+		panel.add(botones, BorderLayout.SOUTH);
 		return panel;
 	}
 
 	private Component getPanelModeloPsicologico() {
-		JList lista = new JList(modeloListaPsicologica);
-		JScrollPane panel = new JScrollPane(lista);
-		
+		JPanel panel = new JPanel(new BorderLayout());
+		JList lista = new JList(modeloListaPsicologica); 
+		JScrollPane scroll = new JScrollPane(lista);
+		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		botones.add(new JButton("+"));
+		botones.add(new JButton("-"));
+		panel.add(scroll, BorderLayout.CENTER);
+		panel.add(botones, BorderLayout.SOUTH);
 		return panel;
 	}
 

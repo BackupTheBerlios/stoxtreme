@@ -5,7 +5,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -71,24 +74,43 @@ public class MainFrameAdmin extends JFrame{
 		return new PanelConfigAgentes();
 	}
 	private Component getPanelSesion() {
-		JSplitPane sesion = new JSplitPane(
-				JSplitPane.HORIZONTAL_SPLIT,
-				getListaSesiones(),
-				getOpcionesSesion()
-		);
+		JPanel panelIzquierdo = new JPanel(new GridLayout(2,1, 20, 20));
+		
+		JPanel grafico = new JPanel(){
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Image img = Toolkit.getDefaultToolkit().getImage("logoPeke.png");
+				g.drawImage(img, 0, 0, 239, 250, this);
+			}
+		};
+		grafico.setPreferredSize(new Dimension(240, 250));
+		grafico.setMaximumSize(new Dimension(240, 250));
+		grafico.setMinimumSize(new Dimension(240, 250));
+		JPanel sesion = new JPanel(new BorderLayout());
+		panelIzquierdo.add(grafico);
+		panelIzquierdo.add(getPanelOpcionesInferior());
+		sesion.add(panelIzquierdo, BorderLayout.WEST);
+		sesion.add(getOpcionesSesion());
+		
+//		JSplitPane sesion = new JSplitPane(
+//				JSplitPane.HORIZONTAL_SPLIT,
+//				grafico,
+//				getListaSesiones(),
+//				getOpcionesSesion()
+//		);
 		return sesion;
 	}
 	private Component getOpcionesSesion() {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(new JScrollPane(getPanelOpcionesSuperior()), BorderLayout.CENTER);
-		panel.add(getPanelOpcionesInferior(), BorderLayout.SOUTH);
+		//panel.add(getPanelOpcionesInferior(), BorderLayout.SOUTH);
 		FakeInternalFrame fr = new FakeInternalFrame("Configuracion de la sesion",panel);
 		
 		return fr;
 	}
 	
 	private Component getPanelOpcionesInferior() {
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new GridLayout(4,1, 20, 20));
 		JButton boton1 = new JButton("Iniciar nueva sesion");
 		panel.add(boton1);
 		JButton boton2 = new JButton("Cerrar sesion antigua");
@@ -106,23 +128,26 @@ public class MainFrameAdmin extends JFrame{
 		ops.add("Velocidad de simulación");
 		ops.add("Tiempo de fluctuacion");
 		ops.add("Sesión continua");
-		ops.add("Etapa de preapertura");
-		ops.add("Etapa de cierre");
-		ops.add("Directorio de Información1");
-		ops.add("Directorio de Información2");
-		ops.add("Directorio de Información3");
-		ops.add("Directorio de Información4");
-		ops.add("Directorio de Información5");
-		ops.add("Directorio de Información6");
-		ops.add("Directorio de Información7");
-		ops.add("Directorio de Información8");
-		ops.add("Directorio de Información9");
+		ops.add("Tiempo Etapa de preapertura");
+		ops.add("Tiempo Etapa de cierre");
+		ops.add("Fichero de historicos");
+		ops.add("Fichero de información");
+		ops.add("Tick");
 		
-		PanelOpciones opciones = new PanelOpciones(ops){
-			protected void ejecuta(String opcion) {
-				
-			}
-		};
+		ops.add(" ");
+		ops.add("  ");
+		ops.add("   ");
+		ops.add("    ");
+		ops.add("     ");
+		ops.add("      ");
+		ops.add("       ");
+		ops.add("        ");
+
+		ArrayList<String> chooser = new ArrayList<String>();
+		chooser.add("Fichero de historicos");
+		chooser.add("Fichero de información");
+		
+		PanelOpciones opciones = new PanelOpciones(ops, null, chooser);
 		return opciones;
 	}
 
