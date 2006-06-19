@@ -2,24 +2,33 @@ package stoxtreme.cliente.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
 import java.util.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
+import mseries.Calendar.MDateSelectorConstraints;
+import mseries.Calendar.MDefaultPullDownConstraints;
+import mseries.Calendar.MFieldListener;
+import mseries.ui.MDateEntryField;
+
 import org.jfree.chart.*;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.*;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.*;
 import org.jfree.data.xy.*;
 import org.jfree.date.SerialDateUtilities;
 
 import stoxtreme.cliente.Cliente;
+import stoxtreme.cliente.infoLocal.DatoHistorico;
 import stoxtreme.cliente.EstadoBolsa;
 import stoxtreme.cliente.infoLocal.InfoLocal;
+import stoxtreme.cliente.infoLocal.ParserInfoLocal;
 import stoxtreme.interfaz_remota.Operacion;
 
 public class MainFrameCliente extends JFrame{
@@ -174,47 +183,47 @@ public class MainFrameCliente extends JFrame{
 	
 	private void pinta_actionPerformed(ActionEvent e){
 		System.out.println(e.getActionCommand());
+		split_graficas.setDividerLocation(300);
 		//JOptionPane.showMessageDialog(tablaArribaIzq,null,"Has pulsado el volumen",JOptionPane.CANCEL_OPTION);
 	    if (e.getActionCommand().equals("Volumen")){
-			if(volumen ) {
+			if(volumen) {
 		    volumen = false;
-		    contadorGraficas--;
 		    split_graficas.remove((Component)graficas.get("volumen"));
 		    graficas.remove("volumen");
 		    }
 		    else {
 		    volumen = true;
-		    contadorGraficas++;
-		    JPanel p=getChartPanel2();
-		    graficas.put("volumen",p);
-		    //split_graficas.add(p);
+		    
 		    }
 	    }
-	    if (e.getActionCommand().equals("Estocastico")){
+	     if (e.getActionCommand().equals("Estocastico")){
 		    if(estocastico) {
 			    estocastico = false;
-			    contadorGraficas--;
 			    split_graficas.remove((Component)graficas.get("estocastico"));
 			    graficas.remove("estocastico");
 			    }
 			    else {
 			    estocastico = true;
-			    contadorGraficas++;
 			    JPanel p=getChartPanel2();
 			    graficas.put("estocastico",p);
+			    split_graficas.setBottomComponent(p);
 			    //split_graficas.add(p);
 			 }
 	    }
 	    JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 	    if (volumen && estocastico){
+	    	split_graficas.setDividerLocation(200);
 			aux.add(getChartPanel2());
-			aux.setDividerLocation(120);
+			aux.setDividerLocation(100);
 			aux.setBottomComponent(getChartPanel3());
 			split_graficas.setBottomComponent(aux);
 		}
-		else
-			if (volumen)
-				split_graficas.setBottomComponent(getChartPanel2());
+	    else if (volumen){
+				JPanel p=getChartPanel2();
+			    graficas.put("volumen",p);
+			    split_graficas.setBottomComponent(p);			
+				//split_graficas.setBottomComponent(p);
+			}	
 			else{
 				if(estocastico)
 					split_graficas.setBottomComponent(getChartPanel3());
@@ -224,6 +233,7 @@ public class MainFrameCliente extends JFrame{
 					split_graficas.remove(2);
 				}
 			}
+	
 	}
 	private Component getPanelIzquierdaArriba() {
 		JPanel panel = new JPanel(new BorderLayout());
@@ -273,10 +283,30 @@ public class MainFrameCliente extends JFrame{
 	}
 
 	private Component getPanelDerechaArriba() {
-		MenuShortcut s=new MenuShortcut(37);
-		MenuItem vol=new MenuItem("Volumen",s);
-		MenuItem esto=new MenuItem("Estocastico");
-		Menu indicadores= new Menu("Indicadores");
+		MDateEntryField entryField = new MDateEntryField();
+        MDateSelectorConstraints c = new MDefaultPullDownConstraints();
+        //c.firstDay = Calendar.MONDAY;
+        entryField.setConstraints(c);
+        entryField.addMFieldListener(new MFieldListener(){
+            public void fieldEntered(FocusEvent e)
+            {
+                System.out.println("Entered");
+            }
+            public void fieldExited(FocusEvent e)
+            {
+                System.out.println("Exited");
+            }
+        });
+
+        JFrame frame2=new JFrame();
+		frame2.getContentPane().add(entryField);
+
+
+
+		//MenuShortcut s=new MenuShortcut(37);
+		JMenuItem vol=new JMenuItem("Volumen");
+		JMenuItem esto=new JMenuItem("Estocastico");
+		JMenu indicadores= new JMenu("Indicadores");
 		vol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				pinta_actionPerformed(event);
@@ -289,70 +319,83 @@ public class MainFrameCliente extends JFrame{
 			}
 		    }				    
 		    );
-		Menu help= new Menu("Ayuda");
+		JMenuItem help= new JMenu("Ayuda");
 		indicadores.add(vol);
 		indicadores.add(esto);
-		MenuBar barra=new MenuBar();
+		JMenuBar barra=new JMenuBar();
 		barra.add(indicadores);
-		barra.setHelpMenu(help);	
+		barra.add(help);	
 		split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-//		JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		graficas.put("normal",getChartPanel());
 		
 		split_graficas.add(getChartPanel());
 		int tam=split_graficas.size().height-split_graficas.size().height/6;
 		split_graficas.setDividerLocation(200);
-		//panel1.add(getChartPanel());
-//		if (volumen)
-//			elegidos.setElementAt(new String("Si"),1);
-//		else
-//			elegidos.setElementAt(new String("No"),1);
-//		if (estocastico)
-//			elegidos.setElementAt(new String("Si"),2);
-//		else
-//			elegidos.setElementAt(new String("No"),2);
-//		if (volumen && estocastico){
-//			aux.add(getChartPanel2());
-//			aux.setDividerLocation(120);
-//			aux.setBottomComponent(getChartPanel3());
-//			split_graficas.setBottomComponent(aux);
-//		}
-//		else
-//			if (volumen)
-//				split_graficas.setBottomComponent(getChartPanel2());
-//			else if (estocastico)
-//					split_graficas.setBottomComponent(getChartPanel3());
-//		if (volumen)
 		FakeInternalFrame frame = new FakeInternalFrame("Precio Accion", split_graficas);
 		frame.setPreferredSize(new Dimension(500, 450));
-		
-		this.setMenuBar(barra);
+		frame.setMenuBar(barra);
 		return frame;
 	}
-	private JPanel getChartPanel2(){
-//		DateAxis ejeX = new DateAxis();
-//		Calendar c1 = Calendar.getInstance();
-//		c1.set(Calendar.AM_PM, Calendar.AM);
-//		c1.set(Calendar.HOUR, 8);
-//		c1.set(Calendar.MINUTE, 30);
-//		Calendar c2 = Calendar.getInstance();
-//		c2.set(Calendar.AM_PM, Calendar.PM);
-//		c2.set(Calendar.HOUR, 5);
-//		c2.set(Calendar.MINUTE, 30);
-//		ejeX.setMaximumDate(c2.getTime());
-//		ejeX.setMinimumDate(c1.getTime());
-//		
-//		NumberAxis ejeY = new NumberAxis();
-//		ejeY.setRange(new Range(0, 540));
-//		
-//		chartPlot = new XYPlot(
-//				modeloPrecios.getPreciosSeleccionados(), 
-//				ejeX, ejeY,new XYLineAndShapeRenderer(true, false));
-//		JFreeChart chart = new JFreeChart(chartPlot);
-//		ChartPanel panel = new ChartPanel(chart);
-		JPanel panel = new JPanel();
-		panel.add(new JButton("hola"));
-		return panel;
+	
+private JPanel getChartPanel2(){
+		
+		try {
+			MDateEntryField entryField = new MDateEntryField();
+
+	        MDateSelectorConstraints c = new MDefaultPullDownConstraints();
+	        entryField.setConstraints(c);
+	        entryField.addMFieldListener(new MFieldListener(){
+	            public void fieldEntered(FocusEvent e)
+	            {
+	                //System.out.println("Entered");
+	            }
+	            public void fieldExited(FocusEvent e)
+	            {
+	                //System.out.println("Exited");
+	            }
+	        });	        
+	        Date fechaIni;
+			JOptionPane.showMessageDialog(this,entryField,"Fecha de Inicial",JOptionPane.INFORMATION_MESSAGE);
+			fechaIni = entryField.getValue();
+			JOptionPane.showMessageDialog(this,entryField,"Fecha de Final",JOptionPane.INFORMATION_MESSAGE);
+	        Date fechaFin=entryField.getValue();
+	        DateAxis ejeX = new DateAxis();
+			Calendar c1 = Calendar.getInstance();
+			c1.setTime(fechaIni);
+			Calendar c2 = Calendar.getInstance();
+			c2.setTime(fechaFin);
+			ejeX.setMaximumDate(c2.getTime());
+			ejeX.setMinimumDate(c1.getTime());
+			System.out.println(fechaIni.toString());
+			System.out.println(fechaFin.toString());
+			DefaultCategoryDataset auxds = new DefaultCategoryDataset();
+			int j=0;
+			String fechaAux;
+			//while (j<modeloPrecios.empresaSeleccionada().size()){
+				//DefaultCategoryDataset auxds = new DefaultCategoryDataset();
+				//for (int i=0;i<200;i++){
+			    while(c1.compareTo(c2)!=0){
+					fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
+					//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
+					DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
+					System.err.println("Fecha: "+fechaAux+ " Volumen: "+aux.getVolumen());
+					auxds.addValue(aux.getVolumen(),"Volumen",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
+					//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),aux.getVolumen());
+					c1.add(Calendar.DATE, 1);
+				}
+			//}
+			JFreeChart chart = ChartFactory.createBarChart(modeloPrecios.empresaSeleccionada(), 
+		            "Dias", "Volumen", auxds, PlotOrientation.VERTICAL, 
+		            true, true, true); 
+			chart.clearSubtitles();
+			chart.getSubtitles().clear();
+			ChartPanel panel = new ChartPanel(chart);
+			return panel;
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+        
 	}
 	private JPanel getChartPanel3(){
 //		DateAxis ejeX = new DateAxis();
@@ -376,7 +419,7 @@ public class MainFrameCliente extends JFrame{
 //		JFreeChart chart = new JFreeChart(chartPlot);
 //		ChartPanel panel = new ChartPanel(chart);
 		JPanel panel = new JPanel();
-		panel.add(new JButton("Pako"));
+		panel.add(new JButton("Pollo"));
 		return panel;
 	}
 	private ChartPanel getChartPanel(){
@@ -533,7 +576,7 @@ public class MainFrameCliente extends JFrame{
 		lEmpresas.add("Empresa3");
 		ModeloOpPendientes mOpPendientes = new ModeloOpPendientes();
 		ModeloCartera mCartera = new ModeloCartera();
-		ModeloPrecioAccionesGrafico mPrecios = new ModeloPrecioAccionesGrafico(lEmpresas);
+		ModeloPrecioAccionesGrafico mPrecios = new ModeloPrecioAccionesGrafico(lEmpresas,new Date(105,7,26));
 		//Cliente p=new Cliente("Pako");
 		MainFrameCliente gui = new MainFrameCliente(mCartera, mOpPendientes, mPrecios);
 		gui.init();

@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.LayoutManager;
+import java.awt.MenuBar;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
@@ -21,6 +24,7 @@ public class FakeInternalFrame extends JPanel{
 	
 	public FakeInternalFrame(String titulo, Component principal){
 		super(new BorderLayout());
+		//super();
 		this.titulo = titulo;
 		this.add(getBarraTitulo(), BorderLayout.NORTH);
 		panelPrincipal.add(principal);
@@ -28,6 +32,7 @@ public class FakeInternalFrame extends JPanel{
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 	
+	public FakeInternalFrame damePanel(){return this;}
 	public JPanel getBarraTitulo(){
 		JPanel panel = new JPanel();
 		panel.setBackground(colorRotulo);
@@ -36,5 +41,9 @@ public class FakeInternalFrame extends JPanel{
 		tituloLabel.setForeground(Color.white);
 		panel.add(tituloLabel);
 		return panel;
+	}
+	
+	public void setMenuBar(JMenuBar menuBar){
+		panelPrincipal.add(menuBar, BorderLayout.NORTH);
 	}
 }

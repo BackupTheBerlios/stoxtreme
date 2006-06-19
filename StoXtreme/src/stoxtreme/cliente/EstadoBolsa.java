@@ -1,6 +1,7 @@
 package stoxtreme.cliente;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 
 import cern.jet.random.engine.MersenneTwister;
@@ -18,7 +19,9 @@ public class EstadoBolsa {
 	
 	public EstadoBolsa(InfoLocal info){
 		this.empresas = info.getEmpresas(); 
-		mAcciones = new ModeloPrecioAccionesGrafico(info.getEmpresas());
+		Calendar c1 = Calendar.getInstance();
+		c1.setTimeInMillis(System.currentTimeMillis());
+		mAcciones = new ModeloPrecioAccionesGrafico(info.getEmpresas(),c1.getTime());
 		mEmpresas = new ModeloEmpresas(info);
 		preciosIniciales = new Hashtable<String,Double>();
 		preciosActuales = new Hashtable<String,Double>();

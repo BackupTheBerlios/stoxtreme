@@ -3,6 +3,7 @@ package stoxtreme.cliente.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 
 import javax.swing.ComboBoxModel;
@@ -22,17 +23,19 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 	private Hashtable colorEmpresa;
 	private ArrayList seleccionado;
 	private Hashtable valoresAcciones;
+	private Hashtable volumenAcciones;
 	
-	public ModeloPrecioAccionesGrafico(ArrayList lEmpresas){
+	public ModeloPrecioAccionesGrafico(ArrayList lEmpresas,Date fecha){
 		listaEmpresas = new ArrayList();
 		colorEmpresa = new Hashtable();
 		seleccionado = new ArrayList();
 		valoresAcciones = new Hashtable();
-		
+		volumenAcciones = new Hashtable();
 		if(lEmpresas.size()>1){
 			for(int i=0; i<lEmpresas.size(); i++){
 				String empresa = (String)lEmpresas.get(i);
 				valoresAcciones.put(empresa, new ValoresEmpresa(empresa,1));
+				volumenAcciones.put(empresa, new ValoresHistoricos(empresa,fecha));
 				listaEmpresas.add(empresa);
 			}
 			seleccionado.add(lEmpresas.get(0));
@@ -110,7 +113,19 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 			textEscucha.setText(Double.toString(valor));
 		}
 	}
-	
+	public void insertaVolumen(String empresa, int volumen){
+		((ValoresHistoricos)volumenAcciones.get(empresa)).insertarSiguienteValor(volumen);
+//		fireTableCellUpdated(listaEmpresas.indexOf(empresa),1);
+//		if(textEscucha != null && empresaEscucha.equals(empresa)){
+//			textEscucha.setText(Double.toString(valor));
+//		}
+	}
+	public String empresaSeleccionada(){
+		if (seleccionado.size()>0){
+			return (String)seleccionado.get(0);
+		}
+		return null;
+	}
 	public TimeSeriesCollection getPreciosSeleccionados(){
 		TimeSeriesCollection series = new TimeSeriesCollection();
 		for(int i=0; i<seleccionado.size(); i++){
@@ -119,7 +134,14 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 		}
 		return series;
 	}
-
+	public TimeSeriesCollection getVolumenSeleccionado(){
+		TimeSeriesCollection series = new TimeSeriesCollection();
+		for(int i=0; i<seleccionado.size(); i++){
+			String empresa = (String)seleccionado.get(i);
+			series.addSeries((ValoresHistoricos)volumenAcciones.get(empresa));
+		}
+		return series;
+	}
 	public ComboBoxModel getModeloComboBox() {
 		ComboBoxModel comboModel = new DefaultComboBoxModel(listaEmpresas.toArray());
 		return comboModel;
