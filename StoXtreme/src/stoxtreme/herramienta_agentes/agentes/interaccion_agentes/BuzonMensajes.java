@@ -1,43 +1,49 @@
 package stoxtreme.herramienta_agentes.agentes.interaccion_agentes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.IDAgente;
-import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 
 // Los buzones son objetos locales del agente, pero que se comunican entre
 // ellos mediante una instancia global
 public class BuzonMensajes {
-	// TODO esto mejor que una hastabla normal deberia ser una clase mas compleja
-	// para poder gestionar las conexiones remotas si se quisiera hacer mas completo
 	private static Hashtable<IDAgente, BuzonMensajes> buzones = new Hashtable<IDAgente, BuzonMensajes>(); 
 	// Planificador del modelo para poder enviar el mensaje
-	private static MonitorAgentes monitorAgentes = null; 
+	private static MonitorAgentes monitor = null;
 	private static ArrayList<String> serviciosDisponibles = new ArrayList<String>();
 	private static Hashtable<String, ArrayList<IDAgente>> servicioAgente = new Hashtable<String, ArrayList<IDAgente>>();
 	
 	// METODOS DE CADA BUZON
 	// Mensajes ordenados
-	private ArrayList<MensajeACL> mensajes;
+	private ArrayList<MensajeACL> mensajesPendientes;
 	// Acciones a al espera de mensajes
 	private IDAgente propietarioBuzon;
-	private ArrayList<RecepcionesPendientes> recepcionesPendientes;
+	private LinkedList<RecepcionesPendientes> recepcionesPendientes;
 	
+	
+	public static void setMonitor(MonitorAgentes monitor){
+		BuzonMensajes.monitor = monitor;
+	}
+	
+	public static BuzonMensajes getBuzon(IDAgente id){
+		return buzones.get(id);
+	}
 	
 	public BuzonMensajes(IDAgente id){
-		this.recepcionesPendientes = new ArrayList<RecepcionesPendientes>();
-		this.mensajes = new ArrayList<MensajeACL>();
+		this.recepcionesPendientes = new LinkedList<RecepcionesPendientes>();
+		this.mensajesPendientes = new ArrayList<MensajeACL>();
 		this.propietarioBuzon = id;
 		buzones.put(id, this);
-		if(monitorAgentes == null)
-			monitorAgentes = _monitor;
 	}
+	
 	
 	public void send(MensajeACL m){
 		ArrayList<IDAgente> ids = m.getReceiver();
@@ -55,57 +61,89 @@ public class BuzonMensajes {
 	}
 	
 	public void receive(int numero, PlantillaMensajes p, RecepcionMensaje action){
-		recepcionesPendientes.add(new RecepcionesPendientes(numero, p, action));
+		RecepcionesPendientes recepcion = new RecepcionesPendientes(numero, p, action);
+		int i=0;
+		while(i<mensajesPendientes.size() && recepcion.isRestantes()){
+			MensajeACL m = mensajesPendientes.get(i);
+			if(recepcion.getPlantilla().coincide(m)){
+				recepcion.addMensaje(m);
+				monitor.addDecision(recepcion.getAccion());
+				mensajesPendientes.remove(i);
+			}
+			else{
+				i++;
+			}
+		}
+
+		if(recepcion.isRestantes()){
+			recepcionesPendientes.add(recepcion);
+		}
 	}
 	
 	// Si al insertar un mensaje modifica alguna condicion inserta en el planificador
 	// la accion correspondiente
 	private void insertaMensaje(MensajeACL m){
-		mensajes.add(m);
+		boolean encontradaRecepcion = false;
 		
-		Iterator<RecepcionesPendientes> it = recepcionesPendientes.iterator();
-		
-		while(it.hasNext()){
-			RecepcionesPendientes rp = it.next();
+		Collections.shuffle(recepcionesPendientes);
+		for(int i=recepcionesPendientes.size()-1; i>=0; i--){
+			RecepcionesPendientes rp = recepcionesPendientes.get(i);
 			if(rp.getPlantilla().coincide(m)){
-				rp.getAccion().addMensaje(m);
+				encontradaRecepcion = true;
+				rp.addMensaje(m);
+				monitor.addDecision(rp.getAccion());
+
 				if(!rp.isRestantes()){
-					monitorAgentes.addDecision(rp.getAccion());
+					// Si se han acabado borra la recepcion
+					recepcionesPendientes.remove(i);
 				}
 			}
+		}
+		
+		if(!encontradaRecepcion){
+			// Espera hasta el momento en el que escuche por el mensaje
+			// TODO: Comprobar al opcion de no persistencia
+			mensajesPendientes.add(m);
 		}
 	}
 	
 	private class RecepcionesPendientes{
-		private int numMensajesRestantes;
+		private int numMensajesRestantes; 
 		private PlantillaMensajes plantilla;
-		private RecepcionMensaje accion;
+		private ArrayList<RecepcionMensaje> acciones;
 		
 		public RecepcionesPendientes(int numMensajes, PlantillaMensajes plantilla, RecepcionMensaje accion) {
 			this.numMensajesRestantes = numMensajes;
 			this.plantilla = plantilla;
-			this.accion = accion;
+			this.acciones = new ArrayList<RecepcionMensaje>();
+			try{
+				for(int i=0; i<numMensajes; i++){
+					RecepcionMensaje clon = (RecepcionMensaje)accion.clone();
+					this.acciones.add(clon);
+				}
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		
 		}
 		
+		public void addMensaje(MensajeACL m) {
+			acciones.get(numMensajesRestantes-1).setMensaje(m);
+		}
+
 		public boolean isRestantes(){
-			return numMensajesRestantes<0;
-		}
-		
-		public void restaNMensajes(){
-			numMensajesRestantes--;
+			return numMensajesRestantes>0;
 		}
 		
 		public RecepcionMensaje getAccion() {
-			return accion;
+			RecepcionMensaje r = acciones.get(numMensajesRestantes-1);
+			numMensajesRestantes--;
+			return r;
 		}
-		public void setAccion(RecepcionMensaje accion) {
-			this.accion = accion;
-		}
+
 		public int getNumMensajes() {
 			return numMensajesRestantes;
-		}
-		public void setNumMensajes(int numMensajes) {
-			this.numMensajesRestantes = numMensajes;
 		}
 		public PlantillaMensajes getPlantilla() {
 			return plantilla;
@@ -142,10 +180,5 @@ public class BuzonMensajes {
 		else{
 			return new ArrayList<IDAgente>();
 		}
-	}
-
-	private static MonitorAgentes _monitor;
-	public static void setMonitor(MonitorAgentes monitor) {
-		_monitor = monitor;
 	}
 }

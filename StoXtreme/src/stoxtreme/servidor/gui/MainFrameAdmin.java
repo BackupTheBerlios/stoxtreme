@@ -59,7 +59,7 @@ public class MainFrameAdmin extends JFrame{
 	}
 	
 	private Component getPanelAgentes() {
-		return new PanelConfigAgentes();
+		return new PanelConfigAgentes(this);
 	}
 	
 	private Component getPanelSesion() {

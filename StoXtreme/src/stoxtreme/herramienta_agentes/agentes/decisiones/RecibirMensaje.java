@@ -18,4 +18,8 @@ public class RecibirMensaje extends Decision{
 	public void ejecuta() {
 		agente.recibeMensaje(n, p, r);
 	}
+	
+	public String toString(){
+		return "Espero recepcion mensaje "+p;
+	}
 }

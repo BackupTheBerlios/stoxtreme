@@ -18,5 +18,7 @@ public class MandarMensaje extends Decision{
 		}
 		agente.enviarMensaje(mensaje);
 	}
-	
+	public String toString(){
+		return "Mando mensaje acl "+mensaje;
+	}
 }

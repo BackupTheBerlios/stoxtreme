@@ -13,7 +13,7 @@ public class PrecioGraficoMoviendose {
 	private int x;
 	private JPanel panel;
 	
-	private int ts1, ts2, hs, anchoTriangulo;
+	private int ts1, ts2, hs, anchoTriangulo, anchoIgual;
 	private int[] xpoints;
 	private int[] ypoints;
 
@@ -28,6 +28,7 @@ public class PrecioGraficoMoviendose {
 		ts1 = fm.stringWidth(empresa);
 		ts2 = fm.stringWidth(valor_str);
 		hs = fm.getHeight()-10;
+		anchoIgual = fm.stringWidth("=");
 
 		anchoTriangulo = (int)Math.sqrt((4.0/3.0)*(hs*hs));
 		
@@ -47,17 +48,26 @@ public class PrecioGraficoMoviendose {
 			ypoints[0] = ypoints[1] = y;
 			ypoints[2] = y-hs;
 		}
-		else{
+		else if (precio < 0.0){
 			g.setColor(Color.RED);
 			ypoints[0] = ypoints[1] = y-hs;
 			ypoints[2] = y;
 		}
+		else{
+			g.setColor(Color.WHITE);
+		}
 		
 		g.setFont(FUENTE);
 		g.drawString(empresa, x, y);
-		g.fillPolygon(xpoints, ypoints, 3);
-		g.drawString(Double.toString(precio), x+ts1+anchoTriangulo+6, y);
 		
+		if(precio != 0.0){
+			g.fillPolygon(xpoints, ypoints, 3);
+			g.drawString(Double.toString(precio), x+ts1+anchoTriangulo+6, y);
+		}
+		else{
+			g.drawString("=", x+ts1+4, y);
+			g.drawString(Double.toString(precio), x+ts1+anchoIgual+6, y);
+		}
 		x-=VELOCIDAD;
 	}
 	

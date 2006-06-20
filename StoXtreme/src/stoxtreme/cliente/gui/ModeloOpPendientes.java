@@ -65,38 +65,9 @@ public class ModeloOpPendientes extends AbstractTableModel{
 		return col==0;
 	}
 	
-	private class EditorOpPendientes extends AbstractCellEditor implements TableCellEditor, ActionListener{
-		private JButton b;
-		
-		public EditorOpPendientes(){
-			b =  new JButton(new ImageIcon("icons/cancel.png"));
-			b.setActionCommand("borra_op");
-			b.addActionListener(this);
-			b.setBorderPainted(false);
-		}
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-			return b;
-		}
-
-		public Object getCellEditorValue() {
-			return " ";
-		}
-		public void actionPerformed(ActionEvent e) {
-			if(JOptionPane.showConfirmDialog(b, "Esta seguro?")==JOptionPane.OK_OPTION){
-				
-			}
-		}
-		
-	}
-	
-	private EditorOpPendientes editor = new EditorOpPendientes();
-	public TableCellEditor getEditor() {
-		return editor;
-	}
-	
 	private DefaultTableCellRenderer renderer = new DefaultTableCellRenderer(){
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			JButton b = new JButton(new ImageIcon("icons/cancel.png"));
+			JButton b = new JButton(new ImageIcon("cancel.png"));
 			b.setEnabled(true);
 			b.setBorderPainted(false);
 			return b;

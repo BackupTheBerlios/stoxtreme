@@ -1,5 +1,15 @@
 package stoxtreme.herramienta_agentes.agentes.comportamiento.informadores;
 
-public class AgentePublicidad {
+import java.util.ArrayList;
 
+import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
+
+public class AgentePublicidad extends ComportamientoAgente{
+	public void configure() {
+		
+	}
+	
+	public void generacionDecisiones() {
+		
+	}
 }

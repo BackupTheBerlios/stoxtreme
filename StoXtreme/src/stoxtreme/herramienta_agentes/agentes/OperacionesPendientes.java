@@ -1,4 +1,5 @@
 package stoxtreme.herramienta_agentes.agentes;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.HashSet;
@@ -54,7 +55,7 @@ public class OperacionesPendientes {
 		comprasPendientes.remove(idOp);
 		ventasPendientes.remove(idOp);
 		empresasPendientes.remove(idOp);
-		cancelacionPendiente.remove(-idOp);
+		cancelacionPendiente.remove(idOp);
 	}
 
 	public boolean hayOperacionesPendientes(String empresa) {
@@ -136,5 +137,19 @@ public class OperacionesPendientes {
 		boolean estaC = comprasPendientes.containsKey(id);
 		boolean estaV = ventasPendientes.containsKey(id);
 		return estaC || estaV;
+	}
+
+	public ArrayList<Integer> dameOperacionesPendientes() {
+		ArrayList<Integer> lista = new ArrayList<Integer>();
+		Enumeration<Integer> idsc = comprasPendientes.keys();
+		Enumeration<Integer> idsv = ventasPendientes.keys();
+		
+		while(idsc.hasMoreElements()){
+			lista.add(idsc.nextElement());
+		}
+		while(idsc.hasMoreElements()){
+			lista.add(idsv.nextElement());
+		}
+		return lista;
 	}
 }

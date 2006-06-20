@@ -50,6 +50,7 @@ public class EstadoBolsa {
 
 	public void cambiaValor(String empresa, double nuevoPrecio) {
 		mAcciones.insertaValor(empresa, nuevoPrecio);
+		preciosActuales.put(empresa, nuevoPrecio);
 	}
 
 	public double getPrecioActualEmpresa(String empresa) {
@@ -70,6 +71,13 @@ public class EstadoBolsa {
 		double actual = preciosActuales.get(empresa);
 		
 		double diferencia = (actual - inicial)/actual;
+		diferencia = redondeo(diferencia, 3); 
 		return diferencia;
+	}
+	public static double redondeo(double numero, int nDecimales){
+		return Math.floor((Math.pow(10, nDecimales)*numero)+0.5)/Math.pow(10, nDecimales);
+	}
+	public double getPrecioAperturaEmpresa(String empresa) {
+		return preciosIniciales.get(empresa);
 	}
 }

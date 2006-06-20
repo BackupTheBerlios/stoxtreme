@@ -17,4 +17,8 @@ public class RequestServicio extends Decision{
 	public void ejecuta() {
 		agente.requestServicio(servicio, proveedores);
 	}
+	
+	public String toString(){
+		return "Peticion de servicio "+servicio;
+	}
 }

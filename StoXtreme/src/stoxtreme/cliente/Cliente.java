@@ -21,6 +21,7 @@ public class Cliente{
 	private static final String URLBASE = "http://localhost:8080/";
 	private static final String URLAXIS = URLBASE+"axis/services/";
 	private static final String URLCONF = URLBASE+"Stoxtreme/config/";
+	private static final String FICH_CONF_AGENTES = "conf/confAgentes.xml";
 	
 	private String nUsuario;
 	private String password;
@@ -168,7 +169,17 @@ public class Cliente{
 	}
 	
 	public void iniciarHerramientaAgentes(){
-		hAgentes.start(servidor, eBolsa);
+		try {
+			hAgentes.start(FICH_CONF_AGENTES, servidor, eBolsa);
+		} catch (Exception e) {
+			System.err.println("Error al iniciar los agentes. Exit");
+			e.printStackTrace();
+			try {
+				deslogea();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 	
 	public void insertarOperacion(Operacion op)throws Exception{
@@ -188,6 +199,7 @@ public class Cliente{
 			opPendientes.quitaOperacion(vOp);
 		}
 		else{
+			System.err.println(idDestino+" "+idOp+" "+cantidad+" "+precio);
 			hAgentes.notificarOperacion(idDestino, idOp, cantidad, precio);
 		}
 	}

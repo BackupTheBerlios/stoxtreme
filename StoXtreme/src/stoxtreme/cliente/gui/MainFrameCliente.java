@@ -177,7 +177,15 @@ public class MainFrameCliente extends JFrame{
 		cartera.setSelected(false);
 		tablaArribaIzq.setModel(modeloOpPendientes);
 		tablaArribaIzq.getColumnModel().getColumn(0).setCellRenderer(modeloOpPendientes.getRenderer());
-		tablaArribaIzq.getColumnModel().getColumn(0).setCellEditor(modeloOpPendientes.getEditor());
+		tablaArribaIzq.getColumnModel().getColumn(0).setCellEditor(new EditorOpPendientes(){
+			public void borraOperacion(int fila) {
+				try {
+					cliente.cancelarOperacion(((Integer)modeloOpPendientes.getValueAt(fila, 1)).intValue());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		tablaArribaIzq.getColumn(tablaArribaIzq.getColumnName(0)).setMaxWidth(10);
 	}
 	
@@ -276,7 +284,15 @@ public class MainFrameCliente extends JFrame{
 		tablaArribaIzq = new JTable(modeloOpPendientes);
 		
 		tablaArribaIzq.getColumnModel().getColumn(0).setCellRenderer(modeloOpPendientes.getRenderer());
-		tablaArribaIzq.getColumnModel().getColumn(0).setCellEditor(modeloOpPendientes.getEditor());
+		tablaArribaIzq.getColumnModel().getColumn(0).setCellEditor(new EditorOpPendientes(){
+			public void borraOperacion(int fila) {
+				try {
+					cliente.cancelarOperacion(((Integer)modeloOpPendientes.getValueAt(fila, 1)).intValue());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		tablaArribaIzq.getColumn(tablaArribaIzq.getColumnName(0)).setMaxWidth(25);
 		panel.add(new JScrollPane(tablaArribaIzq));		
 		return panel;
@@ -461,9 +477,10 @@ private JPanel getChartPanel2(){
 	private Component getPanelIzquierdaAbajo() {
 		JPanel panel = new JPanel(new GridLayout(5, 1));
 		JPanel p = new JPanel();
-		String[] e = {"Empresa1", "Empresa2"};
-		p.add(new JLabel("        Empresa   "));
+		p.add(new JLabel("                Empresa "));
 		empresaSeleccionada = new JComboBox(modeloPrecios.getModeloComboBox());
+		empresaSeleccionada.setSize(new Dimension(90, empresaSeleccionada.getPreferredSize().height));
+		
 		empresaSeleccionada.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				if(seleccionado){
@@ -483,20 +500,22 @@ private JPanel getChartPanel2(){
 		
 		String[] tipos = {"Compra", "Venta"};
 		p = new JPanel();
-		p.add(new JLabel("   Tipo Operacion "));
+		p.add(new JLabel("         Tipo Operacion "));
 		tipoSeleccionado = new JComboBox(tipos);
+		tipoSeleccionado.setPreferredSize(new Dimension(90, tipoSeleccionado.getPreferredSize().height));
 		p.add(tipoSeleccionado);
 		panel.add(p);
 		
 		p = new JPanel();
-		p.add(new JLabel("Numero de acciones"));
-		cantidadSeleccionada = new JTextField(10);
+		p.add(new JLabel("  Numero de acciones "));
+		cantidadSeleccionada = new JTextField(11);
 		p.add(cantidadSeleccionada);
 		panel.add(p);
 		
 		p = new JPanel();
 		p.add(new JLabel("Precio de compra  "));
 		precioSeleccionado = new JTextField(11);
+		
 		p.add(new JCheckBox(new AbstractAction(){
 			
 			public void actionPerformed(ActionEvent e) {

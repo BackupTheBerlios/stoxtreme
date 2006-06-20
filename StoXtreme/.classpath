@@ -34,6 +34,6 @@
 	<classpathentry kind="lib" path="lib/tomcat-util.jar"/>
 	<classpathentry kind="lib" path="lib/axis-ant.jar"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
-	<classpathentry kind="lib" path="C:/hlocal/StoXtreme/lib/MDateSelector14-00347.jar"/>
+	<classpathentry kind="lib" path="lib/MDateSelector14-00347.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

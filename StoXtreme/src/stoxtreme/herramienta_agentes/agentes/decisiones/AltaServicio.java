@@ -10,4 +10,8 @@ public class AltaServicio extends Decision{
 	public void ejecuta() {
 		agente.altaServicio(servicio);
 	}
+	
+	public String toString(){
+		return "Alta Servicio";
+	}
 }

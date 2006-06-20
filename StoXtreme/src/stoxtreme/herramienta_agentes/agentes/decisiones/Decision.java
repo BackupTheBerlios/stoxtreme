@@ -33,10 +33,6 @@ public abstract class Decision implements Comparable{
 		this.tEjecucion = tEspera + ciclo;
 	}
 	
-	public String toString(){
-		return "Decision: " + Integer.toString(tEjecucion);
-	}
-	
 	public void insertarEnMonitor(){
 		_monitor.addDecision(this);
 	}

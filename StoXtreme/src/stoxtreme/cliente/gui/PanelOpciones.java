@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -82,7 +83,13 @@ public class PanelOpciones extends JPanel{
 			s = new String(((JPasswordField)opciones.get(opcion)).getPassword());
 		}
 		else{
-			s = ((JTextField)opciones.get(opcion)).getText();
+			Component comp = opciones.get(opcion);
+			if(comp instanceof JComboBox){
+				s = (String)((JComboBox)comp).getSelectedItem();
+			}
+			else{
+				s = ((JTextField)comp).getText();
+			}
 		}
 		return s;
 	}
@@ -204,5 +211,20 @@ public class PanelOpciones extends JPanel{
 			}
 		}
 		
+	}
+	
+	public void setOpcionalidad(String opcion, String[] valores){
+		JComboBox combo = new JComboBox(valores);
+		opciones.put(opcion, combo);
+		init();
+		updateUI();
+	}
+	
+	public void setOpcionalidad(String opcion, String[] valores, ActionListener listener){
+		JComboBox combo = new JComboBox(valores);
+		combo.addActionListener(listener);
+		opciones.put(opcion, combo);
+		init();
+		updateUI();
 	}
 }

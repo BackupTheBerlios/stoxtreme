@@ -19,7 +19,7 @@ public class MensajeACL {
 	
 	// Contenido del mensaje
 	private String contenidoString;
-	private Object contenidoObject;
+	private Object contenidoObjeto;
 	
 	
 	// Identificador de la conversacion
@@ -111,12 +111,12 @@ public class MensajeACL {
 		return contenidoString;
 	}
 
-	public void setContenidoObject(Object contenidoObject) {
-		this.contenidoObject = contenidoObject;
+	public void setContenidoObjeto(Object contenidoObjeto) {
+		this.contenidoObjeto = contenidoObjeto;
 	}
 
-	public Object getContenidoObject() {
-		return contenidoObject;
+	public Object getContenidoObjeto() {
+		return contenidoObjeto;
 	}
 
 	public void setConversation_id(IDConversacion conversation_id) {
@@ -156,12 +156,27 @@ public class MensajeACL {
 	}
 
 	public Object getContenido() {
-		if(this.contenidoObject != null){
-			return contenidoObject;
+		if(this.contenidoObjeto != null){
+			return contenidoObjeto;
 		}
 		else if(this.contenidoString != null){
 			return contenidoString;
 		}
 		else return null;
+	}
+	
+	public String toString(){
+		StringBuffer buf = new StringBuffer();
+		buf.append(sender);
+		buf.append(",");
+		buf.append(receiver);
+		buf.append(",");
+		buf.append(contenidoString);
+		buf.append(",");
+		buf.append(protocol);
+		buf.append(",");
+		buf.append(performative);
+		buf.append(",");
+		return buf.toString();
 	}
 }

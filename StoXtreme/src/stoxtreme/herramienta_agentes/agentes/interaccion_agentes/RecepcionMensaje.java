@@ -2,22 +2,20 @@ package stoxtreme.herramienta_agentes.agentes.interaccion_agentes;
 
 import java.util.ArrayList;
 
-import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 
-public abstract class RecepcionMensaje extends Decision{
-	protected ArrayList<MensajeACL> listaMensajes;
+public abstract class RecepcionMensaje extends Decision implements Cloneable{
+	protected MensajeACL mensajeRecibido;
 	
 	public RecepcionMensaje(){
-		super();
-		listaMensajes = new ArrayList<MensajeACL>();
+
 	}
 	
-	public void addMensaje(MensajeACL m){
-		listaMensajes.add(m);
+	public void setMensaje(MensajeACL m){
+		this.mensajeRecibido = m;
 	}
 	
-	public void removeMensaje(MensajeACL m){
-		listaMensajes.remove(m);
+	public Object clone() throws CloneNotSupportedException{
+		return super.clone();
 	}
 }

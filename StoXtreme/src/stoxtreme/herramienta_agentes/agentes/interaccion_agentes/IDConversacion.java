@@ -10,6 +10,10 @@ public class IDConversacion {
 		this.ID = id;
 	}
 	
+	public IDConversacion(){
+		
+	}
+	
 	public boolean equals(Object o){
 		return (o instanceof IDAgente) 
 			&& ((IDConversacion)o).getID().equals(ID);

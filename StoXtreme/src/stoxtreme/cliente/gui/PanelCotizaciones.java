@@ -23,7 +23,7 @@ public class PanelCotizaciones extends JPanel implements ActionListener{
 	ArrayList<String> empresas;
 	private double[] cotizaciones;
 	
-	private ArrayList listaMovimientos;
+	private ArrayList<PrecioGraficoMoviendose> listaMovimientos;
 	private int siguienteIndice;
 	
 	private EstadoBolsa bolsa;
@@ -35,11 +35,11 @@ public class PanelCotizaciones extends JPanel implements ActionListener{
 		cotizaciones = new double[empresas.size()];
 		
 		for(int i=0; i<empresas.size(); i++){
-			cotizaciones[i] = bolsa.getPrecioActualEmpresa(empresas.get(i));
+			cotizaciones[i] = 0.0;
 		}
 		
 		siguienteIndice = 1;
-		listaMovimientos = new ArrayList();
+		listaMovimientos = new ArrayList<PrecioGraficoMoviendose>();
 		
 		Timer timer = new Timer(100,this);
 		timer.start();

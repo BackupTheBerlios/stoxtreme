@@ -10,10 +10,6 @@ public class Notificador {
 	private static Hashtable<String, ListenerNotificador> observadores =
 		new Hashtable<String, ListenerNotificador>();
 	
-	public Notificador(){
-
-	}
-	
 	public void addListener(String id, ListenerNotificador a){
 		observadores.put(id, a);
 	}

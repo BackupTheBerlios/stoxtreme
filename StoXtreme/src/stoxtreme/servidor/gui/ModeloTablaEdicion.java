@@ -12,10 +12,11 @@ import javax.swing.table.TableCellRenderer;
 import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ModeloPsicologico;
 
-public abstract class EditorTableModel extends AbstractTableModel implements TableCellRenderer{
+public abstract class ModeloTablaEdicion extends AbstractTableModel implements TableCellRenderer{
 	public static int MODELO_PSICOLOGICO = 0;
 	public static int MODELO_SOCIAL = 1;
 	
+	private String id;
 	private Hashtable<String, String> valores;
 	private TreeSet<String> distribuidas;
 	private ComboTextoCellEditor editor;
@@ -52,11 +53,12 @@ public abstract class EditorTableModel extends AbstractTableModel implements Tab
 		"uniforme1", "normal2", "binomial3"	
 	};
 
-	public EditorTableModel(int tipo, ComboTextoCellEditor editor2){
+	public ModeloTablaEdicion(int tipo, ComboTextoCellEditor editor2, String id){
 		this.tipo = tipo;
 		valores = new Hashtable<String, String>();
 		distribuidas = new TreeSet<String>();
 		this.editor = editor2;
+		this.id = id;
 	}
 	
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -172,6 +174,10 @@ public abstract class EditorTableModel extends AbstractTableModel implements Tab
 			v = valores.get(params_social[row]);
 		}
 		return new JLabel(v);
+	}
+	
+	public String toString(){
+		return id;
 	}
 	
 	public abstract void actualiza();

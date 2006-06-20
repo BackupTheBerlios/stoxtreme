@@ -79,8 +79,6 @@ public class Agente extends Thread{
 			synchronized(this){
 				comportamiento.generaDecisionesAll();
 				decisiones = comportamiento.getDecisiones();
-				Decision espera = comportamiento.getDecisionEspera();
-				decisiones.add(espera);
 			}
 			
 			Iterator<Decision> itDec = decisiones.iterator();
@@ -90,6 +88,9 @@ public class Agente extends Thread{
 				actual.insertarEnMonitor();
 				imprime(actual);
 			}
+			Decision espera = comportamiento.getDecisionEspera();
+			espera.insertarEnMonitor();
+			imprime(espera);
 			
 			try {
 				synchronized(this){
@@ -190,5 +191,9 @@ public class Agente extends Thread{
 		 for(int i=0; i<lista.size(); i++){
 			 proveedores.add(lista.get(i));
 		 }
+	}
+
+	public ModeloSocial getModeloSocial() {
+		return this.modeloSocial;
 	}
 }

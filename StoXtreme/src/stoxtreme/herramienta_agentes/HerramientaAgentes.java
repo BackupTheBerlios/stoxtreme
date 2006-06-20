@@ -13,13 +13,11 @@ import stoxtreme.cliente.EstadoBolsa;
 import stoxtreme.cliente.ManejadorMensajes;
 import stoxtreme.cliente.gui.HerramientaAgentesPanel;
 import stoxtreme.herramienta_agentes.agentes.Agente;
-import stoxtreme.herramienta_agentes.agentes.GeneradorParametrosPsicologicos;
-import stoxtreme.herramienta_agentes.agentes.GeneradorParametrosSocial;
+import stoxtreme.herramienta_agentes.agentes.ConstructorAgentes;
 import stoxtreme.herramienta_agentes.agentes.IDAgente;
 import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
 import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
-import stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoBroker;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.prueba.ComportamientoPrueba;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
@@ -55,7 +53,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();
 	
-	public void start(Stoxtreme servidor, EstadoBolsa eBolsa){
+	public void start(String ficheroConfAgentes, Stoxtreme servidor, EstadoBolsa eBolsa) throws Exception{
 		//int nAgentes = (Integer)parametros.get(ParametrosAgentes.Parametro.NUM_AGENTES);
 		int nAgentes = 3;
 		monitor = new MonitorAgentes(servidor, this);
@@ -64,25 +62,13 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		Decision.setMonitor(monitor);
 		BuzonMensajes.setMonitor(monitor);
 		
-		GeneradorParametrosPsicologicos gPP = new GeneradorParametrosPsicologicos(nAgentes);
-		gPP.generarTiempoEspera(20.0, 5.0);
-		gPP.generaNumeroAcciones(10, 100, 10, 100, 3);
-		gPP.generaPorcentajes(0.1, 0.1, 0.01, 0.1, 0.01, 0.1);
-
-		GeneradorParametrosSocial gPS = new GeneradorParametrosSocial(nAgentes);
+		ConstructorAgentes constructor = new ConstructorAgentes();
+		agentes = constructor.construyeAgentes(
+				monitor.getConexionBolsa(), 
+				eBolsa, monitor.getConsolaAgentes(),
+				notif,
+				ficheroConfAgentes, nAgentes);
 		
-		for (int i=0; i<nAgentes; i++){
-			String id = "Agente"+i;
-			ParametrosPsicologicos pp = gPP.get(i);
-			ParametrosSocial ps = gPS.get(i);
-			ComportamientoAgente comportamiento1 = new ComportamientoBroker();
-			
-			Agente agente = new Agente(monitor.getConexionBolsa(), eBolsa, monitor.getConsolaAgentes(), ps, pp);
-			notif.addListener(agente.getIDString(), agente.getPerceptor());
-			agente.addComportamiento(comportamiento1);
-			agente.start();
-			agentes.add(agente);
-		}
 		super.addListaAgentes(agentes);
 	}
 	

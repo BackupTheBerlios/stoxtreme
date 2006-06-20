@@ -1,43 +1,46 @@
 package stoxtreme.servidor.gui;
 import stoxtreme.servidor.gui.ComboTextoCellEditor;
-import stoxtreme.servidor.gui.EditorTableModel;
+import stoxtreme.servidor.gui.ModeloTablaEdicion;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.TableColumnModelListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import stoxtreme.servidor.gui.FakeInternalFrame;
 
 public class PanelConfigAgentes extends JPanel{
-	private DefaultTableModel modeloTabla = new DefaultTableModel();
 	private DefaultListModel modeloListaSocial = new DefaultListModel();
 	private DefaultListModel modeloListaPsicologica = new DefaultListModel();
 	private DefaultListModel modeloListaDistribucion = new DefaultListModel();
 	private DefaultTreeModel modeloComportamientos = new DefaultTreeModel(new DefaultMutableTreeNode("Comportamientos"));
+	private JFrame frame;
+	private JList listaPsicologico;
+	private JList listaDistribuciones;
+	private JList listaSocial;
+	private JTree arbolComportamientos;
 	
-	public PanelConfigAgentes(){
+	public PanelConfigAgentes(JFrame frame){
 		try{
 			init();
 		}
@@ -81,26 +84,16 @@ public class PanelConfigAgentes extends JPanel{
 	}
 	
 	public void actualiza2(){
-		tabla.repaint();
+		tablaEdicion.repaint();
 	}
-	JTable tabla;
+	JTable tablaEdicion;
 	
 	private Component getPanelEditor() {
-		ComboTextoCellEditor editor = new ComboTextoCellEditor(EditorTableModel.params_psicologicos.length, EditorTableModel.params_psicologicos);
 		
-		EditorTableModel modelo = new EditorTableModel(EditorTableModel.MODELO_PSICOLOGICO, editor){
-			public void actualiza() {
-				actualiza2();
-			}
-		};
 		
-		tabla = new JTable(modelo);
-		tabla.getColumnModel().getColumn(1).setCellEditor(editor);
-		tabla.getColumnModel().getColumn(1).setCellRenderer(editor);
+		tablaEdicion = new JTable();
 		
-		tabla.getColumn(tabla.getColumnName(2)).setMaxWidth(60);
-
-		JScrollPane panel = new JScrollPane(tabla);
+		JScrollPane panel = new JScrollPane(tablaEdicion);
 		return panel;
 	}
 
@@ -138,13 +131,25 @@ public class PanelConfigAgentes extends JPanel{
 	
 	private Component getPanelComportamientos() {
 		JPanel panel = new JPanel(new BorderLayout());
-		JTree arbolComportamientos = new JTree(modeloComportamientos);
+		arbolComportamientos = new JTree(modeloComportamientos);
 		JScrollPane scroll = new JScrollPane(arbolComportamientos);
 		
 		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
-		botones.add(new JButton("+"));
-		botones.add(new JButton("-"));
+		JButton boton1 = new JButton("+");
+		boton1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				addComportamiento();
+			}
+		});
+		JButton boton2 = new JButton("-");
+		boton1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				subComportamiento();
+			}
+		});
+		botones.add(boton1);
+		botones.add(boton2);
 		
 		panel.add(scroll, BorderLayout.CENTER);
 		panel.add(botones, BorderLayout.SOUTH);
@@ -153,11 +158,23 @@ public class PanelConfigAgentes extends JPanel{
 
 	private Component getPanelDistribuciones() {
 		JPanel panel = new JPanel(new BorderLayout());
-		JList lista = new JList(modeloListaDistribucion); 
-		JScrollPane scroll = new JScrollPane(lista);
+		listaDistribuciones = new JList(modeloListaDistribucion); 
+		JScrollPane scroll = new JScrollPane(listaDistribuciones);
 		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		botones.add(new JButton("+"));
-		botones.add(new JButton("-"));
+		JButton boton1 = new JButton("+");
+		boton1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				addDistribucion();
+			}
+		});
+		JButton boton2 = new JButton("-");
+		boton2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				subDistribucion();
+			}
+		});
+		botones.add(boton1);
+		botones.add(boton2);
 		panel.add(scroll, BorderLayout.CENTER);
 		panel.add(botones, BorderLayout.SOUTH);
 		return panel;
@@ -187,23 +204,63 @@ public class PanelConfigAgentes extends JPanel{
 	
 	private Component getPanelModeloSocial() {
 		JPanel panel = new JPanel(new BorderLayout());
-		JList lista = new JList(modeloListaSocial); 
-		JScrollPane scroll = new JScrollPane(lista);
+		listaSocial = new JList(modeloListaSocial); 
+		listaSocial.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() >= 2){
+					listaSocial_dblClick();
+				}
+			}
+		});
+		JScrollPane scroll = new JScrollPane(listaSocial);
 		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		botones.add(new JButton("+"));
-		botones.add(new JButton("-"));
+		JButton boton1 = new JButton("+");
+		boton1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				addSocial();
+			}
+		});
+		JButton boton2 = new JButton("-");
+		boton2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				subSocial();
+			}
+		});
+		botones.add(boton1);
+		botones.add(boton2);
+		
 		panel.add(scroll, BorderLayout.CENTER);
 		panel.add(botones, BorderLayout.SOUTH);
 		return panel;
 	}
-
+	
+	
 	private Component getPanelModeloPsicologico() {
 		JPanel panel = new JPanel(new BorderLayout());
-		JList lista = new JList(modeloListaPsicologica); 
-		JScrollPane scroll = new JScrollPane(lista);
+		listaPsicologico = new JList(modeloListaPsicologica); 
+		listaPsicologico.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() >= 2){
+					listaPsicologico_dblClick();
+				}
+			}
+		});
+		JScrollPane scroll = new JScrollPane(listaPsicologico);
 		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		botones.add(new JButton("+"));
-		botones.add(new JButton("-"));
+		JButton boton1 = new JButton("+");
+		boton1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				addPsicologico();
+			}
+		});
+		JButton boton2 = new JButton("-");
+		boton2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				subPsicologico();
+			}
+		});
+		botones.add(boton1);
+		botones.add(boton2);
 		panel.add(scroll, BorderLayout.CENTER);
 		panel.add(botones, BorderLayout.SOUTH);
 		return panel;
@@ -211,9 +268,129 @@ public class PanelConfigAgentes extends JPanel{
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
-		frame.add(new PanelConfigAgentes());
+		frame.add(new PanelConfigAgentes(frame));
 		frame.setSize(new Dimension(800,600));
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	public void addComportamiento(){
+		
+	}
+	
+	public void subComportamiento(){
+		
+	}
+	
+	public void addDistribucion(){
+		DialogoInsertarDistribucion dialogo = new DialogoInsertarDistribucion(frame);
+		dialogo.setVisible(true);
+		String tipo = dialogo.getTipo();
+		String id = dialogo.getId();
+		double p1 = dialogo.getP1();
+		double p2 = dialogo.getP2();
+		
+		if(DialogoInsertarDistribucion.NORMAL.equals(tipo)){
+			modeloListaDistribucion.addElement(new ElementoDistribucion(id, tipo, p1, p2));
+		}
+		else{
+			modeloListaDistribucion.addElement(new ElementoDistribucion(id, tipo, p1));
+		}
+	}
+	
+	public void subDistribucion(){
+		Object[] elimina = listaDistribuciones.getSelectedValues();
+		for(int i=0; i<elimina.length; i++){
+			modeloListaDistribucion.removeElement(elimina[i]);
+		}
+	}
+	
+	public void addSocial(){
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, ModeloTablaEdicion.params_psicologicos);
+		String id = JOptionPane.showInputDialog(this, "Introduzca identificador para el modelo");
+		ModeloTablaEdicion modelo = new ModeloTablaEdicion(ModeloTablaEdicion.MODELO_SOCIAL, editor, id){
+			public void actualiza() {
+				actualiza2();
+			}
+		};
+		
+		modeloListaSocial.addElement(modelo);
+		tablaEdicion.setModel(modelo);
+		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
+		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
+		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
+
+	}
+	
+	public void subSocial(){
+		
+	}
+	
+	public void listaSocial_dblClick(){
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, ModeloTablaEdicion.params_psicologicos);
+		ModeloTablaEdicion modelo = (ModeloTablaEdicion)listaSocial.getSelectedValue();
+		tablaEdicion.setModel(modelo);
+		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
+		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
+		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
+
+	}
+	
+	public void addPsicologico(){
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, ModeloTablaEdicion.params_psicologicos);
+		String id = JOptionPane.showInputDialog(this, "Introduzca identificador para el modelo");
+		ModeloTablaEdicion modelo = new ModeloTablaEdicion(ModeloTablaEdicion.MODELO_PSICOLOGICO, editor, id){
+			public void actualiza() {
+				actualiza2();
+			}
+		};
+		
+		modeloListaPsicologica.addElement(modelo);
+		tablaEdicion.setModel(modelo);
+		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
+		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
+		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
+	}
+	
+	public void subPsicologico(){
+		
+	}
+	
+	public void listaPsicologico_dblClick(){
+		ModeloTablaEdicion modelo = (ModeloTablaEdicion)listaPsicologico.getSelectedValue();
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, ModeloTablaEdicion.params_psicologicos);
+		tablaEdicion.setModel(modelo);
+		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
+		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
+		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
+	}
+
+	private class ElementoDistribucion{
+		public String tipo;
+		public double p1;
+		public double p2;
+		public int nParam;
+		public String id;
+		
+		public ElementoDistribucion(String id, String tipo, double p1){
+			nParam = 1;
+			this.tipo = tipo;
+			this.id = id;
+			this.p1 = p1;
+		}
+		
+		public ElementoDistribucion(String id, String tipo, double p1, double p2){
+			nParam = 2;
+			this.id = id;
+			this.tipo = tipo;
+			this.p1 = p1;
+			this.p2 = p2;
+		}
+		
+		public String toString(){
+			return id +" - "+ tipo+"("+p1+((nParam==2)?(","+p2):"")+")";
+		}
+	}
+	
+	
 }

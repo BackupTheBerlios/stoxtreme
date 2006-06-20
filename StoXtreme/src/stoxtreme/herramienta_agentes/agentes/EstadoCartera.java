@@ -1,4 +1,4 @@
-package stoxtreme.herramienta_agentes.agentes.comportamiento;
+package stoxtreme.herramienta_agentes.agentes;
 import java.util.Hashtable;
 
 public class EstadoCartera {
@@ -10,7 +10,7 @@ public class EstadoCartera {
 
 	public void insertaAcciones(String empresa, int cantidad) {
 		int n = 0;
-		if(cartera.contains(empresa)){
+		if(cartera.containsKey(empresa)){
 			n = cartera.get(empresa).intValue();
 		}
 		cartera.put(empresa, cantidad+n);
@@ -21,13 +21,9 @@ public class EstadoCartera {
 		if(cartera.containsKey(empresa)){
 			n = cartera.get(empresa);
 		}
-		cartera.put(empresa, cantidad-n);
+		cartera.put(empresa, n-cantidad);
 		if(cantidad-n == 0)
 			cartera.remove(empresa);
-	}
-
-	public void actualiza() {
-		
 	}
 
 	public boolean tieneAccionesPosesion(String empresa) {
@@ -35,7 +31,6 @@ public class EstadoCartera {
 	}
 
 	public int numeroAccionesPosesion(String empresa) {
-		return cartera.get(empresa);
+		return cartera.containsKey(empresa)?cartera.get(empresa):0;
 	}
-
 }

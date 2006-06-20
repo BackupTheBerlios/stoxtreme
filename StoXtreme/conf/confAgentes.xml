@@ -67,18 +67,18 @@
 		
 		<comportamiento 
 			id="agentes_principal" 
-			tipo_comportamiento="bolsa_repast.agentes.comportamiento.inversores.ComportamientoAleatorio" 
+			tipo_comportamiento="stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoAleatorio" 
 			modelo_psicologico="psicologico1" 
 			modelo_social="social1" 
 			porcentaje="70"
 		>
-			<comportamiento id="sc1" tipo_comportamiento="bolsa_repast.agentes.comportamiento.inversores.ComportamientoCompraRecomendacion"/>
-			<comportamiento id="sc2" tipo_comportamiento="bolsa_repast.agentes.comportamiento.inversores.ComportamientoRumor"/>
+			<comportamiento id="sc1" tipo_comportamiento="stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoCompraRecomendacion"/>
+			<comportamiento id="sc2" tipo_comportamiento="stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoRumor"/>
 		</comportamiento>
 		
 		<comportamiento 
 			id="agentes_ruido" 
-			tipo_comportamiento="bolsa_repast.agentes.comportamiento.inversores.ComportamientoAleatorio"
+			tipo_comportamiento="stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoAleatorio"
 			modelo_psicologico="psicologico1" 
 			modelo_social="social1" 
 			porcentaje="15"
@@ -86,7 +86,7 @@
 		
 		<comportamiento 
 			id="emisor_rumores" 
-			tipo_comportamiento="bolsa_repast.agentes.comportamiento.informadores.AgenteRumores"
+			tipo_comportamiento="stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgenteRumores"
 			modelo_psicologico="psicologico1" 
 			modelo_social="social1" 
 			porcentaje="5"
@@ -94,7 +94,7 @@
 		
 		<comportamiento 
 			id="agentes_tecnicos" 
-			tipo_comportamiento="bolsa_repast.agentes.comportamiento.informadores.AgenteAnalisisTecnico"
+			tipo_comportamiento="stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgenteAnalisisTecnico"
 			modelo_psicologico="psicologico1" 
 			modelo_social="social1" 
 			porcentaje="5"
@@ -102,7 +102,7 @@
 		
 		<comportamiento 
 			id="agentes_fundamental" 
-			tipo_comportamiento="bolsa_repast.agentes.comportamiento.informadores.AgenteAnalisisFundamental"
+			tipo_comportamiento="stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgenteAnalisisFundamental"
 			modelo_psicologico="psicologico1" 
 			modelo_social="social1" 
 			porcentaje="5"

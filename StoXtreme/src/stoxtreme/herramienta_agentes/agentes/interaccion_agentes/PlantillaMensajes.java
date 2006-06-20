@@ -2,6 +2,8 @@ package stoxtreme.herramienta_agentes.agentes.interaccion_agentes;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class PlantillaMensajes{
 	public enum Campos{
@@ -37,7 +39,7 @@ public class PlantillaMensajes{
 			if(m.getContenidoString()!=null)
 				coincide &= m.getContenidoString().equals(map.get(Campos.CONTENIDO));
 			else{
-				coincide &= (m.getContenidoObject()!=null&&m.getContenidoObject().equals(map.get(Campos.CONTENIDO)));
+				coincide &= (m.getContenidoObjeto()!=null&&m.getContenidoObjeto().equals(map.get(Campos.CONTENIDO)));
 			}
 		}
 		if(map.containsKey(Campos.CONVERSATION_ID)){
@@ -54,5 +56,21 @@ public class PlantillaMensajes{
 
 	public void add(Campos campo, Object contenido) {
 		map.put(campo, contenido);
+	}
+	
+	public String toString(){
+		StringBuffer strbuf = new StringBuffer();
+		Set<Campos> claves = map.keySet();
+		Iterator<Campos> it = claves.iterator();
+		
+		while(it.hasNext()){
+			Campos campo = it.next();
+			strbuf.append("(");
+			strbuf.append(campo);
+			strbuf.append(",");
+			strbuf.append(map.get(campo));
+			strbuf.append(")");
+		}
+		return strbuf.toString();
 	}
 }

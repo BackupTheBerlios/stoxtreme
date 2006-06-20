@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import stoxtreme.cliente.EstadoBolsa;
+import stoxtreme.herramienta_agentes.agentes.EstadoCartera;
 import stoxtreme.herramienta_agentes.agentes.OperacionesPendientes;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Espera;
