@@ -48,14 +48,13 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		this.notif = new Notificador();
 		//receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
 //		receptor.addListener(this);
-		agentes = new ArrayList<Agente>();
 	}
 	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();
 	
 	public void start(String ficheroConfAgentes, Stoxtreme servidor, EstadoBolsa eBolsa) throws Exception{
 		//int nAgentes = (Integer)parametros.get(ParametrosAgentes.Parametro.NUM_AGENTES);
-		int nAgentes = 3;
+		int nAgentes = 20;
 		monitor = new MonitorAgentes(servidor, this);
 		monitor.addTimerListener(this);
 		monitor.start();
@@ -66,7 +65,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		agentes = constructor.construyeAgentes(
 				monitor.getConexionBolsa(), 
 				eBolsa, monitor.getConsolaAgentes(),
-				notif,
+				notif,modeloTabla,
 				ficheroConfAgentes, nAgentes);
 		
 		super.addListaAgentes(agentes);

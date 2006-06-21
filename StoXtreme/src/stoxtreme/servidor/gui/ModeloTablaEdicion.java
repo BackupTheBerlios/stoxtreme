@@ -181,4 +181,12 @@ public abstract class ModeloTablaEdicion extends AbstractTableModel implements T
 	}
 	
 	public abstract void actualiza();
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

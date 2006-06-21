@@ -26,10 +26,24 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import stoxtreme.servidor.gui.FakeInternalFrame;
 
 public class PanelConfigAgentes extends JPanel{
+	// TODO esto que lo pille por la entrada
+	private static String[] tiposComportamientos ={
+		"stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgenteAnalisisFundamental",
+		"stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgenteAnalisisTecnico",
+		"stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgentePublicidad",
+		"stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgenteRumores",
+		
+		"stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoAleatorio",
+		"stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoCompraRecomendacion",
+		"stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoRumor",
+	};
+	
 	private DefaultListModel modeloListaSocial = new DefaultListModel();
 	private DefaultListModel modeloListaPsicologica = new DefaultListModel();
 	private DefaultListModel modeloListaDistribucion = new DefaultListModel();
@@ -39,6 +53,7 @@ public class PanelConfigAgentes extends JPanel{
 	private JList listaDistribuciones;
 	private JList listaSocial;
 	private JTree arbolComportamientos;
+	
 	
 	public PanelConfigAgentes(JFrame frame){
 		try{
@@ -159,6 +174,13 @@ public class PanelConfigAgentes extends JPanel{
 	private Component getPanelDistribuciones() {
 		JPanel panel = new JPanel(new BorderLayout());
 		listaDistribuciones = new JList(modeloListaDistribucion); 
+		listaDistribuciones.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() >= 2){
+					listaDistribuciones_dblClick();
+				}
+			}
+		});
 		JScrollPane scroll = new JScrollPane(listaDistribuciones);
 		JPanel botones = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JButton boton1 = new JButton("+");
@@ -275,7 +297,47 @@ public class PanelConfigAgentes extends JPanel{
 	}
 	
 	public void addComportamiento(){
-		
+		if(	modeloListaPsicologica.size() != 0 &&
+			modeloListaSocial.size() != 0){
+//			String[] distribuciones = new String[modeloListaDistribucion.size()];
+//			for(int i=0; i<modeloListaDistribucion.size(); i++){
+//				distribuciones[i] = ((ElementoDistribucion)modeloListaDistribucion.getElementAt(i)).getId();
+//			}
+			String[] psicologicos = new String[modeloListaPsicologica.size()];
+			for(int i=0; i<modeloListaPsicologica.size(); i++){
+				psicologicos[i] = ((Par)modeloListaPsicologica.getElementAt(i)).getModelo().getId();
+			}
+			String[] sociales = new String[modeloListaSocial.size()];
+			for(int i=0; i<modeloListaSocial.size(); i++){
+				sociales[i] = ((Par)modeloListaSocial.getElementAt(i)).getModelo().getId();
+			}
+			
+			DialogoInsertarComportamiento dialogo = new DialogoInsertarComportamiento(
+					frame,
+					sociales,
+					psicologicos,
+					tiposComportamientos
+			);
+			
+			dialogo.setVisible(true);
+			ElementoComportamiento elemento = 
+				new ElementoComportamiento(dialogo.getId(), dialogo.getTipoComportamiento(), 
+						dialogo.getModeloPsicologico(), dialogo.getModeloSocial(), dialogo.getPorcentaje());
+			
+			TreePath path = arbolComportamientos.getSelectionPath();
+			MutableTreeNode nodo = (MutableTreeNode)path.getLastPathComponent();
+			modeloComportamientos.insertNodeInto(new DefaultMutableTreeNode(elemento),nodo, 0);
+			path = path.pathByAddingChild(nodo);
+			arbolComportamientos.expandPath(path);
+		}
+		else{
+			if(modeloListaPsicologica.size() == 0){
+				JOptionPane.showMessageDialog(frame, "Error. No hay modelos psicologicos", "Error",JOptionPane.ERROR_MESSAGE);
+			}
+			else{
+				JOptionPane.showMessageDialog(frame, "Error. No hay modelos sociales", "Error",JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 	
 	public void subComportamiento(){
@@ -285,16 +347,19 @@ public class PanelConfigAgentes extends JPanel{
 	public void addDistribucion(){
 		DialogoInsertarDistribucion dialogo = new DialogoInsertarDistribucion(frame);
 		dialogo.setVisible(true);
-		String tipo = dialogo.getTipo();
-		String id = dialogo.getId();
-		double p1 = dialogo.getP1();
-		double p2 = dialogo.getP2();
 		
-		if(DialogoInsertarDistribucion.NORMAL.equals(tipo)){
-			modeloListaDistribucion.addElement(new ElementoDistribucion(id, tipo, p1, p2));
-		}
-		else{
-			modeloListaDistribucion.addElement(new ElementoDistribucion(id, tipo, p1));
+		if(dialogo.isAceptado()){
+			String tipo = dialogo.getTipo();
+			String id = dialogo.getId();
+			double p1 = dialogo.getP1();
+			double p2 = dialogo.getP2();
+			
+			if(DialogoInsertarDistribucion.NORMAL.equals(tipo)){
+				modeloListaDistribucion.addElement(new ElementoDistribucion(id, tipo, p1, p2));
+			}
+			else{
+				modeloListaDistribucion.addElement(new ElementoDistribucion(id, tipo, p1));
+			}
 		}
 	}
 	
@@ -305,16 +370,45 @@ public class PanelConfigAgentes extends JPanel{
 		}
 	}
 	
+	public void listaDistribuciones_dblClick(){
+		ElementoDistribucion dist = (ElementoDistribucion)listaDistribuciones.getSelectedValue();
+		DialogoInsertarDistribucion dialogo = 
+			new DialogoInsertarDistribucion(frame, dist.getId(), dist.getTipo(), dist.getP1(), dist.getP2());
+		dialogo.setVisible(true);
+		
+		if(dialogo.isAceptado()){
+			String tipo = dialogo.getTipo();
+			String id = dialogo.getId();
+			double p1 = dialogo.getP1();
+			double p2 = dialogo.getP2();
+			
+			int index = listaDistribuciones.getSelectedIndex();
+			if(DialogoInsertarDistribucion.NORMAL.equals(tipo)){
+				modeloListaDistribucion.setElementAt(new ElementoDistribucion(id, tipo, p1, p2),index);
+			}
+			else{
+				modeloListaDistribucion.setElementAt(new ElementoDistribucion(id, tipo, p1),index);
+			}
+		}
+	}
+	
+	public void pararEdicion(){
+		if(tablaEdicion.getColumnModel().getColumnCount()>0){
+			ComboTextoCellEditor editor = 
+				(ComboTextoCellEditor)tablaEdicion.getColumnModel().getColumn(1).getCellEditor();
+			editor.paraEdicion();
+		}
+	}
 	public void addSocial(){
-		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, ModeloTablaEdicion.params_psicologicos);
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, modeloListaDistribucion);
 		String id = JOptionPane.showInputDialog(this, "Introduzca identificador para el modelo");
 		ModeloTablaEdicion modelo = new ModeloTablaEdicion(ModeloTablaEdicion.MODELO_SOCIAL, editor, id){
 			public void actualiza() {
 				actualiza2();
 			}
 		};
-		
-		modeloListaSocial.addElement(modelo);
+		pararEdicion();
+		modeloListaSocial.addElement(new Par(modelo, editor));
 		tablaEdicion.setModel(modelo);
 		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
 		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
@@ -323,12 +417,16 @@ public class PanelConfigAgentes extends JPanel{
 	}
 	
 	public void subSocial(){
-		
+		Object[] elimina = listaSocial.getSelectedValues();
+		for(int i=0; i<elimina.length; i++){
+			modeloListaSocial.removeElement(elimina[i]);
+		}
 	}
 	
 	public void listaSocial_dblClick(){
-		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, ModeloTablaEdicion.params_psicologicos);
-		ModeloTablaEdicion modelo = (ModeloTablaEdicion)listaSocial.getSelectedValue();
+		pararEdicion();
+		ModeloTablaEdicion modelo = ((Par)listaSocial.getSelectedValue()).getModelo();
+		ComboTextoCellEditor editor = ((Par)listaSocial.getSelectedValue()).getEditor();
 		tablaEdicion.setModel(modelo);
 		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
 		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
@@ -337,15 +435,15 @@ public class PanelConfigAgentes extends JPanel{
 	}
 	
 	public void addPsicologico(){
-		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, ModeloTablaEdicion.params_psicologicos);
+		pararEdicion();
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, modeloListaDistribucion);
 		String id = JOptionPane.showInputDialog(this, "Introduzca identificador para el modelo");
 		ModeloTablaEdicion modelo = new ModeloTablaEdicion(ModeloTablaEdicion.MODELO_PSICOLOGICO, editor, id){
 			public void actualiza() {
 				actualiza2();
 			}
 		};
-		
-		modeloListaPsicologica.addElement(modelo);
+		modeloListaPsicologica.addElement(new Par(modelo,editor));
 		tablaEdicion.setModel(modelo);
 		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
 		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
@@ -353,12 +451,16 @@ public class PanelConfigAgentes extends JPanel{
 	}
 	
 	public void subPsicologico(){
-		
+		Object[] elimina = listaPsicologico.getSelectedValues();
+		for(int i=0; i<elimina.length; i++){
+			modeloListaPsicologica.removeElement(elimina[i]);
+		}
 	}
 	
 	public void listaPsicologico_dblClick(){
-		ModeloTablaEdicion modelo = (ModeloTablaEdicion)listaPsicologico.getSelectedValue();
-		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, ModeloTablaEdicion.params_psicologicos);
+		pararEdicion();
+		ModeloTablaEdicion modelo = ((Par)listaPsicologico.getSelectedValue()).getModelo();
+		ComboTextoCellEditor editor = ((Par)listaPsicologico.getSelectedValue()).getEditor();
 		tablaEdicion.setModel(modelo);
 		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
 		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
@@ -372,6 +474,38 @@ public class PanelConfigAgentes extends JPanel{
 		public int nParam;
 		public String id;
 		
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public double getP1() {
+			return p1;
+		}
+
+		public void setP1(double p1) {
+			this.p1 = p1;
+		}
+
+		public double getP2() {
+			return p2;
+		}
+
+		public void setP2(double p2) {
+			this.p2 = p2;
+		}
+
+		public String getTipo() {
+			return tipo;
+		}
+
+		public void setTipo(String tipo) {
+			this.tipo = tipo;
+		}
+
 		public ElementoDistribucion(String id, String tipo, double p1){
 			nParam = 1;
 			this.tipo = tipo;
@@ -392,5 +526,96 @@ public class PanelConfigAgentes extends JPanel{
 		}
 	}
 	
+	private class ElementoComportamiento{
+		private String id;
+		private String modeloPsicologico;
+		private String modeloSocial;
+		private String tipoComportamiento;
+		private double porcentaje;
+		
+		public ElementoComportamiento(String id, String comportamiento, String psicologico, String social, double porcentaje) {
+			this.id = id;
+			modeloPsicologico = psicologico;
+			modeloSocial = social;
+			this.porcentaje = porcentaje;
+			tipoComportamiento = comportamiento;
+		}
+		
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public String getModeloPsicologico() {
+			return modeloPsicologico;
+		}
+		public void setModeloPsicologico(String modeloPsicologico) {
+			this.modeloPsicologico = modeloPsicologico;
+		}
+		public String getModeloSocial() {
+			return modeloSocial;
+		}
+		public void setModeloSocial(String modeloSocial) {
+			this.modeloSocial = modeloSocial;
+		}
+		public double getPorcentaje() {
+			return porcentaje;
+		}
+		public void setPorcentaje(double porcentaje) {
+			this.porcentaje = porcentaje;
+		}
+		public String getTipoComportamiento() {
+			return tipoComportamiento;
+		}
+		public void setTipoComportamiento(String tipoComportamiento) {
+			this.tipoComportamiento = tipoComportamiento;
+		}
+		
+		public String toString(){
+			StringBuffer buf = new StringBuffer();
+			buf.append(id);
+			buf.append("(");
+			buf.append(tipoComportamiento);
+			buf.append(",");
+			buf.append(modeloSocial);
+			buf.append(",");
+			buf.append(modeloPsicologico);
+			buf.append(",");
+			buf.append(porcentaje);
+			buf.append(")");
+			return buf.toString();
+		}
+	}
+	
+	private class Par{
+		private ModeloTablaEdicion modelo;
+		private ComboTextoCellEditor editor;
+		
+		public Par(ModeloTablaEdicion modelo, ComboTextoCellEditor editor){
+			this.modelo = modelo;
+			this.editor = editor;
+		}
+
+		public ComboTextoCellEditor getEditor() {
+			return editor;
+		}
+
+		public void setEditor(ComboTextoCellEditor editor) {
+			this.editor = editor;
+		}
+
+		public ModeloTablaEdicion getModelo() {
+			return modelo;
+		}
+
+		public void setModelo(ModeloTablaEdicion modelo) {
+			this.modelo = modelo;
+		}
+		
+		public String toString(){
+			return modelo.toString();
+		}
+	}
 	
 }

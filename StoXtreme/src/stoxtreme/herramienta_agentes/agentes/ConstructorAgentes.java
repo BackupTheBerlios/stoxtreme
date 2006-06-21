@@ -16,6 +16,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.traversal.NodeIterator;
 
 import stoxtreme.cliente.EstadoBolsa;
+import stoxtreme.cliente.gui.HerramientaAgentesTableModel;
 import stoxtreme.herramienta_agentes.ConsolaAgentes;
 import stoxtreme.herramienta_agentes.Notificador;
 import stoxtreme.herramienta_agentes.agentes.Agente;
@@ -35,7 +36,7 @@ public class ConstructorAgentes {
 			Stoxtreme conexionBolsa, 
 			EstadoBolsa estado, 
 			ConsolaAgentes consolaAgentes,
-			Notificador notif, String fichero,
+			Notificador notif, HerramientaAgentesTableModel modeloTabla, String fichero,
 			int numAgentes
 	) throws Exception{
 		ArrayList<Agente> agentes = new ArrayList<Agente>();
@@ -56,7 +57,7 @@ public class ConstructorAgentes {
 				ParametrosPsicologicos  pp = generaParametrosPsicologico(fichAgentes, actual.getAttribute("modelo_psicologico"), distribuciones);
 				ComportamientoAgente c = (ComportamientoAgente)Class.forName(actual.getAttribute("tipo_comportamiento")).newInstance();
 				procesaSubComportamientos(fichAgentes, actual.getAttribute("id"), c);
-				Agente agente = new Agente(conexionBolsa,estado,consolaAgentes,ps, pp);
+				Agente agente = new Agente(conexionBolsa,estado,consolaAgentes,modeloTabla,ps, pp);
 				agente.addComportamiento(c);
 				//double dineroInicial = java.lang.Double.parseDouble(modelo.getDineroInicial());
 				agentes.add(agente);

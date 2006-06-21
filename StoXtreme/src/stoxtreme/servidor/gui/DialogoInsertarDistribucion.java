@@ -9,12 +9,13 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import stoxtreme.cliente.gui.FakeInternalFrame;
-import stoxtreme.cliente.gui.PanelOpciones;
+import stoxtreme.servidor.gui.FakeInternalFrame;
+import stoxtreme.servidor.gui.PanelOpciones;
 
 public class DialogoInsertarDistribucion extends JDialog implements ActionListener{
 	public static String UNIFORME = "Distribucion Uniforme";
@@ -47,6 +48,30 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 		}
 	}
 	
+	public DialogoInsertarDistribucion(JFrame frame, String id, String tipo, double p1, double p2) {
+		this(frame);
+		// Ahora seteamos los valores antiguos
+		panelOpciones.setValor("Distribucion", tipo);
+		panelOpciones.setValor("Identificador", id);
+		
+		panelDependiente.removeAll();
+		if(UNIFORME.equals(tipo)){
+			panelDependiente.add(getPanelOpcionesUniforme());
+			panelParametros.setValor("Media", Double.toString(p1));
+		}
+		else if(NORMAL.equals(tipo)){
+			panelDependiente.add(getPanelOpcionesNormal());
+			panelParametros.setValor("Media", Double.toString(p1));
+			panelParametros.setValor("Desviacion tipica", Double.toString(p1));
+		}
+		else{
+			panelDependiente.add(getPanelOpcionesPoisson());
+			panelParametros.setValor("Lambda", Double.toString(p1));
+		}
+		panelDependiente.updateUI();
+		pack();
+	}
+
 	public void init(){
 		JPanel panel = new JPanel(new BorderLayout());
 		getContentPane().add(panel);
@@ -196,6 +221,10 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public boolean isAceptado() {
+		return aceptado;
 	}
 	
 	

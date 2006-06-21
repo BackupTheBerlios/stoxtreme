@@ -60,7 +60,7 @@ public class ComportamientoCompraRecomendacion extends ComportamientoAgente{
 		decisiones.add(new RecibirMensaje(1, pInform, rInform));
 		
 		listaProveedores = new ArrayList<IDAgente>();
-		decisiones.add(new RequestServicio(AgenteAnalisisFundamental.NOMBRE_SERVICIO, listaProveedores));
+//		decisiones.add(new RequestServicio(AgenteAnalisisFundamental.NOMBRE_SERVICIO, listaProveedores));
 		pendienteRespuesta = false;
 		ultimoEnviado = -1;
 	}

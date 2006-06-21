@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.AbstractCellEditor;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -17,10 +18,10 @@ import javax.swing.table.TableCellRenderer;
 public class ComboTextoCellEditor extends AbstractCellEditor implements TableCellEditor, TableCellRenderer{
 	private ArrayList<Component> lista;  
 	private int actual;
-	private String[] valores;
+	private DefaultListModel modelo;
 	
-	public ComboTextoCellEditor(int nParam, String[] valores){
-		this.valores = valores;
+	public ComboTextoCellEditor(int nParam, DefaultListModel modeloDistros){
+		this.modelo = modeloDistros;
 		lista = new ArrayList<Component>(nParam);
 		for(int i=0; i<nParam; i++){
 			lista.add(new JTextField());
@@ -52,7 +53,12 @@ public class ComboTextoCellEditor extends AbstractCellEditor implements TableCel
 	}
 
 	public void setCombo(int rowIndex) {
-		JComboBox combo =  new JComboBox(valores);
+		Vector<Object> v = new Vector(modelo.size());
+		for(int i=0; i<modelo.size(); i++){
+			v.add(modelo.getElementAt(i));
+		}
+		
+		JComboBox combo =  new JComboBox(v);
 		combo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				parar_seleccion();
@@ -63,5 +69,15 @@ public class ComboTextoCellEditor extends AbstractCellEditor implements TableCel
 	
 	private void parar_seleccion() {
 		fireEditingStopped();
+	}
+
+	public void paraEdicion() {
+		for(int i=0;i<lista.size(); i++){
+			Component comp = lista.get(i);
+			if(comp instanceof JTextField){
+				String s = ((JTextField)comp).getText();
+				((JTextField)comp).setText(s);
+			}
+		}
 	}
 }

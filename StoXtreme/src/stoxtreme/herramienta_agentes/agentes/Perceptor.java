@@ -12,6 +12,7 @@ public class Perceptor implements ListenerNotificador{
 	private EstadoCartera estadoCartera = null;
 	private OperacionesPendientes opPendientes = null;
 	private ArrayList<ComportamientoAgente> gDecisiones = null;
+	private Agente agente;
 	
 	public Perceptor() {
 		gDecisiones = new ArrayList<ComportamientoAgente>();
@@ -42,9 +43,11 @@ public class Perceptor implements ListenerNotificador{
 			switch (tipoOp){
 				case Operacion.COMPRA:
 					estadoCartera.insertaAcciones(empresa, cantidad);
+					agente.decrementaBeneficio(cantidad*precio);
 					break;
 				case Operacion.VENTA:
 					estadoCartera.quitaAcciones(empresa, cantidad);
+					agente.incrementaBeneficio(cantidad*precio);
 					break;
 			}
 			
@@ -57,5 +60,9 @@ public class Perceptor implements ListenerNotificador{
 		for(int i=0; i<gDecisiones.size(); i++){
 			gDecisiones.get(i).notifica(-idOp);
 		}
+	}
+
+	public void setAgente(Agente agente) {
+		this.agente = agente;
 	}
 }

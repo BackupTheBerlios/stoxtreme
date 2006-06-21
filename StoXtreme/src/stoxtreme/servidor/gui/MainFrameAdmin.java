@@ -141,11 +141,12 @@ public class MainFrameAdmin extends JFrame{
 	DefaultListModel modeloSesiones;
 
 	public Component getPanelControl(){
-		JScrollPane panelScrollDerecha = new JScrollPane(new JTable(modeloOperaciones));
+		TableSorter sorter = new TableSorter(modeloOperaciones);
+		JTable tablaOperaciones = new JTable(sorter);
+		sorter.setTableHeader(tablaOperaciones.getTableHeader());
+		JScrollPane panelScrollDerecha = new JScrollPane(tablaOperaciones);
 		panelScrollDerecha.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panelDerecha = new FakeInternalFrame("Log de Operaciones", panelScrollDerecha);
-		
-		
 		
 		JTable tablaPrecios = new JTable(modeloPrecios);
 		tablaPrecios.getColumn(tablaPrecios.getColumnName(1)).setCellRenderer(modeloPrecios.getRenderer());

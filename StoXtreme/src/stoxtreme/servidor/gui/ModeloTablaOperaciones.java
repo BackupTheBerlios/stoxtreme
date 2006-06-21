@@ -59,6 +59,18 @@ public class ModeloTablaOperaciones extends AbstractTableModel{
 		}
 	}
 	
+	public Class getColumnClass(int column) {
+		switch (column){
+			case 0: case 3:
+				return Integer.class;
+			case 1:case 2: case 5:
+				return String.class; 
+			case 4:
+				return Double.class;
+			default:
+				return Object.class;
+		}
+	}
 	public void insertarOperacion(Operacion o){
 		listaOperaciones.add(o);
 		int fila = listaOperaciones.size()-1;

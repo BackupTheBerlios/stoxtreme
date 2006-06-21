@@ -94,6 +94,24 @@ public class PanelOpciones extends JPanel{
 		return s;
 	}
 	
+	public void setValor(String opcion, String valor){
+		if(chooser.contains(opcion)){
+			vChooser.put(opcion,valor);
+		}
+		else if(password.contains(opcion)){
+			// No dejamos setear los password
+		}
+		else{
+			Component comp = opciones.get(opcion);
+			if(comp instanceof JComboBox){
+				((JComboBox)comp).setSelectedItem(valor);
+			}
+			else{
+				((JTextField)comp).setText(valor);
+			}
+		}
+	}
+	
 	public void init(){
 		add(getPanelPrincipal(), BorderLayout.CENTER);
 	}

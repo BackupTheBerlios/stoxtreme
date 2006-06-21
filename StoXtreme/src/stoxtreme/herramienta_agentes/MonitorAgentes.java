@@ -32,7 +32,6 @@ public class MonitorAgentes extends Thread{
 		ciclo = 0;
 		exit = false;
 		esperaTimer = new Object();
-		listaAgentes = new ArrayList<Agente>();
 		listaTimerListeners = new ArrayList<TimerListener>();
 		Timer t = new Timer(true);
 		TimerTask task = new TimerTask(){

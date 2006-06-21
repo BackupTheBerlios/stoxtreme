@@ -68,4 +68,14 @@ public class HerramientaAgentesTableModel extends AbstractTableModel{
 		}
 		return ret;
 	}
+	
+	public void cambioEnAgente(String id){
+		int i=0;
+		while(i<elementos.size() && !elementos.get(i).getIDString().equals(id)){
+			i++;
+		}
+		if(i<elementos.size()){
+			fireTableRowsUpdated(i,i);
+		}
+	}
 }

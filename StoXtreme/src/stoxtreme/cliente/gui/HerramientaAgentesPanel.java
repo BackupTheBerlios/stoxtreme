@@ -29,7 +29,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	
 	private StyledDocument textoNotificacion;
 	private StyledDocument textoConsola;
-	private HerramientaAgentesTableModel modeloTabla;
+	protected HerramientaAgentesTableModel modeloTabla;
 	
 	private JButton botonIniciarPararSistema;
 	private JButton botonEliminar;

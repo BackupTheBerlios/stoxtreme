@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -32,7 +33,7 @@ public class PanelOpciones extends JPanel{
 		this(claves, new ArrayList<String>(), new ArrayList<String>());
 	}
 	public PanelOpciones(ArrayList<String> claves, ArrayList<String> passw){
-		this(claves, new ArrayList<String>(), new ArrayList<String>());
+		this(claves, passw, new ArrayList<String>());
 	}
 	
 	public PanelOpciones(
@@ -82,9 +83,33 @@ public class PanelOpciones extends JPanel{
 			s = new String(((JPasswordField)opciones.get(opcion)).getPassword());
 		}
 		else{
-			s = ((JTextField)opciones.get(opcion)).getText();
+			Component comp = opciones.get(opcion);
+			if(comp instanceof JComboBox){
+				s = (String)((JComboBox)comp).getSelectedItem();
+			}
+			else{
+				s = ((JTextField)comp).getText();
+			}
 		}
 		return s;
+	}
+	
+	public void setValor(String opcion, String valor){
+		if(chooser.contains(opcion)){
+			vChooser.put(opcion,valor);
+		}
+		else if(password.contains(opcion)){
+			// No dejamos setear los password
+		}
+		else{
+			Component comp = opciones.get(opcion);
+			if(comp instanceof JComboBox){
+				((JComboBox)comp).setSelectedItem(valor);
+			}
+			else{
+				((JTextField)comp).setText(valor);
+			}
+		}
 	}
 	
 	public void init(){
@@ -204,5 +229,20 @@ public class PanelOpciones extends JPanel{
 			}
 		}
 		
+	}
+	
+	public void setOpcionalidad(String opcion, String[] valores){
+		JComboBox combo = new JComboBox(valores);
+		opciones.put(opcion, combo);
+		init();
+		updateUI();
+	}
+	
+	public void setOpcionalidad(String opcion, String[] valores, ActionListener listener){
+		JComboBox combo = new JComboBox(valores);
+		combo.addActionListener(listener);
+		opciones.put(opcion, combo);
+		init();
+		updateUI();
 	}
 }

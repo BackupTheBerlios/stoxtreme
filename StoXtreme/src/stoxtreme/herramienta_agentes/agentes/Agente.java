@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import stoxtreme.cliente.EstadoBolsa;
+import stoxtreme.cliente.gui.HerramientaAgentesTableModel;
 import stoxtreme.herramienta_agentes.ConsolaAgentes;
 import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.*;
@@ -31,10 +32,12 @@ public class Agente extends Thread{
 	private ConsolaAgentes consolaAgentes;
 	private double ganancias = 0.0;
 	private EstadoBolsa estadoBolsa;
+	private HerramientaAgentesTableModel modeloTabla;
 	
-	public Agente (Stoxtreme conexionBolsa, EstadoBolsa estado, ConsolaAgentes consolaAgentes, ParametrosSocial ps, ParametrosPsicologicos pp){
+	public Agente (Stoxtreme conexionBolsa, EstadoBolsa estado, ConsolaAgentes consolaAgentes, HerramientaAgentesTableModel modeloTabla, ParametrosSocial ps, ParametrosPsicologicos pp){
 		ID = new IDAgente();
 		p = new Perceptor();
+		this.modeloTabla = modeloTabla;
 		
 		modeloSocial = new ModeloSocial(ps);
 		modeloPsicologico = new ModeloPsicologico(pp);
@@ -46,6 +49,7 @@ public class Agente extends Thread{
 //		monitor.addNotificadorListener(ID.toString(), p);
 		
 		opPendientes = new OperacionesPendientes();
+		p.setAgente(this);
 		p.setOperacionesPendientes(opPendientes);
 //		p.setEstadoBolsa(estadoBolsa);
 		p.setEstadoCartera(estadoCartera);
@@ -88,7 +92,9 @@ public class Agente extends Thread{
 				actual.insertarEnMonitor();
 				imprime(actual);
 			}
+			decisiones.clear();
 			Decision espera = comportamiento.getDecisionEspera();
+			espera.setAgente(this);
 			espera.insertarEnMonitor();
 			imprime(espera);
 			
@@ -195,5 +201,19 @@ public class Agente extends Thread{
 
 	public ModeloSocial getModeloSocial() {
 		return this.modeloSocial;
+	}
+
+	public void decrementaBeneficio(double d) {
+		ganancias-=d;
+		fireUpdateTable();
+	}
+
+	public void incrementaBeneficio(double d) {
+		ganancias+=d;
+		fireUpdateTable();
+	}
+	
+	public void fireUpdateTable(){
+		modeloTabla.cambioEnAgente(getIDString());
 	}
 }
