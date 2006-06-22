@@ -19,6 +19,7 @@ import stoxtreme.cliente.EstadoBolsa;
 import stoxtreme.cliente.gui.HerramientaAgentesTableModel;
 import stoxtreme.herramienta_agentes.ConsolaAgentes;
 import stoxtreme.herramienta_agentes.Notificador;
+import stoxtreme.herramienta_agentes.ParametrosAgentes;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
 import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
@@ -37,7 +38,7 @@ public class ConstructorAgentes {
 			EstadoBolsa estado, 
 			ConsolaAgentes consolaAgentes,
 			Notificador notif, HerramientaAgentesTableModel modeloTabla, String fichero,
-			int numAgentes
+			ParametrosAgentes parametros
 	) throws Exception{
 		ArrayList<Agente> agentes = new ArrayList<Agente>();
 		// Parseamos el fichero
@@ -45,10 +46,10 @@ public class ConstructorAgentes {
 		// Primero generamos las distribuciones de probabilidad
 		Hashtable<String,AbstractDistribution> distribuciones = generaDistribuciones(fichAgentes);
 		// Creamos los parametros sociales y psicologicos de los modelos
-		
 		NodeIterator iterator = XPathAPI.selectNodeIterator(fichAgentes, "//comportamientos/comportamiento");
-		
 		Element actual;
+		int numAgentes = parametros.getInt(ParametrosAgentes.Parametro.NUM_AGENTES);
+//		int tEspera = parametros.getInt(ParametrosAgentes.Parametro.TIEMPO_ESPERA);
 		// Vamos generando por cada tipo de agentes
 		while((actual=(Element)iterator.nextNode())!=null){
 			int nAgentesCreacion = (int) (numAgentes * (Double.parseDouble(actual.getAttribute("porcentaje"))/100));

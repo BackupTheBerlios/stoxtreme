@@ -24,7 +24,7 @@ public class MonitorAgentes extends Thread{
 	private Stoxtreme conexion;
 	private ConsolaAgentes consola;
 	
-	public MonitorAgentes(Stoxtreme conexion, ConsolaAgentes consola){
+	public MonitorAgentes(Stoxtreme conexion, ConsolaAgentes consola, int tiempoCiclo){
 		this.conexion = conexion;
 		this.consola = consola;
 		this.pausa = false;
@@ -41,7 +41,7 @@ public class MonitorAgentes extends Thread{
 				}
 			}
 		};
-		t.schedule(task, new Date(), 200);
+		t.schedule(task, new Date(), tiempoCiclo);
 	}
 	
 	public void addAgente(Agente a){

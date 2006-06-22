@@ -16,6 +16,7 @@ import javax.swing.*;
 
 import stoxtreme.cliente.Cliente;
 import stoxtreme.herramienta_agentes.ConsolaAgentes;
+import stoxtreme.herramienta_agentes.ParametrosAgentes;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.IDAgente;
 import stoxtreme.interfaz_remota.Operacion;
@@ -38,8 +39,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private Cliente cliente;
 	
 	private boolean parado = true;
+	private JFrame frame;
 	
-	public HerramientaAgentesPanel() {
+	public HerramientaAgentesPanel(JFrame frame) {
 		try{
 			init();
 		}
@@ -132,7 +134,13 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	}
 
 	private void botonIniciar_actionPerformed(){
-		cliente.iniciarHerramientaAgentes();
+		DialogoParametrosAgentes dialogo = new DialogoParametrosAgentes(frame);
+		dialogo.setVisible(true);
+		ParametrosAgentes parametros = new ParametrosAgentes();
+		parametros.set(ParametrosAgentes.Parametro.NUM_AGENTES, dialogo.getNAgentes());
+		parametros.set(ParametrosAgentes.Parametro.TIEMPO_ESPERA, dialogo.getTEjecucion());
+		parametros.set(ParametrosAgentes.Parametro.TCICLO, dialogo.getTCiclo());
+		cliente.iniciarHerramientaAgentes(parametros);
 		botonIniciarPararSistema.setText("Parar Sistema");
 		botonEditar.setEnabled(true);
 		botonEliminar.setEnabled(true);
@@ -254,25 +262,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
         s = doc.addStyle("red", regular);
         StyleConstants.setForeground(s, Color.red);
     }
-	
-	
-	public static void main(String[] args){
-		try {
-			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
-		JFrame frame = new JFrame();
-		HerramientaAgentesPanel hp = new HerramientaAgentesPanel();
-		frame.add(hp);
-		hp.insertarNotificacion("Agente", "Notif");
-		hp.insertarAccion("Agente", "Accion");
-		frame.setSize(new Dimension(800,600));
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}

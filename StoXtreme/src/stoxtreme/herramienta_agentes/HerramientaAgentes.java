@@ -35,14 +35,16 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	private Notificador notif;
 	JFrame frame;
 	
-	public HerramientaAgentes(){
-		super();
+	public HerramientaAgentes(JFrame frame){
+		super(frame);
 	}
 
 	public HerramientaAgentes(
+			JFrame frame,
 			String nombreUsuario, 
 			EstadoBolsa bolsa, 
 			ParametrosAgentes parametros){
+		super(frame);
 		IDAgente.setUsuario(nombreUsuario);
 		this.parametros = parametros;
 		this.notif = new Notificador();
@@ -52,10 +54,9 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();
 	
-	public void start(String ficheroConfAgentes, Stoxtreme servidor, EstadoBolsa eBolsa) throws Exception{
-		//int nAgentes = (Integer)parametros.get(ParametrosAgentes.Parametro.NUM_AGENTES);
-		int nAgentes = 20;
-		monitor = new MonitorAgentes(servidor, this);
+	public void start(ParametrosAgentes parametros, String ficheroConfAgentes, Stoxtreme servidor, EstadoBolsa eBolsa) throws Exception{
+		int tCiclo = parametros.getInt(ParametrosAgentes.Parametro.TCICLO);
+		monitor = new MonitorAgentes(servidor, this, tCiclo);
 		monitor.addTimerListener(this);
 		monitor.start();
 		Decision.setMonitor(monitor);
@@ -66,7 +67,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 				monitor.getConexionBolsa(), 
 				eBolsa, monitor.getConsolaAgentes(),
 				notif,modeloTabla,
-				ficheroConfAgentes, nAgentes);
+				ficheroConfAgentes, parametros);
 		
 		super.addListaAgentes(agentes);
 	}

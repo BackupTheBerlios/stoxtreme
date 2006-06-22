@@ -3,7 +3,7 @@ package stoxtreme.herramienta_agentes;
 import java.util.EnumMap;
 
 public class ParametrosAgentes{
-	public enum Parametro{NUM_AGENTES,TIEMPO_ESPERA};
+	public enum Parametro{NUM_AGENTES,TIEMPO_ESPERA,TCICLO};
 	private EnumMap<Parametro, Object> parametros;
 	
 	public ParametrosAgentes(){
@@ -14,7 +14,10 @@ public class ParametrosAgentes{
 		parametros.put(p, v);
 	}
 	
-	public Object get(Parametro p){
-		return parametros.get(p);
+	public int getInt(Parametro p){
+		return (Integer)parametros.get(p);
+	}
+	public double getDouble(Parametro p){
+		return (Double)parametros.get(p);
 	}
 }

@@ -158,7 +158,7 @@ public class Cliente{
 		System.err.println("Creando Parametros");
 		ParametrosAgentes parametros = new ParametrosAgentes();
 		System.err.println("Creando Agentes");
-		hAgentes = new HerramientaAgentes(nUsuario, eBolsa, parametros);
+		hAgentes = new HerramientaAgentes(gui, nUsuario, eBolsa, parametros);
 		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa, hAgentes);
 		gui.init();
 		gui.pack();
@@ -168,9 +168,9 @@ public class Cliente{
 		receptor.addListener(new ManejadorMensajes(this));
 	}
 	
-	public void iniciarHerramientaAgentes(){
+	public void iniciarHerramientaAgentes(ParametrosAgentes parametros){
 		try {
-			hAgentes.start(FICH_CONF_AGENTES, servidor, eBolsa);
+			hAgentes.start(parametros, FICH_CONF_AGENTES, servidor, eBolsa);
 		} catch (Exception e) {
 			System.err.println("Error al iniciar los agentes. Exit");
 			e.printStackTrace();
