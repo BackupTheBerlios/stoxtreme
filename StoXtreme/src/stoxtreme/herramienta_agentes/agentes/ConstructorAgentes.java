@@ -28,6 +28,8 @@ import stoxtreme.interfaz_remota.Stoxtreme;
 
 import cern.jet.random.AbstractDistribution;
 import cern.jet.random.Normal;
+import cern.jet.random.Poisson;
+import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister;
 
 import com.sun.org.apache.xpath.internal.XPathAPI;
@@ -134,16 +136,38 @@ public class ConstructorAgentes {
 
 	private Hashtable<String, AbstractDistribution> generaDistribuciones(Document d)throws Exception{
 		Hashtable<String, AbstractDistribution> t = new Hashtable<String, AbstractDistribution>();
-		// Cogemos las uniformes
-		NodeIterator iterator = XPathAPI.selectNodeIterator(d, "//dist_uniforme");
+		MersenneTwister generador = new MersenneTwister(new Date());
+		// Cogemos las normales
+		NodeIterator iterator = XPathAPI.selectNodeIterator(d, "//dist_normal");
 		Element actual;
 		
 		while((actual = (Element)iterator.nextNode())!=null){
 			String clave = actual.getAttribute("id");
 			double media = Double.parseDouble(actual.getAttribute("media"));
 			double desvTipica = Double.parseDouble(actual.getAttribute("desviacion_tipica"));
-			Normal normal = new Normal(media, desvTipica, new MersenneTwister(new Date()));
+			Normal normal = new Normal(media, desvTipica, generador);
 			t.put(clave, normal);
+		}
+		
+		// Cogemos las poisson
+		iterator = XPathAPI.selectNodeIterator(d, "//dist_poisson");
+
+		while((actual = (Element)iterator.nextNode())!=null){
+			String clave = actual.getAttribute("id");
+			double lambda = Double.parseDouble(actual.getAttribute("lambda"));
+			Poisson poisson = new Poisson(lambda, generador);
+			t.put(clave, poisson);
+		}
+		
+		// Cogemos las uniformes
+		iterator = XPathAPI.selectNodeIterator(d, "//dist_uniforme");
+
+		while((actual = (Element)iterator.nextNode())!=null){
+			String clave = actual.getAttribute("id");
+			double minimo = Double.parseDouble(actual.getAttribute("minimo"));
+			double maximo = Double.parseDouble(actual.getAttribute("maximo"));
+			Uniform uniforme = new Uniform(minimo, maximo, generador);
+			t.put(clave, uniforme);
 		}
 		return t;
 	}

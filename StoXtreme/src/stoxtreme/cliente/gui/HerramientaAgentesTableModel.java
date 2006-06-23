@@ -47,7 +47,12 @@ public class HerramientaAgentesTableModel extends AbstractTableModel{
 	}
 	
 	public Class getColumnClass(int columnIndex) {
-		return columnIndex==0?Boolean.class:Object.class;
+		switch(columnIndex){
+			case 0: return Boolean.class;
+			case 1: case 2: case 3: return String.class;
+			case 4: return Double.class;
+			default: return Object.class;
+		}
 	}
 	
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -60,6 +65,7 @@ public class HerramientaAgentesTableModel extends AbstractTableModel{
 			default: return"";
 		}
 	}
+	
 	public ArrayList<Agente> dameSeleccionados() {
 		ArrayList<Agente> ret = new ArrayList(seleccionadas.size());
 		Iterator<Integer> it = seleccionadas.iterator();

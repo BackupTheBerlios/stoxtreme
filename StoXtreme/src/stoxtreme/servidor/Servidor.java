@@ -1,31 +1,19 @@
-/*
- * TODO:
- * 	- Falta todo lo de los parametros
- *  - Falta la ejecucion
- *  - Falta con la interfaz grafica
- */
-
 package stoxtreme.servidor;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Administrador;
 import stoxtreme.interfaz_remota.Stoxtreme;
-import stoxtreme.servicio_web.AdministradorServiceLocator;
 import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.gestion_usuarios.GestionUsuarios;
 import stoxtreme.servidor.gui.MainFrameAdmin;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
-import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
-import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -146,7 +134,12 @@ public class Servidor implements Administrador, Stoxtreme{
 		Connector connector = webServer.createConnector((InetAddress)null,8080,false);
 		webServer.addConnector(connector);
 		
-		webServer.start();
+		try {
+			webServer.start();
+		} catch (LifecycleException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
 	}
 	
 	public static void main(String[] argv){
@@ -190,6 +183,7 @@ public class Servidor implements Administrador, Stoxtreme{
 		guiAdmin.setModeloPrecios(estadoBolsa);
 		guiAdmin.setServidor(this);
 		guiAdmin.init();
+		
 		/*TODO SALE AL CERRAR!!! CAMBIAR ESTO DESPUES DE PROBARLO*/
 		guiAdmin.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
@@ -203,7 +197,6 @@ public class Servidor implements Administrador, Stoxtreme{
 		
 		reloj = new Reloj(param.getTiempo());
 		// Insertamos en el reloj los objetos bolsa
-		
 		Enumeration eObBols = objetosBolsa.keys();
 		while(eObBols.hasMoreElements()){
 			reloj.addListener(objetosBolsa.get(eObBols.nextElement()));
@@ -219,12 +212,10 @@ public class Servidor implements Administrador, Stoxtreme{
 		}
 		// Empezar cogiendo el tiempo de paso
 		// Crear un Timer que ejecute run cada tiempo de paso
-		reloj.iniciarReloj();
 	}
 	
 
 	public void pararServidor() throws RemoteException {
-		// TODO Parar el Timer y destruir lo necesario
 		reloj.pararReloj();
 		try {
 			webServer.stop();
@@ -235,26 +226,33 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	
 	public void iniciaSesion() throws RemoteException {
-		// TODO Mirar cual es la siguiente sesion (apertur, cierre)
-
+		// Consigue los parametros
+		reloj.iniciarReloj();
+		// Inicia la sesion
 	}
 
+	public void pausarSesion(){
+		reloj.pararReloj();
+	}
+	
+	public void reanudarSesion(){
+		reloj.reanudarReloj();
+	}
+	
 	public void finalizaSesion() throws RemoteException {
 		// TODO Finaliza
-		
 	}
+	
 	public void showGUI() throws RemoteException {
-		// TODO solo un gui.show
 		guiAdmin.setVisible(true);
 	}
 	public void hideGUI() throws RemoteException {
-		// TODO Auto-generated method stub
 		guiAdmin.setVisible(false);
 	}
 	public VariablesSistema getVariablesSistema() {
 		return variables;
 	}
-	public Frame getGUI() {
+	public JFrame getGUI() {
 		return this.guiAdmin;
 	}
 }

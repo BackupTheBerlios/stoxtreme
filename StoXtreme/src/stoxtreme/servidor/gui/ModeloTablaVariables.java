@@ -7,11 +7,11 @@ import java.util.Hashtable;
 import javax.swing.table.AbstractTableModel;
 
 public class ModeloTablaVariables extends AbstractTableModel{
-	private Hashtable valorVariables;
+	private Hashtable<String,Double> valorVariables;
 	private ArrayList nombreVariables;
 	
 	public ModeloTablaVariables(){
-		valorVariables = new Hashtable();
+		valorVariables = new Hashtable<String,Double>();
 		nombreVariables = new ArrayList();
 	}
 	
@@ -27,6 +27,15 @@ public class ModeloTablaVariables extends AbstractTableModel{
 		String nombreVar = (String)nombreVariables.get(rowIndex);
 		return (columnIndex==0)?nombreVar:valorVariables.get(nombreVar);
 	}
+
+	public Class getColumnClass(int col) {
+		if(col == 0){
+			return String.class;
+		}
+		else{
+			return Double.class;
+		}
+	}
 	
 	public String getColumnName(int columnIndex){
 		switch(columnIndex){
@@ -34,13 +43,13 @@ public class ModeloTablaVariables extends AbstractTableModel{
 		default: return "Valor";
 		}
 	}
-	public void insertarVariable(String nombre, Object valor) {
+	public void insertarVariable(String nombre, double valor) {
 		nombreVariables.add(nombre);
 		valorVariables.put(nombre, valor);
 		fireTableRowsInserted(nombreVariables.size()-1, nombreVariables.size()-1);
 	}
 
-	public void cambiaVariable(String nombre, Object nuevoValor) {
+	public void cambiaVariable(String nombre, double nuevoValor) {
 		valorVariables.put(nombre, nuevoValor);
 		int index = nombreVariables.indexOf(nombre);
 		fireTableCellUpdated(index, 1);

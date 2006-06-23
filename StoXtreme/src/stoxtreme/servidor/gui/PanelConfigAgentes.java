@@ -11,10 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -43,7 +47,7 @@ public class PanelConfigAgentes extends JPanel{
 		"stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoCompraRecomendacion",
 		"stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoRumor",
 	};
-	
+	private PanelOpciones atribModelo;
 	private DefaultListModel modeloListaSocial = new DefaultListModel();
 	private DefaultListModel modeloListaPsicologica = new DefaultListModel();
 	private DefaultListModel modeloListaDistribucion = new DefaultListModel();
@@ -55,9 +59,11 @@ public class PanelConfigAgentes extends JPanel{
 	private JTree arbolComportamientos;
 	
 	
-	public PanelConfigAgentes(JFrame frame){
+	public PanelConfigAgentes(File fichConf, JFrame frame){
 		try{
+			this.frame = frame;
 			init();
+			loadXML(fichConf);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -76,7 +82,7 @@ public class PanelConfigAgentes extends JPanel{
 			getPanelIzquierdo(),
 			getPanelDerecho()
 		);
-		panel.setDividerLocation(350);
+		panel.setDividerLocation(325);
 		return panel;
 	}
 	
@@ -93,9 +99,45 @@ public class PanelConfigAgentes extends JPanel{
 
 	private Component getPanelBotones() {
 		JPanel panel = new JPanel();
-		panel.add(new JButton("Cargar Fichero"));
-		panel.add(new JButton("Guardar Configuracion"));
+		JButton botonCarga = new JButton("Cargar Fichero");
+		botonCarga.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				carga_actionPerformed();
+			}
+		});
+		panel.add(botonCarga);
+		JButton botonGuardar = new JButton("Guardar Configuracion");
+		botonGuardar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				guarda_actionPerformed();
+			}
+		});
+		panel.add(botonGuardar);
 		return panel;
+	}
+	
+	public void carga_actionPerformed(){
+		JFileChooser chooser = new JFileChooser(new File("."));
+		if(chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+			File fich = chooser.getSelectedFile();
+			try {
+				loadXML(fich);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "Fallo en la carga del XML","Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
+	public void guarda_actionPerformed(){
+		JFileChooser chooser = new JFileChooser(new File("."));
+		if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){
+			File fich = chooser.getSelectedFile();
+			try {
+				saveXML(fich);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "Fallo en la carga del XML","Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 	
 	public void actualiza2(){
@@ -104,10 +146,7 @@ public class PanelConfigAgentes extends JPanel{
 	JTable tablaEdicion;
 	
 	private Component getPanelEditor() {
-		
-		
 		tablaEdicion = new JTable();
-		
 		JScrollPane panel = new JScrollPane(tablaEdicion);
 		return panel;
 	}
@@ -120,12 +159,6 @@ public class PanelConfigAgentes extends JPanel{
 	}
 
 	private Component getPanelIzquierdaArriba() {
-		
-//		JSplitPane panel = new JSplitPane(
-//			JSplitPane.VERTICAL_SPLIT,
-//			getPanelIzquierdaArribaArriba(),
-//			getPanelIzquierdaArribaAbajo()
-//		);
 		JPanel panel = new JPanel(new GridLayout(2,1));
 		panel.add(getPanelIzquierdaArribaArriba());
 		panel.add(getPanelIzquierdaArribaAbajo());
@@ -204,22 +237,16 @@ public class PanelConfigAgentes extends JPanel{
 
 	private Component getPanelIzquierdaArribaArriba() {
 		ArrayList<String> ops = new ArrayList<String>();
-		ops.add("Numero de agentes");
-		ops.add("Velocidad del sistema");
-		ops.add("Dinero inicial");
+		ops.add("Numero máximo de agentes");
+		ops.add("Numero mínimo de agentes");
+		ops.add("Tiempo de espera mínimo");
+		ops.add("Tiempo de espera máximo");
+		ops.add("Distribucion del tiempo de espera");
 		ops.add("Gasto máximo");
 		ops.add("Ratio respawn");
 		ops.add("Atenuacion rumor");
-		ops.add("Fichero historicos");
-		ops.add("Ficheros informacion");
-		
-		ArrayList<String> choosers = new ArrayList<String>();
-		choosers.add("Fichero historicos");
-		choosers.add("Ficheros informacion");
-		
-		PanelOpciones panel = new PanelOpciones(ops, null, choosers);
-		FakeInternalFrame frame = new FakeInternalFrame("Parametros", panel);
-		
+		atribModelo = new PanelOpciones(ops);
+		FakeInternalFrame frame = new FakeInternalFrame("Parametros", atribModelo);
 		return frame;
 	}
 
@@ -288,21 +315,8 @@ public class PanelConfigAgentes extends JPanel{
 		return panel;
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.add(new PanelConfigAgentes(frame));
-		frame.setSize(new Dimension(800,600));
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-	
 	public void addComportamiento(){
-		if(	modeloListaPsicologica.size() != 0 &&
-			modeloListaSocial.size() != 0){
-//			String[] distribuciones = new String[modeloListaDistribucion.size()];
-//			for(int i=0; i<modeloListaDistribucion.size(); i++){
-//				distribuciones[i] = ((ElementoDistribucion)modeloListaDistribucion.getElementAt(i)).getId();
-//			}
+		if(	modeloListaPsicologica.size() != 0 && modeloListaSocial.size() != 0){
 			String[] psicologicos = new String[modeloListaPsicologica.size()];
 			for(int i=0; i<modeloListaPsicologica.size(); i++){
 				psicologicos[i] = ((Par)modeloListaPsicologica.getElementAt(i)).getModelo().getId();
@@ -312,23 +326,47 @@ public class PanelConfigAgentes extends JPanel{
 				sociales[i] = ((Par)modeloListaSocial.getElementAt(i)).getModelo().getId();
 			}
 			
-			DialogoInsertarComportamiento dialogo = new DialogoInsertarComportamiento(
-					frame,
-					sociales,
-					psicologicos,
-					tiposComportamientos
-			);
-			
-			dialogo.setVisible(true);
-			ElementoComportamiento elemento = 
-				new ElementoComportamiento(dialogo.getId(), dialogo.getTipoComportamiento(), 
-						dialogo.getModeloPsicologico(), dialogo.getModeloSocial(), dialogo.getPorcentaje());
-			
 			TreePath path = arbolComportamientos.getSelectionPath();
-			MutableTreeNode nodo = (MutableTreeNode)path.getLastPathComponent();
-			modeloComportamientos.insertNodeInto(new DefaultMutableTreeNode(elemento),nodo, 0);
-			path = path.pathByAddingChild(nodo);
-			arbolComportamientos.expandPath(path);
+			ElementoComportamiento elemento = null;
+			if(path == null || modeloComportamientos.getRoot().equals(path.getLastPathComponent())){
+				DialogoInsertarComportamiento dialogo = new DialogoInsertarComportamiento(
+						frame,
+						sociales,
+						psicologicos,
+						tiposComportamientos
+				);
+				dialogo.setVisible(true);
+				if(dialogo.isAceptado()){
+					elemento = 
+						new ElementoComportamiento(dialogo.getId(), dialogo.getTipoComportamiento(), 
+								dialogo.getModeloPsicologico(), dialogo.getModeloSocial(), dialogo.getPorcentaje());
+				}
+			}
+			else{
+				DialogoInsertarSubomportamiento dialogo = new DialogoInsertarSubomportamiento(
+						frame,
+						tiposComportamientos
+				);
+				dialogo.setVisible(true);
+				if(dialogo.isAceptado()){
+					elemento = 
+						new ElementoComportamiento(dialogo.getId(), dialogo.getTipoComportamiento());
+				}
+			}
+			
+			if(elemento != null){
+				if(path != null){
+					MutableTreeNode nodo = (MutableTreeNode)path.getLastPathComponent();
+					modeloComportamientos.insertNodeInto(new DefaultMutableTreeNode(elemento),nodo, 0);
+					path = path.pathByAddingChild(nodo);
+					arbolComportamientos.expandPath(path);
+				}
+				else{
+					modeloComportamientos.insertNodeInto(new DefaultMutableTreeNode(elemento), (MutableTreeNode)modeloComportamientos.getRoot(), 0);
+					path = new TreePath((MutableTreeNode)modeloComportamientos.getRoot());
+					arbolComportamientos.expandPath(path);
+				}
+			}
 		}
 		else{
 			if(modeloListaPsicologica.size() == 0){
@@ -347,7 +385,6 @@ public class PanelConfigAgentes extends JPanel{
 	public void addDistribucion(){
 		DialogoInsertarDistribucion dialogo = new DialogoInsertarDistribucion(frame);
 		dialogo.setVisible(true);
-		
 		if(dialogo.isAceptado()){
 			String tipo = dialogo.getTipo();
 			String id = dialogo.getId();
@@ -467,6 +504,133 @@ public class PanelConfigAgentes extends JPanel{
 		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
 	}
 
+	public void loadXML(File fich)throws Exception{
+		borraAnterior();
+		CargaXMLAgentes.carga(fich, this);
+	}
+	
+	private void borraAnterior() {
+		modeloComportamientos = new DefaultTreeModel(new DefaultMutableTreeNode("Comportamientos"));
+		arbolComportamientos.setModel(modeloComportamientos);
+		modeloListaDistribucion.clear();
+		modeloListaPsicologica.clear();
+		modeloListaSocial.clear();
+	}
+
+	public void saveXML(File fich)throws Exception{
+		
+	}
+	
+	public void insDistribucion(String id, String tipo, double p1, double p2){
+		ElementoDistribucion dist;
+		if("Poisson".equals(tipo)){
+			dist = new ElementoDistribucion(id, tipo, p1);
+		}
+		else{
+			dist = new ElementoDistribucion(id,tipo,p1,p2);
+		}
+		modeloListaDistribucion.addElement(dist);
+	}
+	
+	public void insModeloSocial(
+			String id, 
+			Hashtable<String, Double> valores, 
+			Hashtable<String, String> distribs
+	){
+		Enumeration<String> claves = valores.keys();
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_social.length, modeloListaDistribucion);
+		ModeloTablaEdicion modeloEdicion = new ModeloTablaEdicion(ModeloTablaEdicion.MODELO_SOCIAL, editor, id){
+			public void actualiza() {
+				actualiza2();
+			}
+		};
+		
+		while(claves.hasMoreElements()){
+			String actual = claves.nextElement();
+			double valor = valores.get(actual);
+			int fila = modeloEdicion.getFilaSocial(actual);
+			editor.setValor(fila, Double.toString(valor));
+			modeloEdicion.setValorNormal(actual,valor);
+		}
+		
+		claves = distribs.keys();
+		while(claves.hasMoreElements()){
+			String actual = claves.nextElement();
+			String valor = distribs.get(actual);
+			int fila = modeloEdicion.getFilaSocial(actual);
+			editor.setDistribucion(fila, valor);
+			modeloEdicion.setValorDistribuido(actual,valor);
+		}
+		Par par = new Par(modeloEdicion,editor);
+		modeloListaSocial.addElement(par);
+	}
+	
+	public void insModeloPsicologico(
+			String id, 
+			Hashtable<String, Double> valores, 
+			Hashtable<String, String> distribs
+	){
+		Enumeration<String> claves = valores.keys();
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, modeloListaDistribucion);
+		ModeloTablaEdicion modeloEdicion = new ModeloTablaEdicion(ModeloTablaEdicion.MODELO_PSICOLOGICO, editor, id){
+			public void actualiza() {
+				actualiza2();
+			}
+		};
+		
+		while(claves.hasMoreElements()){
+			String actual = claves.nextElement();
+			double valor = valores.get(actual);
+			int fila = modeloEdicion.getFilaPsicologico(actual);
+			editor.setValor(fila, Double.toString(valor));
+			modeloEdicion.setValorNormal(actual,valor);
+		}
+		
+		claves = distribs.keys();
+		while(claves.hasMoreElements()){
+			String actual = claves.nextElement();
+			String valor = distribs.get(actual);
+			int fila = modeloEdicion.getFilaPsicologico(actual);
+			editor.setDistribucion(fila, valor);
+			modeloEdicion.setValorDistribuido(actual,valor);
+		}
+		Par par = new Par(modeloEdicion,editor);
+		modeloListaPsicologica.addElement(par);
+	}
+	
+	public void insComportamiento(
+			String id, 
+			String tipo_comportamiento, 
+			String modelo_social, 
+			String modelo_psicologico, 
+			double porcentaje, 
+			ArrayList<Hashtable<String, Object>> subComportamientos
+	){
+		ElementoComportamiento comportamiento = 
+			new ElementoComportamiento(id, tipo_comportamiento, modelo_psicologico, modelo_social, porcentaje);
+		DefaultMutableTreeNode nodoComportamiento = new DefaultMutableTreeNode(comportamiento);
+		
+		for(int i=0; i<subComportamientos.size();i++){
+			MutableTreeNode subnodo = getNodoSubcomportamientos(subComportamientos.get(i));
+			nodoComportamiento.insert(subnodo,0);
+		}
+		((MutableTreeNode)modeloComportamientos.getRoot()).insert(nodoComportamiento, 0);
+	}
+	
+	private MutableTreeNode getNodoSubcomportamientos(Hashtable<String,Object> subcomportamiento){
+		String id = (String)subcomportamiento.get("id");
+		String tipoComportamiento = (String)subcomportamiento.get("tipo_comportamiento"); 
+		ArrayList<Hashtable<String,Object>> hijos = (ArrayList<Hashtable<String,Object>>)subcomportamiento.get("subcomportamientos"); 
+		ElementoComportamiento comportamiento = new ElementoComportamiento(id, tipoComportamiento);
+		DefaultMutableTreeNode nodoComportamiento = new DefaultMutableTreeNode(comportamiento);
+		
+		for(int i=0; i<hijos.size(); i++){
+			MutableTreeNode subnodo = getNodoSubcomportamientos(hijos.get(i));
+			nodoComportamiento.insert(subnodo,0);
+		}
+		return nodoComportamiento;
+	}
+	
 	private class ElementoDistribucion{
 		public String tipo;
 		public double p1;
@@ -532,8 +696,16 @@ public class PanelConfigAgentes extends JPanel{
 		private String modeloSocial;
 		private String tipoComportamiento;
 		private double porcentaje;
+		private boolean padre;
+		
+		public ElementoComportamiento(String id, String comportamiento) {
+			padre = false;
+			this.id = id;
+			this.tipoComportamiento = comportamiento;
+		}
 		
 		public ElementoComportamiento(String id, String comportamiento, String psicologico, String social, double porcentaje) {
+			padre = true;
 			this.id = id;
 			modeloPsicologico = psicologico;
 			modeloSocial = social;
@@ -577,13 +749,18 @@ public class PanelConfigAgentes extends JPanel{
 			buf.append(id);
 			buf.append("(");
 			buf.append(tipoComportamiento);
-			buf.append(",");
-			buf.append(modeloSocial);
-			buf.append(",");
-			buf.append(modeloPsicologico);
-			buf.append(",");
-			buf.append(porcentaje);
-			buf.append(")");
+			if(padre){
+				buf.append(",");
+				buf.append(modeloSocial);
+				buf.append(",");
+				buf.append(modeloPsicologico);
+				buf.append(",");
+				buf.append(porcentaje);
+				buf.append(")");
+			}
+			else{
+				buf.append(")");
+			}
 			return buf.toString();
 		}
 	}
@@ -617,5 +794,20 @@ public class PanelConfigAgentes extends JPanel{
 			return modelo.toString();
 		}
 	}
-	
+
+	public void expandeArbol() {
+		TreePath path = new TreePath(modeloComportamientos.getRoot());
+		arbolComportamientos.expandPath(path);
+	}
+
+	public void setAtributos(int maxAgentes, int minAgentes, int minEspera, int maxEspera, String distribEspera, double maxGasto, double ratioRespawn, double atenuacion) {
+		atribModelo.setValor("Numero máximo de agentes", Integer.toString(maxAgentes));
+		atribModelo.setValor("Numero mínimo de agentes", Integer.toString(minAgentes));
+		atribModelo.setValor("Tiempo de espera mínimo", Integer.toString(maxEspera));
+		atribModelo.setValor("Tiempo de espera máximo", Integer.toString(minEspera));
+		atribModelo.setValor("Distribucion del tiempo de espera", distribEspera);
+		atribModelo.setValor("Gasto máximo", Double.toString(maxGasto));
+		atribModelo.setValor("Ratio respawn", Double.toString(ratioRespawn));
+		atribModelo.setValor("Atenuacion rumor", Double.toString(atenuacion));
+	}
 }

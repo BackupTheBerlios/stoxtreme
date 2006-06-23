@@ -12,17 +12,17 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 	/* TODAS LAS VARIABLES EN MAYUSCULAS!! NECESARIO PARA EL PARSER DE LOS EVENTOS*/
 	public static String VAR_TIEMPO = "TIEMPO";
 	
-	private Hashtable<String, Object> variables;
+	private Hashtable<String, Double> variables;
 	private ArrayList<VariablesListener> listeners;
 	
 	public VariablesSistema(ParametrosServidor p){
-		variables = new Hashtable<String, Object>();
+		variables = new Hashtable<String, Double>();
 		listeners = new ArrayList<VariablesListener>();
 		cambiaVariable(VAR_TIEMPO,0L);
 	}
 
 	public void paso() {
-		long t = (Long)variables.get(VAR_TIEMPO);
+		long t = (long)variables.get(VAR_TIEMPO).longValue();
 		cambiaVariable(VAR_TIEMPO, t+1);
 //		System.out.println(variables.get(VAR_TIEMPO));
 	}
@@ -35,7 +35,7 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 		listeners.remove(listener);
 	}
 	
-	public void cambiaVariable(String var, Object value){
+	public void cambiaVariable(String var, double value){
 		if(!variables.containsKey(var)){
 			super.insertarVariable(var, value);
 		}
@@ -62,7 +62,7 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 		return variables.get(variable);
 	}
 	
-	public void setValue(String variable, Object valor){
+	public void setValue(String variable, double valor){
 		variables.put(variable, valor);
 	}
 

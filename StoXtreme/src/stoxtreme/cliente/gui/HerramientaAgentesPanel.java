@@ -41,13 +41,17 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private boolean parado = true;
 	private JFrame frame;
 	
-	public HerramientaAgentesPanel(JFrame frame) {
+	public HerramientaAgentesPanel() {
 		try{
 			init();
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public void setFrame(JFrame frame){
+		this.frame = frame;
 	}
 	
 	public void init() throws Exception{
@@ -70,7 +74,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	
 	public Component getPanelIzquierdoArriba(){
 		modeloTabla = new HerramientaAgentesTableModel();
-		tablaAgentes = new JTable(modeloTabla);
+		TableSorter sorter = new TableSorter(modeloTabla);
+		tablaAgentes = new JTable(sorter);
+		sorter.setTableHeader(tablaAgentes.getTableHeader());
 		panelIzquierdoArriba = new JScrollPane(tablaAgentes);
 		return panelIzquierdoArriba;
 	}
@@ -136,14 +142,16 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private void botonIniciar_actionPerformed(){
 		DialogoParametrosAgentes dialogo = new DialogoParametrosAgentes(frame);
 		dialogo.setVisible(true);
-		ParametrosAgentes parametros = new ParametrosAgentes();
-		parametros.set(ParametrosAgentes.Parametro.NUM_AGENTES, dialogo.getNAgentes());
-		parametros.set(ParametrosAgentes.Parametro.TIEMPO_ESPERA, dialogo.getTEjecucion());
-		parametros.set(ParametrosAgentes.Parametro.TCICLO, dialogo.getTCiclo());
-		cliente.iniciarHerramientaAgentes(parametros);
-		botonIniciarPararSistema.setText("Parar Sistema");
-		botonEditar.setEnabled(true);
-		botonEliminar.setEnabled(true);
+		if(dialogo.isAceptado()){
+			ParametrosAgentes parametros = new ParametrosAgentes();
+			parametros.set(ParametrosAgentes.Parametro.NUM_AGENTES, dialogo.getNAgentes());
+			parametros.set(ParametrosAgentes.Parametro.TIEMPO_ESPERA, dialogo.getTEjecucion());
+			parametros.set(ParametrosAgentes.Parametro.TCICLO, dialogo.getTCiclo());
+			cliente.iniciarHerramientaAgentes(parametros);
+			botonIniciarPararSistema.setText("Parar Sistema");
+			botonEditar.setEnabled(true);
+			botonEliminar.setEnabled(true);
+		}
 	}
 	
 	private void botonReanudar_actionPerformed() {

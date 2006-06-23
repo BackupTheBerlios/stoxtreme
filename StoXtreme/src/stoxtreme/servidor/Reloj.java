@@ -3,8 +3,8 @@ import java.util.*;
 import sun.security.krb5.internal.crypto.t;
 
 
-public class Reloj extends TimerTask{
-	private ArrayList oyentes;
+public class Reloj{
+	private ArrayList<RelojListener> oyentes;
 	private Timer timer;
 	private long ms;
 	private boolean parado = true;
@@ -15,7 +15,7 @@ public class Reloj extends TimerTask{
 	// Recibe el numero de milisegundos cada cuanto se 
 	// ejecuta un paso
 	public Reloj(long ms){
-		this.oyentes = new ArrayList();
+		this.oyentes = new ArrayList<RelojListener>();
 		this.timer = new Timer();
 		this.ms = ms;
 	}
@@ -24,14 +24,12 @@ public class Reloj extends TimerTask{
 		oyentes.add(r);
 	}
 	
-	public void run(){
-		//System.out.println("Reloj");
-		Iterator i = oyentes.iterator();
+	public void ejecuta(){
+		System.err.println("Paso");
+		Iterator<RelojListener> i = oyentes.iterator();
 		while(i.hasNext()){
-			// TODO CUIDADO CON LA CONCURRENCIA EN ESTE METODO
-			((RelojListener)i.next()).paso();
+			i.next().paso();
 		}
-		
 	}
 	
 	public void iniciarReloj(){
@@ -41,7 +39,7 @@ public class Reloj extends TimerTask{
 	
 	public void reiniciarReloj(){
 		timer = new Timer(true);
-		timer.schedule(this, new Date(), ms);
+		timer.schedule(new Ejecucion(this), new Date(), ms);
 	}
 	
 	public void pararReloj(){
@@ -52,8 +50,16 @@ public class Reloj extends TimerTask{
 	}
 	
 	public void reanudarReloj(){
-		timer = new Timer();
+		iniciarReloj();
 	}
 	
-	
+	private class Ejecucion extends TimerTask{
+		private Reloj reloj;
+		public Ejecucion(Reloj r) {
+			this.reloj = r;
+		}
+		public void run() {
+			reloj.ejecuta();
+		}
+	}
 }

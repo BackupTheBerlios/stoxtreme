@@ -30,8 +30,23 @@ public class DialogoInsercionEvento extends JDialog implements ActionListener{
 	JCheckBox checkUnaVez;
 	JCheckBox checkIniciarActivo;
 	
-	public DialogoInsercionEvento(Frame owner){
-		super(owner);
+	public DialogoInsercionEvento(JFrame frame){
+		super(frame);
+		try{
+			init();
+			pack();
+			setModal(true);
+			setSize(new Dimension(300, this.getHeight()));
+			setLocation(
+					frame.getLocationOnScreen().x+ (frame.getWidth()/2)-getWidth()/2,
+					frame.getLocationOnScreen().y+ (frame.getHeight()/2)-getHeight()/2
+			);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	public void init(){
 		Container panel = this.getContentPane();
 		
 		panel.add(getPanelPrincipal());

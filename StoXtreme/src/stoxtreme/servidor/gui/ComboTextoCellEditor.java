@@ -80,4 +80,13 @@ public class ComboTextoCellEditor extends AbstractCellEditor implements TableCel
 			}
 		}
 	}
+	
+	public void setValor(int fila, String valor){
+		lista.set(fila, new JTextField(valor));
+	}
+	
+	public void setDistribucion(int fila, String distribucion){
+		setCombo(fila);
+		((JComboBox)lista.get(fila)).setSelectedItem(distribucion);
+	}
 }

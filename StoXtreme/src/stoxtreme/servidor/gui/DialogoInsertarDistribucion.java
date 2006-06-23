@@ -1,6 +1,7 @@
 package stoxtreme.servidor.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -37,11 +38,16 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 	private PanelOpciones panelOpciones;
 	
 	public DialogoInsertarDistribucion(Frame frame) {
-		super(frame);
+		super(frame,"Inserte Distribucion",true);
 		try{
 			init();
-			setModal(true);
 			pack();
+			setModal(true);
+			setSize(new Dimension(300, this.getHeight()));
+			setLocation(
+					frame.getLocationOnScreen().x+ (frame.getWidth()/2)-getWidth()/2,
+					frame.getLocationOnScreen().y+ (frame.getHeight()/2)-getHeight()/2
+			);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -70,6 +76,7 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 		}
 		panelDependiente.updateUI();
 		pack();
+		setSize(new Dimension(300, this.getHeight()));
 	}
 
 	public void init(){
@@ -176,18 +183,21 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 			panelDependiente.add(getPanelOpcionesUniforme());
 			panelDependiente.updateUI();
 			pack();
+			setSize(new Dimension(300, this.getHeight()));
 		}
 		else if(NORMAL.equals(s)){
 			panelDependiente.removeAll();
 			panelDependiente.add(getPanelOpcionesNormal());
 			panelDependiente.updateUI();
 			pack();
+			setSize(new Dimension(300, this.getHeight()));
 		}
 		else{
 			panelDependiente.removeAll();
 			panelDependiente.add(getPanelOpcionesPoisson());
 			panelDependiente.updateUI();
 			pack();
+			setSize(new Dimension(300, this.getHeight()));
 		}
 	}
 

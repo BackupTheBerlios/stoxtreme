@@ -7,6 +7,10 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -24,6 +28,7 @@ import stoxtreme.servidor.Servidor;
 
 @SuppressWarnings("serial")
 public class MainFrameAdmin extends JFrame{
+	private static final String FICH_CONFAGENTES = "./conf/confAgentes.xml";
 	private ModeloTablaOperaciones modeloOperaciones; 
 	private ModeloListaUsuariosConectados modeloUsuarios; 
 	private ModeloTablaPrecioAcciones modeloPrecios;
@@ -35,6 +40,7 @@ public class MainFrameAdmin extends JFrame{
 	private FakeInternalFrame panelDerecha;
 	private FakeInternalFrame panelIzqAbajo;
 	private Servidor servidor;
+	private JButton botonFinalizarSimulacion;
 	
 	static{
 		try{
@@ -59,7 +65,9 @@ public class MainFrameAdmin extends JFrame{
 	}
 	
 	private Component getPanelAgentes() {
-		return new PanelConfigAgentes(this);
+		File fich = new File(FICH_CONFAGENTES); 
+		PanelConfigAgentes panel = new PanelConfigAgentes(fich,this);
+		return panel;
 	}
 	
 	private Component getPanelSesion() {
@@ -103,9 +111,48 @@ public class MainFrameAdmin extends JFrame{
 		panel.add(panelIzqArriba);
 		
 		panelIzqArriba.setPreferredSize(new Dimension(250, 300));
-		JButton boton = new JButton("Iniciar Simulacion");
-		panel.add(boton, BorderLayout.SOUTH);
+		JButton botonIniciarParar = new JButton("Iniciar Simulacion");
+		botonIniciarParar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JButton src = (JButton)e.getSource();
+				iniciarPausar_actionPerformed(src);
+			}
+		});
+		botonFinalizarSimulacion = new JButton("Finalizar Simulacion");
+		botonFinalizarSimulacion.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				botonFinalizar_actionPerformed();
+			}
+		});
+		JPanel panelBotones = new JPanel();
+		panelBotones.add(botonIniciarParar);
+		panelBotones.add(botonFinalizarSimulacion);
+		panel.add(panelBotones, BorderLayout.SOUTH);
+		
 		return panel;
+	}
+	
+	private void iniciarPausar_actionPerformed(JButton src) {
+		try {
+			if("Iniciar Simulacion".equals(src.getText())){
+				src.setText("Pausar Simulacion");
+				servidor.iniciaSesion();
+			}
+			else if("Pausar Simulacion".equals(src.getText())){
+				src.setText("Reanudar Simulacion");
+				servidor.pausarSesion();
+			}
+			else if("Reanudar Simulacion".equals(src.getText())){
+				src.setText("Pausar Simulacion");
+				servidor.reanudarSesion();
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void botonFinalizar_actionPerformed(){
+		
 	}
 	
 	private Component getPanelOpcionesSuperior() {
@@ -141,14 +188,16 @@ public class MainFrameAdmin extends JFrame{
 	DefaultListModel modeloSesiones;
 
 	public Component getPanelControl(){
-		TableSorter sorter = new TableSorter(modeloOperaciones);
-		JTable tablaOperaciones = new JTable(sorter);
-		sorter.setTableHeader(tablaOperaciones.getTableHeader());
+		TableSorter sorterOperaciones = new TableSorter(modeloOperaciones);
+		JTable tablaOperaciones = new JTable(sorterOperaciones);
+		sorterOperaciones.setTableHeader(tablaOperaciones.getTableHeader());
 		JScrollPane panelScrollDerecha = new JScrollPane(tablaOperaciones);
 		panelScrollDerecha.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panelDerecha = new FakeInternalFrame("Log de Operaciones", panelScrollDerecha);
 		
-		JTable tablaPrecios = new JTable(modeloPrecios);
+		TableSorter sorterPrecios = new TableSorter(modeloPrecios);
+		JTable tablaPrecios = new JTable(sorterPrecios);
+		sorterPrecios.setTableHeader(tablaPrecios.getTableHeader());
 		tablaPrecios.getColumn(tablaPrecios.getColumnName(1)).setCellRenderer(modeloPrecios.getRenderer());
 		
 		JScrollPane panelScrollIzqAbajo = new JScrollPane(tablaPrecios);
@@ -168,7 +217,10 @@ public class MainFrameAdmin extends JFrame{
 	}
 	
 	public Component getPanelEventos(){
-		JTable tablaVariables = new JTable(modeloVariables);
+		TableSorter sorterVariables = new TableSorter(modeloVariables);
+		JTable tablaVariables = new JTable(sorterVariables);
+		sorterVariables.setTableHeader(tablaVariables.getTableHeader());
+		
 		tablaVariables.getColumn(tablaVariables.getColumnName(1)).setPreferredWidth(100);
 		JScrollPane panelIzq = new JScrollPane(tablaVariables);
 		JPanel panelDer = new JPanel(new BorderLayout());

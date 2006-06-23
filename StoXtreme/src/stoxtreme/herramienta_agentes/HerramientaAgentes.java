@@ -33,18 +33,11 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	private ArrayList<Agente> agentes;
 	private MonitorAgentes monitor;
 	private Notificador notif;
-	JFrame frame;
 	
-	public HerramientaAgentes(JFrame frame){
-		super(frame);
-	}
-
 	public HerramientaAgentes(
-			JFrame frame,
 			String nombreUsuario, 
 			EstadoBolsa bolsa, 
 			ParametrosAgentes parametros){
-		super(frame);
 		IDAgente.setUsuario(nombreUsuario);
 		this.parametros = parametros;
 		this.notif = new Notificador();

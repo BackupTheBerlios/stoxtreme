@@ -67,7 +67,12 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 		
 	}
 	public Class getColumnClass(int columnIndex){
-		return (columnIndex==2)?Boolean.class:String.class;
+		switch(columnIndex){
+			case 0: return String.class; 
+			case 1: return Double.class; 
+			case 2: return Boolean.class;
+			default: return Object.class;
+		}
 	}
 	
 	public TableCellRenderer getRenderer(){

@@ -115,6 +115,15 @@ public abstract class ModeloTablaEdicion extends AbstractTableModel implements T
 		return (columnIndex!=2)?Object.class:Boolean.class;
 	}
 	
+	public void setValorNormal(String opcion, double valor){
+		valores.put(opcion, Double.toString(valor));
+	}
+	
+	public void setValorDistribuido(String opcion, String valor){
+		distribuidas.add(opcion);
+		valores.put(opcion, valor);
+	}
+	
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		if("".equals(aValue)){
 			return;
@@ -188,5 +197,21 @@ public abstract class ModeloTablaEdicion extends AbstractTableModel implements T
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public int getFilaPsicologico(String opcion) {
+		int i=0;
+		while(i<params_psicologicos.length && !params_psicologicos[i].equals(opcion)){
+			i++;
+		}
+		return i;
+	}
+	
+	public int getFilaSocial(String opcion) {
+		int i=0;
+		while(i<params_social.length && !params_social[i].equals(opcion)){
+			i++;
+		}
+		return i;
 	}
 }

@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<agentes>
+<agentes
+	max_agentes="100"
+	min_agentes="6"
+	min_tespera="10"
+	max_tespera="60"
+	tespera_distrib="normal1"
+	max_gasto="1000"
+	ratio_respawn="0.1"
+	atenuacion_rumor="0.1"
+>
 	<distribuciones_probabilidad>
-		<dist_uniforme id="uniforme1" media="20.0" desviacion_tipica="10.0"></dist_uniforme>
-		<dist_uniforme id="uniforme2" media="50.0" desviacion_tipica="20.0"></dist_uniforme>
-		<dist_uniforme id="uniforme3" media="10.0" desviacion_tipica="5.0"></dist_uniforme>
+		<dist_normal id="normal1" media="20.0" desviacion_tipica="10.0"></dist_normal>
+		<dist_normal id="normal2" media="50.0" desviacion_tipica="20.0"></dist_normal>
+		<dist_normal id="normal3" media="10.0" desviacion_tipica="5.0"></dist_normal>
+		<dist_poisson id="poisson1" lambda="12.0"></dist_poisson>
+		<dist_uniforme id="uniforme1" minimo="10.0" maximo="30.0"></dist_uniforme>
 	</distribuciones_probabilidad>
 	
 	<modelos>
 		<modelo_psicologico id="psicologico1">
 			<parametro_modelo tipo="tiempo_espera">
-				<distribucion>uniforme2</distribucion>
+				<distribucion>normal2</distribucion>
 			</parametro_modelo>
 			<parametro_modelo tipo="numero_maximo_acciones_compra">
 				<valor>1000</valor>
@@ -58,7 +69,7 @@
 			</parametro_modelo>
 			
 			<parametro_modelo tipo="numero_conocidos">
-				<distribucion>uniforme3</distribucion>
+				<distribucion>normal3</distribucion>
 			</parametro_modelo>
 		</modelo_social>
     </modelos>

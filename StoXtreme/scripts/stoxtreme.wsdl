@@ -1,199 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions targetNamespace="http://interfaz_remota.stoxtreme" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://interfaz_remota.stoxtreme" xmlns:intf="http://interfaz_remota.stoxtreme" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-<!--WSDL created by Apache Axis version: 1.3
-Built on Oct 05, 2005 (05:23:37 EDT)-->
- <wsdl:types>
-  <schema targetNamespace="http://interfaz_remota.stoxtreme" xmlns="http://www.w3.org/2001/XMLSchema">
-   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
-   <complexType name="Operacion">
-    <sequence>
-     <element name="cantidad" type="xsd:int"/>
-     <element name="empresa" nillable="true" type="soapenc:string"/>
-     <element name="idEmisor" nillable="true" type="soapenc:string"/>
-     <element name="precio" type="xsd:float"/>
-     <element name="tipoOp" type="xsd:int"/>
-     <element name="valido" type="xsd:boolean"/>
-    </sequence>
-   </complexType>
-  </schema>
- </wsdl:types>
-
-   <wsdl:message name="insertarOperacionRequest">
-
-      <wsdl:part name="in0" type="soapenc:string"/>
-
-      <wsdl:part name="in1" type="impl:Operacion"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="loginResponse">
-
-      <wsdl:part name="loginReturn" type="xsd:boolean"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="insertarOperacionResponse">
-
-      <wsdl:part name="insertarOperacionReturn" type="xsd:int"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="registroRequest">
-
-      <wsdl:part name="in0" type="soapenc:string"/>
-
-      <wsdl:part name="in1" type="soapenc:string"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="cancelarOperacionRequest">
-
-      <wsdl:part name="in0" type="soapenc:string"/>
-
-      <wsdl:part name="in1" type="xsd:int"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="registroResponse">
-
-      <wsdl:part name="registroReturn" type="xsd:boolean"/>
-
-   </wsdl:message>
-
-   <wsdl:message name="cancelarOperacionResponse">
-
-   </wsdl:message>
-
-   <wsdl:message name="loginRequest">
-
-      <wsdl:part name="in0" type="soapenc:string"/>
-
-      <wsdl:part name="in1" type="soapenc:string"/>
-
-   </wsdl:message>
-
-   <wsdl:portType name="Stoxtreme">
-
-      <wsdl:operation name="registro" parameterOrder="in0 in1">
-
-         <wsdl:input message="impl:registroRequest" name="registroRequest"/>
-
-         <wsdl:output message="impl:registroResponse" name="registroResponse"/>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="login" parameterOrder="in0 in1">
-
-         <wsdl:input message="impl:loginRequest" name="loginRequest"/>
-
-         <wsdl:output message="impl:loginResponse" name="loginResponse"/>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="insertarOperacion" parameterOrder="in0 in1">
-
-         <wsdl:input message="impl:insertarOperacionRequest" name="insertarOperacionRequest"/>
-
-         <wsdl:output message="impl:insertarOperacionResponse" name="insertarOperacionResponse"/>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="cancelarOperacion" parameterOrder="in0 in1">
-
-         <wsdl:input message="impl:cancelarOperacionRequest" name="cancelarOperacionRequest"/>
-
-         <wsdl:output message="impl:cancelarOperacionResponse" name="cancelarOperacionResponse"/>
-
-      </wsdl:operation>
-
-   </wsdl:portType>
-
-   <wsdl:binding name="StoXtremeSoapBinding" type="impl:Stoxtreme">
-
-      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-
-      <wsdl:operation name="registro">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="registroRequest">
-
-            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://interfaz_remota.stoxtreme" use="encoded"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="registroResponse">
-
-            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://interfaz_remota.stoxtreme" use="encoded"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="login">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="loginRequest">
-
-            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://interfaz_remota.stoxtreme" use="encoded"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="loginResponse">
-
-            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://interfaz_remota.stoxtreme" use="encoded"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="insertarOperacion">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="insertarOperacionRequest">
-
-            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://interfaz_remota.stoxtreme" use="encoded"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="insertarOperacionResponse">
-
-            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://interfaz_remota.stoxtreme" use="encoded"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="cancelarOperacion">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="cancelarOperacionRequest">
-
-            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://interfaz_remota.stoxtreme" use="encoded"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="cancelarOperacionResponse">
-
-            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://interfaz_remota.stoxtreme" use="encoded"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-   </wsdl:binding>
-
-   <wsdl:service name="StoxtremeService">
-
-      <wsdl:port binding="impl:StoXtremeSoapBinding" name="StoXtreme">
-
-         <wsdlsoap:address location="http://localhost:8080/axis/services/StoXtreme"/>
-
-      </wsdl:port>
-
-   </wsdl:service>
+<wsdl:definitions 
+	targetNamespace="http://interfaz_remota.stoxtreme" 
+	xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+	xmlns:impl="http://interfaz_remota.stoxtreme" 
+	xmlns:intf="http://interfaz_remota.stoxtreme" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<wsdl:types>
+	<schema 
+		targetNamespace="http://interfaz_remota.stoxtreme" 
+		xmlns="http://www.w3.org/2001/XMLSchema">
+		<import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+		<complexType name="Operacion">
+			<sequence>
+				<element name="cantidad" type="xsd:int"/>
+				<element name="empresa" nillable="true" type="soapenc:string"/>
+				<element name="idEmisor" nillable="true" type="soapenc:string"/>
+				<element name="precio" type="xsd:float"/>
+				<element name="tipoOp" type="xsd:int"/>
+				<element name="valido" type="xsd:boolean"/>
+			</sequence>
+		</complexType>
+	</schema>
+</wsdl:types>
+
+<wsdl:message name="registroRequest">
+	<wsdl:part name="idUsuario" type="soapenc:string"/>
+	<wsdl:part name="password" type="soapenc:string"/>
+</wsdl:message>
+
+<wsdl:message name="registroResponse">
+	<wsdl:part name="registroReturn" type="xsd:boolean"/>
+</wsdl:message>
+
+<wsdl:message name="loginRequest">
+	<wsdl:part name="idUsuario" type="soapenc:string"/>
+	<wsdl:part name="password" type="soapenc:string"/>
+</wsdl:message>
+
+<wsdl:message name="loginResponse">
+	<wsdl:part name="loginReturn" type="xsd:boolean"/>
+</wsdl:message>
+
+<wsdl:message name="insertarOperacionRequest">
+	<wsdl:part name="idUsuario" type="soapenc:string"/>
+	<wsdl:part name="operacion" type="impl:Operacion"/>
+</wsdl:message>
+
+<wsdl:message name="insertarOperacionResponse">
+	<wsdl:part name="insertarOperacionReturn" type="xsd:int"/>
+</wsdl:message>
+
+<wsdl:message name="cancelarOperacionRequest">
+	<wsdl:part name="idUsuario" type="soapenc:string"/>
+    <wsdl:part name="idOperacion" type="xsd:int"/>
+</wsdl:message>
+
+<wsdl:message name="cancelarOperacionResponse">
+</wsdl:message>
+
+<wsdl:portType name="Stoxtreme">
+	<wsdl:operation name="registro" parameterOrder="idUsuario password">
+		<wsdl:input 
+			message="impl:registroRequest" 
+			name="registroRequest"/>
+		<wsdl:output 
+			message="impl:registroResponse" 
+			name="registroResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="login" parameterOrder="idUsuario password">
+		<wsdl:input 
+			message="impl:loginRequest" 
+			name="loginRequest"/>
+		<wsdl:output 
+			message="impl:loginResponse" 
+			name="loginResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="insertarOperacion" parameterOrder="idUsuario operacion">
+		<wsdl:input 
+			message="impl:insertarOperacionRequest" 
+			name="insertarOperacionRequest"/>
+		<wsdl:output 
+			message="impl:insertarOperacionResponse" 
+			name="insertarOperacionResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="cancelarOperacion" parameterOrder="idUsuario idOperacion">
+		<wsdl:input 
+			message="impl:cancelarOperacionRequest" 
+			name="cancelarOperacionRequest"/>
+		<wsdl:output 
+			message="impl:cancelarOperacionResponse" 
+			name="cancelarOperacionResponse"/>
+	</wsdl:operation>
+</wsdl:portType>
+
+<wsdl:binding name="StoXtremeSoapBinding" type="impl:Stoxtreme">
+	<wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+	<wsdl:operation name="registro">
+		<wsdlsoap:operation soapAction=""/>
+			<wsdl:input name="registroRequest">
+				<wsdlsoap:body 
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+					namespace="http://interfaz_remota.stoxtreme" 
+					use="encoded"/>
+			</wsdl:input>
+
+			<wsdl:output name="registroResponse">
+				<wsdlsoap:body 
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+					namespace="http://interfaz_remota.stoxtreme" 
+					use="encoded"/>
+			</wsdl:output>
+	</wsdl:operation>
+	
+	<wsdl:operation name="login">
+		<wsdlsoap:operation soapAction=""/>
+			<wsdl:input name="loginRequest">
+				<wsdlsoap:body 
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+					namespace="http://interfaz_remota.stoxtreme" 
+					use="encoded"/>
+			</wsdl:input>
+
+			<wsdl:output name="loginResponse">
+				<wsdlsoap:body 
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+					namespace="http://interfaz_remota.stoxtreme" 
+					use="encoded"/>
+			</wsdl:output>
+	</wsdl:operation>
+	
+	<wsdl:operation name="insertarOperacion">
+		<wsdlsoap:operation soapAction=""/>
+			<wsdl:input name="insertarOperacionRequest">
+				<wsdlsoap:body 
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+					namespace="http://interfaz_remota.stoxtreme" 
+					use="encoded"/>
+			</wsdl:input>
+			
+			<wsdl:output name="insertarOperacionResponse">
+				<wsdlsoap:body 
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+					namespace="http://interfaz_remota.stoxtreme" 
+					use="encoded"/>
+			</wsdl:output>
+	</wsdl:operation>
+
+	<wsdl:operation name="cancelarOperacion">
+		<wsdlsoap:operation soapAction=""/>
+			<wsdl:input name="cancelarOperacionRequest">
+				<wsdlsoap:body 
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+					namespace="http://interfaz_remota.stoxtreme" 
+					use="encoded"/>
+			</wsdl:input>
+
+			<wsdl:output name="cancelarOperacionResponse">
+				<wsdlsoap:body 
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+					namespace="http://interfaz_remota.stoxtreme" 
+					use="encoded"/>
+			</wsdl:output>
+	</wsdl:operation>
+
+</wsdl:binding>
+
+<wsdl:service name="StoxtremeService">
+	<wsdl:port binding="impl:StoXtremeSoapBinding" name="StoXtreme">
+		<wsdlsoap:address location="http://localhost:8080/axis/services/StoXtreme"/>
+	</wsdl:port>
+</wsdl:service>
 
 </wsdl:definitions>

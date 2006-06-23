@@ -93,7 +93,6 @@ public class MainFrameCliente extends JFrame{
 		panel.add(new PanelCotizaciones(eBolsa), BorderLayout.SOUTH);
 		getContentPane().add(panel);
 		this.addWindowListener(new WindowAdapter(){
-
 			public void windowClosing(WindowEvent e) {
 				try {
 					cliente.deslogea();
@@ -101,7 +100,6 @@ public class MainFrameCliente extends JFrame{
 					e1.printStackTrace();
 				}
 			}
-
 		});
 	}
 	
@@ -189,6 +187,27 @@ public class MainFrameCliente extends JFrame{
 		tablaArribaIzq.getColumn(tablaArribaIzq.getColumnName(0)).setMaxWidth(10);
 	}
 	
+	private void cartera_actionPerformed(ActionEvent e){
+		TableSorter sorter = new TableSorter();
+
+		opPend.setSelected(false);
+		cartera.setSelected(true);
+		tablaArribaIzq.setModel(modeloCartera);
+		tablaArribaIzq.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				JTable src = (JTable)e.getSource();
+				if(src.getModel() instanceof ModeloCartera){
+					int row = src.getSelectedRow();
+					String empresa = (String)src.getModel().getValueAt(row, 0);
+					Integer nAcciones = (Integer)src.getModel().getValueAt(row, 1);
+					empresaSeleccionada.setSelectedItem(empresa);
+					cantidadSeleccionada.setText(nAcciones.toString());
+					tipoSeleccionado.setSelectedItem("Venta");
+				}
+			}
+		});
+	}
+	
 	private void pinta_actionPerformed(ActionEvent e){
 		System.out.println(e.getActionCommand());
 		split_graficas.setDividerLocation(300);
@@ -257,22 +276,7 @@ public class MainFrameCliente extends JFrame{
 		
 		cartera.setAction(new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				opPend.setSelected(false);
-				cartera.setSelected(true);
-				tablaArribaIzq.setModel(modeloCartera);
-				tablaArribaIzq.addMouseListener(new MouseAdapter(){
-					public void mouseClicked(MouseEvent e){
-						JTable src = (JTable)e.getSource();
-						if(src.getModel() instanceof ModeloCartera){
-							int row = src.getSelectedRow();
-							String empresa = (String)src.getModel().getValueAt(row, 0);
-							Integer nAcciones = (Integer)src.getModel().getValueAt(row, 1);
-							empresaSeleccionada.setSelectedItem(empresa);
-							cantidadSeleccionada.setText(nAcciones.toString());
-							tipoSeleccionado.setSelectedItem("Venta");
-						}
-					}
-				});
+				cartera_actionPerformed(e);
 			}
 		});
 		panelArriba.add(opPend);
@@ -569,7 +573,10 @@ private JPanel getChartPanel2(){
 	}
 
 	private Component getPanelDerechaAbajo() {
-		JTable tabla = new JTable(modeloPrecios);
+		TableSorter sorterPrecios = new TableSorter(modeloPrecios);
+		JTable tabla = new JTable(sorterPrecios);
+		sorterPrecios.setTableHeader(tabla.getTableHeader());
+		
 		tabla.getColumn(tabla.getColumnName(1)).setCellRenderer(modeloPrecios.getRenderer());
 		
 		tabla.addMouseListener(new MouseAdapter(){

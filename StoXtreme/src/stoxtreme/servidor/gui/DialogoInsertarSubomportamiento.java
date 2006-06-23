@@ -14,25 +14,18 @@ import javax.swing.JPanel;
 import stoxtreme.servidor.gui.FakeInternalFrame;
 import stoxtreme.servidor.gui.PanelOpciones;
 
-public class DialogoInsertarComportamiento extends JDialog{
-	private String[] sociales;
-	private String[]psicologicos;
+public class DialogoInsertarSubomportamiento extends JDialog{
 	private String[] tiposComportamiento;
 	private PanelOpciones panelOpciones;
 	
 	private String id;
 	private String tipoComportamiento;
-	private String modeloPsicologico;
-	private String modeloSocial;
-	private double porcentaje;
 	
 	private boolean aceptado;
 	
-	public DialogoInsertarComportamiento(
-			JFrame frame, String[] sociales, String[]psicologicos, String[] tiposC) {
+	public DialogoInsertarSubomportamiento(
+			JFrame frame, String[] tiposC) {
 		super(frame);
-		this.sociales = sociales;
-		this.psicologicos = psicologicos;
 		this.tiposComportamiento = tiposC;
 		try{
 			init();
@@ -62,23 +55,15 @@ public class DialogoInsertarComportamiento extends JDialog{
 	public Component getPanelSuperior(){
 		ArrayList<String> opciones = new ArrayList<String>();
 		opciones.add("Identificador");
-		opciones.add("Modelo Psicologico");
-		opciones.add("Modelo Social");
 		opciones.add("Tipo de Comportamiento");
-		opciones.add("Porcentaje");
 		panelOpciones = new PanelOpciones(opciones);
-		panelOpciones.setOpcionalidad("Modelo Psicologico", psicologicos);
-		panelOpciones.setOpcionalidad("Modelo Social", sociales);
 		panelOpciones.setOpcionalidad("Tipo de Comportamiento", tiposComportamiento);
 		return panelOpciones;
 	}
 	public void botonAceptar_actionPerformed(){
 		aceptado = true;
 		id = panelOpciones.getValor("Identificador");
-		modeloPsicologico = panelOpciones.getValor("Modelo Psicologico");
-		modeloSocial = panelOpciones.getValor("Modelo Social");
 		tipoComportamiento = panelOpciones.getValor("Tipo de Comportamiento");
-		porcentaje = Double.parseDouble(panelOpciones.getValor("Porcentaje"));
 		setVisible(false);
 	}
 	
@@ -112,30 +97,6 @@ public class DialogoInsertarComportamiento extends JDialog{
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getModeloPsicologico() {
-		return modeloPsicologico;
-	}
-
-	public void setModeloPsicologico(String modeloPsicologico) {
-		this.modeloPsicologico = modeloPsicologico;
-	}
-
-	public String getModeloSocial() {
-		return modeloSocial;
-	}
-
-	public void setModeloSocial(String modeloSocial) {
-		this.modeloSocial = modeloSocial;
-	}
-
-	public double getPorcentaje() {
-		return porcentaje;
-	}
-
-	public void setPorcentaje(double porcentaje) {
-		this.porcentaje = porcentaje;
 	}
 
 	public String getTipoComportamiento() {
