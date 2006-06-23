@@ -33,7 +33,7 @@ public class ManejadorMensajes implements IMensajeriaListener{
 		else if(m.getTipoMensaje().equals("INFORMACION")){
 			cliente.informar(m.getContenido());
 		}
-		else if(m.getTipoMensaje().equals("FIN SIMULACION")){
+		else if(m.getTipoMensaje().equals("FINSESION")){
 			cliente.finSimulacion();
 		}
 		else{

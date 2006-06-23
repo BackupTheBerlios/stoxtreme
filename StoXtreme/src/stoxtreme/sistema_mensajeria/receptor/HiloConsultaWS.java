@@ -33,6 +33,9 @@ public class HiloConsultaWS extends Thread{
 				
 			while(!parar){
 				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());
+				if("FIN".equals(m.getTipoMensaje())){
+					parar = true;
+				}
 				if(m!=null){
 					receptor.notifica(m);
 				}
@@ -41,9 +44,5 @@ public class HiloConsultaWS extends Thread{
 		catch(Exception e){
 			e.printStackTrace();
 		}
-	}
-	
-	public void pararHilo(){
-		parar = true;
 	}
 }

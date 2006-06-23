@@ -246,7 +246,7 @@ public class PanelConfigAgentes extends JPanel{
 		ops.add("Ratio respawn");
 		ops.add("Atenuacion rumor");
 		atribModelo = new PanelOpciones(ops);
-		FakeInternalFrame frame = new FakeInternalFrame("Parametros", atribModelo);
+		FakeInternalFrame frame = new FakeInternalFrame("Parametros", new JScrollPane(atribModelo));
 		return frame;
 	}
 

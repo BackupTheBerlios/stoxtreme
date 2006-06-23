@@ -46,10 +46,12 @@ public class ComportamientoAleatorio extends ComportamientoAgente{
 						!estadoCartera.tieneAccionesPosesion(empresa) ||
 						estadoBolsa.getPrecioActualEmpresa(empresa) < estadoBolsa.getPrecioAperturaEmpresa(empresa)) {
 					o = generaCompra(empresa);
+					estado ="Genera compra";
 					//System.out.println("COMPRA "+o.getIDAgente()+" "+o.getPrecio());
 				}
 				else{ // No tiene acciones de esa empresa
 					o = generaVenta(empresa);
+					estado ="Genera venta";
 					//System.out.println("VENTA "+o.getIDAgente()+" "+o.getPrecio());
 				}
 				if(o.getCantidad() >0){
@@ -61,6 +63,7 @@ public class ComportamientoAleatorio extends ComportamientoAgente{
 
 				if(!operacionesPendientes.isPendienteCancelacion(idOp)){
 					decisiones.add(new CancelarOperacion(idOp));
+					estado ="Genera cancelacion";
 					// Una cancelacion es una operacion pendiente
 					
 					if(numeroCancelaciones < modeloPsicologico.numeroMaximoCancelaciones()) {
@@ -92,5 +95,9 @@ public class ComportamientoAleatorio extends ComportamientoAgente{
 				}
 			}
 		}
+	}
+
+	public String getNombreComportamiento() {
+		return "Aleatorio";
 	}
 }

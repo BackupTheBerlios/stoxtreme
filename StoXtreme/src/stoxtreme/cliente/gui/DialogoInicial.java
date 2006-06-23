@@ -45,6 +45,7 @@ public class DialogoInicial extends JFrame{
 	//0=Error (ha cerrado la ventana), 1=Login, 2=Registro
 	private int operacion;
 	private Object despertador;
+	private static Image LOGO = Toolkit.getDefaultToolkit().getImage("logo.png");
 	
 	private void cerrarVentana() {
 		synchronized (despertador) {
@@ -88,8 +89,7 @@ public class DialogoInicial extends JFrame{
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				Toolkit toolkit = Toolkit.getDefaultToolkit();
-				Image im = toolkit.getImage("logo.png");
-				g.drawImage(im, 0, 0, 480, 500, this);
+				g.drawImage(LOGO, 0, 0, 480, 500, this);
 			}
 		};
 		panel.setPreferredSize(new Dimension(480, 500));
@@ -107,18 +107,20 @@ public class DialogoInicial extends JFrame{
 	private PanelOpciones panelOpciones;
 	private static final String NUSUARIO ="Nombre de Usuario"; 
 	private static final String NPASS ="Contraseña";
-		
+	private static final String NURL ="Dirección del servidor";	
+	
 	private Component getPanelInferior(){
 		ArrayList<String> opciones = new ArrayList<String>();
 		opciones.add(NUSUARIO);
 		opciones.add(NPASS);
+		opciones.add(NURL);
 		
 		ArrayList<String> pass = new ArrayList<String>();
 		pass.add(NPASS);
 		
 		panelOpciones = new PanelOpciones(opciones,pass);
 		principal=new JPanel(new BorderLayout());
-		
+		panelOpciones.setValor(NURL, "http://localhost:8080");
 		principal.add(panelOpciones, BorderLayout.CENTER);
 		//principal.add(getCentralPanel(), BorderLayout.CENTER);
 		principal.add(getPButtons(),BorderLayout.SOUTH);
@@ -227,6 +229,9 @@ public class DialogoInicial extends JFrame{
 	public void setOperacion(int i) {
 		operacion=i;
 		
+	}
+	public String getDireccionServidor() {
+		return panelOpciones.getValor(NURL);
 	}
 	
 //	private static class Ventanuco extends JFrame{

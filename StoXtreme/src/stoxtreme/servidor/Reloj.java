@@ -44,6 +44,7 @@ public class Reloj{
 	
 	public void pararReloj(){
 		if(!parado){
+			parado = true;
 			timer.cancel();
 			timer = null;
 		}

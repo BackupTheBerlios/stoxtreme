@@ -95,4 +95,8 @@ public class AgenteAnalisisFundamental extends ComportamientoAgente {
 
 		decisiones.add(new AltaServicio(NOMBRE_SERVICIO));
 	}
+
+	public String getNombreComportamiento() {
+		return "Analisis Fundamental";
+	}
 }

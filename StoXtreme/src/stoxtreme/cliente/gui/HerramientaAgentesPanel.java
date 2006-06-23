@@ -162,14 +162,20 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private void botonEliminar_actionPerformed(){
 		// Cogemos los agentes seleccionados y los eliminamos
 		// de la bolsa
-		ArrayList<Agente> selec = modeloTabla.dameSeleccionados();
+		ArrayList<Agente> selec = modeloTabla.getAgentesSeleccionados();
 		for (Agente agente : selec) {
 			agente.abandonarModelo();
 		}
+		modeloTabla.clearSeleccionados();
 	}
 	
 	private void botonEditar_actionPerformed(){
-		
+		int row = tablaAgentes.getSelectedRow();
+		if(row != -1){
+			Agente agente = modeloTabla.getAgente(row);
+			DialogoMuestraAgente dialogo = new DialogoMuestraAgente(agente, frame);
+			dialogo.setVisible(true);
+		}
 	}
 	
 	private void botonConsultaConfig_actionPerformed(){

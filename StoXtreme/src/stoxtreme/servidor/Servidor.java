@@ -1,4 +1,5 @@
 package stoxtreme.servidor;
+import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Administrador;
 import stoxtreme.interfaz_remota.Stoxtreme;
@@ -6,6 +7,7 @@ import stoxtreme.servidor.eventos.SistemaEventos;
 import stoxtreme.servidor.gestion_usuarios.GestionUsuarios;
 import stoxtreme.servidor.gui.MainFrameAdmin;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
+import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -240,7 +242,8 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	
 	public void finalizaSesion() throws RemoteException {
-		// TODO Finaliza
+		AlmacenMensajes.getInstance().insertarMensajeGlobal(new Mensaje("FINSESION","FINSESION",Mensaje.GLOBAL));
+		// TODO FALTA REINICIAR TODO
 	}
 	
 	public void showGUI() throws RemoteException {

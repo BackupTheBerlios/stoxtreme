@@ -65,16 +65,7 @@ public class HerramientaAgentesTableModel extends AbstractTableModel{
 			default: return"";
 		}
 	}
-	
-	public ArrayList<Agente> dameSeleccionados() {
-		ArrayList<Agente> ret = new ArrayList(seleccionadas.size());
-		Iterator<Integer> it = seleccionadas.iterator();
-		while(it.hasNext()){
-			ret.add(elementos.get(it.next()));
-		}
-		return ret;
-	}
-	
+
 	public void cambioEnAgente(String id){
 		int i=0;
 		while(i<elementos.size() && !elementos.get(i).getIDString().equals(id)){
@@ -83,5 +74,28 @@ public class HerramientaAgentesTableModel extends AbstractTableModel{
 		if(i<elementos.size()){
 			fireTableRowsUpdated(i,i);
 		}
+	}
+	
+	public ArrayList<Agente> getAgentesSeleccionados(){
+		ArrayList<Agente> lista = new ArrayList<Agente>();
+		Iterator<Integer> iterator = seleccionadas.iterator();
+		while(iterator.hasNext()){
+			int i = iterator.next();
+			lista.add(elementos.get(i));
+		}
+		return lista;
+	}
+	
+	public void clearSeleccionados(){
+		seleccionadas.clear();
+	}
+	
+	public void eliminaAgente(Agente agente) {
+		int index = elementos.indexOf(agente);
+		elementos.remove(index);
+		fireTableRowsDeleted(index,index);
+	}
+	public Agente getAgente(int row) {
+		return elementos.get(row);
 	}
 }

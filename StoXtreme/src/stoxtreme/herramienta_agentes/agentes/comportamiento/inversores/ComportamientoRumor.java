@@ -82,4 +82,8 @@ public class ComportamientoRumor extends ComportamientoAgente{
 				c.onBajaPrecio(mensajeRecibido.getSender(), contenido[0], porcentaje);
 		}
 	}
+
+	public String getNombreComportamiento() {
+		return "Rumor";
+	}
 }

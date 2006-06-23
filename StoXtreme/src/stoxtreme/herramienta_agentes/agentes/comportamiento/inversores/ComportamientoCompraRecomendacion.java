@@ -95,4 +95,8 @@ public class ComportamientoCompraRecomendacion extends ComportamientoAgente{
 	public void onRecepcionInform(IDAgente ids, String msg){
 		System.out.println(ids.toString()+" "+msg);
 	}
+
+	public String getNombreComportamiento() {
+		return "Compra Recomendacion";
+	}
 }

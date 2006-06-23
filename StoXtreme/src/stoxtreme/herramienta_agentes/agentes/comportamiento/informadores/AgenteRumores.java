@@ -33,4 +33,8 @@ public class AgenteRumores extends ComportamientoAgente{
 			decisiones.add(decision);
 		}
 	}
+	
+	public String getNombreComportamiento() {
+		return "Propagador Rumores";
+	}
 }	

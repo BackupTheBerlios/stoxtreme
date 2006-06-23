@@ -176,5 +176,6 @@ public abstract class ComportamientoAgente {
 
 	abstract public void generacionDecisiones();
 	abstract public void configure();
+	abstract public String getNombreComportamiento();
 }
 	

@@ -23,4 +23,8 @@ public class ComportamientoPrueba extends ComportamientoAgente{
 		if(precio2>precio1)
 			decisiones.add(new IntroducirOperacion(new Operacion(null,Operacion.COMPRA,100,"ENDESA",new InfoLocal().getPrecioInicial("ENDESA"))));
 	}
+
+	public String getNombreComportamiento() {
+		return "Prueba";
+	}
 }

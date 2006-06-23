@@ -33,6 +33,8 @@ public class Agente extends Thread{
 	private double ganancias = 0.0;
 	private EstadoBolsa estadoBolsa;
 	private HerramientaAgentesTableModel modeloTabla;
+	private StringBuffer output = new StringBuffer();
+	private String estado;
 	
 	public Agente (Stoxtreme conexionBolsa, EstadoBolsa estado, ConsolaAgentes consolaAgentes, HerramientaAgentesTableModel modeloTabla, ParametrosSocial ps, ParametrosPsicologicos pp){
 		ID = new IDAgente();
@@ -46,12 +48,11 @@ public class Agente extends Thread{
 		
 		this.conexionBolsa = conexionBolsa;
 		this.consolaAgentes = consolaAgentes;
-//		monitor.addNotificadorListener(ID.toString(), p);
 		
 		opPendientes = new OperacionesPendientes();
 		p.setAgente(this);
 		p.setOperacionesPendientes(opPendientes);
-//		p.setEstadoBolsa(estadoBolsa);
+		p.setEstadoBolsa(estadoBolsa);
 		p.setEstadoCartera(estadoCartera);
 		
 		this.alive = true;
@@ -80,9 +81,12 @@ public class Agente extends Thread{
 			// Nadie le interrumpe mientras toma las
 			// decisiones
 			ArrayList<Decision> decisiones;
+			String nuevoEstado;
 			synchronized(this){
 				comportamiento.generaDecisionesAll();
 				decisiones = comportamiento.getDecisiones();
+				
+				nuevoEstado = comportamiento.getEstadoComportamiento();
 			}
 			
 			Iterator<Decision> itDec = decisiones.iterator();
@@ -97,6 +101,11 @@ public class Agente extends Thread{
 			espera.setAgente(this);
 			espera.insertarEnMonitor();
 			imprime(espera);
+			
+			if(!nuevoEstado.equals(estado)){
+				estado = nuevoEstado;
+				fireUpdateTable();
+			}
 			
 			try {
 				synchronized(this){
@@ -148,6 +157,7 @@ public class Agente extends Thread{
 	public void abandonarModelo(){
 		if(alive){
 			setAlive(false);
+			modeloTabla.eliminaAgente(this);
 		}
 	}
 	
@@ -158,6 +168,8 @@ public class Agente extends Thread{
 
 	public void imprime(Decision decision) {
 		consolaAgentes.insertarAccion(getIDString(), decision.toString());
+		output.append(decision.toString());
+		output.append('\n');
 	}
 
 	public Perceptor getPerceptor() {
@@ -165,11 +177,11 @@ public class Agente extends Thread{
 	}
 	
 	public String getEstado(){
-		return comportamiento.getEstadoComportamiento();
+		return estado;
 	}
 	
 	public String getStringComportamiento(){
-		return this.comportamiento.getClass().toString();
+		return this.comportamiento.getNombreComportamiento();
 	}
 	
 	public double getGanancias(){
@@ -215,5 +227,9 @@ public class Agente extends Thread{
 	
 	public void fireUpdateTable(){
 		modeloTabla.cambioEnAgente(getIDString());
+	}
+	
+	public StringBuffer getOutput(){
+		return output;
 	}
 }

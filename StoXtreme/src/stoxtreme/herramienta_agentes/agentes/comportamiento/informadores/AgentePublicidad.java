@@ -12,4 +12,8 @@ public class AgentePublicidad extends ComportamientoAgente{
 	public void generacionDecisiones() {
 		
 	}
+
+	public String getNombreComportamiento() {
+		return "Publicidad";
+	}
 }

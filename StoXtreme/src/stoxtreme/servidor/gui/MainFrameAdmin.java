@@ -29,6 +29,7 @@ import stoxtreme.servidor.Servidor;
 @SuppressWarnings("serial")
 public class MainFrameAdmin extends JFrame{
 	private static final String FICH_CONFAGENTES = "./conf/confAgentes.xml";
+	private static Image LOGO = Toolkit.getDefaultToolkit().getImage("logoPeke.png");
 	private ModeloTablaOperaciones modeloOperaciones; 
 	private ModeloListaUsuariosConectados modeloUsuarios; 
 	private ModeloTablaPrecioAcciones modeloPrecios;
@@ -36,7 +37,6 @@ public class MainFrameAdmin extends JFrame{
 	private ModeloTablaEventos modeloEventos;
 	/**/
 	private JSplitPane panelPrincipal;
-	private JSplitPane panelSecundario;
 	private FakeInternalFrame panelDerecha;
 	private FakeInternalFrame panelIzqAbajo;
 	private Servidor servidor;
@@ -76,8 +76,7 @@ public class MainFrameAdmin extends JFrame{
 		JPanel grafico = new JPanel(){
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				Image img = Toolkit.getDefaultToolkit().getImage("logoPeke.png");
-				g.drawImage(img, 0, 0, 239, 250, this);
+				g.drawImage(LOGO, 0, 0, 239, 250, this);
 			}
 		};
 		grafico.setPreferredSize(new Dimension(240, 250));
@@ -152,9 +151,13 @@ public class MainFrameAdmin extends JFrame{
 	}
 	
 	private void botonFinalizar_actionPerformed(){
-		
+		try {
+			servidor.finalizaSesion();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	private Component getPanelOpcionesSuperior() {
 		ArrayList<String> ops = new ArrayList<String>();
 		ops.add("Numero de empresas");
