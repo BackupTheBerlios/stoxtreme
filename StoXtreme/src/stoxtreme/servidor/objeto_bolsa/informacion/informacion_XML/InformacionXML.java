@@ -89,30 +89,7 @@ public class InformacionXML implements IInformacion{
 	    }
 	}
 
-	public Balance getBalanceActual() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Vector getBalances(Date inicio, Date fin) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setBalance(Balance b, Date fecha) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Vector getCuentas(Date inicio, Date fin) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setCuenta(Cuenta c, Date fecha) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 	/*Obtenemos los datos bursatiles:
 	 * Participaciones (nombre del accionista, numero de acciones que posee)
@@ -166,7 +143,6 @@ public class InformacionXML implements IInformacion{
 	 * que se han dado en la bolsa
 	 */
 	public void setAmpliacionesCapital(Vector v){
-		//TODO
 	}
 	
 	public Vector getCapitalSocial(){
@@ -183,12 +159,10 @@ public class InformacionXML implements IInformacion{
 	}
 
 	public String getPerspectivaFuturo() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void setPerspectivaFuturo(String s) {
-		// TODO Auto-generated method stub
 		
 	}
 		

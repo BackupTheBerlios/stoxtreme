@@ -1,20 +1,8 @@
 package stoxtreme.interfaz_remota;
 
-import java.util.Date;
-import java.util.Vector;
-
-import stoxtreme.servidor.objeto_bolsa.informacion.Balance;
-import stoxtreme.servidor.objeto_bolsa.informacion.Cuenta;
 import stoxtreme.servidor.objeto_bolsa.informacion.InfoBursatil;
 
 public interface IInformacion {
-	// Datos de los recursos de la empresa
-	public Balance getBalanceActual();
-	public Vector getBalances(Date inicio, Date fin);
-	public void setBalance(Balance b, Date fecha);
-	// Datos financieros (beneficios y gastos) de la empresa
-	public Vector getCuentas(Date inicio, Date fin);
-	public void setCuenta(Cuenta c, Date fecha);
 	// Participaciones, ampliaciones de capital, etc...
 	public InfoBursatil getDatosBursatiles();
 	public void setInfoBursatil(InfoBursatil i);

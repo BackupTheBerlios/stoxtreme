@@ -186,7 +186,6 @@ public class Servidor implements Administrador, Stoxtreme{
 		guiAdmin.setServidor(this);
 		guiAdmin.init();
 		
-		/*TODO SALE AL CERRAR!!! CAMBIAR ESTO DESPUES DE PROBARLO*/
 		guiAdmin.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
 				try {
@@ -219,6 +218,7 @@ public class Servidor implements Administrador, Stoxtreme{
 
 	public void pararServidor() throws RemoteException {
 		reloj.pararReloj();
+		finalizaSesion();
 		try {
 			webServer.stop();
 		} catch (LifecycleException e) {
@@ -243,7 +243,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	public void finalizaSesion() throws RemoteException {
 		AlmacenMensajes.getInstance().insertarMensajeGlobal(new Mensaje("FINSESION","FINSESION",Mensaje.GLOBAL));
-		// TODO FALTA REINICIAR TODO
+		// TODO: FALTA REINICIAR
 	}
 	
 	public void showGUI() throws RemoteException {

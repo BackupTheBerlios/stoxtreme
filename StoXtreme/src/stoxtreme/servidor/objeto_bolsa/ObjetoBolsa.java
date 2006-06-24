@@ -1,10 +1,3 @@
-/*
- * TODO:
- * 	- Conectar esto con el sistema de eventos y las variables del sistema
- * 	
- */
-
-
 package stoxtreme.servidor.objeto_bolsa;
 import java.util.Hashtable;
 
@@ -52,9 +45,6 @@ public class ObjetoBolsa implements RelojListener{
 		if(sistemaOperaciones != null && fluctuaciones !=null){
 			// Se calcula el nuevo precio de la empresa
 			double nPrecio = fluctuaciones.paso();
-			
-			// Se cruzan las operaciones
-			sistemaOperaciones.paso(nPrecio);
 		}
 	}
 	

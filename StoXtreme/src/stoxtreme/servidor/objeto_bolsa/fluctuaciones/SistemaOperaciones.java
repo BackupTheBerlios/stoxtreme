@@ -30,12 +30,6 @@ public class SistemaOperaciones /*implements RelojListener*/{
         private TreeSet idscompras;
         private TreeSet idsventas;
         
-        public void paso(double nuevoPrecio){
-        	// TODO: IMPLEMENTAR EL CRUCE
-        	// Recorrer las operaciones a "nuevoPrecio"
-        	// Lo primero es cruzar con las acciones de la empresa 
-        	// ponerlo como un abanico de precios
-        }
         public SistemaOperaciones (int nAccionesVenta){
           listaCompras=new Hashtable();
           listaVentas=new Hashtable();

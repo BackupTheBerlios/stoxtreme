@@ -36,7 +36,7 @@ import javax.swing.tree.TreePath;
 import stoxtreme.servidor.gui.FakeInternalFrame;
 
 public class PanelConfigAgentes extends JPanel{
-	// TODO esto que lo pille por la entrada
+	// TODO: esto que lo pille por la entrada
 	private static String[] tiposComportamientos ={
 		"stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgenteAnalisisFundamental",
 		"stoxtreme.herramienta_agentes.agentes.comportamiento.informadores.AgenteAnalisisTecnico",

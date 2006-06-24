@@ -102,7 +102,6 @@ public class BuzonMensajes {
 		
 		if(!encontradaRecepcion){
 			// Espera hasta el momento en el que escuche por el mensaje
-			// TODO: Comprobar al opcion de no persistencia
 			mensajesPendientes.add(m);
 		}
 	}

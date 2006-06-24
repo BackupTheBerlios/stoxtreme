@@ -218,9 +218,7 @@ public class Cliente{
 		int contador=0;
 		while(ficheros.length>contador){
 			try {
-				//TODO Cambiar la URL
 				url= new  URL(direccion+URLCONF+ficheros[contador]+".xml");
-				//TODO Cambiar la ruta de destino si procede
 				
 				File f = new File("./conf/cliente/"+ficheros[contador]+".xml");
 				System.err.println(f.getAbsolutePath());
