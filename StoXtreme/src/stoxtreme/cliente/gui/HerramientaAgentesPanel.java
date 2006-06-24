@@ -35,11 +35,14 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private JButton botonIniciarPararSistema;
 	private JButton botonEliminar;
 	private JButton botonEditar;
-	private JButton botonConsultaConfig;
+	private JButton botonReiniciar;
 	private Cliente cliente;
 	
 	private boolean parado = true;
 	private JFrame frame;
+	
+	private JScrollPane scrollTextoConsola;
+	private JScrollPane scrollTextoNotificacion;
 	
 	public HerramientaAgentesPanel() {
 		try{
@@ -91,12 +94,16 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		botonEliminar.setEnabled(false);
 		botonEditar = new JButton("Editar");
 		botonEditar.setEnabled(false);
-		botonConsultaConfig = new JButton("Consultar configuración");
-
+		botonReiniciar = new JButton("Reiniciar Sistema");
+		botonReiniciar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				boton_reiniciarActionPerformed();
+			}
+		});
 		panelBotonesNormal.add(botonIniciarPararSistema);
 		panelBotonesNormal.add(botonEliminar);
 		panelBotonesNormal.add(botonEditar);
-		panelBotonesNormal.add(botonConsultaConfig);
+		panelBotonesNormal.add(botonReiniciar);
 		
 		// Setea los botones
 		botonEditar.addActionListener(new ActionListener(){
@@ -108,12 +115,6 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		botonEliminar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				botonEliminar_actionPerformed();
-			}
-		});
-		
-		botonConsultaConfig.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				botonConsultaConfig_actionPerformed();
 			}
 		});
 		
@@ -134,7 +135,21 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		return panelBotonesNormal;
 	}
 	
-	public void botonParar_actionPerformed(){
+	private void boton_reiniciarActionPerformed(){
+		DialogoParametrosAgentes dialogo = new DialogoParametrosAgentes(frame);
+		dialogo.setVisible(true);
+		if(dialogo.isAceptado()){
+			ParametrosAgentes parametros = new ParametrosAgentes();
+			parametros.set(ParametrosAgentes.Parametro.NUM_AGENTES, dialogo.getNAgentes());
+			parametros.set(ParametrosAgentes.Parametro.TIEMPO_ESPERA, dialogo.getTEjecucion());
+			parametros.set(ParametrosAgentes.Parametro.TCICLO, dialogo.getTCiclo());
+			cliente.reiniciarHerramientaAgentes(parametros);
+			botonEditar.setEnabled(true);
+			botonEliminar.setEnabled(true);
+		}
+	}
+	
+	private void botonParar_actionPerformed(){
 		cliente.detenerHerramientaAgentes();
 		botonIniciarPararSistema.setText("Reanudar Sistema");
 	}
@@ -178,10 +193,6 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		}
 	}
 	
-	private void botonConsultaConfig_actionPerformed(){
-		
-	}
-
 	public void addListaAgentes(ArrayList<Agente> listaAgentes){
 		modeloTabla.setAgentes(listaAgentes);
 	}
@@ -194,21 +205,23 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		return(panelDerecho);
 	}
 	
+	
 	public Component getPanelInferiorDerecho(){
 		JTextPane texto = new JTextPane();
 		textoConsola = texto.getStyledDocument();
 		addStylesToDocument(textoConsola);
-		JScrollPane panel = new JScrollPane(texto);
-		FakeInternalFrame frame = new FakeInternalFrame("Acciones de los agentes",panel);
+		scrollTextoConsola = new JScrollPane(texto);
+		FakeInternalFrame frame = new FakeInternalFrame("Acciones de los agentes",scrollTextoConsola);
 		return frame;
 	}
+	
 	
 	public Component getPanelSuperiorDerecho(){
 		JTextPane texto = new JTextPane();
 		textoNotificacion = texto.getStyledDocument();
 		addStylesToDocument(textoNotificacion);
-		JScrollPane panel = new JScrollPane(texto);
-		FakeInternalFrame frame = new FakeInternalFrame("Notificaciones de los agentes",panel);
+		scrollTextoNotificacion = new JScrollPane(texto);
+		FakeInternalFrame frame = new FakeInternalFrame("Notificaciones de los agentes",scrollTextoNotificacion);
 		return frame;
 	}
 	
@@ -229,11 +242,22 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 					accion+nl,
 					textoConsola.getStyle(ESTILO_ACCION)
 			);
+			
+			SwingUtilities.invokeLater(new Runnable(){
+				public void run() {
+					scrollAbajoConsola();
+				}
+			});
+			
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	private void scrollAbajoConsola(){
+		scrollTextoConsola.getVerticalScrollBar().setValue(scrollTextoConsola.getVerticalScrollBar().getMaximum());
+	}
+
 	public synchronized void insertarNotificacion(String idAgente, String notif){
 		try {
 			textoNotificacion.insertString(
@@ -246,12 +270,19 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 					notif+nl,
 					textoNotificacion.getStyle(ESTILO_NOTIFICACION)
 			);
+			SwingUtilities.invokeLater(new Runnable(){
+				public void run() {
+					scrollAbajoNotificacion();
+				}
+			});
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
+	private void scrollAbajoNotificacion(){
+		scrollTextoNotificacion.getVerticalScrollBar().setValue(scrollTextoConsola.getVerticalScrollBar().getMaximum());
+	}
 	
 	private void addStylesToDocument(StyledDocument doc) {
         //Initialize some styles.
@@ -279,5 +310,14 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public void limpiarGUI(){
+		try {
+			textoConsola.remove(0, textoConsola.getLength()-1);
+			textoNotificacion.remove(0, textoConsola.getLength()-1);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 }

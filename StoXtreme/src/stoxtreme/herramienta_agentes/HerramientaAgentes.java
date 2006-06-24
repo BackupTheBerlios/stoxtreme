@@ -29,17 +29,14 @@ import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 import stoxtreme.sistema_mensajeria.receptor.ReceptorMensajes;
 
 public class HerramientaAgentes extends HerramientaAgentesPanel implements TimerListener{
-	private ParametrosAgentes parametros;
 	private ArrayList<Agente> agentes;
 	private MonitorAgentes monitor;
 	private Notificador notif;
 	
 	public HerramientaAgentes(
 			String nombreUsuario, 
-			EstadoBolsa bolsa, 
-			ParametrosAgentes parametros){
+			EstadoBolsa bolsa){
 		IDAgente.setUsuario(nombreUsuario);
-		this.parametros = parametros;
 		this.notif = new Notificador();
 		//receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
 //		receptor.addListener(this);
@@ -125,5 +122,28 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 
 	public void reanudarAgentes() {
 		monitor.reanudar();
+	}
+
+	
+	public void reiniciar(ParametrosAgentes parametros, String ficheroConfAgentes, Stoxtreme servidor, EstadoBolsa bolsa) {
+		for(int i=0; i<agentes.size(); i++){
+			agentes.get(i).abandonarModelo();
+		}
+		limpiarGUI();
+		
+		try {
+			synchronized (monitor) {
+				ConstructorAgentes constructor = new ConstructorAgentes();
+				agentes = constructor.construyeAgentes(
+						monitor.getConexionBolsa(), 
+						bolsa, monitor.getConsolaAgentes(),
+						notif,modeloTabla,
+						ficheroConfAgentes, parametros);
+				
+				super.addListaAgentes(agentes);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

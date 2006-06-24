@@ -139,9 +139,8 @@ public class Cliente{
 		System.err.println("Creando Estado de la Bolsa");
 		eBolsa = new EstadoBolsa(new InfoLocal());
 		System.err.println("Creando Parametros");
-		ParametrosAgentes parametros = new ParametrosAgentes();
 		System.err.println("Creando Agentes");
-		hAgentes = new HerramientaAgentes(nUsuario, eBolsa, parametros);
+		hAgentes = new HerramientaAgentes(nUsuario, eBolsa);
 		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa, hAgentes);
 		hAgentes.setFrame(gui);
 		gui.init();
@@ -283,7 +282,15 @@ public class Cliente{
 	public void reanudarHerramientaAgentes() {
 		hAgentes.reanudarAgentes();
 	}
-
+	
+	public void reiniciarHerramientaAgentes(ParametrosAgentes parametros) {
+		try {
+			hAgentes.reiniciar(parametros, FICH_CONF_AGENTES, servidor, eBolsa);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void finSimulacion() {
 		try {
 			JOptionPane.showMessageDialog(gui, "El servidor ha finalizado inesperadamente");
