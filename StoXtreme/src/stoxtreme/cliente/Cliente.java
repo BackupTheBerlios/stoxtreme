@@ -3,11 +3,21 @@ package stoxtreme.cliente;
 import java.awt.Dimension;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.PropertyConfigurator;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import stoxtreme.cliente.gui.MainFrameCliente;
 import stoxtreme.cliente.gui.DialogoInicial;
 import stoxtreme.cliente.infoLocal.InfoLocal;
@@ -15,6 +25,7 @@ import stoxtreme.herramienta_agentes.HerramientaAgentes;
 import stoxtreme.herramienta_agentes.ParametrosAgentes;
 import stoxtreme.interfaz_remota.*;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
+import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 import stoxtreme.sistema_mensajeria.receptor.*;
 
 public class Cliente{
@@ -158,7 +169,7 @@ public class Cliente{
 			System.err.println("Error al iniciar los agentes. Exit");
 			e.printStackTrace();
 			try {
-				deslogea();
+				desloguea();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -200,7 +211,7 @@ public class Cliente{
 		return nUsuario;
 	}
 	
-	public void deslogea() throws Exception{
+	public void desloguea() throws Exception{
 		System.out.println("Deslogea");
 		servidor.login(nUsuario, password);
 		System.out.println("Fin del cliente.");
@@ -208,19 +219,44 @@ public class Cliente{
 	}
 	public void obtenerFicheros(String direccion) throws Exception{
 		URL url = null;
-		FileOutputStream fos = null; 
+		FileOutputStream fos = null;
 		InputStreamReader isr = null;
 		Reader in = null;
 		StringBuffer buffer = null;
 		OutputStreamWriter osw = null;
-		//Lista de nombres de ficheros de configuracion
-		String[] ficheros={"empresas","endesa","antena3","repsol","telecinco"};
+		try{
+			url=new URL(direccion+URLCONF+"empresas.xml");
+			File f=new File("./conf/cliente/empresas.xml");
+			System.err.println(f.getAbsolutePath());
+			fos = new FileOutputStream(f);
+			isr = new InputStreamReader(url.openStream());
+			in = new BufferedReader(isr);
+			buffer = new StringBuffer();
+			int ch;
+			while((ch =in.read())>-1){
+				buffer.append((char)ch);
+			}
+			osw = new OutputStreamWriter(fos);
+			osw.append(buffer);
+		} 
+		 catch (Exception e) {
+			e.printStackTrace();
+		} 
+		if(osw != null)
+			osw.close();
+		if(in != null)
+			in.close();
+		if(fos != null)
+			fos.close();
+		if(isr!=null)
+			isr.close();
+		ArrayList ficheros=this.getNombreFicheros("./conf/cliente/empresas.xml");
 		int contador=0;
-		while(ficheros.length>contador){
+		while(ficheros.size()>contador){
 			try {
-				url= new  URL(direccion+URLCONF+ficheros[contador]+".xml");
+				url= new  URL(direccion+URLCONF+ficheros.get(contador));
 				
-				File f = new File("./conf/cliente/"+ficheros[contador]+".xml");
+				File f = new File("./conf/cliente/"+ficheros.get(contador));
 				System.err.println(f.getAbsolutePath());
 				//f.createNewFile();
 				fos = new FileOutputStream(f);
@@ -249,6 +285,37 @@ public class Cliente{
 		}
 	}
 	
+	public ArrayList getNombreFicheros(String fichEmpresas){
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		//Lista de nombres de ficheros de configuracion
+		ArrayList ficheros=new ArrayList();
+		try {
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document document = builder.parse(new File(fichEmpresas));
+			NodeList nl = document.getElementsByTagName("emp");
+			String ruta=null;
+			//Obtengo los nombres de todas las empresas
+			for (int i=0; nl!=null && i<nl.getLength();i++){
+				ruta=((Element)nl.item(i)).getTextContent().trim();
+				String[] nombre=ruta.split("/");
+				ficheros.add(i,nombre[1].toString());
+			}
+	    } catch (SAXException sxe) {
+	       // Error generated during parsing
+	       Exception  x = sxe;
+	       if (sxe.getException() != null)
+	           x = sxe.getException();
+	       x.printStackTrace();
+
+	    } catch (ParserConfigurationException pce) {
+	       // Parser with specified options can't be built
+	       pce.printStackTrace();
+	    } catch (IOException ioe) {
+	       // I/O error
+	       ioe.printStackTrace();
+	    }
+		return ficheros;
+	}
 	public boolean validar (String s){
 		boolean valido=true;
 		final char[] chars = s.toCharArray();
@@ -292,7 +359,7 @@ public class Cliente{
 	public void finSimulacion() {
 		try {
 			JOptionPane.showMessageDialog(gui, "El servidor ha finalizado inesperadamente");
-			System.exit(0);
+			desloguea();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
