@@ -18,7 +18,7 @@ public class IntroducirOperacion extends Decision{
 		else{
 			tipo = "Venta";
 		}
-		System.err.println(tipo+" "+o.getPrecio()+" "+o.getCantidad());
+//		System.err.println(tipo+" "+o.getPrecio()+" "+o.getCantidad());
 		agente.insertarOperacion(o);
 	}
 	

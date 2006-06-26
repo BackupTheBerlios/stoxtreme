@@ -16,7 +16,6 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 	private VariablesSistema variables;
 	private ArrayList<ObjetoCondicion> listaCondiciones;
 	private ArrayList<String> listaAcciones;
-	private Ejecutor ejecutor;
 	
 	public SistemaEventos(VariablesSistema variables){
 		super();
@@ -33,14 +32,27 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 				Ejecutor.ejecuta((String)listaAcciones.get(i));
 				
 				if(oc.isUnaVez()){
+					quitarEvento(oc, (String)listaAcciones.get(i));
 					listaAcciones.remove(i);
 					listaCondiciones.remove(i);
-					quitarEvento(oc.getDescripcion());
 				}
 			}
 		}
 	}
 	
+	private void quitarEvento(ObjetoCondicion oc, String accion) {
+		ArrayList<Evento> eventos = new ArrayList<Evento>();
+		for(int i=0; i<listaEventos.size(); i++){
+			Evento evento = listaEventos.get(i);
+			String acEv = evento.getAccion();
+			String conEv = evento.getCondicion();
+			
+			if(acEv.equals(accion)&&conEv.equals(oc.getDescripcion())){
+				eventos.add(evento);
+			}
+		}
+	}
+
 	public void insertarEvento(String descripcionIn, String accionIn, boolean unavez, boolean activo){
 		try {
 			String descripcion = descripcionIn.toUpperCase();

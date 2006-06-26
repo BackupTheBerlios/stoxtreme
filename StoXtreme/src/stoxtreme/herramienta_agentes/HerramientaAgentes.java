@@ -1,32 +1,16 @@
 package stoxtreme.herramienta_agentes;
 
-import java.awt.Dimension;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import stoxtreme.cliente.EstadoBolsa;
-import stoxtreme.cliente.ManejadorMensajes;
 import stoxtreme.cliente.gui.HerramientaAgentesPanel;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.ConstructorAgentes;
 import stoxtreme.herramienta_agentes.agentes.IDAgente;
-import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
-import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
-import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente;
-import stoxtreme.herramienta_agentes.agentes.comportamiento.prueba.ComportamientoPrueba;
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
-import stoxtreme.interfaz_remota.Mensaje;
-import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Stoxtreme;
-import stoxtreme.servicio_web.StoxtremeServiceLocator;
-import stoxtreme.sistema_mensajeria.IMensajeriaListener;
-import stoxtreme.sistema_mensajeria.receptor.ReceptorMensajes;
 
 public class HerramientaAgentes extends HerramientaAgentesPanel implements TimerListener{
 	private ArrayList<Agente> agentes;
@@ -48,7 +32,6 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		int tCiclo = parametros.getInt(ParametrosAgentes.Parametro.TCICLO);
 		monitor = new MonitorAgentes(servidor, this, tCiclo);
 		monitor.addTimerListener(this);
-		monitor.start();
 		Decision.setMonitor(monitor);
 		BuzonMensajes.setMonitor(monitor);
 		
@@ -58,7 +41,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 				eBolsa, monitor.getConsolaAgentes(),
 				notif,modeloTabla,
 				ficheroConfAgentes, parametros);
-		
+		monitor.start();
 		super.addListaAgentes(agentes);
 	}
 	

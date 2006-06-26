@@ -152,4 +152,14 @@ public class OperacionesPendientes {
 		}
 		return lista;
 	}
+
+	public int[] getOperacionesPendientes() {
+		int[] opsPendientes = new int[empresasPendientes.size()];
+		Enumeration<Integer> claves = empresasPendientes.keys();
+		int i=0;
+		while(claves.hasMoreElements()){
+			opsPendientes[i++] = claves.nextElement();
+		}
+		return opsPendientes;
+	}
 }

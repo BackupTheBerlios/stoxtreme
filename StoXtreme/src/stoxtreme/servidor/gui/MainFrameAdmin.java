@@ -224,6 +224,7 @@ public class MainFrameAdmin extends JFrame{
 		
 		tablaVariables.getColumn(tablaVariables.getColumnName(1)).setPreferredWidth(100);
 		JScrollPane panelIzq = new JScrollPane(tablaVariables);
+		
 		JPanel panelDer = new JPanel(new BorderLayout());
 		JPanel panelDerAbajo = new JPanel();
 		JButton botonInsertar = new JButton(ModeloTablaEventos.INSERTAR_EVENTO);
@@ -234,6 +235,7 @@ public class MainFrameAdmin extends JFrame{
 		panelDerAbajo.add(botonCancelar);
 		
 		JTable tablaEventos = new JTable(modeloEventos);
+		modeloEventos.setLista(tablaEventos);
 		tablaEventos.getColumn(tablaEventos.getColumnName(2)).setMaxWidth(40);
 
 		JScrollPane panelDerArriba = new JScrollPane(tablaEventos);

@@ -8,7 +8,7 @@ import stoxtreme.servidor.eventos.evaluador.Evaluador;
 import stoxtreme.servidor.eventos.evaluador.ParseException;
 
 public class ObjetoCondicion {
-	private String descripcion;
+	private String condicion;
 	private ArrayList variablesUsadas;
 	private VariablesSistema vSistema;
 	private boolean valorAnterior;
@@ -22,7 +22,7 @@ public class ObjetoCondicion {
 	}
 	
 	public ObjetoCondicion(String descripcion, VariablesSistema variables, boolean unavez, boolean activado) throws ParseException{
-		this.descripcion = descripcion;
+		this.condicion = descripcion;
 		this.unavez = unavez;
 		this.vSistema = variables;
 		
@@ -69,6 +69,6 @@ public class ObjetoCondicion {
 	}
 
 	public String getDescripcion() {
-		return descripcion;
+		return condicion;
 	}
 }

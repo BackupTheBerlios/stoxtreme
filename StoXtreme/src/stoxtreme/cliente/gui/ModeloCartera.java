@@ -48,7 +48,11 @@ public class ModeloCartera extends AbstractTableModel{
 	}
 	
 	public void restaAcciones(String empresa, int numero){
-		int nAnterior = cartera.get(empresa);
+		int nAnterior = 0;
+		if(cartera.containsKey(empresa)){
+			nAnterior = cartera.get(empresa);
+		}
+		 
 		if(nAnterior - numero == 0){
 			// Si no quedan acciones de esa empresa la borramos
 			int indiceAntiguo = nombreEmpresas.indexOf(empresa);

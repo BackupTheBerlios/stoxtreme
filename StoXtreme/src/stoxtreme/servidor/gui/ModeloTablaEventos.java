@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -18,7 +20,7 @@ import stoxtreme.servidor.eventos.evaluador.ParseException;
 public abstract class ModeloTablaEventos extends AbstractTableModel implements ActionListener{
 	public static final String INSERTAR_EVENTO = "Insertar Evento";
 	public static final String CANCELAR_EVENTO = "Cancelar Evento";
-	private ArrayList<Evento> listaEventos;
+	protected ArrayList<Evento> listaEventos;
 	private ArrayList<Boolean> eventosActivos;
 	
 	public ModeloTablaEventos(){
@@ -75,7 +77,7 @@ public abstract class ModeloTablaEventos extends AbstractTableModel implements A
 		this.fireTableRowsInserted(listaEventos.size()-1, listaEventos.size()-1);
 	}
 	
-	private class Evento{
+	protected class Evento{
 		private String condicion;
 		private String accion;
 		
@@ -101,10 +103,10 @@ public abstract class ModeloTablaEventos extends AbstractTableModel implements A
 		}
 	}
 
-	public void quitarEvento(String descripcion) {
+	public void quitarEvento(Evento evento) {
 		boolean cambiado = false;
 		for(int i=listaEventos.size()-1; i>=0; i--){
-			if(listaEventos.get(i).getCondicion().equals(descripcion)){
+			if(listaEventos.get(i).equals(evento)){
 				listaEventos.remove(i);
 				cambiado = true;
 			}
@@ -112,6 +114,10 @@ public abstract class ModeloTablaEventos extends AbstractTableModel implements A
 		if(cambiado) fireTableDataChanged();
 	}
 	
+	private JTable lista;
+	public void setLista(JTable lista){
+		this.lista = lista;
+	}
 	public void actionPerformed(ActionEvent e) {
 		if(((JButton)e.getSource()).getText().equals(INSERTAR_EVENTO)){
 			DialogoInsercionEvento diag = new DialogoInsercionEvento(Servidor.getInstance().getGUI());
@@ -121,7 +127,16 @@ public abstract class ModeloTablaEventos extends AbstractTableModel implements A
 			}
 		}
 		else if(((JButton)e.getSource()).getText().equals(CANCELAR_EVENTO)){
+			int[] indices = lista.getSelectedRows();
+			ArrayList<Evento> descripciones = new ArrayList<Evento>();
 			
+			for(int i=0; i<indices.length; i++){
+				descripciones.add(listaEventos.get(indices[i]));
+			}
+			
+			for(int i=0; i<descripciones.size(); i++){
+				quitarEvento(descripciones.get(i));
+			}
 		}
 	}
 }

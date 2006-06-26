@@ -39,7 +39,12 @@ public class Perceptor implements ListenerNotificador{
 			opPendientes != null && gDecisiones.size()!=0){
 			String empresa = opPendientes.getEmpresaOperacion(idOp);
 			int tipoOp = opPendientes.getTipoOperacion(idOp);
-					
+			
+			if(empresa == null){
+				System.err.println("EMPRESA NULL!!! "+ idOp+" "+cantidad+" "+precio);
+				return;
+			}
+			
 			switch (tipoOp){
 				case Operacion.COMPRA:
 					estadoCartera.insertaAcciones(empresa, cantidad);

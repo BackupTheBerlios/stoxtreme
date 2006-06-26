@@ -82,25 +82,24 @@ public class Agente extends Thread{
 			// decisiones
 			ArrayList<Decision> decisiones;
 			String nuevoEstado;
+			
 			synchronized(this){
 				comportamiento.generaDecisionesAll();
 				decisiones = comportamiento.getDecisiones();
-				
 				nuevoEstado = comportamiento.getEstadoComportamiento();
+				Iterator<Decision> itDec = decisiones.iterator();
+				while(itDec.hasNext()){
+					Decision actual = itDec.next();
+					actual.setAgente(this);
+					actual.insertarEnMonitor();
+					imprime(actual);
+				}
+				decisiones.clear();
+				Decision espera = comportamiento.getDecisionEspera();
+				espera.setAgente(this);
+				espera.insertarEnMonitor();
+				imprime(espera);
 			}
-			
-			Iterator<Decision> itDec = decisiones.iterator();
-			while(itDec.hasNext()){
-				Decision actual = itDec.next();
-				actual.setAgente(this);
-				actual.insertarEnMonitor();
-				imprime(actual);
-			}
-			decisiones.clear();
-			Decision espera = comportamiento.getDecisionEspera();
-			espera.setAgente(this);
-			espera.insertarEnMonitor();
-			imprime(espera);
 			
 			if(!nuevoEstado.equals(estado)){
 				estado = nuevoEstado;
