@@ -102,7 +102,7 @@ public class MainFrameCliente extends JFrame{
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
 				try {
-					cliente.deslogea();
+					cliente.desloguea();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
