@@ -235,7 +235,12 @@ public class TableSorter extends AbstractTableModel {
     }
 
     public int modelIndex(int viewIndex) {
-        return getViewToModel()[viewIndex].modelIndex;
+        try{
+        	return getViewToModel()[viewIndex].modelIndex;
+        }
+        catch(Exception e){
+        	return 0;
+        }
     }
 
     private int[] getModelToView() {
@@ -272,7 +277,15 @@ public class TableSorter extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int column) {
-        return tableModel.getValueAt(modelIndex(row), column);
+        try{
+        	return tableModel.getValueAt(modelIndex(row), column);
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        	
+        	System.exit(0);
+        	return 0;
+        }
     }
 
     public void setValueAt(Object aValue, int row, int column) {

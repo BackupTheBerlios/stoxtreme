@@ -1,7 +1,7 @@
 <info>
 	<empresa nombre="BBVA" grupo="Servicios financeros/Inmobiliarias">
 	 	<info_bursatil>
-			<capital_social capital="1661517501.07" valor_nominal="0.49" num_acciones="3390852043"/>
+			<capital_social capital="1661517501" valor_nominal="1" num_acciones="1661517501"/>
 	 		<participaciones> 
 			</participaciones>
 	 		<ampliaciones>0</ampliaciones>

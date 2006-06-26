@@ -45,6 +45,15 @@ public class ModeloTablaPrecioAcciones extends AbstractTableModel{
 		}
 	}
 	
+	public Class<?> getColumnClass(int columnIndex) {
+		if(columnIndex == 0){
+			return String.class;
+		}
+		else{
+			return Double.class;
+		}
+	}
+	
 	public void insertarEmpresa(String empresa){
 		listaEmpresas.add(empresa);
 		precioAcciones.put(empresa, new Double(0.0));

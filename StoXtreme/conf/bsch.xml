@@ -1,7 +1,7 @@
 <info>
 	<empresa nombre="BSCH" grupo="Servicios financeros/Inmobiliarias">
 	 	<info_bursatil>
-			<capital_social capital="3127148289.50" valor_nominal="0.5" num_acciones="6254296579"/>
+			<capital_social capital="2127148289" valor_nominal="" num_acciones="2127148289"/>
 	 		<participaciones> 
 			</participaciones>
 	 		<ampliaciones>0</ampliaciones>
