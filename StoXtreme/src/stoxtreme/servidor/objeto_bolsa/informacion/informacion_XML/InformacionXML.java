@@ -3,7 +3,6 @@ package stoxtreme.servidor.objeto_bolsa.informacion.informacion_XML;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -14,13 +13,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import stoxtreme.interfaz_remota.IInformacion;
-import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
-import stoxtreme.servidor.objeto_bolsa.informacion.Balance;
-import stoxtreme.servidor.objeto_bolsa.informacion.Cuenta;
 import stoxtreme.servidor.objeto_bolsa.informacion.InfoBursatil;
 
 public class InformacionXML implements IInformacion{
@@ -110,6 +105,7 @@ public class InformacionXML implements IInformacion{
 	 * key=nombre del accionista
 	 * valor=numero de acciones que posee
 	 */
+	@SuppressWarnings("unchecked")
 	public Hashtable getParticipaciones(){
 		Hashtable part=new Hashtable();
 		NodeList nl=document.getElementsByTagName("accionista");
@@ -132,6 +128,7 @@ public class InformacionXML implements IInformacion{
 	/*Obtenemos la informacion de las ampliaciones de capital.
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	public Vector getAmpliacionesCapital(){
 		Vector amps=new Vector();
 		NodeList nl=document.getElementsByTagName("ampliaciones");
@@ -145,6 +142,7 @@ public class InformacionXML implements IInformacion{
 	public void setAmpliacionesCapital(Vector v){
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Vector getCapitalSocial(){
 		Vector capSocial=new Vector();
 		NodeList nl=document.getElementsByTagName("capital_social");
