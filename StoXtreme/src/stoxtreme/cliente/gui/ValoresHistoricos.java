@@ -16,7 +16,7 @@ public class ValoresHistoricos extends TimeSeries{
 		this.fecha=fecha;
 	}
 	
-	public void insertarSiguienteValor(int valor){
-		volumenesSesion.add(new Integer(valor));
+	public void insertarSiguienteValor(double valor){
+		volumenesSesion.add(new Double(valor));
 	}
 }

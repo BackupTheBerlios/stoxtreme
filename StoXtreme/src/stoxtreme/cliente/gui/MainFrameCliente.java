@@ -1,6 +1,7 @@
 package stoxtreme.cliente.gui;
 
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.*;
 import java.text.ParseException;
 import java.util.*;
@@ -19,6 +20,7 @@ import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.*;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.*;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.*;
 import org.jfree.data.xy.*;
@@ -54,6 +56,11 @@ public class MainFrameCliente extends JFrame{
 	private Hashtable graficas=new Hashtable();
 	private HerramientaAgentesPanel hAgentes;
 	private EstadoBolsa eBolsa;
+	private JPanel p2;
+	private JPanel p3;
+	double max =0;
+	double min =1000000;
+	double cierre;
 	
 	public MainFrameCliente(Cliente cliente,
 			ModeloCartera modeloCartera,
@@ -231,29 +238,27 @@ public class MainFrameCliente extends JFrame{
 			    }
 			    else {
 			    estocastico = true;
-			    JPanel p=getChartPanel2();
-			    graficas.put("estocastico",p);
-			    split_graficas.setBottomComponent(p);
-			    //split_graficas.add(p);
 			 }
 	    }
 	    JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 	    if (volumen && estocastico){
 	    	split_graficas.setDividerLocation(200);
-			aux.add(getChartPanel2());
+			aux.add(p2);
 			aux.setDividerLocation(100);
-			aux.setBottomComponent(getChartPanel3());
+			aux.setBottomComponent(p3);
 			split_graficas.setBottomComponent(aux);
 		}
-	    else if (volumen){
-				JPanel p=getChartPanel2();
-			    graficas.put("volumen",p);
-			    split_graficas.setBottomComponent(p);			
+	    else if (volumen && e.getActionCommand().equals("Volumen")){
+				p2=getChartPanel2();
+			    graficas.put("volumen",p2);
+			    split_graficas.setBottomComponent(p2);			
 				//split_graficas.setBottomComponent(p);
 			}	
 			else{
-				if(estocastico)
-					split_graficas.setBottomComponent(getChartPanel3());
+				if(estocastico && e.getActionCommand().equals("Estocastico"))
+					p3=getChartPanel3();
+			        graficas.put("estocastico",p3);
+					split_graficas.setBottomComponent(p3);
 				if(!volumen && !estocastico){
 //					split_graficas=null;
 //					split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -398,7 +403,8 @@ private JPanel getChartPanel2(){
 					fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
 					//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
 					DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
-					System.err.println("Fecha: "+fechaAux+ " Volumen: "+aux.getVolumen());
+					System.err.println("Fecha: "+c1.get(Calendar.MONTH)+ " Volumen: "+aux.getVolumen());
+					//auxds.addValue(aux.getVolumen(),"Volumen",c1.getTime());
 					auxds.addValue(aux.getVolumen(),"Volumen",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
 					//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),aux.getVolumen());
 					c1.add(Calendar.DATE, 1);
@@ -417,30 +423,102 @@ private JPanel getChartPanel2(){
 		}
         
 	}
+private void calculaMaxenFecha(Calendar f){
+	f.add(Calendar.DATE,-7);
+	int i=0;
+	DatoHistorico aux;
+	while(i<7){
+		String fechaAux=f.get(Calendar.DAY_OF_MONTH)+"/"+(f.get(Calendar.MONTH)+1)+"/"+f.get(Calendar.YEAR);
+		aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
+		if (aux.getPrecioMaximo()>max){
+			max=aux.getPrecioMaximo();
+		}
+		if (aux.getPrecioMinimo()<min){
+			min=aux.getPrecioMinimo();
+		}
+		f.add(Calendar.DATE, 1);
+		i++;
+		if (i==7){
+			cierre=aux.getPrecioCierre();
+		}
+	}	
+}
+//formula del estocastico 100*(C-Min/max-min) c es el cierre
 	private JPanel getChartPanel3(){
-//		DateAxis ejeX = new DateAxis();
-//		Calendar c1 = Calendar.getInstance();
-//		c1.set(Calendar.AM_PM, Calendar.AM);
-//		c1.set(Calendar.HOUR, 8);
-//		c1.set(Calendar.MINUTE, 30);
-//		Calendar c2 = Calendar.getInstance();
-//		c2.set(Calendar.AM_PM, Calendar.PM);
-//		c2.set(Calendar.HOUR, 5);
-//		c2.set(Calendar.MINUTE, 30);
-//		ejeX.setMaximumDate(c2.getTime());
-//		ejeX.setMinimumDate(c1.getTime());
-//		
-//		NumberAxis ejeY = new NumberAxis();
-//		ejeY.setRange(new Range(0, 540));
-//		
-//		chartPlot = new XYPlot(
-//				modeloPrecios.getPreciosSeleccionados(), 
-//				ejeX, ejeY,new XYLineAndShapeRenderer(true, false));
-//		JFreeChart chart = new JFreeChart(chartPlot);
-//		ChartPanel panel = new ChartPanel(chart);
-		JPanel panel = new JPanel();
-		panel.add(new JButton("Pollo"));
-		return panel;
+		try {
+			MDateEntryField entryField = new MDateEntryField();
+
+	        MDateSelectorConstraints c = new MDefaultPullDownConstraints();
+	        entryField.setConstraints(c);
+	        entryField.addMFieldListener(new MFieldListener(){
+	            public void fieldEntered(FocusEvent e)
+	            {
+	                //System.out.println("Entered");
+	            }
+	            public void fieldExited(FocusEvent e)
+	            {
+	                //System.out.println("Exited");
+	            }
+	        });	        
+	        Date fechaIni;
+			JOptionPane.showMessageDialog(this,entryField,"Fecha de Inicial",JOptionPane.INFORMATION_MESSAGE);
+			fechaIni = entryField.getValue();
+			JOptionPane.showMessageDialog(this,entryField,"Fecha de Final",JOptionPane.INFORMATION_MESSAGE);
+	        Date fechaFin=entryField.getValue();
+	        DateAxis ejeX = new DateAxis();
+			Calendar c1 = Calendar.getInstance();
+			c1.setTime(fechaIni);
+			Calendar c2 = Calendar.getInstance();
+			c2.setTime(fechaFin);
+			System.out.println(fechaIni.toString());
+			System.out.println(fechaFin.toString());
+			ejeX.setMaximumDate(c2.getTime());
+			ejeX.setMinimumDate(c1.getTime());
+			NumberAxis ejeY = new NumberAxis();
+			ejeY.setRange(new Range(0, 540));
+			DefaultCategoryDataset auxds = new DefaultCategoryDataset();
+			//TimeSeriesCollection auxds = new TimeSeriesCollection();
+			int j=1;
+			String fechaAux;
+			XYSeries series = new XYSeries("Estocastico");
+			    while(c1.compareTo(c2)!=0){
+			    	calculaMaxenFecha(c1);
+					fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
+					//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
+					//DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
+					auxds.addValue((100*(cierre - min))/(max-min),"Estocastico",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
+					//System.out.println((100*(cierre - min))/(max-min));
+					series.add(j, (100*(cierre - min))/(max-min));
+					//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),(100*(cierre - min))/(max-min));
+					//auxds.addSeries(new TimeSeries("valores",Double.toString((100*(cierre - min))/(max-min))));
+					//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),aux.getVolumen());
+					c1.add(Calendar.DATE, 1);				    
+
+				}
+			    XYDataset juegoDatos= new XYSeriesCollection(series);
+		        
+			    JFreeChart chart = 
+			     ChartFactory.createLineChart("Estocastico",  
+			        "Meses","Sesiones",auxds,PlotOrientation.VERTICAL,
+			        false,
+			        false, 
+			        true                // Show legend
+			        );    
+			chartPlot = new XYPlot(
+				modeloPrecios.getVolumenSeleccionado(), 
+			    ejeX, ejeY,new XYLineAndShapeRenderer(true, false)); 
+			//JFreeChart chart = new JFreeChart(chartPlot);
+			//JFreeChart chart = ChartFactory.createBarChart(modeloPrecios.empresaSeleccionada(), 
+		   //        "Dias", "Volumen", auxds, PlotOrientation.VERTICAL, 
+		   //         true, true, true); 
+			//chart.clearSubtitles();
+			//chart.getSubtitles().clear();
+			ChartPanel panel = new ChartPanel(chart);
+			return panel;
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+			return null;
+		}
 	}
 	private ChartPanel getChartPanel(){
 		DateAxis ejeX = new DateAxis();

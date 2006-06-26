@@ -118,7 +118,7 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 			textEscucha.setText(Double.toString(valor));
 		}
 	}
-	public void insertaVolumen(String empresa, int volumen){
+	public void insertaVolumen(String empresa, double volumen){
 		((ValoresHistoricos)volumenAcciones.get(empresa)).insertarSiguienteValor(volumen);
 //		fireTableCellUpdated(listaEmpresas.indexOf(empresa),1);
 //		if(textEscucha != null && empresaEscucha.equals(empresa)){
