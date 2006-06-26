@@ -15,7 +15,7 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 	private Hashtable<String, Double> variables;
 	private ArrayList<VariablesListener> listeners;
 	
-	public VariablesSistema(ParametrosServidor p){
+	public VariablesSistema(){
 		variables = new Hashtable<String, Double>();
 		listeners = new ArrayList<VariablesListener>();
 		cambiaVariable(VAR_TIEMPO,0L);

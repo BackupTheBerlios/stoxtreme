@@ -159,32 +159,29 @@ public class MainFrameAdmin extends JFrame{
 	}
 
 	private Component getPanelOpcionesSuperior() {
+		JPanel panel = new JPanel(new BorderLayout());
 		ArrayList<String> ops = new ArrayList<String>();
-		ops.add("Numero de empresas");
+		ops.add("         Numero de empresas");
 		ops.add("Velocidad de simulación");
 		ops.add("Tiempo de fluctuacion");
-		ops.add("Sesión continua");
-		ops.add("Tiempo Etapa de preapertura");
-		ops.add("Tiempo Etapa de cierre");
 		ops.add("Fichero de historicos");
 		ops.add("Fichero de información");
 		ops.add("Tick");
+		ops.add("Sesión continua");
 		
-		ops.add(" ");
-		ops.add("  ");
-		ops.add("   ");
-		ops.add("    ");
-		ops.add("     ");
-		ops.add("      ");
-		ops.add("       ");
-		ops.add("        ");
-
 		ArrayList<String> chooser = new ArrayList<String>();
 		chooser.add("Fichero de historicos");
 		chooser.add("Fichero de información");
 		
 		PanelOpciones opciones = new PanelOpciones(ops, null, chooser);
-		return opciones;
+		opciones.setCheckBox("Sesión continua");
+		
+		panel.add(opciones, BorderLayout.NORTH);
+		JPanel panelBlanco = new JPanel();
+		panelBlanco.setPreferredSize(new Dimension(350,300));
+		panel.add(panelBlanco);
+		
+		return panel;
 	}
 
 		

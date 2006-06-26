@@ -152,7 +152,10 @@ public class Servidor implements Administrador, Stoxtreme{
 			e.printStackTrace();
 		}
 	}
-	
+	private void ponVariablesManuales() {
+		// TODO Auto-generated method stub
+		
+	}
 	public void iniciarServidor() throws RemoteException{
 		try {
 			iniciarTomcat();
@@ -165,7 +168,8 @@ public class Servidor implements Administrador, Stoxtreme{
 		guiAdmin.setModeloUsuarios(gestorUsuarios);
 		objetosBolsa = new Hashtable<String, ObjetoBolsa>();
 		datosEmpresa=new DatosEmpresas();
-		variables = new VariablesSistema(param);
+		variables = new VariablesSistema();
+		ponVariablesManuales();
 		guiAdmin.setModeloVariables(variables);
 		objetosBolsa=datosEmpresa.creaObjetosBolsa(param);
 		
@@ -216,6 +220,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	}
 	
 
+	
 	public void pararServidor() throws RemoteException {
 		reloj.pararReloj();
 		finalizaSesion();

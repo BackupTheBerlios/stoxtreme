@@ -110,6 +110,12 @@ public class MainFrameCliente extends JFrame{
 		});
 	}
 	
+	private Component getPanelHerramientas() {
+		JSplitPane panelDerecha = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+				getPanelGrafico(), getPanelTablaPrecios());
+		return panelDerecha;
+	}
+
 	public JSplitPane getPanelInfo(){
 		JSplitPane panelInfo=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,getPanelEmpresas(),getVisualizador());
 	return panelInfo;
@@ -164,16 +170,16 @@ public class MainFrameCliente extends JFrame{
 		return visio;
 	}
 	
-	public JSplitPane getPanelPrincipal(){
+	public Component getPanelPrincipal(){
 		JPanel panelIzquierda = new JPanel(new BorderLayout());
 		panelIzquierda.add(getPanelIzquierdaArriba(), BorderLayout.CENTER);
 		panelIzquierda.add(getPanelIzquierdaAbajo(), BorderLayout.SOUTH);
 
 		JSplitPane panelDerecha = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				getPanelDerechaArriba(), getPanelDerechaAbajo());
+				getPanelGrafico(), getPanelTablaPrecios());
 		
 		JSplitPane panel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelIzquierda, panelDerecha);
-
+		
 		return panel;
 	}
 	
@@ -307,7 +313,7 @@ public class MainFrameCliente extends JFrame{
 		return panel;
 	}
 
-	private Component getPanelDerechaArriba() {
+	private Component getPanelGrafico() {
 		MDateEntryField entryField = new MDateEntryField();
         MDateSelectorConstraints c = new MDefaultPullDownConstraints();
         //c.firstDay = Calendar.MONDAY;
@@ -650,7 +656,7 @@ private void calculaMaxenFecha(Calendar f){
 		return frame;
 	}
 
-	private Component getPanelDerechaAbajo() {
+	private Component getPanelTablaPrecios() {
 		TableSorter sorterPrecios = new TableSorter(modeloPrecios);
 		JTable tabla = new JTable(sorterPrecios);
 		sorterPrecios.setTableHeader(tabla.getTableHeader());

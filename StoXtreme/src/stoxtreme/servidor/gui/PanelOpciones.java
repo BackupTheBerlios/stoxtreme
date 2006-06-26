@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -28,7 +29,7 @@ public class PanelOpciones extends JPanel{
 	private ArrayList<String> chooser;
 	private Hashtable<String,JComponent> opciones;
 	private Hashtable<String,String> vChooser;
-	
+
 	public PanelOpciones(ArrayList<String> claves){
 		this(claves, new ArrayList<String>(), new ArrayList<String>());
 	}
@@ -84,7 +85,15 @@ public class PanelOpciones extends JPanel{
 		}
 		else{
 			Component comp = opciones.get(opcion);
-			if(comp instanceof JComboBox){
+			if(comp instanceof JCheckBox){
+				if(((JCheckBox)comp).isSelected()){
+					return "true";
+				}
+				else{
+					return "false";
+				}
+			}
+			else if(comp instanceof JComboBox){
 				s = (String)((JComboBox)comp).getSelectedItem();
 			}
 			else{
@@ -242,6 +251,13 @@ public class PanelOpciones extends JPanel{
 		JComboBox combo = new JComboBox(valores);
 		combo.addActionListener(listener);
 		opciones.put(opcion, combo);
+		init();
+		updateUI();
+	}
+	
+	public void setCheckBox(String opcion){
+		JCheckBox check = new JCheckBox();
+		opciones.put(opcion, check);
 		init();
 		updateUI();
 	}
