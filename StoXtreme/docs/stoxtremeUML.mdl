@@ -1319,7 +1319,10 @@
 				exportControl 	"Public"
 				logical_models 	(list unit_reference_list
 				    (object Class "Agente"
-					quid       	"449972FA038A")
+					quid       	"449972FA038A"
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "IDAgente"
+						quid       	"449FBD3F00F9")))
 				    (object Class "ConstructorAgentes"
 					quid       	"4499731C002B"
 					used_nodes 	(list uses_relationship_list
@@ -1745,7 +1748,37 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::interfaz_remota::StoxtremeMensajes" @4
+		    (object ClassView "Class" "Logical View::stoxtreme::cliente::Cliente" @4
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(368, 1040)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@4
+			    location   	(252, 965)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	232
+			    justify    	0
+			    label      	"Cliente")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4499720A0280"
+			width      	250
+			height     	174
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::interfaz_remota::StoxtremeMensajes" @5
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -1760,7 +1793,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@4
+			    Parent_View 	@5
 			    location   	(383, 636)
 			    anchor_loc 	1
 			    nlines     	2
@@ -1776,43 +1809,13 @@
 			height     	58
 			annotation 	8
 			autoResize 	TRUE)
-		    (object InheritView "" @5
+		    (object InheritView "" @6
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449804F20061"
 			client     	@3
-			supplier   	@4
+			supplier   	@5
 			line_style 	0)
-		    (object ClassView "Class" "Logical View::stoxtreme::cliente::Cliente" @6
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(368, 1040)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@6
-			    location   	(252, 965)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	232
-			    justify    	0
-			    label      	"Cliente")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4499720A0280"
-			width      	250
-			height     	174
-			annotation 	8
-			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::sistema_mensajeria::IMensajeriaListener" @7
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
@@ -1848,7 +1851,7 @@
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"44997D28019C"
-			client     	@6
+			client     	@4
 			supplier   	@7
 			line_style 	0)
 		    (object ClassView "Class" "Logical View::stoxtreme::sistema_mensajeria::receptor::HiloConsulta" @9
@@ -1918,7 +1921,7 @@
 				line_color 	3342489
 				quidu      	"449804F70072"
 				client     	@12
-				supplier   	@4
+				supplier   	@5
 				line_style 	0)
 			    (object RoleView "$UNNAMED$11" @14
 				Parent_View 	@12
@@ -3720,137 +3723,7 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::cliente::CarteraAcciones" @119
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(1504, 416)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@119
-			    location   	(1312, 342)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	384
-			    justify    	0
-			    label      	"CarteraAcciones")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"449972010241"
-			width      	402
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::cliente::OperacionesPendientes" @120
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(1584, 880)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@120
-			    location   	(1314, 806)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	540
-			    justify    	0
-			    label      	"OperacionesPendientes")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4499721F029E"
-			width      	558
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::cliente::ManejadorMensajes" @121
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(336, 1216)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@121
-			    location   	(96, 1142)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	480
-			    justify    	0
-			    label      	"ManejadorMensajes")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4499721803A3"
-			width      	498
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object InheritView "" @122
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"44997533034C"
-			client     	@121
-			supplier   	@117
-			line_style 	0)
-		    (object AssociationViewNew "$UNNAMED$84" @123
-			location   	(336, 1367)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4499753C0359"
-			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$85" @124
-				Parent_View 	@123
-				location   	(-1472, 7)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"4499753D00F7"
-				client     	@123
-				supplier   	@118
-				line_style 	0)
-			    (object RoleView "$UNNAMED$86" @125
-				Parent_View 	@123
-				location   	(-1472, 7)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"4499753D00F9"
-				client     	@123
-				supplier   	@121
-				line_style 	0)))
-		    (object ClassView "Class" "Logical View::stoxtreme::cliente::infoLocal::DatoHistorico" @126
+		    (object ClassView "Class" "Logical View::stoxtreme::cliente::infoLocal::DatoHistorico" @119
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -3865,7 +3738,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@126
+			    Parent_View 	@119
 			    location   	(174, 70)
 			    fill_color 	13434879
 			    nlines     	1
@@ -3880,6 +3753,136 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::cliente::CarteraAcciones" @120
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1504, 416)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@120
+			    location   	(1312, 342)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	384
+			    justify    	0
+			    label      	"CarteraAcciones")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"449972010241"
+			width      	402
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::cliente::OperacionesPendientes" @121
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1584, 880)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@121
+			    location   	(1314, 806)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	540
+			    justify    	0
+			    label      	"OperacionesPendientes")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4499721F029E"
+			width      	558
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::cliente::ManejadorMensajes" @122
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(336, 1216)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@122
+			    location   	(96, 1142)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	480
+			    justify    	0
+			    label      	"ManejadorMensajes")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4499721803A3"
+			width      	498
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object InheritView "" @123
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"44997533034C"
+			client     	@122
+			supplier   	@117
+			line_style 	0)
+		    (object AssociationViewNew "$UNNAMED$84" @124
+			location   	(336, 1367)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4499753C0359"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$85" @125
+				Parent_View 	@124
+				location   	(-1472, 7)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4499753D00F7"
+				client     	@124
+				supplier   	@118
+				line_style 	0)
+			    (object RoleView "$UNNAMED$86" @126
+				Parent_View 	@124
+				location   	(-1472, 7)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4499753D00F9"
+				client     	@124
+				supplier   	@122
+				line_style 	0)))
 		    (object ClassView "Class" "Logical View::stoxtreme::cliente::infoLocal::InfoLocal" @127
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
@@ -3939,7 +3942,7 @@
 				line_color 	3342489
 				quidu      	"4499755F0395"
 				client     	@129
-				supplier   	@126
+				supplier   	@119
 				line_style 	0)
 			    (object RoleView "$UNNAMED$92" @131
 				Parent_View 	@129
@@ -4062,7 +4065,7 @@
 				line_color 	3342489
 				quidu      	"4499750202C9"
 				client     	@135
-				supplier   	@119
+				supplier   	@120
 				line_style 	0)
 			    (object RoleView "$UNNAMED$77" @137
 				Parent_View 	@135
@@ -4095,7 +4098,7 @@
 				line_color 	3342489
 				quidu      	"4499750903CD"
 				client     	@138
-				supplier   	@120
+				supplier   	@121
 				line_style 	0)
 			    (object RoleView "$UNNAMED$83" @140
 				Parent_View 	@138
@@ -4137,7 +4140,7 @@
 				line_color 	3342489
 				quidu      	"4499754A00F6"
 				client     	@141
-				supplier   	@121
+				supplier   	@122
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$69" @144
 			location   	(336, 639)
@@ -4504,44 +4507,7 @@
 				client     	@165
 				supplier   	@158
 				line_style 	0)))
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::MonitorAgentes" @168
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(432, 608)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@168
-			    location   	(192, 534)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	480
-			    justify    	0
-			    label      	"MonitorAgentes")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4499725D0366"
-			width      	498
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object InheritView "" @169
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"449977CC00BD"
-			client     	@168
-			supplier   	@154
-			line_style 	0)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::ListenerNotificador" @170
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::ListenerNotificador" @168
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -4556,7 +4522,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@170
+			    Parent_View 	@168
 			    location   	(319, 1756)
 			    anchor_loc 	1
 			    nlines     	2
@@ -4572,6 +4538,43 @@
 			height     	58
 			annotation 	8
 			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::MonitorAgentes" @169
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(432, 608)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@169
+			    location   	(192, 534)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	480
+			    justify    	0
+			    label      	"MonitorAgentes")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4499725D0366"
+			width      	498
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object InheritView "" @170
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"449977CC00BD"
+			client     	@169
+			supplier   	@154
+			line_style 	0)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::Notificador" @171
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
@@ -4624,7 +4627,7 @@
 				line_color 	3342489
 				quidu      	"4499780000C2"
 				client     	@172
-				supplier   	@170
+				supplier   	@168
 				line_style 	0)
 			    (object RoleView "$UNNAMED$119" @174
 				Parent_View 	@172
@@ -4757,7 +4760,7 @@
 				line_color 	3342489
 				quidu      	"449978A202D7"
 				client     	@178
-				supplier   	@168
+				supplier   	@169
 				line_style 	0)))
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::HerramientaAgentes" @181
 			ShowCompartmentStereotypes 	TRUE
@@ -4811,7 +4814,7 @@
 				line_color 	3342489
 				quidu      	"449978120136"
 				client     	@182
-				supplier   	@168
+				supplier   	@169
 				line_style 	0)
 			    (object RoleView "$UNNAMED$122" @184
 				Parent_View 	@182
@@ -4897,7 +4900,7 @@
 			line_color 	3342489
 			quidu      	"4499780500F1"
 			client     	@189
-			supplier   	@170
+			supplier   	@168
 			line_style 	0)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::Agente" @191
 			ShowCompartmentStereotypes 	TRUE
@@ -4925,6 +4928,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449972FA038A"
+			compartment 	(object Compartment
+			    Parent_View 	@191
+			    location   	(1027, 668)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	0)
 			width      	268
 			height     	172
 			annotation 	8
@@ -5107,7 +5127,7 @@
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	0
+		origin_x   	1506
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::AltaServicio" @208
@@ -5350,190 +5370,7 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision" @216
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(2176, 1200)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@216
-			    location   	(2029, 1126)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	294
-			    justify    	0
-			    label      	"Decision")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4499737A0117"
-			width      	312
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object InheritView "" @217
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"449979570223"
-			client     	@215
-			supplier   	@216
-			line_style 	0)
-		    (object InheritView "" @218
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4499795903B7"
-			client     	@212
-			supplier   	@216
-			line_style 	0)
-		    (object InheritView "" @219
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4499795C019E"
-			client     	@210
-			supplier   	@216
-			line_style 	0)
-		    (object InheritView "" @220
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4499795E026A"
-			client     	@208
-			supplier   	@216
-			line_style 	0)
-		    (object InheritView "" @221
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"449979610097"
-			client     	@209
-			supplier   	@216
-			line_style 	0)
-		    (object InheritView "" @222
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"44997963028F"
-			client     	@213
-			supplier   	@216
-			line_style 	0)
-		    (object InheritView "" @223
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"44997967030D"
-			client     	@211
-			supplier   	@216
-			line_style 	0)
-		    (object InheritView "" @224
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"4499796A01B3"
-			client     	@214
-			supplier   	@216
-			line_style 	0)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::comportamiento::ComportamientoAgente" @225
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(2176, 720)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@225
-			    location   	(1911, 646)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	530
-			    justify    	0
-			    label      	"ComportamientoAgente")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4499735603AA"
-			width      	548
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object UsesView "" @226
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"449979A9023F"
-			client     	@225
-			supplier   	@216
-			line_style 	0)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::comportamiento::ModeloSocial" @227
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(1312, 432)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@227
-			    location   	(1114, 358)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	396
-			    justify    	0
-			    label      	"ModeloSocial")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4499736700A1"
-			width      	414
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::comportamiento::ModeloPsicologico" @228
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(1728, 192)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@228
-			    location   	(1502, 118)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	452
-			    justify    	0
-			    label      	"ModeloPsicologico")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"449973600372"
-			width      	470
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::MensajeACL" @229
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::MensajeACL" @216
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -5548,7 +5385,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@229
+			    Parent_View 	@216
 			    location   	(536, 38)
 			    fill_color 	13434879
 			    nlines     	1
@@ -5563,11 +5400,11 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::IDAgente" @230
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision" @217
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(768, 960)
+			location   	(2176, 1200)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5578,22 +5415,175 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@230
-			    location   	(643, 886)
+			    Parent_View 	@217
+			    location   	(2029, 1126)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	250
+			    max_width  	294
 			    justify    	0
-			    label      	"IDAgente")
+			    label      	"Decision")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"449973290305"
-			width      	268
+			quidu      	"4499737A0117"
+			width      	312
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::BuzonMensajes" @231
+		    (object InheritView "" @218
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"449979570223"
+			client     	@215
+			supplier   	@217
+			line_style 	0)
+		    (object InheritView "" @219
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4499795903B7"
+			client     	@212
+			supplier   	@217
+			line_style 	0)
+		    (object InheritView "" @220
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4499795C019E"
+			client     	@210
+			supplier   	@217
+			line_style 	0)
+		    (object InheritView "" @221
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4499795E026A"
+			client     	@208
+			supplier   	@217
+			line_style 	0)
+		    (object InheritView "" @222
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"449979610097"
+			client     	@209
+			supplier   	@217
+			line_style 	0)
+		    (object InheritView "" @223
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"44997963028F"
+			client     	@213
+			supplier   	@217
+			line_style 	0)
+		    (object InheritView "" @224
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"44997967030D"
+			client     	@211
+			supplier   	@217
+			line_style 	0)
+		    (object InheritView "" @225
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4499796A01B3"
+			client     	@214
+			supplier   	@217
+			line_style 	0)
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::comportamiento::ComportamientoAgente" @226
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(2176, 720)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@226
+			    location   	(1911, 646)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	530
+			    justify    	0
+			    label      	"ComportamientoAgente")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4499735603AA"
+			width      	548
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object UsesView "" @227
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"449979A9023F"
+			client     	@226
+			supplier   	@217
+			line_style 	0)
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::comportamiento::ModeloSocial" @228
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1312, 432)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@228
+			    location   	(1114, 358)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	396
+			    justify    	0
+			    label      	"ModeloSocial")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4499736700A1"
+			width      	414
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::comportamiento::ModeloPsicologico" @229
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1728, 192)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@229
+			    location   	(1502, 118)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	452
+			    justify    	0
+			    label      	"ModeloPsicologico")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"449973600372"
+			width      	470
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::BuzonMensajes" @230
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -5608,7 +5598,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@231
+			    Parent_View 	@230
 			    location   	(536, 342)
 			    fill_color 	13434879
 			    nlines     	1
@@ -5623,7 +5613,7 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$165" @232
+		    (object AssociationViewNew "$UNNAMED$165" @231
 			location   	(768, 263)
 			font       	(object Font
 			    size       	10
@@ -5638,24 +5628,54 @@
 			line_color 	3342489
 			quidu      	"449979F7035A"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$166" @233
-				Parent_View 	@232
+			    (object RoleView "$UNNAMED$166" @232
+				Parent_View 	@231
 				location   	(0, -153)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979F801A3"
-				client     	@232
-				supplier   	@229
+				client     	@231
+				supplier   	@216
 				line_style 	0)
-			    (object RoleView "$UNNAMED$167" @234
-				Parent_View 	@232
+			    (object RoleView "$UNNAMED$167" @233
+				Parent_View 	@231
 				location   	(0, -153)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979F801A5"
-				client     	@232
-				supplier   	@231
+				client     	@231
+				supplier   	@230
 				line_style 	0)))
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::IDAgente" @234
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(768, 960)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@234
+			    location   	(643, 886)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	250
+			    justify    	0
+			    label      	"IDAgente")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"449973290305"
+			width      	268
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$168" @235
 			location   	(768, 687)
 			font       	(object Font
@@ -5678,7 +5698,7 @@
 				line_color 	3342489
 				quidu      	"44997A030177"
 				client     	@235
-				supplier   	@230
+				supplier   	@234
 				line_style 	0)
 			    (object RoleView "$UNNAMED$170" @237
 				Parent_View 	@235
@@ -5687,39 +5707,9 @@
 				line_color 	3342489
 				quidu      	"44997A030181"
 				client     	@235
-				supplier   	@231
+				supplier   	@230
 				line_style 	0)))
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::OperacionesPendientes" @238
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(752, 1360)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@238
-			    location   	(482, 1286)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	540
-			    justify    	0
-			    label      	"OperacionesPendientes")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4499733100EA"
-			width      	558
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::Agente" @239
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::Agente" @238
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -5734,30 +5724,47 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@239
-			    location   	(1411, 886)
+			    Parent_View 	@238
+			    location   	(1407, 856)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	250
+			    max_width  	258
 			    justify    	0
 			    label      	"Agente")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449972FA038A"
-			width      	268
-			height     	172
+			compartment 	(object Compartment
+			    Parent_View 	@238
+			    location   	(1407, 961)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	216)
+			width      	276
+			height     	232
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$135" @240
-			location   	(1844, 1074)
+		    (object AssociationViewNew "$UNNAMED$135" @239
+			location   	(1846, 1075)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449978B2008C"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$137" @241
-				Parent_View 	@240
-				location   	(692, 514)
+			    (object RoleView "$UNNAMED$137" @240
+				Parent_View 	@239
+				location   	(694, 515)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5767,9 +5774,9 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @242
-				    Parent_View 	@241
-				    location   	(1970, 1166)
+				label      	(object SegLabel @241
+				    Parent_View 	@240
+				    location   	(1971, 1166)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -5792,12 +5799,12 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978B2024E"
-				client     	@240
-				supplier   	@216
+				client     	@239
+				supplier   	@217
 				line_style 	0)
-			    (object RoleView "$UNNAMED$136" @243
-				Parent_View 	@240
-				location   	(692, 514)
+			    (object RoleView "$UNNAMED$136" @242
+				Parent_View 	@239
+				location   	(694, 515)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5807,9 +5814,9 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @244
-				    Parent_View 	@243
-				    location   	(1690, 1061)
+				label      	(object SegLabel @243
+				    Parent_View 	@242
+				    location   	(1694, 1063)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -5832,11 +5839,11 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978B20244"
-				client     	@240
-				supplier   	@239
+				client     	@239
+				supplier   	@238
 				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$147" @245
-			location   	(1808, 857)
+		    (object AssociationViewNew "$UNNAMED$147" @244
+			location   	(1810, 856)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5850,26 +5857,26 @@
 			line_color 	3342489
 			quidu      	"449979A60295"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$148" @246
-				Parent_View 	@245
-				location   	(656, 297)
+			    (object RoleView "$UNNAMED$148" @245
+				Parent_View 	@244
+				location   	(658, 296)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979A700C0"
-				client     	@245
-				supplier   	@225
+				client     	@244
+				supplier   	@226
 				line_style 	0)
-			    (object RoleView "$UNNAMED$149" @247
-				Parent_View 	@245
-				location   	(656, 297)
+			    (object RoleView "$UNNAMED$149" @246
+				Parent_View 	@244
+				location   	(658, 296)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979A700C2"
-				client     	@245
-				supplier   	@239
+				client     	@244
+				supplier   	@238
 				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$150" @248
-			location   	(1423, 695)
+		    (object AssociationViewNew "$UNNAMED$150" @247
+			location   	(1417, 680)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5883,26 +5890,26 @@
 			line_color 	3342489
 			quidu      	"449979B70069"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$151" @249
-				Parent_View 	@248
-				location   	(271, 135)
+			    (object RoleView "$UNNAMED$151" @248
+				Parent_View 	@247
+				location   	(265, 120)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979B701D1"
-				client     	@248
-				supplier   	@227
+				client     	@247
+				supplier   	@228
 				line_style 	0)
-			    (object RoleView "$UNNAMED$152" @250
-				Parent_View 	@248
-				location   	(271, 135)
+			    (object RoleView "$UNNAMED$152" @249
+				Parent_View 	@247
+				location   	(265, 120)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979B701D3"
-				client     	@248
-				supplier   	@239
+				client     	@247
+				supplier   	@238
 				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$153" @251
-			location   	(1631, 575)
+		    (object AssociationViewNew "$UNNAMED$153" @250
+			location   	(1635, 560)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5916,26 +5923,26 @@
 			line_color 	3342489
 			quidu      	"449979B802EB"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$154" @252
-				Parent_View 	@251
-				location   	(479, 15)
+			    (object RoleView "$UNNAMED$154" @251
+				Parent_View 	@250
+				location   	(483, 0)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979B9010C"
-				client     	@251
-				supplier   	@228
+				client     	@250
+				supplier   	@229
 				line_style 	0)
-			    (object RoleView "$UNNAMED$155" @253
-				Parent_View 	@251
-				location   	(479, 15)
+			    (object RoleView "$UNNAMED$155" @252
+				Parent_View 	@250
+				location   	(483, 0)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979B9010E"
-				client     	@251
-				supplier   	@239
+				client     	@250
+				supplier   	@238
 				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$162" @254
-			location   	(1151, 687)
+		    (object AssociationViewNew "$UNNAMED$162" @253
+			location   	(1143, 681)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5949,33 +5956,33 @@
 			line_color 	3342489
 			quidu      	"449979C50023"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$163" @255
-				Parent_View 	@254
-				location   	(-1, 127)
+			    (object RoleView "$UNNAMED$163" @254
+				Parent_View 	@253
+				location   	(-9, 121)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979C50268"
-				client     	@254
-				supplier   	@231
+				client     	@253
+				supplier   	@230
 				line_style 	0)
-			    (object RoleView "$UNNAMED$164" @256
-				Parent_View 	@254
-				location   	(-1, 127)
+			    (object RoleView "$UNNAMED$164" @255
+				Parent_View 	@253
+				location   	(-9, 121)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979C5026A"
-				client     	@254
-				supplier   	@239
+				client     	@253
+				supplier   	@238
 				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$129" @257
-			location   	(1151, 960)
+		    (object AssociationViewNew "$UNNAMED$129" @256
+			location   	(1149, 960)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"4499789B03C8"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$131" @258
-				Parent_View 	@257
-				location   	(927, -112)
+			    (object RoleView "$UNNAMED$131" @257
+				Parent_View 	@256
+				location   	(925, -112)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5985,9 +5992,9 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @259
-				    Parent_View 	@258
-				    location   	(1351, 919)
+				label      	(object SegLabel @258
+				    Parent_View 	@257
+				    location   	(1347, 919)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -6010,12 +6017,12 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499789C01CC"
-				client     	@257
-				supplier   	@239
+				client     	@256
+				supplier   	@238
 				line_style 	0)
-			    (object RoleView "$UNNAMED$130" @260
-				Parent_View 	@257
-				location   	(927, -112)
+			    (object RoleView "$UNNAMED$130" @259
+				Parent_View 	@256
+				location   	(925, -112)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -6025,9 +6032,9 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @261
-				    Parent_View 	@260
-				    location   	(953, 919)
+				label      	(object SegLabel @260
+				    Parent_View 	@259
+				    location   	(952, 919)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -6050,11 +6057,41 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499789C01CA"
-				client     	@257
-				supplier   	@230
+				client     	@256
+				supplier   	@234
 				line_style 	0)))
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::OperacionesPendientes" @261
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(752, 1360)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@261
+			    location   	(480, 1286)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	544
+			    justify    	0
+			    label      	"OperacionesPendientes")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4499733100EA"
+			width      	562
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$156" @262
-			location   	(1160, 1150)
+			location   	(1158, 1151)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6070,21 +6107,21 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$157" @263
 				Parent_View 	@262
-				location   	(8, 590)
+				location   	(6, 591)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979BD028E"
 				client     	@262
-				supplier   	@238
+				supplier   	@261
 				line_style 	0)
 			    (object RoleView "$UNNAMED$158" @264
 				Parent_View 	@262
-				location   	(8, 590)
+				location   	(6, 591)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979BD0298"
 				client     	@262
-				supplier   	@239
+				supplier   	@238
 				line_style 	0)))
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::EstadoCartera" @265
 			ShowCompartmentStereotypes 	TRUE
@@ -6117,7 +6154,7 @@
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$159" @266
-			location   	(1495, 1367)
+			location   	(1493, 1382)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6133,7 +6170,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$160" @267
 				Parent_View 	@266
-				location   	(343, 807)
+				location   	(341, 822)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979C000B2"
@@ -6142,12 +6179,12 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$161" @268
 				Parent_View 	@266
-				location   	(343, 807)
+				location   	(341, 822)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979C000B4"
 				client     	@266
-				supplier   	@239
+				supplier   	@238
 				line_style 	0)))
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::Perceptor" @269
 			ShowCompartmentStereotypes 	TRUE
@@ -6180,14 +6217,14 @@
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$144" @270
-			location   	(1247, 1367)
+			location   	(1236, 1382)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449978DE0266"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$146" @271
 				Parent_View 	@270
-				location   	(-737, 135)
+				location   	(-748, 150)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -6199,7 +6236,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @272
 				    Parent_View 	@271
-				    location   	(1395, 1088)
+				    location   	(1376, 1114)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -6223,11 +6260,11 @@
 				line_color 	3342489
 				quidu      	"449978DF018D"
 				client     	@270
-				supplier   	@239
+				supplier   	@238
 				line_style 	0)
 			    (object RoleView "$UNNAMED$145" @273
 				Parent_View 	@270
-				location   	(-737, 135)
+				location   	(-748, 150)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -6239,7 +6276,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @274
 				    Parent_View 	@273
-				    location   	(1033, 1601)
+				    location   	(1030, 1604)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -6287,7 +6324,7 @@
 				line_color 	3342489
 				quidu      	"44997A19018C"
 				client     	@275
-				supplier   	@238
+				supplier   	@261
 				line_style 	0)
 			    (object RoleView "$UNNAMED$173" @277
 				Parent_View 	@275
@@ -6396,6 +6433,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449972FA038A"
+			compartment 	(object Compartment
+			    Parent_View 	@282
+			    location   	(1219, 348)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	0)
 			width      	268
 			height     	172
 			annotation 	8
@@ -6486,44 +6540,7 @@
 				client     	@283
 				supplier   	@282
 				line_style 	0)))
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::RecepcionMensaje" @288
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(1968, 656)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@288
-			    location   	(1737, 582)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	462
-			    justify    	0
-			    label      	"RecepcionMensaje")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"449973F30279"
-			width      	480
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object InheritView "" @289
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"44997B380207"
-			client     	@288
-			supplier   	@281
-			line_style 	0)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::BuzonMensajes" @290
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::BuzonMensajes" @288
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -6538,7 +6555,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@290
+			    Parent_View 	@288
 			    location   	(1112, 614)
 			    fill_color 	13434879
 			    nlines     	1
@@ -6553,14 +6570,14 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$162" @291
+		    (object AssociationViewNew "$UNNAMED$162" @289
 			location   	(1344, 471)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449979C50023"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$164" @292
-				Parent_View 	@291
+			    (object RoleView "$UNNAMED$164" @290
+				Parent_View 	@289
 				location   	(144, -105)
 				font       	(object Font
 				    size       	10
@@ -6571,8 +6588,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @293
-				    Parent_View 	@292
+				label      	(object SegLabel @291
+				    Parent_View 	@290
 				    location   	(1303, 368)
 				    font       	(object Font
 					size       	10
@@ -6596,11 +6613,11 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979C5026A"
-				client     	@291
+				client     	@289
 				supplier   	@282
 				line_style 	0)
-			    (object RoleView "$UNNAMED$163" @294
-				Parent_View 	@291
+			    (object RoleView "$UNNAMED$163" @292
+				Parent_View 	@289
 				location   	(144, -105)
 				font       	(object Font
 				    size       	10
@@ -6611,8 +6628,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @295
-				    Parent_View 	@294
+				label      	(object SegLabel @293
+				    Parent_View 	@292
 				    location   	(1303, 575)
 				    font       	(object Font
 					size       	10
@@ -6636,10 +6653,10 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979C50268"
-				client     	@291
-				supplier   	@290
+				client     	@289
+				supplier   	@288
 				line_style 	0)))
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::Protocol" @296
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::Protocol" @294
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -6654,7 +6671,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@296
+			    Parent_View 	@294
 			    location   	(72, 1286)
 			    fill_color 	13434879
 			    nlines     	1
@@ -6669,7 +6686,7 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::Performative" @297
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::Performative" @295
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -6684,7 +6701,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@297
+			    Parent_View 	@295
 			    location   	(584, 1286)
 			    fill_color 	13434879
 			    nlines     	1
@@ -6699,7 +6716,7 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::IDConversacion" @298
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::IDConversacion" @296
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -6714,7 +6731,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@298
+			    Parent_View 	@296
 			    location   	(1096, 1286)
 			    fill_color 	13434879
 			    nlines     	1
@@ -6729,7 +6746,7 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::IDAgente" @299
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::IDAgente" @297
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -6744,7 +6761,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@299
+			    Parent_View 	@297
 			    location   	(563, 182)
 			    fill_color 	13434879
 			    nlines     	1
@@ -6759,14 +6776,14 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$129" @300
+		    (object AssociationViewNew "$UNNAMED$129" @298
 			location   	(1015, 256)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"4499789B03C8"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$131" @301
-				Parent_View 	@300
+			    (object RoleView "$UNNAMED$131" @299
+				Parent_View 	@298
 				location   	(375, -64)
 				font       	(object Font
 				    size       	10
@@ -6777,8 +6794,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @302
-				    Parent_View 	@301
+				label      	(object SegLabel @300
+				    Parent_View 	@299
 				    location   	(1170, 215)
 				    font       	(object Font
 					size       	10
@@ -6802,11 +6819,11 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499789C01CC"
-				client     	@300
+				client     	@298
 				supplier   	@282
 				line_style 	0)
-			    (object RoleView "$UNNAMED$130" @303
-				Parent_View 	@300
+			    (object RoleView "$UNNAMED$130" @301
+				Parent_View 	@298
 				location   	(375, -64)
 				font       	(object Font
 				    size       	10
@@ -6817,8 +6834,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @304
-				    Parent_View 	@303
+				label      	(object SegLabel @302
+				    Parent_View 	@301
 				    location   	(862, 215)
 				    font       	(object Font
 					size       	10
@@ -6842,17 +6859,17 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499789C01CA"
-				client     	@300
-				supplier   	@299
+				client     	@298
+				supplier   	@297
 				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$168" @305
+		    (object AssociationViewNew "$UNNAMED$168" @303
 			location   	(1015, 471)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"44997A03005E"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$170" @306
-				Parent_View 	@305
+			    (object RoleView "$UNNAMED$170" @304
+				Parent_View 	@303
 				location   	(375, 151)
 				font       	(object Font
 				    size       	10
@@ -6863,8 +6880,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @307
-				    Parent_View 	@306
+				label      	(object SegLabel @305
+				    Parent_View 	@304
 				    location   	(1151, 610)
 				    font       	(object Font
 					size       	10
@@ -6888,11 +6905,11 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997A030181"
-				client     	@305
-				supplier   	@290
+				client     	@303
+				supplier   	@288
 				line_style 	0)
-			    (object RoleView "$UNNAMED$169" @308
-				Parent_View 	@305
+			    (object RoleView "$UNNAMED$169" @306
+				Parent_View 	@303
 				location   	(375, 151)
 				font       	(object Font
 				    size       	10
@@ -6903,8 +6920,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @309
-				    Parent_View 	@308
+				label      	(object SegLabel @307
+				    Parent_View 	@306
 				    location   	(881, 334)
 				    font       	(object Font
 					size       	10
@@ -6928,9 +6945,46 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997A030177"
-				client     	@305
-				supplier   	@299
+				client     	@303
+				supplier   	@297
 				line_style 	0)))
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::RecepcionMensaje" @308
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(1968, 656)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@308
+			    location   	(1737, 582)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	462
+			    justify    	0
+			    label      	"RecepcionMensaje")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"449973F30279"
+			width      	480
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object InheritView "" @309
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"44997B380207"
+			client     	@308
+			supplier   	@281
+			line_style 	0)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::MensajeACL" @310
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
@@ -7005,7 +7059,7 @@
 				line_color 	3342489
 				quidu      	"449979F801A5"
 				client     	@311
-				supplier   	@290
+				supplier   	@288
 				line_style 	0)
 			    (object RoleView "$UNNAMED$166" @314
 				Parent_View 	@311
@@ -7069,7 +7123,7 @@
 				line_color 	3342489
 				quidu      	"44997B4E00FA"
 				client     	@316
-				supplier   	@296
+				supplier   	@294
 				line_style 	0)
 			    (object RoleView "$UNNAMED$182" @318
 				Parent_View 	@316
@@ -7102,7 +7156,7 @@
 				line_color 	3342489
 				quidu      	"44997B4F037D"
 				client     	@319
-				supplier   	@297
+				supplier   	@295
 				line_style 	0)
 			    (object RoleView "$UNNAMED$185" @321
 				Parent_View 	@319
@@ -7135,7 +7189,7 @@
 				line_color 	3342489
 				quidu      	"44997B52004C"
 				client     	@322
-				supplier   	@298
+				supplier   	@296
 				line_style 	0)
 			    (object RoleView "$UNNAMED$188" @324
 				Parent_View 	@322
@@ -7168,7 +7222,7 @@
 				line_color 	3342489
 				quidu      	"44997B730035"
 				client     	@325
-				supplier   	@299
+				supplier   	@297
 				line_style 	0)
 			    (object RoleView "$UNNAMED$191" @327
 				Parent_View 	@325
@@ -7240,7 +7294,7 @@
 				line_color 	3342489
 				quidu      	"44997B4403BF"
 				client     	@329
-				supplier   	@288
+				supplier   	@308
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$195" @332
 			location   	(1327, 944)
@@ -7415,70 +7469,7 @@
 				client     	@339
 				supplier   	@337
 				line_style 	0)))
-		    (object ClassView "Class" "Logical View::stoxtreme::servicio_web::StoxtremeServiceLocator" @342
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(928, 592)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@342
-			    location   	(644, 518)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	568
-			    justify    	0
-			    label      	"StoxtremeServiceLocator")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"44997EC20282"
-			width      	586
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$207" @343
-			location   	(645, 405)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"44997F0601A3"
-			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$208" @344
-				Parent_View 	@343
-				location   	(277, 181)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"44997F060352"
-				client     	@343
-				supplier   	@342
-				line_style 	0)
-			    (object RoleView "$UNNAMED$209" @345
-				Parent_View 	@343
-				location   	(277, 181)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"44997F060354"
-				client     	@343
-				supplier   	@337
-				line_style 	0)))
-		    (object ClassView "Class" "Logical View::stoxtreme::servidor::Servidor" @346
+		    (object ClassView "Class" "Logical View::stoxtreme::servidor::Servidor" @342
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -7493,7 +7484,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@346
+			    Parent_View 	@342
 			    location   	(1701, 150)
 			    fill_color 	13434879
 			    nlines     	1
@@ -7508,13 +7499,76 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object InheritView "" @347
+		    (object InheritView "" @343
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"44997E87038C"
-			client     	@346
+			client     	@342
 			supplier   	@336
 			line_style 	0)
+		    (object ClassView "Class" "Logical View::stoxtreme::servicio_web::StoxtremeServiceLocator" @344
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(928, 592)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@344
+			    location   	(644, 518)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	568
+			    justify    	0
+			    label      	"StoxtremeServiceLocator")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"44997EC20282"
+			width      	586
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object AssociationViewNew "$UNNAMED$207" @345
+			location   	(645, 405)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"44997F0601A3"
+			roleview_list 	(list RoleViews
+			    (object RoleView "$UNNAMED$208" @346
+				Parent_View 	@345
+				location   	(277, 181)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"44997F060352"
+				client     	@345
+				supplier   	@344
+				line_style 	0)
+			    (object RoleView "$UNNAMED$209" @347
+				Parent_View 	@345
+				location   	(277, 181)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"44997F060354"
+				client     	@345
+				supplier   	@337
+				line_style 	0)))
 		    (object ClassView "Class" "Logical View::stoxtreme::servicio_web::StoxtremeSoapBindingSkelleton" @348
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
@@ -7567,7 +7621,7 @@
 				line_color 	3342489
 				quidu      	"44997EF800D1"
 				client     	@349
-				supplier   	@346
+				supplier   	@342
 				line_style 	0)
 			    (object RoleView "$UNNAMED$206" @351
 				Parent_View 	@349
@@ -7639,7 +7693,7 @@
 				line_color 	3342489
 				quidu      	"44997F17010A"
 				client     	@353
-				supplier   	@342
+				supplier   	@344
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$213" @356
 			location   	(1350, 1040)
@@ -7774,37 +7828,7 @@
 			height     	58
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::sistema_mensajeria::emisor::AlmacenMensajes" @362
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(240, 656)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@362
-			    location   	(16, 582)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	448
-			    justify    	0
-			    label      	"AlmacenMensajes")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"4496D19302B1"
-			width      	466
-			height     	172
-			annotation 	8
-			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::servidor::objeto_bolsa::fluctuaciones::Posicion" @363
+		    (object ClassView "Class" "Logical View::stoxtreme::servidor::objeto_bolsa::fluctuaciones::Posicion" @362
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -7819,7 +7843,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@363
+			    Parent_View 	@362
 			    location   	(741, 118)
 			    fill_color 	13434879
 			    nlines     	1
@@ -7834,7 +7858,7 @@
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::interfaz_remota::Operacion" @364
+		    (object ClassView "Class" "Logical View::stoxtreme::interfaz_remota::Operacion" @363
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
@@ -7849,7 +7873,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@364
+			    Parent_View 	@363
 			    location   	(63, 278)
 			    fill_color 	13434879
 			    nlines     	1
@@ -7861,6 +7885,36 @@
 			fill_color 	13434879
 			quidu      	"44980A9C020B"
 			width      	404
+			height     	172
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::sistema_mensajeria::emisor::AlmacenMensajes" @364
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(240, 656)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@364
+			    location   	(16, 582)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	448
+			    justify    	0
+			    label      	"AlmacenMensajes")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4496D19302B1"
+			width      	466
 			height     	172
 			annotation 	8
 			autoResize 	TRUE)
@@ -7916,7 +7970,7 @@
 				line_color 	3342489
 				quidu      	"44997F770015"
 				client     	@366
-				supplier   	@362
+				supplier   	@364
 				line_style 	0)
 			    (object RoleView "$UNNAMED$218" @368
 				Parent_View 	@366
@@ -7949,7 +8003,7 @@
 				line_color 	3342489
 				quidu      	"44997F7E03E1"
 				client     	@369
-				supplier   	@363
+				supplier   	@362
 				line_style 	0)
 			    (object RoleView "$UNNAMED$221" @371
 				Parent_View 	@369
@@ -7982,7 +8036,7 @@
 				line_color 	3342489
 				quidu      	"44997FBE02B6"
 				client     	@372
-				supplier   	@364
+				supplier   	@363
 				line_style 	0)
 			    (object RoleView "$UNNAMED$233" @374
 				Parent_View 	@372
@@ -8045,7 +8099,7 @@
 				line_color 	3342489
 				quidu      	"44997FA6030C"
 				client     	@376
-				supplier   	@362
+				supplier   	@364
 				line_style 	0)
 			    (object RoleView "$UNNAMED$230" @378
 				Parent_View 	@376
@@ -8570,7 +8624,7 @@
 		    (object Attribute
 			tool       	"Java"
 			name       	"ClassPath"
-			value      	"C:\\jdk1.5.0_04\\jre\\lib\\charsets.jar;C:\\jdk1.5.0_04\\jre\\lib\\jce.jar;C:\\jdk1.5.0_04\\jre\\lib\\jsse.jar;C:\\jdk1.5.0_04\\jre\\lib\\rt.jar;C:\\jdk1.5.0_04\\jre\\lib\\ext\\dnsns.jar;C:\\jdk1.5.0_04\\jre\\lib\\ext\\localedata.jar;C:\\jdk1.5.0_04\\jre\\lib\\ext\\sunjce_provider.jar;C:\\jdk1.5.0_04\\jre\\lib\\security\\local_policy.jar;C:\\jdk1.5.0_04\\jre\\lib\\security\\US_export_policy.jar;C:\\jdk1.5.0_04\\lib\\dt.jar;C:\\jdk1.5.0_04\\lib\\htmlconverter.jar;C:\\jdk1.5.0_04\\lib\\tools.jar;C:\\Documents and Settings\\Administrador\\Escritorio\\StoXtreme;C:\\Documents and Settings\\Administrador\\Escritorio\\StoXtreme\\fuentes_servicios;C:\\Documents and Settings\\Administrador\\Escritorio\\StoXtreme\\src;C:\\Documents and Settings\\Administrador\\Escritorio\\StoXtreme\\webapps\\axis;C:\\j2sdk1.4.2_12\\jre\\lib\\charsets.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\jce.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\jsse.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\rt.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\sunrsasign.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\ext\\dnsns.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\ext\\ldapsec.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\ext\\localedata.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\ext\\sunjce_provider.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\security\\local_policy.jar;C:\\j2sdk1.4.2_12\\jre\\lib\\security\\US_export_policy.jar;C:\\j2sdk1.4.2_12\\lib\\dt.jar;C:\\j2sdk1.4.2_12\\lib\\htmlconverter.jar;C:\\j2sdk1.4.2_12\\lib\\tools.jar")
+			value      	"C:\\;C:\\j2sdk1.4.1_05\\demo\\jfc\\Java2D\\Java2Demo.jar;C:\\j2sdk1.4.1_05\\demo\\plugin\\jfc\\Java2D\\Java2Demo.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\charsets.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\ext\\dnsns.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\ext\\ldapsec.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\ext\\localedata.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\ext\\sunjce_provider.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\im\\indicim.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\jaws.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\jce.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\jsse.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\rt.jar;C:\\j2sdk1.4.1_05\\jre\\lib\\sunrsasign.jar;C:\\j2sdk1.4.1_05\\lib\\dt.jar;C:\\j2sdk1.4.1_05\\lib\\htmlconverter.jar;C:\\j2sdk1.4.1_05\\lib\\tools.jar;c:\\oracle\\ora92idev\\jlib\\bigraphbean.jar;c:\\oracle\\ora92idev\\jlib\\LW_PfjBean.jar;c:\\oracle\\ora92idev\\jlib\\bigraphbean-nls.zip;C:\\JBuilder7\\jdk1.3.1\\src.jar;C:\\JBuilder7\\jdk1.3.1\\jre\\lib\\i18n.jar;C:\\JBuilder7\\jdk1.3.1\\jre\\lib\\jaws.jar;C:\\JBuilder7\\jdk1.3.1\\jre\\lib\\rt.jar;C:\\JBuilder7\\jdk1.3.1\\jre\\lib\\sunrsasign.jar;C:\\JBuilder7\\jdk1.3.1\\lib\\dt.jar;C:\\JBuilder7\\jdk1.3.1\\lib\\htmlconverter.jar;C:\\JBuilder7\\jdk1.3.1\\lib\\tools.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\charsets.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\jce.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\jsse.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\rt.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\sunrsasign.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\ext\\dnsns.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\ext\\ldapsec.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\ext\\localedata.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\ext\\sunjce_provider.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\security\\local_policy.jar;C:\\j2sdk1.4.2_05\\jre\\lib\\security\\US_export_policy.jar;C:\\j2sdk1.4.2_05\\lib\\dt.jar;C:\\j2sdk1.4.2_05\\lib\\htmlconverter.jar;C:\\j2sdk1.4.2_05\\lib\\tools.jar")
 		    (object Attribute
 			tool       	"Java"
 			name       	"ReferenceClasspath"
