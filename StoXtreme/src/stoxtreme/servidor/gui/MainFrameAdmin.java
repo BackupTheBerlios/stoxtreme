@@ -35,6 +35,7 @@ public class MainFrameAdmin extends JFrame{
 	private ModeloTablaPrecioAcciones modeloPrecios;
 	private ModeloTablaVariables modeloVariables;
 	private ModeloTablaEventos modeloEventos;
+	private PanelOpciones opciones;
 	/**/
 	private JSplitPane panelPrincipal;
 	private FakeInternalFrame panelDerecha;
@@ -173,7 +174,7 @@ public class MainFrameAdmin extends JFrame{
 		chooser.add("Fichero de historicos");
 		chooser.add("Fichero de información");
 		
-		PanelOpciones opciones = new PanelOpciones(ops, null, chooser);
+		opciones = new PanelOpciones(ops, null, chooser);
 		opciones.setCheckBox("Sesión continua");
 		
 		panel.add(opciones, BorderLayout.NORTH);
@@ -282,5 +283,11 @@ public class MainFrameAdmin extends JFrame{
 	}
 	public Servidor getServidor(){
 		return servidor;
+	}
+	public PanelOpciones getOpciones() {
+		return opciones;
+	}
+	public void setOpciones(PanelOpciones opciones) {
+		this.opciones = opciones;
 	}
 }

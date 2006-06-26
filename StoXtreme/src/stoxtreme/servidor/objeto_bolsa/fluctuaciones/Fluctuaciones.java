@@ -74,7 +74,6 @@ public class Fluctuaciones {
   //cambiar para el proyecto total
   public double paso(){
     double nuevoValor=calculaValorTitulo();
-    System.out.print("El nuevo valor es="+nuevoValor+" de "+empresa+"\n");
     String nomEmpresa="PRECIO_"+empresa.toUpperCase();
     varS.cambiaVariable(nomEmpresa,new Double(nuevoValor));
     return nuevoValor;
@@ -129,27 +128,23 @@ public class Fluctuaciones {
 	        	Posicion pV=(Posicion)preciosVenta.elementAt(indiceV);
 	        	if (pC.getNumeroDeAcciones()<=auxC){	        		
 	        		auxC-=pC.getNumeroDeAcciones();
-	        		System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
 	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones(),precioM);
 	        		preciosCompra.remove(indiceC);
 	        		indiceC++;	        		
 	        	}
 	        	else{
 	        		pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-auxC);
-	        		System.out.println("Has enviado peticion a Id: "+pC.getIDAgente()+" numero acciones: "+pC.getNumeroDeAcciones());
 	        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),auxC,precioM);
 	        		auxC=0;
 	        	}
 	        	if (pV.getNumeroDeAcciones()<=auxV){
 	        		auxV-=pV.getNumeroDeAcciones();
-	        		System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
 	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),pV.getNumeroDeAcciones(),precioM);
 	        		preciosVenta.remove(indiceV);
 	        		indiceV++;
 	        	}
 	        	else{
 	        		pV.setNumeroDeAcciones(pV.getNumeroDeAcciones()-auxV);
-	        		System.out.println("Has enviado peticion a Id: "+pV.getIDAgente()+" numero acciones: "+pV.getNumeroDeAcciones());
 	        		sisOp.notificaOperacion(pV.getIDAgente(),pV.getIdOperacion(),auxV,precioM);
 	        		auxV=0;
 	        	}	        	
@@ -205,14 +200,11 @@ public class Fluctuaciones {
 		    			aux.put(claveFinal,auxC);
 		    		sisOp.setListaCompras(aux);
 		    		precioM=Double.parseDouble(claveFinal);
-	//	    		precioM=SistemaOperaciones.calculaPrecio
-	//				(pActual,tick,pActual+sisOp.getPrecioEstimado());
 		    	}
 		    }
 	    }
 	    sisOp.setListaCompras(compra);
 	    sisOp.setListaVentas(venta);
-	    System.out.println("Empresa "+empresa+ " precio:"+precioM);
 	    return redondeo(precioM, 2);
 	  }	  
 

@@ -80,7 +80,7 @@ public class PanelOpciones extends JPanel{
 		if(chooser.contains(opcion)){
 			s = vChooser.get(opcion);
 		}
-		else if(password.contains(opcion)){
+		else if(password != null && password.contains(opcion)){
 			s = new String(((JPasswordField)opciones.get(opcion)).getPassword());
 		}
 		else{

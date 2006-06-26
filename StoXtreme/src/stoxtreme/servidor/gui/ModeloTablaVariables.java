@@ -54,4 +54,20 @@ public class ModeloTablaVariables extends AbstractTableModel{
 		int index = nombreVariables.indexOf(nombre);
 		fireTableCellUpdated(index, 1);
 	}
+
+	public ArrayList getNombreVariables() {
+		return nombreVariables;
+	}
+
+	public void setNombreVariables(ArrayList nombreVariables) {
+		this.nombreVariables = nombreVariables;
+	}
+
+	public Hashtable<String, Double> getValorVariables() {
+		return valorVariables;
+	}
+
+	public void setValorVariables(Hashtable<String, Double> valorVariables) {
+		this.valorVariables = valorVariables;
+	}
 }

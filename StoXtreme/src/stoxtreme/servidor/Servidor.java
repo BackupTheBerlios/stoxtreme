@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.InetAddress;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -27,10 +28,12 @@ import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Embedded;
 import org.apache.log4j.PropertyConfigurator;
+import org.w3c.dom.Element;
 
 public class Servidor implements Administrador, Stoxtreme{
 	/**/
 	private static Servidor _instance = new Servidor();
+	boolean iniciado=false;
 	
 	public static Servidor getInstance(){
 		return _instance;
@@ -148,13 +151,10 @@ public class Servidor implements Administrador, Stoxtreme{
 		try {
 			Servidor.getInstance().iniciarServidor();
 			Servidor.getInstance().showGUI();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	private void ponVariablesManuales() {
-		// TODO Auto-generated method stub
-		
 	}
 	public void iniciarServidor() throws RemoteException{
 		try {
@@ -163,13 +163,13 @@ public class Servidor implements Administrador, Stoxtreme{
 			
 		}
 		guiAdmin = new MainFrameAdmin();
+		//if (iniciado){
 		param = new ParametrosServidor();
 		gestorUsuarios=new GestionUsuarios(param.getFicheroRegistrados());
 		guiAdmin.setModeloUsuarios(gestorUsuarios);
 		objetosBolsa = new Hashtable<String, ObjetoBolsa>();
 		datosEmpresa=new DatosEmpresas();
 		variables = new VariablesSistema();
-		ponVariablesManuales();
 		guiAdmin.setModeloVariables(variables);
 		objetosBolsa=datosEmpresa.creaObjetosBolsa(param);
 		
@@ -207,6 +207,7 @@ public class Servidor implements Administrador, Stoxtreme{
 			reloj.addListener(objetosBolsa.get(eObBols.nextElement()));
 		}
 		reloj.addListener(variables);
+		//}
 		
 		try{
 			//sistEventos.insertarEvento("tiempo==5", "dihola_alonso", false);
@@ -234,7 +235,55 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	public void iniciaSesion() throws RemoteException {
 		// Consigue los parametros
+
+		if (!guiAdmin.getOpciones().getValor("Tick").equals(""))
+			param.modificarParams("Tick",new Double(guiAdmin.getOpciones().getValor("Tick")));
+		if (!guiAdmin.getOpciones().getValor("Tiempo de fluctuacion").equals(""))
+			param.modificarParams("Tiempo de fluctuacion",new Long(guiAdmin.getOpciones().getValor("Tiempo de fluctuacion")));
+		if (guiAdmin.getOpciones().getValor("Fichero de historicos")!=null)
+			param.modificarParams("ficheroEmpresas",guiAdmin.getOpciones().getValor("Fichero de historicos"));
+		if (guiAdmin.getOpciones().getValor("Fichero de información")!=null)
+			param.modificarParams("ficheroRegistrados",guiAdmin.getOpciones().getValor("Fichero de información"));
+//		try {
+//			finalizaSesion();
+//			iniciarTomcat();
+//		} catch (RemoteException e1) {
+//			e1.printStackTrace();
+//		}
+//		  catch (Exception e2) {	
+//			  e2.printStackTrace();
+//		}
+		  guiAdmin = new MainFrameAdmin();
+			//if (iniciado){
+			gestorUsuarios=new GestionUsuarios(param.getFicheroRegistrados());
+			guiAdmin.setModeloUsuarios(gestorUsuarios);
+			objetosBolsa = new Hashtable<String, ObjetoBolsa>();
+			datosEmpresa=new DatosEmpresas();
+			variables = new VariablesSistema();
+			guiAdmin.setModeloVariables(variables);
+			objetosBolsa=datosEmpresa.creaObjetosBolsa(param);
+			
+			Enumeration<String> e = objetosBolsa.keys();
+			while(e.hasMoreElements()){
+				objetosBolsa.get(e.nextElement()).setVariablesSistema(variables, param);
+			}
+			
+			sistEventos = new SistemaEventos(variables);
+			guiAdmin.setModeloEventos(sistEventos);
+			regOperaciones = new RegistroOperaciones();
+			guiAdmin.setModeloOperaciones(regOperaciones);
+			estadoBolsa = new EstadoBolsa(datosEmpresa);
+			variables.addListener(sistEventos);
+			variables.addListener(estadoBolsa);
+			variables.insertaPrecios(objetosBolsa);
+			guiAdmin.setModeloPrecios(estadoBolsa);
+			guiAdmin.setServidor(this);
+			guiAdmin.init();
 		reloj.iniciarReloj();
+		/*this.modificarParams(TICK,new Double(((Element)nl.item(0)).getTextContent().trim()));
+		this.modificarParams(TIEMPO,new Long(((Element)nl.item(0)).getTextContent().trim()));
+		this.modificarParams(FICH_EMP,((Element)nl.item(0)).getTextContent().trim());
+		this.modificarParams(FICH_REG,((Element)nl.item(0)).getTextContent().trim());*/
 		// Inicia la sesion
 	}
 
