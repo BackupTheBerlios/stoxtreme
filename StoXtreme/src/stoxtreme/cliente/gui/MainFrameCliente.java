@@ -38,7 +38,7 @@ public class MainFrameCliente extends JFrame{
 	//private JTabbedPane tabbedPane;
 	private ModeloOpPendientes modeloOpPendientes;
 	private ModeloPrecioAccionesGrafico modeloPrecios;
-	private InfoLocal info=new InfoLocal();
+	private InfoLocal info=InfoLocal.getInstance();
 	private Cliente cliente;
 	public boolean volumen;
 	public boolean estocastico;

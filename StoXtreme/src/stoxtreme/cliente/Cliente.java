@@ -1,13 +1,11 @@
 package stoxtreme.cliente;
 
-import java.awt.Dimension;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,7 +23,6 @@ import stoxtreme.herramienta_agentes.HerramientaAgentes;
 import stoxtreme.herramienta_agentes.ParametrosAgentes;
 import stoxtreme.interfaz_remota.*;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
-import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 import stoxtreme.sistema_mensajeria.receptor.*;
 
 public class Cliente{
@@ -150,7 +147,9 @@ public class Cliente{
 		System.err.println("Creando Cartera");
 		cartera = new CarteraAcciones();
 		System.err.println("Creando Estado de la Bolsa");
-		eBolsa = new EstadoBolsa(new InfoLocal());
+		InfoLocal.crearInstancia("./conf/cliente/empresas.xml", numEmpresas);
+		InfoLocal infoLocal = InfoLocal.getInstance();
+		eBolsa = new EstadoBolsa(infoLocal);
 		System.err.println("Creando Parametros");
 		System.err.println("Creando Agentes");
 		hAgentes = new HerramientaAgentes(nUsuario, eBolsa);
@@ -288,6 +287,7 @@ public class Cliente{
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList getNombreFicheros(String fichEmpresas){
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		//Lista de nombres de ficheros de configuracion

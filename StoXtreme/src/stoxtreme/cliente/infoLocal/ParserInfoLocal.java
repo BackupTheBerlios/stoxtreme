@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 
@@ -22,7 +21,7 @@ public class ParserInfoLocal {
 	public ParserInfoLocal(){
 	}
 	
-	public Hashtable<String, Double> creaInfoLocal(String fichero) {
+	public Hashtable<String, Double> creaInfoLocal(String fichero, int numEmpresas) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Hashtable <String,Double>ht=new Hashtable<String,Double>();
 		try {
@@ -32,7 +31,7 @@ public class ParserInfoLocal {
 			String nombre=null;
 			double cotiz=0;
 			String info=null;
-			for (int i=0; nl!=null && i<nl.getLength();i++){
+			for (int i=0; nl!=null && i<nl.getLength() && i<numEmpresas;i++){
 				nombre=((Element)nl.item(i)).getAttribute("nombre");
 				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio

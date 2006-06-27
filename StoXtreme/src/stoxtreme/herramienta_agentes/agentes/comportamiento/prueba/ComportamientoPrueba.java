@@ -21,7 +21,7 @@ public class ComportamientoPrueba extends ComportamientoAgente{
 		dh=parser.getDatoHistorico("endesa", "09/12/2004");
 		Double precio2=dh.getPrecioCierre();
 		if(precio2>precio1)
-			decisiones.add(new IntroducirOperacion(new Operacion(null,Operacion.COMPRA,100,"ENDESA",new InfoLocal().getPrecioInicial("ENDESA"))));
+			decisiones.add(new IntroducirOperacion(new Operacion(null,Operacion.COMPRA,100,"ENDESA",InfoLocal.getInstance().getPrecioInicial("ENDESA"))));
 	}
 
 	public String getNombreComportamiento() {
