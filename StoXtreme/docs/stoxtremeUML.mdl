@@ -1470,7 +1470,74 @@
 					    (object Realize_Relationship
 						quid       	"449804ED0295"
 						supplier   	"Logical View::stoxtreme::interfaz_remota::StoxtremeMensajes"
-						quidu      	"44980486017E"))))
+						quidu      	"44980486017E"))
+					operations 	(list Operations
+					    (object Operation "isNuevos"
+						quid       	"44A13FE10147"
+						parameters 	(list Parameters
+						    (object Parameter "String ID"
+							quid       	"44A13FE2029F"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "altaUsuario"
+						quid       	"44A13FE70251"
+						parameters 	(list Parameters
+						    (object Parameter "String ID"
+							quid       	"44A13FE80261"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "enviaMensaje"
+						quid       	"44A13FEE0280"
+						parameters 	(list Parameters
+						    (object Parameter "Mensaje m"
+							quid       	"44A13FF000EA"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "pararHiloConsulta"
+						quid       	"44A13FFB005D"
+						parameters 	(list Parameters
+						    (object Parameter "String id"
+							quid       	"44A13FFC008C"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "insertarMensajeGlobal"
+						quid       	"44A1400200AB"
+						parameters 	(list Parameters
+						    (object Parameter "Mensaje m"
+							quid       	"44A140030167"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "insertarMensajePrivado"
+						quid       	"44A1400901B5"
+						parameters 	(list Parameters
+						    (object Parameter "String ID"
+							quid       	"44A1400A0222")
+						    (object Parameter "Mensaje m"
+							quid       	"44A1400A0261"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0))
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "buzon"
+						quid       	"44A13F6E00CA"
+						type       	"Hashtable<String, Integer>")
+					    (object ClassAttribute "mensajesGlobales"
+						quid       	"44A13F8A002E"
+						type       	"ArrayList<Mensaje>")
+					    (object ClassAttribute "numMensajesGlobales"
+						quid       	"44A13FA100AB"
+						type       	"int")
+					    (object ClassAttribute "mensajesPrivados"
+						quid       	"44A13FAB02CE"
+						type       	"Hashtable<String, ArrayList<Mensaje>>")
+					    (object ClassAttribute "esperando"
+						quid       	"44A13FB40157"
+						type       	"Hashtable<String, Object>"))))
 				logical_presentations 	(list unit_reference_list))
 			    (object Class_Category "receptor"
 				quid       	"4496D1810251"
@@ -1487,7 +1554,12 @@
 					    (object Realize_Relationship
 						quid       	"449802FA0052"
 						supplier   	"Logical View::stoxtreme::sistema_mensajeria::receptor::HiloConsulta"
-						quidu      	"449802C301C6")))
+						quidu      	"449802C301C6"))
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "receptor"
+						quid       	"44A14C1F0147"
+						type       	"ReceptorMensajes"
+						quidu      	"4496D1AE00E4")))
 				    (object Class "HiloConsultaWS"
 					quid       	"4496D1A60114"
 					superclasses 	(list inheritance_relationship_list
@@ -1504,9 +1576,39 @@
 					    (object Realize_Relationship
 						quid       	"449802D10252"
 						supplier   	"Logical View::stoxtreme::sistema_mensajeria::receptor::HiloConsulta"
-						quidu      	"449802C301C6")))
+						quidu      	"449802C301C6"))
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "receptor"
+						quid       	"44A14BDB0241"
+						type       	"ReceptorMensajes"
+						quidu      	"4496D1AE00E4")
+					    (object ClassAttribute "url"
+						quid       	"44A14BE6030D"
+						type       	"String")
+					    (object ClassAttribute "parar"
+						quid       	"44A14BFD02BE"
+						type       	"boolean")))
 				    (object Class "ReceptorMensajes"
-					quid       	"4496D1AE00E4")
+					quid       	"4496D1AE00E4"
+					operations 	(list Operations
+					    (object Operation "notifica"
+						quid       	"44A14C5F03E7"
+						parameters 	(list Parameters
+						    (object Parameter "Mensaje m"
+							quid       	"44A14C6003C8"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0))
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "listaOyentes"
+						quid       	"44A14C2F0261"
+						type       	"ArrayList<IMensajeriaListener>")
+					    (object ClassAttribute "hiloConsulta"
+						quid       	"44A14C420290"
+						type       	"Thread")
+					    (object ClassAttribute "usuario"
+						quid       	"44A14C4D0251"
+						type       	"String")))
 				    (object Class "HiloConsulta"
 					quid       	"449802C301C6"
 					stereotype 	"Interface"))
@@ -1684,14 +1786,77 @@
 				    (object Inheritance_Relationship
 					quid       	"449977CC00BD"
 					supplier   	"Logical View::stoxtreme::herramienta_agentes::TimerListener"
-					quidu      	"449972C00322")))
+					quidu      	"449972C00322"))
+				operations 	(list Operations
+				    (object Operation "ejecutaPeticiones"
+					quid       	"44A1467C034B"
+					concurrency 	"Sequential"
+					opExportControl 	"Public"
+					uid        	0))
+				class_attributes 	(list class_attribute_list
+				    (object ClassAttribute "listaAgentes"
+					quid       	"44A145A80196"
+					type       	"ArrayList<Agente>")
+				    (object ClassAttribute "ciclo"
+					quid       	"44A145B302DE"
+					type       	"int")
+				    (object ClassAttribute "exit"
+					quid       	"44A145E402BE"
+					type       	"boolean")
+				    (object ClassAttribute "pausa"
+					quid       	"44A145EA001F"
+					type       	"boolean")
+				    (object ClassAttribute "esperaTimer"
+					quid       	"44A145F6030D"
+					type       	"Object")
+				    (object ClassAttribute "conexion"
+					quid       	"44A14600036A"
+					type       	"Stoxtreme"
+					quidu      	"449804900092")
+				    (object ClassAttribute "consola"
+					quid       	"44A1460F0157"
+					type       	"ConsolaAgentes"
+					quidu      	"449972420295")))
 			    (object Class "Notificador"
-				quid       	"44997265032B")
+				quid       	"44997265032B"
+				operations 	(list Operations
+				    (object Operation "notificar"
+					quid       	"44A146BA030D"
+					parameters 	(list Parameters
+					    (object Parameter "String id"
+						quid       	"44A146BC009C")
+					    (object Parameter "int idOp"
+						quid       	"44A146BC0167")
+					    (object Parameter "int cantidad"
+						quid       	"44A146BC01B5")
+					    (object Parameter "double precio"
+						quid       	"44A146BC01F3"))
+					concurrency 	"Sequential"
+					opExportControl 	"Public"
+					uid        	0)
+				    (object Operation "notificarCancelacion"
+					quid       	"44A146C10176"
+					parameters 	(list Parameters
+					    (object Parameter "String id"
+						quid       	"44A146C3036A")
+					    (object Parameter "int idOp"
+						quid       	"44A146C303A9"))
+					concurrency 	"Sequential"
+					opExportControl 	"Public"
+					uid        	0))
+				class_attributes 	(list class_attribute_list
+				    (object ClassAttribute "observadores"
+					quid       	"44A146A10270"
+					type       	"Hashtable<String, ListenerNotificador>")))
 			    (object Class "TimerListener"
 				quid       	"449972C00322"
 				stereotype 	"Interface")
 			    (object Class "ParametrosAgentes"
-				quid       	"449972CD0050")
+				quid       	"449972CD0050"
+				class_attributes 	(list class_attribute_list
+				    (object ClassAttribute "parametros"
+					quid       	"44A149B700AB"
+					type       	"EnumMap<Parametro,Object>")))
 			    (object Class_Category "agentes"
 				quid       	"4499723C00FB"
 				exportControl 	"Public"
@@ -1809,9 +1974,124 @@
 					    (object Uses_Relationship
 						quid       	"4499779100F4"
 						supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::Agente"
-						quidu      	"449972FA038A")))
+						quidu      	"449972FA038A"))
+					operations 	(list Operations
+					    (object Operation "procesaSubComportamientos"
+						quid       	"44A147EF0138"
+						parameters 	(list Parameters
+						    (object Parameter "Document d"
+							quid       	"44A147F003A9")
+						    (object Parameter "String idComportamiento"
+							quid       	"44A147F1000F")
+						    (object Parameter "ComportamientoAgente c"
+							quid       	"44A147F1004D"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "generaParametrosPsicologico"
+						quid       	"44A148760119"
+						parameters 	(list Parameters
+						    (object Parameter "Document d"
+							quid       	"44A148770290")
+						    (object Parameter "String id"
+							quid       	"44A14877035B")
+						    (object Parameter "Hashtable<String"
+							quid       	"44A1487703B8")
+						    (object Parameter "AbstractDistribution> distribuciones"
+							quid       	"44A14878003E"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "generaParametrosSocial"
+						quid       	"44A14883033B"
+						parameters 	(list Parameters
+						    (object Parameter "Document d"
+							quid       	"44A14885008C")
+						    (object Parameter "String id"
+							quid       	"44A148850138")
+						    (object Parameter "Hashtable<String"
+							quid       	"44A148850196")
+						    (object Parameter "AbstractDistribution> distribuciones"
+							quid       	"44A1488502CE"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "generaDistribuciones"
+						quid       	"44A148900196"
+						parameters 	(list Parameters
+						    (object Parameter "Document d"
+							quid       	"44A14891033B"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "inicializaDOM"
+						quid       	"44A1489B03B8"
+						parameters 	(list Parameters
+						    (object Parameter "String fichero"
+							quid       	"44A1489D005D"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0))
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "agentes . ArrayList<Agente>"
+						quid       	"44A14778032C")
+					    (object ClassAttribute "fichAgentes"
+						quid       	"44A1478500AB"
+						type       	"Document")
+					    (object ClassAttribute "distribuciones"
+						quid       	"44A14795008C"
+						type       	"Hashtable<String,AbstractDistribution>")
+					    (object ClassAttribute "iterator NodeIterator"
+						quid       	"44A147B2002E")
+					    (object ClassAttribute "numAgentes"
+						quid       	"44A147C901B5"
+						type       	"int")
+					    (object ClassAttribute "actual"
+						quid       	"44A147BE02ED"
+						type       	"Element")))
 				    (object Class "EstadoCartera"
-					quid       	"4499732400E1")
+					quid       	"4499732400E1"
+					operations 	(list Operations
+					    (object Operation "insertaAcciones"
+						quid       	"44A13690005D"
+						parameters 	(list Parameters
+						    (object Parameter "String empresa"
+							quid       	"44A1369102CE")
+						    (object Parameter "int cantidad"
+							quid       	"44A13691030D"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "quitaAcciones"
+						quid       	"44A136990213"
+						parameters 	(list Parameters
+						    (object Parameter "String empresa"
+							quid       	"44A1369B0157")
+						    (object Parameter "int cantidad"
+							quid       	"44A1369B0186"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "tieneAccionesPosesion"
+						quid       	"44A136A1038A"
+						parameters 	(list Parameters
+						    (object Parameter "String empresa"
+							quid       	"44A136A30128"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0)
+					    (object Operation "numeroAccionesPosesion"
+						quid       	"44A136AA007C"
+						parameters 	(list Parameters
+						    (object Parameter "String empresa"
+							quid       	"44A136AB0222"))
+						concurrency 	"Sequential"
+						opExportControl 	"Public"
+						uid        	0))
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "cartera"
+						quid       	"44A136780186"
+						type       	"Hashtable<String, Integer>")))
 				    (object Class "IDAgente"
 					quid       	"449973290305"
 					class_attributes 	(list class_attribute_list
@@ -1893,9 +2173,17 @@
 						quid       	"44A11CBF0130"
 						type       	"HashSet<Integer>")))
 				    (object Class "ParametrosPsicologicos"
-					quid       	"4499733A009D")
+					quid       	"4499733A009D"
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "parametros"
+						quid       	"44A149460270"
+						type       	"EnumMap<Parametro,String>")))
 				    (object Class "ParametrosSocial"
-					quid       	"4499734300DC")
+					quid       	"4499734300DC"
+					class_attributes 	(list class_attribute_list
+					    (object ClassAttribute "parametros"
+						quid       	"44A1498201E4"
+						type       	"EnumMap<Parametro,String>")))
 				    (object Class "Perceptor"
 					quid       	"4499734A008C"
 					superclasses 	(list inheritance_relationship_list
@@ -1945,7 +2233,86 @@
 						    (object Uses_Relationship
 							quid       	"449979A9023F"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117")))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "configureAll"
+							quid       	"44A137A8030D"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)
+						    (object Operation "generaDecisionesAll"
+							quid       	"44A137B4009C"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)
+						    (object Operation "addComportamiento"
+							quid       	"44A137BA0167"
+							parameters 	(list Parameters
+							    (object Parameter "ComportamientoAgente c"
+								quid       	"44A137BB033B"))
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)
+						    (object Operation "quitaComportamiento"
+							quid       	"44A137C401C4"
+							parameters 	(list Parameters
+							    (object Parameter "ComportamientoAgente c"
+								quid       	"44A137C60270"))
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)
+						    (object Operation "generaDecisionAPartirNotificacion"
+							quid       	"44A137CE02ED"
+							parameters 	(list Parameters
+							    (object Parameter "int notificacion"
+								quid       	"44A137D0030D")
+							    (object Parameter "Decision decision"
+								quid       	"44A137D0034B"))
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)
+						    (object Operation "notifica"
+							quid       	"44A137D50203"
+							parameters 	(list Parameters
+							    (object Parameter "int notificacion"
+								quid       	"44A137D7031C"))
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "estadoBolsa"
+							quid       	"44A136D802DE"
+							type       	"EstadoBolsa")
+						    (object ClassAttribute "estadoCartera"
+							quid       	"44A136E4030D"
+							type       	"EstadoCartera"
+							quidu      	"4499732400E1")
+						    (object ClassAttribute "modeloSocial"
+							quid       	"44A136F000BB"
+							type       	"ModeloSocial"
+							quidu      	"4499736700A1")
+						    (object ClassAttribute "modeloPsicologico"
+							quid       	"44A1371303D8"
+							type       	"ModeloPsicologico"
+							quidu      	"449973600372")
+						    (object ClassAttribute "operacionesPendientes"
+							quid       	"44A13726029F"
+							type       	"OperacionesPendientes")
+						    (object ClassAttribute "decisionesEsperaNotificacion"
+							quid       	"44A137330196"
+							type       	"Hashtable<Integer, Decision>")
+						    (object ClassAttribute "numeroCancelaciones"
+							quid       	"44A1374E033B"
+							type       	"int")
+						    (object ClassAttribute "subComportamientos"
+							quid       	"44A13763037A"
+							type       	"ArrayList<ComportamientoAgente>")
+						    (object ClassAttribute "decisiones"
+							quid       	"44A1377602DE"
+							type       	"ArrayList<Decision>")
+						    (object ClassAttribute "estado"
+							quid       	"44A1378801C4"
+							type       	"String")))
 					    (object Class "ModeloPsicologico"
 						quid       	"449973600372"
 						operations 	(list Operations
@@ -2067,63 +2434,183 @@
 					exportControl 	"Public"
 					logical_models 	(list unit_reference_list
 					    (object Class "Decision"
-						quid       	"4499737A0117")
+						quid       	"4499737A0117"
+						operations 	(list Operations
+						    (object Operation "insertarEnMonitor"
+							quid       	"44A13B4201F3"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)
+						    (object Operation "ejecuta"
+							quid       	"44A13BBA0290"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "_monitor"
+							quid       	"44A1381B01E4"
+							type       	"MonitorAgentes"
+							quidu      	"4499725D0366")
+						    (object ClassAttribute "agente"
+							quid       	"44A1383B01E4"
+							type       	"Agente"
+							quidu      	"449972FA038A")
+						    (object ClassAttribute "tEspera"
+							quid       	"44A1383E03A9"
+							type       	"int")
+						    (object ClassAttribute "tEjecucion"
+							quid       	"44A1385701E4"
+							type       	"int")))
 					    (object Class "AltaServicio"
 						quid       	"4499737F01D2"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"4499795E026A"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117")))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "ejecuta"
+							quid       	"44A13D3702FD"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "servicio"
+							quid       	"44A13D1F00DA"
+							type       	"String")))
 					    (object Class "BajaServicio"
 						quid       	"44997385000E"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"449979610097"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117")))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "ejecuta"
+							quid       	"44A13D5B00AB"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "servicio"
+							quid       	"44A13D4A00DA"
+							type       	"String")))
 					    (object Class "CancelarOperacion"
 						quid       	"4499738C0271"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"4499795C019E"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117")))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "ejecuta"
+							quid       	"44A13BFD0222"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "idOp"
+							quid       	"44A13BED03B8"
+							type       	"int")))
 					    (object Class "Espera"
 						quid       	"44997394002E"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"44997967030D"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117")))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "ejecuta"
+							quid       	"44A13DF0033B"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)))
 					    (object Class "IntroducirOperacion"
 						quid       	"4499739A0253"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"4499795903B7"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117")))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "ejecuta"
+							quid       	"44A13C450251"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "o"
+							quid       	"44A13C340270"
+							type       	"Operacion"
+							quidu      	"44980A9C020B")))
 					    (object Class "MandarMensaje"
 						quid       	"449973A10344"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"44997963028F"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117")))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "ejecuta"
+							quid       	"44A13DB1003E"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "mensaje"
+							quid       	"44A13D8E01A5"
+							type       	"MensajeACL"
+							quidu      	"449973D3004C")
+						    (object ClassAttribute "privado"
+							quid       	"44A13D98037A"
+							type       	"boolean")))
 					    (object Class "RecibirMensaje"
 						quid       	"449973A7034C"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"4499796A01B3"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117")))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "ejecuta"
+							quid       	"44A13DDE0280"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "r"
+							quid       	"44A13DC002FD"
+							type       	"RecepcionMensaje"
+							quidu      	"449973F30279")
+						    (object ClassAttribute "p"
+							quid       	"44A13DC903C8"
+							type       	"PlantillaMensajes"
+							quidu      	"449973ED00C2")
+						    (object ClassAttribute "n"
+							quid       	"44A13DCD0186"
+							type       	"int")))
 					    (object Class "RequestServicio"
 						quid       	"449973AE01BC"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"449979570223"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117"))))
+							quidu      	"4499737A0117"))
+						operations 	(list Operations
+						    (object Operation "ejecuta"
+							quid       	"44A13D1A0176"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "servicio"
+							quid       	"44A13CB0033B"
+							type       	"String")
+						    (object ClassAttribute "proveedores"
+							quid       	"44A13CB602BE"
+							type       	"ArrayList<IDAgente>")
+						    (object ClassAttribute "name"
+							quid       	"44A13CC600CA"))))
 					logical_presentations 	(list unit_reference_list))
 				    (object Class_Category "interaccion_agentes"
 					quid       	"449972F1023C"
@@ -2183,7 +2670,14 @@
 						    (object ClassAttribute "name"
 							quid       	"44A1185D0315")))
 					    (object Class "IDConversacion"
-						quid       	"449973CB020E")
+						quid       	"449973CB020E"
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "ids"
+							quid       	"44A1410F000F"
+							type       	"int")
+						    (object ClassAttribute "ID"
+							quid       	"44A1411301B5"
+							type       	"String")))
 					    (object Class "MensajeACL"
 						quid       	"449973D3004C"
 						used_nodes 	(list uses_relationship_list
@@ -2253,14 +2747,42 @@
 						    (object Uses_Relationship
 							quid       	"44997BC0019E"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::MensajeACL"
-							quidu      	"449973D3004C")))
+							quidu      	"449973D3004C"))
+						operations 	(list Operations
+						    (object Operation "coincide"
+							quid       	"44A1430D0290"
+							parameters 	(list Parameters
+							    (object Parameter "MensajeACL m"
+								quid       	"44A1430F009C"))
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)
+						    (object Operation "add"
+							quid       	"44A14319029F"
+							parameters 	(list Parameters
+							    (object Parameter "Campos campo"
+								quid       	"44A1431A034B")
+							    (object Parameter "Object contenido"
+								quid       	"44A1431B001F"))
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "map"
+							quid       	"44A142F200EA"
+							type       	"EnumMap<Campos, Object>")))
 					    (object Class "RecepcionMensaje"
 						quid       	"449973F30279"
 						superclasses 	(list inheritance_relationship_list
 						    (object Inheritance_Relationship
 							quid       	"44997B380207"
 							supplier   	"Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision"
-							quidu      	"4499737A0117"))))
+							quidu      	"4499737A0117"))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "mensajeRecibido"
+							quid       	"44A1433C002E"
+							type       	"MensajeACL"
+							quidu      	"449973D3004C"))))
 					logical_presentations 	(list unit_reference_list)))
 				logical_presentations 	(list unit_reference_list)))
 			logical_presentations 	(list unit_reference_list))
@@ -2297,9 +2819,61 @@
 					quid       	"449FBC320337"
 					type       	"String")))
 			    (object Class "StoxtremeSoapBindingSkelleton"
-				quid       	"44997ECB02CB")
+				quid       	"44997ECB02CB"
+				operations 	(list Operations
+				    (object Operation "enviaMensaje"
+					quid       	"44A1451603C8"
+					parameters 	(list Parameters
+					    (object Parameter "stoxtreme.interfaz_remota.Mensaje in0"
+						quid       	"44A14517036A"))
+					concurrency 	"Sequential"
+					opExportControl 	"Public"
+					uid        	0))
+				class_attributes 	(list class_attribute_list
+				    (object ClassAttribute "impl"
+					quid       	"44A144180119"
+					type       	"StoxtremeMensajes"
+					quidu      	"44980486017E")
+				    (object ClassAttribute "_myOperations"
+					quid       	"44A144E70119"
+					type       	"Map")
+				    (object ClassAttribute "_myOperationsList"
+					quid       	"44A144F402DE"
+					type       	"Collection")))
 			    (object Class "StoxtremeSoapBindingStub"
-				quid       	"44997EE20089"))
+				quid       	"44997EE20089"
+				operations 	(list Operations
+				    (object Operation "_initOperationDesc1"
+					quid       	"44A143DF0241"
+					concurrency 	"Sequential"
+					opExportControl 	"Public"
+					uid        	0)
+				    (object Operation "createCall"
+					quid       	"44A143EF0270"
+					concurrency 	"Sequential"
+					opExportControl 	"Public"
+					uid        	0)
+				    (object Operation "enviaMensaje"
+					quid       	"44A1440002FD"
+					parameters 	(list Parameters
+					    (object Parameter "stoxtreme.interfaz_remota.Mensaje in0"
+						quid       	"44A14402008C"))
+					concurrency 	"Sequential"
+					opExportControl 	"Public"
+					uid        	0))
+				class_attributes 	(list class_attribute_list
+				    (object ClassAttribute "cachedSerClasses"
+					quid       	"44A143A601C4"
+					type       	"Vector")
+				    (object ClassAttribute "cachedSerQNames"
+					quid       	"44A143AC001F"
+					type       	"Vector")
+				    (object ClassAttribute "cachedSerFactories"
+					quid       	"44A143B9004D"
+					type       	"Vector")
+				    (object ClassAttribute "cachedDeserFactories"
+					quid       	"44A143C9001F"
+					type       	"Vector"))))
 			logical_presentations 	(list unit_reference_list))
 		    (object Class_Category "servidor"
 			quid       	"4496D12C021D"
@@ -2644,9 +3218,47 @@
 							quid       	"44A00FF9016E"
 							type       	"String[]")))
 					    (object Class "EvaluadorTokenManager"
-						quid       	"44980972034D")
+						quid       	"44980972034D"
+						operations 	(list Operations
+						    (object Operation "jjFillToken"
+							quid       	"44A14A9A01A5"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "debugStream"
+							quid       	"44A14A560176"
+							type       	"PrintStream")))
 					    (object Class "ParseException"
-						quid       	"4498097B0331")
+						quid       	"4498097B0331"
+						operations 	(list Operations
+						    (object Operation "add_escapes"
+							quid       	"44A14B4C0280"
+							parameters 	(list Parameters
+							    (object Parameter "String str"
+								quid       	"44A14B4E036A"))
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0)
+						    (object Operation "getMessage"
+							quid       	"44A14B5900EA"
+							concurrency 	"Sequential"
+							opExportControl 	"Public"
+							uid        	0))
+						class_attributes 	(list class_attribute_list
+						    (object ClassAttribute "specialConstructor"
+							quid       	"44A14ACE01B5"
+							type       	"boolean")
+						    (object ClassAttribute "currentToken"
+							quid       	"44A14AD3029F"
+							type       	"Token"
+							quidu      	"4498098C025A")
+						    (object ClassAttribute "expectedTokenSequences"
+							quid       	"44A14B1F033B"
+							type       	"int[][]")
+						    (object ClassAttribute "tokenImage"
+							quid       	"44A14B360280"
+							type       	"String[]")))
 					    (object Class "SimpleCharStream"
 						quid       	"4498098400DC"
 						operations 	(list Operations
@@ -3052,14 +3664,14 @@
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	0
+		origin_x   	2194
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::stoxtreme::sistema_mensajeria::receptor::HiloConsultaLocal.java" @1
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1536, 208)
+			location   	(2656, 864)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3071,25 +3683,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@1
-			    location   	(1274, 130)
+			    location   	(2319, 760)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	524
+			    max_width  	674
 			    justify    	0
 			    label      	"HiloConsultaLocal.java")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4496D19F0205"
-			width      	542
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@1
+			    location   	(2319, 865)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	572)
+			width      	692
+			height     	232
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::sistema_mensajeria::receptor::HiloConsultaWS" @2
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(928, 208)
+			location   	(1904, 432)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3101,25 +3730,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@2
-			    location   	(735, 130)
+			    location   	(1567, 278)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	386
+			    max_width  	674
 			    justify    	0
 			    label      	"HiloConsultaWS")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4496D1A60114"
-			width      	404
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@2
+			    location   	(1567, 383)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	4
+			    max_width  	572)
+			width      	692
+			height     	332
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::sistema_mensajeria::emisor::AlmacenMensajes" @3
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(384, 208)
+			location   	(832, 384)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3131,25 +3777,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@3
-			    location   	(160, 130)
+			    location   	(160, 30)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	448
+			    max_width  	1344
 			    justify    	0
 			    label      	"AlmacenMensajes")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4496D19302B1"
-			width      	466
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@3
+			    location   	(160, 135)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	12
+			    max_width  	1144)
+			width      	1362
+			height     	732
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::cliente::Cliente" @4
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(368, 1040)
+			location   	(416, 1472)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3161,10 +3824,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@4
-			    location   	(93, 736)
+			    location   	(62, 968)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	550
+			    max_width  	708
 			    justify    	0
 			    label      	"Cliente")
 			icon_style 	"Icon"
@@ -3173,7 +3836,7 @@
 			quidu      	"4499720A0280"
 			compartment 	(object Compartment
 			    Parent_View 	@4
-			    location   	(93, 1132)
+			    location   	(62, 1073)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3187,16 +3850,16 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	18
-			    max_width  	466)
-			width      	568
-			height     	632
+			    max_width  	600)
+			width      	726
+			height     	1032
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::interfaz_remota::StoxtremeMensajes" @5
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(384, 528)
+			location   	(1728, 1152)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3208,7 +3871,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@5
-			    location   	(383, 636)
+			    location   	(1727, 1260)
 			    anchor_loc 	1
 			    nlines     	2
 			    max_width  	231
@@ -3234,7 +3897,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(768, 1040)
+			location   	(1152, 1920)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3246,7 +3909,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@7
-			    location   	(767, 1147)
+			    location   	(1151, 2027)
 			    anchor_loc 	1
 			    nlines     	2
 			    max_width  	226
@@ -3272,7 +3935,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1280, 528)
+			location   	(2224, 1200)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3284,7 +3947,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@9
-			    location   	(1279, 636)
+			    location   	(2223, 1308)
 			    anchor_loc 	1
 			    nlines     	2
 			    max_width  	226
@@ -3314,7 +3977,7 @@
 			supplier   	@9
 			line_style 	0)
 		    (object AssociationViewNew "$UNNAMED$9" @12
-			location   	(831, 528)
+			location   	(1975, 1173)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3330,7 +3993,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$10" @13
 				Parent_View 	@12
-				location   	(-433, -48)
+				location   	(711, 597)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449804F70072"
@@ -3339,7 +4002,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$11" @14
 				Parent_View 	@12
-				location   	(-433, -48)
+				location   	(711, 597)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449804F70090"
@@ -3350,7 +4013,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(768, 816)
+			location   	(1152, 1312)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3362,10 +4025,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@15
-			    location   	(543, 738)
+			    location   	(908, 1158)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	450
+			    max_width  	488
 			    justify    	0
 			    label      	"Mensaje")
 			icon_style 	"Icon"
@@ -3374,7 +4037,7 @@
 			quidu      	"44980A960298"
 			compartment 	(object Compartment
 			    Parent_View 	@15
-			    location   	(543, 908)
+			    location   	(908, 1263)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3388,16 +4051,16 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	4
-			    max_width  	0)
-			width      	468
-			height     	180
+			    max_width  	413)
+			width      	506
+			height     	332
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::sistema_mensajeria::receptor::ReceptorMensajes" @16
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1360, 1040)
+			location   	(2192, 1920)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3409,22 +4072,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@16
-			    location   	(1145, 962)
+			    location   	(1676, 1741)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	430
+			    max_width  	1032
 			    justify    	0
 			    label      	"ReceptorMensajes")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4496D1AE00E4"
-			width      	448
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@16
+			    location   	(1676, 1846)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	5
+			    max_width  	878)
+			width      	1050
+			height     	382
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$3" @17
-			location   	(964, 1040)
+			location   	(1421, 1920)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3440,7 +4120,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$4" @18
 				Parent_View 	@17
-				location   	(-780, -128)
+				location   	(-323, 752)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4498032002EC"
@@ -3449,7 +4129,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$5" @19
 				Parent_View 	@17
-				location   	(-780, -128)
+				location   	(-323, 752)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4498032002EE"
@@ -3457,7 +4137,7 @@
 				supplier   	@16
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$0" @20
-			location   	(1325, 829)
+			location   	(2206, 1552)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3473,7 +4153,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$1" @21
 				Parent_View 	@20
-				location   	(-419, -339)
+				location   	(462, 384)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44980315030E"
@@ -3482,7 +4162,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$2" @22
 				Parent_View 	@20
-				location   	(-419, -339)
+				location   	(462, 384)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4498031600CB"
@@ -3490,7 +4170,7 @@
 				supplier   	@16
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$198" @23
-			location   	(1068, 929)
+			location   	(1634, 1594)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3506,7 +4186,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$199" @24
 				Parent_View 	@23
-				location   	(-212, -111)
+				location   	(354, 554)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997DFB03C6"
@@ -3515,7 +4195,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$200" @25
 				Parent_View 	@23
-				location   	(-212, -111)
+				location   	(354, 554)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997DFB03C8"
@@ -3528,11 +4208,6 @@
 			quidu      	"44997E0200E1"
 			client     	@3
 			supplier   	@15
-			vertices   	(list Points
-			    (150, 206)
-			    (94, 206)
-			    (94, 816)
-			    (533, 816))
 			line_style 	0)))
 	    (object ClassDiagram "Estructura Servidor"
 		quid       	"449805D90212"
@@ -3541,7 +4216,7 @@
 		max_height 	28350
 		max_width  	21600
 		origin_x   	0
-		origin_y   	375
+		origin_y   	0
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::stoxtreme::servidor::DatosEmpresas" @27
 			ShowCompartmentStereotypes 	TRUE
@@ -3559,17 +4234,34 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@27
-			    location   	(2580, 623)
+			    location   	(2579, 623)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	696
+			    max_width  	698
 			    justify    	0
 			    label      	"DatosEmpresas")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449805430284"
-			width      	714
+			compartment 	(object Compartment
+			    Parent_View 	@27
+			    location   	(2579, 728)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	591)
+			width      	716
 			height     	282
 			annotation 	8
 			autoResize 	TRUE)
@@ -3599,6 +4291,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498055B03A1"
+			compartment 	(object Compartment
+			    Parent_View 	@28
+			    location   	(36, 436)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	481)
 			width      	586
 			height     	482
 			annotation 	8
@@ -3660,12 +4369,29 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449805700347"
+			compartment 	(object Compartment
+			    Parent_View 	@30
+			    location   	(2391, 1723)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	8
+			    max_width  	394)
 			width      	484
 			height     	532
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$30" @31
-			location   	(3006, 1679)
+			location   	(3021, 1672)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3681,7 +4407,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$31" @32
 				Parent_View 	@31
-				location   	(1102, 879)
+				location   	(1117, 872)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449957F4001B"
@@ -3690,7 +4416,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$32" @33
 				Parent_View 	@31
-				location   	(1102, 879)
+				location   	(1117, 872)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449957F40026"
@@ -3723,6 +4449,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449809C7036D"
+			compartment 	(object Compartment
+			    Parent_View 	@34
+			    location   	(1755, 116)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	469)
 			width      	572
 			height     	482
 			annotation 	8
@@ -3753,6 +4496,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449809C102B0"
+			compartment 	(object Compartment
+			    Parent_View 	@35
+			    location   	(1745, 662)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	5
+			    max_width  	459)
 			width      	560
 			height     	382
 			annotation 	8
@@ -3761,7 +4521,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(272, 1616)
+			location   	(288, 1616)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -3773,17 +4533,34 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@36
-			    location   	(12, 1487)
+			    location   	(4, 1487)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	520
+			    max_width  	568
 			    justify    	0
 			    label      	"EstadoBolsa")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980554026B"
-			width      	538
+			compartment 	(object Compartment
+			    Parent_View 	@36
+			    location   	(4, 1592)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	481)
+			width      	586
 			height     	282
 			annotation 	8
 			autoResize 	TRUE)
@@ -3813,6 +4590,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449809BA013D"
+			compartment 	(object Compartment
+			    Parent_View 	@37
+			    location   	(726, 287)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	4
+			    max_width  	422)
 			width      	518
 			height     	332
 			annotation 	8
@@ -3909,6 +4703,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498093903C3"
+			compartment 	(object Compartment
+			    Parent_View 	@44
+			    location   	(1549, 1860)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	547)
 			width      	664
 			height     	482
 			annotation 	8
@@ -3939,6 +4750,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449809DB0376"
+			compartment 	(object Compartment
+			    Parent_View 	@45
+			    location   	(1795, 1140)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	838)
 			width      	1004
 			height     	482
 			annotation 	8
@@ -3999,12 +4827,29 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498053903A2"
+			compartment 	(object Compartment
+			    Parent_View 	@47
+			    location   	(732, 953)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	10
+			    max_width  	413)
 			width      	506
 			height     	632
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$12" @48
-			location   	(603, 1396)
+			location   	(609, 1398)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4020,7 +4865,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$13" @49
 				Parent_View 	@48
-				location   	(-421, 1044)
+				location   	(-415, 1046)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449957C80130"
@@ -4029,7 +4874,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$14" @50
 				Parent_View 	@48
-				location   	(-421, 1044)
+				location   	(-415, 1046)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449957C8014E"
@@ -4255,6 +5100,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498058B0288"
+			compartment 	(object Compartment
+			    Parent_View 	@65
+			    location   	(693, 1835)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	8
+			    max_width  	425)
 			width      	520
 			height     	532
 			annotation 	8
@@ -4344,14 +5206,14 @@
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	0
+		origin_x   	2319
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::stoxtreme::servidor::eventos::evaluador::ParseException" @75
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2160, 240)
+			location   	(2560, 256)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4363,25 +5225,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@75
-			    location   	(1972, 162)
+			    location   	(2171, 27)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	376
+			    max_width  	778
 			    justify    	0
 			    label      	"ParseException")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498097B0331"
-			width      	394
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@75
+			    location   	(2171, 132)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	659)
+			width      	796
+			height     	482
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::servidor::eventos::evaluador::TokenMgrError" @76
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2320, 656)
+			location   	(2576, 944)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4393,7 +5272,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@76
-			    location   	(2142, 527)
+			    location   	(2398, 815)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	356
@@ -4403,6 +5282,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449809920027"
+			compartment 	(object Compartment
+			    Parent_View 	@76
+			    location   	(2398, 920)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	300)
 			width      	374
 			height     	282
 			annotation 	8
@@ -4411,7 +5307,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1696, 2032)
+			location   	(1728, 2128)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4423,7 +5319,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@77
-			    location   	(1445, 1778)
+			    location   	(1477, 1874)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	502
@@ -4433,6 +5329,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498058B0288"
+			compartment 	(object Compartment
+			    Parent_View 	@77
+			    location   	(1477, 1979)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	8
+			    max_width  	425)
 			width      	520
 			height     	532
 			annotation 	8
@@ -4441,7 +5354,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1104, 1872)
+			location   	(1120, 2016)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4453,7 +5366,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@78
-			    location   	(1103, 1980)
+			    location   	(1119, 2124)
 			    anchor_loc 	1
 			    nlines     	2
 			    max_width  	231
@@ -4469,14 +5382,14 @@
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$33" @79
-			location   	(1327, 1930)
+			location   	(1306, 2048)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449957F7019C"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$35" @80
 				Parent_View 	@79
-				location   	(-833, 794)
+				location   	(-854, 912)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -4488,7 +5401,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @81
 				    Parent_View 	@80
-				    location   	(1402, 1995)
+				    location   	(1428, 2114)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -4516,7 +5429,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$34" @82
 				Parent_View 	@79
-				location   	(-833, 794)
+				location   	(-854, 912)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -4528,7 +5441,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @83
 				    Parent_View 	@82
-				    location   	(1231, 1946)
+				    location   	(1171, 2065)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -4558,7 +5471,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(448, 1168)
+			location   	(464, 1280)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4570,7 +5483,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@84
-			    location   	(222, 1039)
+			    location   	(238, 1151)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	452
@@ -4580,6 +5493,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498091C0190"
+			compartment 	(object Compartment
+			    Parent_View 	@84
+			    location   	(238, 1256)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	381)
 			width      	470
 			height     	282
 			annotation 	8
@@ -4588,7 +5518,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(448, 1696)
+			location   	(480, 1872)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4600,7 +5530,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@85
-			    location   	(125, 1467)
+			    location   	(157, 1643)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	646
@@ -4610,6 +5540,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498093903C3"
+			compartment 	(object Compartment
+			    Parent_View 	@85
+			    location   	(157, 1748)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	547)
 			width      	664
 			height     	482
 			annotation 	8
@@ -4622,7 +5569,7 @@
 			supplier   	@78
 			line_style 	0)
 		    (object AssociationViewNew "$UNNAMED$51" @87
-			location   	(448, 1381)
+			location   	(470, 1525)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4638,7 +5585,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$52" @88
 				Parent_View 	@87
-				location   	(-912, -59)
+				location   	(-890, 85)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A2F00A8"
@@ -4647,7 +5594,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$53" @89
 				Parent_View 	@87
-				location   	(-912, -59)
+				location   	(-890, 85)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A2F00AA"
@@ -4658,7 +5605,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1616, 1312)
+			location   	(1616, 1408)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4670,7 +5617,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@90
-			    location   	(1196, 983)
+			    location   	(1196, 1079)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	840
@@ -4680,12 +5627,29 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980931024F"
+			compartment 	(object Compartment
+			    Parent_View 	@90
+			    location   	(1196, 1184)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	11
+			    max_width  	713)
 			width      	858
 			height     	682
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$48" @91
-			location   	(983, 1519)
+			location   	(999, 1658)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4701,7 +5665,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$49" @92
 				Parent_View 	@91
-				location   	(-377, 79)
+				location   	(-361, 218)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A1B01FE"
@@ -4710,7 +5674,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$50" @93
 				Parent_View 	@91
-				location   	(-377, 79)
+				location   	(-361, 218)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A1B0200"
@@ -4743,6 +5707,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498096A00B6"
+			compartment 	(object Compartment
+			    Parent_View 	@94
+			    location   	(1363, 209)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	428)
 			width      	524
 			height     	232
 			annotation 	8
@@ -4773,12 +5754,29 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980962032C"
+			compartment 	(object Compartment
+			    Parent_View 	@95
+			    location   	(1284, 582)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	5
+			    max_width  	563)
 			width      	682
 			height     	382
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$54" @96
-			location   	(1616, 908)
+			location   	(1616, 956)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4794,7 +5792,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$55" @97
 				Parent_View 	@96
-				location   	(16, -212)
+				location   	(16, -164)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A3A0339"
@@ -4803,7 +5801,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$56" @98
 				Parent_View 	@96
-				location   	(16, -212)
+				location   	(16, -164)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A3A033B"
@@ -4869,6 +5867,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498098C025A"
+			compartment 	(object Compartment
+			    Parent_View 	@102
+			    location   	(47, 146)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	9
+			    max_width  	435)
 			width      	532
 			height     	582
 			annotation 	8
@@ -4889,17 +5904,34 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@103
-			    location   	(654, 68)
+			    location   	(653, 68)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	484
+			    max_width  	486
 			    justify    	0
 			    label      	"SimpleCharStream")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498098400DC"
-			width      	502
+			compartment 	(object Compartment
+			    Parent_View 	@103
+			    location   	(653, 173)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	6
+			    max_width  	410)
+			width      	504
 			height     	432
 			annotation 	8
 			autoResize 	TRUE)
@@ -4907,7 +5939,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(528, 832)
+			location   	(608, 912)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4919,22 +5951,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@104
-			    location   	(249, 754)
+			    location   	(287, 783)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	558
+			    max_width  	642
 			    justify    	0
 			    label      	"EvaluadorTokenManager")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980972034D"
-			width      	576
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@104
+			    location   	(287, 888)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	544)
+			width      	660
+			height     	282
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$57" @105
-			location   	(1045, 748)
+			location   	(1106, 785)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4950,7 +5999,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$58" @106
 				Parent_View 	@105
-				location   	(-555, -36)
+				location   	(-494, 1)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A740184"
@@ -4959,7 +6008,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$59" @107
 				Parent_View 	@105
-				location   	(-555, -36)
+				location   	(-494, 1)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A740186"
@@ -4967,7 +6016,7 @@
 				supplier   	@95
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$63" @108
-			location   	(458, 676)
+			location   	(494, 690)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -4983,7 +6032,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$64" @109
 				Parent_View 	@108
-				location   	(-822, 100)
+				location   	(-786, 114)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A7C0045"
@@ -4992,7 +6041,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$65" @110
 				Parent_View 	@108
-				location   	(-822, 100)
+				location   	(-786, 114)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A7C0047"
@@ -5000,7 +6049,7 @@
 				supplier   	@104
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$66" @111
-			location   	(669, 614)
+			location   	(734, 629)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5016,7 +6065,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$67" @112
 				Parent_View 	@111
-				location   	(-611, 38)
+				location   	(-546, 53)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A8300C7"
@@ -5025,7 +6074,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$68" @113
 				Parent_View 	@111
-				location   	(-611, 38)
+				location   	(-546, 53)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44995A8300C9"
@@ -5081,23 +6130,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449971EF00A1"
-			compartment 	(object Compartment
-			    Parent_View 	@116
-			    location   	(978, 369)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	2
-			    max_width  	375)
 			width      	462
 			height     	232
 			annotation 	8
@@ -5128,23 +6160,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A9C020B"
-			compartment 	(object Compartment
-			    Parent_View 	@117
-			    location   	(1390, 1668)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	7
-			    max_width  	382)
 			width      	470
 			height     	482
 			annotation 	8
@@ -5206,23 +6221,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A960298"
-			compartment 	(object Compartment
-			    Parent_View 	@119
-			    location   	(1084, 2799)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	4
-			    max_width  	413)
 			width      	506
 			height     	332
 			annotation 	8
@@ -5253,23 +6251,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449971E300CB"
-			compartment 	(object Compartment
-			    Parent_View 	@120
-			    location   	(99, 153)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	10
-			    max_width  	482)
 			width      	588
 			height     	632
 			annotation 	8
@@ -5300,23 +6281,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449972010241"
-			compartment 	(object Compartment
-			    Parent_View 	@121
-			    location   	(863, 792)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	3
-			    max_width  	516)
 			width      	628
 			height     	282
 			annotation 	8
@@ -5347,23 +6311,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499721F029E"
-			compartment 	(object Compartment
-			    Parent_View 	@122
-			    location   	(1437, 1197)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	6
-			    max_width  	766)
 			width      	920
 			height     	432
 			annotation 	8
@@ -5394,23 +6341,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499721803A3"
-			compartment 	(object Compartment
-			    Parent_View 	@123
-			    location   	(192, 2840)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	3
-			    max_width  	331)
 			width      	498
 			height     	282
 			annotation 	8
@@ -5481,23 +6411,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449971E90200"
-			compartment 	(object Compartment
-			    Parent_View 	@128
-			    location   	(48, 1000)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	3
-			    max_width  	625)
 			width      	754
 			height     	282
 			annotation 	8
@@ -5568,23 +6481,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499724D0327"
-			compartment 	(object Compartment
-			    Parent_View 	@133
-			    location   	(1503, 439)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	12
-			    max_width  	572)
 			width      	692
 			height     	732
 			annotation 	8
@@ -5615,23 +6511,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499720F029B"
-			compartment 	(object Compartment
-			    Parent_View 	@134
-			    location   	(1898, 2082)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	9
-			    max_width  	853)
 			width      	1022
 			height     	582
 			annotation 	8
@@ -5662,23 +6541,6 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499720A0280"
-			compartment 	(object Compartment
-			    Parent_View 	@135
-			    location   	(110, 1553)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	16777215
-			    anchor     	2
-			    nlines     	18
-			    max_width  	600)
 			width      	726
 			height     	1032
 			annotation 	8
@@ -5894,14 +6756,14 @@
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	0
+		origin_x   	3481
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::TimerListener" @155
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(432, 816)
+			location   	(208, 1408)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5913,7 +6775,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@155
-			    location   	(431, 924)
+			    location   	(207, 1516)
 			    anchor_loc 	1
 			    nlines     	2
 			    max_width  	412
@@ -5932,7 +6794,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2448, 912)
+			location   	(3888, 416)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5944,25 +6806,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@156
-			    location   	(2170, 834)
+			    location   	(3399, 312)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	556
+			    max_width  	978
 			    justify    	0
 			    label      	"ParametrosPsicologicos")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499733A009D"
-			width      	574
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@156
+			    location   	(3399, 417)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	832)
+			width      	996
+			height     	232
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::ParametrosSocial" @157
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2384, 1168)
+			location   	(3872, 896)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -5974,25 +6853,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@157
-			    location   	(2171, 1090)
+			    location   	(3383, 792)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	426
+			    max_width  	978
 			    justify    	0
 			    label      	"ParametrosSocial")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499734300DC"
-			width      	444
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@157
+			    location   	(3383, 897)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	832)
+			width      	996
+			height     	232
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::ParametrosAgentes" @158
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2416, 1408)
+			location   	(3664, 1664)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6004,25 +6900,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@158
-			    location   	(2170, 1330)
+			    location   	(3167, 1560)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	492
+			    max_width  	994
 			    justify    	0
 			    label      	"ParametrosAgentes")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449972CD0050"
-			width      	510
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@158
+			    location   	(3167, 1665)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	844)
+			width      	1012
+			height     	232
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::ConstructorAgentes" @159
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1792, 1152)
+			location   	(2544, 912)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6034,22 +6947,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@159
-			    location   	(1561, 1074)
+			    location   	(1930, 558)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	462
+			    max_width  	1228
 			    justify    	0
 			    label      	"ConstructorAgentes")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499731C002B"
-			width      	480
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@159
+			    location   	(1930, 663)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	12
+			    max_width  	1044)
+			width      	1246
+			height     	732
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$108" @160
-			location   	(2117, 1032)
+			location   	(3370, 606)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6065,7 +6995,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$109" @161
 				Parent_View 	@160
-				location   	(933, 424)
+				location   	(2186, -2)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449977BD00B1"
@@ -6074,7 +7004,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$110" @162
 				Parent_View 	@160
-				location   	(933, 424)
+				location   	(2186, -2)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449977BD00B3"
@@ -6082,7 +7012,7 @@
 				supplier   	@159
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$111" @163
-			location   	(2096, 1159)
+			location   	(3270, 903)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6098,7 +7028,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$112" @164
 				Parent_View 	@163
-				location   	(912, 551)
+				location   	(2086, 295)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449977BE02E4"
@@ -6107,7 +7037,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$113" @165
 				Parent_View 	@163
-				location   	(912, 551)
+				location   	(2086, 295)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449977BE02EE"
@@ -6115,7 +7045,7 @@
 				supplier   	@159
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$114" @166
-			location   	(2103, 1279)
+			location   	(3290, 1412)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6131,7 +7061,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$115" @167
 				Parent_View 	@166
-				location   	(919, 671)
+				location   	(2106, 804)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449977C0014C"
@@ -6140,7 +7070,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$116" @168
 				Parent_View 	@166
-				location   	(919, 671)
+				location   	(2106, 804)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449977C0014E"
@@ -6151,7 +7081,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(320, 1648)
+			location   	(912, 2064)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6163,7 +7093,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@169
-			    location   	(319, 1756)
+			    location   	(911, 2172)
 			    anchor_loc 	1
 			    nlines     	2
 			    max_width  	409
@@ -6182,7 +7112,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(432, 608)
+			location   	(432, 976)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6194,18 +7124,35 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@170
-			    location   	(106, 530)
+			    location   	(47, 697)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	652
+			    max_width  	770
 			    justify    	0
 			    label      	"MonitorAgentes")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499725D0366"
-			width      	670
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@170
+			    location   	(47, 802)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	9
+			    max_width  	653)
+			width      	788
+			height     	582
 			annotation 	8
 			autoResize 	TRUE)
 		    (object InheritView "" @171
@@ -6219,7 +7166,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1152, 1648)
+			location   	(1776, 2352)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6231,22 +7178,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@172
-			    location   	(873, 1570)
+			    location   	(1175, 2198)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	558
+			    max_width  	1202
 			    justify    	0
 			    label      	"Notificador")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44997265032B"
-			width      	576
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@172
+			    location   	(1175, 2303)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	4
+			    max_width  	1022)
+			width      	1220
+			height     	332
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$117" @173
-			location   	(604, 1648)
+			location   	(1180, 2152)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6262,7 +7226,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$118" @174
 				Parent_View 	@173
-				location   	(-36, 816)
+				location   	(540, 1320)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499780000C2"
@@ -6271,7 +7235,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$119" @175
 				Parent_View 	@173
-				location   	(-36, 816)
+				location   	(540, 1320)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499780000C4"
@@ -6282,7 +7246,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1728, 576)
+			location   	(1984, 96)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6294,7 +7258,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@176
-			    location   	(1727, 684)
+			    location   	(1983, 204)
 			    anchor_loc 	1
 			    nlines     	2
 			    max_width  	386
@@ -6313,7 +7277,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1152, 224)
+			location   	(3008, 192)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6325,10 +7289,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@177
-			    location   	(1015, 146)
+			    location   	(2793, 63)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	274
+			    max_width  	430
 			    justify    	0
 			    label      	"IDAgente")
 			icon_style 	"Icon"
@@ -6337,7 +7301,7 @@
 			quidu      	"449973290305"
 			compartment 	(object Compartment
 			    Parent_View 	@177
-			    location   	(1015, 316)
+			    location   	(2793, 168)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -6351,16 +7315,16 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	3
-			    max_width  	0)
-			width      	292
-			height     	180
+			    max_width  	363)
+			width      	448
+			height     	282
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision" @178
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(432, 224)
+			location   	(368, 240)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6372,22 +7336,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@178
-			    location   	(267, 146)
+			    location   	(56, 11)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	330
+			    max_width  	624
 			    justify    	0
 			    label      	"Decision")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499737A0117"
-			width      	348
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@178
+			    location   	(56, 116)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	528)
+			width      	642
+			height     	482
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$132" @179
-			location   	(432, 415)
+			location   	(397, 582)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6403,7 +7384,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$133" @180
 				Parent_View 	@179
-				location   	(-176, -1)
+				location   	(-211, 166)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978A202CD"
@@ -6412,7 +7393,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$134" @181
 				Parent_View 	@179
-				location   	(-176, -1)
+				location   	(-211, 166)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978A202D7"
@@ -6423,7 +7404,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1152, 1152)
+			location   	(2480, 1744)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6435,10 +7416,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@182
-			    location   	(906, 1074)
+			    location   	(2143, 1390)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	492
+			    max_width  	674
 			    justify    	0
 			    label      	"HerramientaAgentes")
 			icon_style 	"Icon"
@@ -6447,7 +7428,7 @@
 			quidu      	"4499724D0327"
 			compartment 	(object Compartment
 			    Parent_View 	@182
-			    location   	(906, 1244)
+			    location   	(2143, 1495)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -6461,13 +7442,13 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	12
-			    max_width  	0)
-			width      	510
-			height     	180
+			    max_width  	572)
+			width      	692
+			height     	732
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$120" @183
-			location   	(791, 879)
+			location   	(1479, 1368)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6483,7 +7464,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$121" @184
 				Parent_View 	@183
-				location   	(-489, -321)
+				location   	(199, 168)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978120136"
@@ -6492,7 +7473,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$122" @185
 				Parent_View 	@183
-				location   	(-489, -321)
+				location   	(199, 168)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978120138"
@@ -6507,7 +7488,7 @@
 			supplier   	@159
 			line_style 	0)
 		    (object AssociationViewNew "$UNNAMED$141" @187
-			location   	(1152, 1399)
+			location   	(2050, 2113)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6523,7 +7504,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$142" @188
 				Parent_View 	@187
-				location   	(-160, 199)
+				location   	(738, 913)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978D70342"
@@ -6532,7 +7513,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$143" @189
 				Parent_View 	@187
-				location   	(-160, 199)
+				location   	(738, 913)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978D70344"
@@ -6543,7 +7524,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(320, 1216)
+			location   	(1024, 1632)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6555,10 +7536,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@190
-			    location   	(183, 1138)
+			    location   	(467, 1428)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	274
+			    max_width  	1114
 			    justify    	0
 			    label      	"Perceptor")
 			icon_style 	"Icon"
@@ -6567,7 +7548,7 @@
 			quidu      	"4499734A008C"
 			compartment 	(object Compartment
 			    Parent_View 	@190
-			    location   	(183, 1308)
+			    location   	(467, 1533)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -6581,9 +7562,9 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	6
-			    max_width  	0)
-			width      	292
-			height     	180
+			    max_width  	948)
+			width      	1132
+			height     	432
 			annotation 	8
 			autoResize 	TRUE)
 		    (object InheritView "" @191
@@ -6597,7 +7578,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1152, 576)
+			location   	(1296, 528)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6609,10 +7590,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@192
-			    location   	(1015, 498)
+			    location   	(898, 49)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	274
+			    max_width  	796
 			    justify    	0
 			    label      	"Agente")
 			icon_style 	"Icon"
@@ -6621,7 +7602,7 @@
 			quidu      	"449972FA038A"
 			compartment 	(object Compartment
 			    Parent_View 	@192
-			    location   	(1015, 668)
+			    location   	(898, 154)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -6635,13 +7616,13 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	17
-			    max_width  	0)
-			width      	292
-			height     	180
+			    max_width  	676)
+			width      	814
+			height     	982
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$96" @193
-			location   	(1498, 576)
+			location   	(1766, 231)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6657,7 +7638,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$97" @194
 				Parent_View 	@193
-				location   	(170, 320)
+				location   	(438, -25)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499778A011C"
@@ -6666,7 +7647,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$98" @195
 				Parent_View 	@193
-				location   	(170, 320)
+				location   	(438, -25)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499778A0126"
@@ -6681,7 +7662,7 @@
 			supplier   	@192
 			line_style 	0)
 		    (object AssociationViewNew "$UNNAMED$129" @197
-			location   	(1152, 399)
+			location   	(2243, 341)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6697,7 +7678,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$130" @198
 				Parent_View 	@197
-				location   	(-176, -49)
+				location   	(915, -107)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499789C01CA"
@@ -6706,7 +7687,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$131" @199
 				Parent_View 	@197
-				location   	(-176, -49)
+				location   	(915, -107)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4499789C01CC"
@@ -6714,7 +7695,7 @@
 				supplier   	@192
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$135" @200
-			location   	(805, 406)
+			location   	(788, 370)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6730,7 +7711,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$136" @201
 				Parent_View 	@200
-				location   	(213, 262)
+				location   	(196, 226)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978B20244"
@@ -6739,7 +7720,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$137" @202
 				Parent_View 	@200
-				location   	(213, 262)
+				location   	(196, 226)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978B2024E"
@@ -6747,7 +7728,7 @@
 				supplier   	@178
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$138" @203
-			location   	(1152, 863)
+			location   	(1918, 1167)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6763,7 +7744,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$139" @204
 				Parent_View 	@203
-				location   	(-112, -705)
+				location   	(654, -401)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978CB0037"
@@ -6772,7 +7753,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$140" @205
 				Parent_View 	@203
-				location   	(-112, -705)
+				location   	(654, -401)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978CB0041"
@@ -6780,7 +7761,7 @@
 				supplier   	@182
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$144" @206
-			location   	(736, 895)
+			location   	(1125, 1217)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6796,7 +7777,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$145" @207
 				Parent_View 	@206
-				location   	(-592, 399)
+				location   	(-203, 721)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978DF018B"
@@ -6805,7 +7786,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$146" @208
 				Parent_View 	@206
-				location   	(-592, 399)
+				location   	(-203, 721)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449978DF018D"
@@ -6818,14 +7799,14 @@
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	556
-		origin_y   	3818
+		origin_x   	0
+		origin_y   	0
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::AltaServicio" @209
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3792, 1872)
+			location   	(4992, 2304)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6837,25 +7818,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@209
-			    location   	(3627, 1794)
+			    location   	(4797, 2175)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	330
+			    max_width  	390
 			    justify    	0
 			    label      	"AltaServicio")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499737F01D2"
-			width      	348
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@209
+			    location   	(4797, 2280)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	328)
+			width      	408
+			height     	282
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::BajaServicio" @210
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3776, 2112)
+			location   	(4928, 2656)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6867,25 +7865,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@210
-			    location   	(3611, 2034)
+			    location   	(4733, 2527)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	330
+			    max_width  	390
 			    justify    	0
 			    label      	"BajaServicio")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44997385000E"
-			width      	348
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@210
+			    location   	(4733, 2632)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	328)
+			width      	408
+			height     	282
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::CancelarOperacion" @211
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3856, 1232)
+			location   	(4864, 1184)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6897,7 +7912,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@211
-			    location   	(3630, 1154)
+			    location   	(4638, 1055)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	452
@@ -6907,15 +7922,32 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499738C0271"
+			compartment 	(object Compartment
+			    Parent_View 	@211
+			    location   	(4638, 1160)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	216)
 			width      	470
-			height     	180
+			height     	282
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Espera" @212
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3328, 2256)
+			location   	(4416, 2640)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6927,25 +7959,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@212
-			    location   	(3166, 2178)
+			    location   	(4268, 2536)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	324
+			    max_width  	296
 			    justify    	0
 			    label      	"Espera")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44997394002E"
-			width      	342
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@212
+			    location   	(4268, 2641)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	206)
+			width      	314
+			height     	232
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::IntroducirOperacion" @213
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3872, 1456)
+			location   	(4896, 1568)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6957,7 +8006,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@213
-			    location   	(3642, 1378)
+			    location   	(4666, 1439)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	460
@@ -6967,15 +8016,32 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499739A0253"
+			compartment 	(object Compartment
+			    Parent_View 	@213
+			    location   	(4666, 1544)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	294)
 			width      	478
-			height     	180
+			height     	282
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::MandarMensaje" @214
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2592, 2256)
+			location   	(3280, 2576)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -6987,25 +8053,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@214
-			    location   	(2406, 2178)
+			    location   	(3001, 2422)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	372
+			    max_width  	558
 			    justify    	0
 			    label      	"MandarMensaje")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449973A10344"
-			width      	390
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@214
+			    location   	(3001, 2527)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	4
+			    max_width  	472)
+			width      	576
+			height     	332
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::RecibirMensaje" @215
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2976, 2256)
+			location   	(3888, 2576)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7017,25 +8100,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@215
-			    location   	(2797, 2178)
+			    location   	(3625, 2397)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	358
+			    max_width  	526
 			    justify    	0
 			    label      	"RecibirMensaje")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449973A7034C"
-			width      	376
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@215
+			    location   	(3625, 2502)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	5
+			    max_width  	444)
+			width      	544
+			height     	382
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::RequestServicio" @216
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3824, 1664)
+			location   	(5072, 1936)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7047,18 +8147,35 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@216
-			    location   	(3637, 1586)
+			    location   	(4671, 1757)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	374
+			    max_width  	802
 			    justify    	0
 			    label      	"RequestServicio")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449973AE01BC"
-			width      	392
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@216
+			    location   	(4671, 1862)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	5
+			    max_width  	681)
+			width      	820
+			height     	382
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::interaccion_agentes::MensajeACL" @217
@@ -7103,7 +8220,7 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	14
-			    max_width  	638)
+			    max_width  	646)
 			width      	768
 			height     	832
 			annotation 	8
@@ -7112,7 +8229,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3040, 1504)
+			location   	(3792, 1760)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7124,18 +8241,35 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@218
-			    location   	(2875, 1426)
+			    location   	(3480, 1531)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	330
+			    max_width  	624
 			    justify    	0
 			    label      	"Decision")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499737A0117"
-			width      	348
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@218
+			    location   	(3480, 1636)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	528)
+			width      	642
+			height     	482
 			annotation 	8
 			autoResize 	TRUE)
 		    (object InheritView "" @219
@@ -7198,7 +8332,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3184, 1024)
+			location   	(4240, 528)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7210,18 +8344,35 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@227
-			    location   	(2919, 946)
+			    location   	(3563, 49)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	530
+			    max_width  	1354
 			    justify    	0
 			    label      	"ComportamientoAgente")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499735603AA"
-			width      	548
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@227
+			    location   	(3563, 154)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	17
+			    max_width  	1153)
+			width      	1372
+			height     	982
 			annotation 	8
 			autoResize 	TRUE)
 		    (object UsesView "" @228
@@ -7273,7 +8424,7 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	10
-			    max_width  	781)
+			    max_width  	790)
 			width      	938
 			height     	632
 			annotation 	8
@@ -7282,7 +8433,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(3280, 336)
+			location   	(3136, 352)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7294,7 +8445,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@230
-			    location   	(2915, 7)
+			    location   	(2771, 23)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	730
@@ -7306,7 +8457,7 @@
 			quidu      	"449973600372"
 			compartment 	(object Compartment
 			    Parent_View 	@230
-			    location   	(2915, 112)
+			    location   	(2771, 128)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -7320,7 +8471,7 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	11
-			    max_width  	619)
+			    max_width  	628)
 			width      	748
 			height     	682
 			annotation 	8
@@ -7367,7 +8518,7 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	11
-			    max_width  	1181)
+			    max_width  	1190)
 			width      	1406
 			height     	682
 			annotation 	8
@@ -7447,7 +8598,7 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	3
-			    max_width  	363)
+			    max_width  	371)
 			width      	448
 			height     	282
 			annotation 	8
@@ -7527,20 +8678,20 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	17
-			    max_width  	675)
+			    max_width  	684)
 			width      	814
 			height     	982
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$135" @240
-			location   	(2724, 1462)
+			location   	(3026, 1585)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449978B2008C"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$137" @241
 				Parent_View 	@240
-				location   	(1572, 902)
+				location   	(1874, 1025)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -7552,7 +8703,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @242
 				    Parent_View 	@241
-				    location   	(2832, 1519)
+				    location   	(3373, 1707)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -7580,7 +8731,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$136" @243
 				Parent_View 	@240
-				location   	(1572, 902)
+				location   	(1874, 1025)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -7592,7 +8743,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @244
 				    Parent_View 	@243
-				    location   	(2607, 1490)
+				    location   	(2664, 1545)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -7619,7 +8770,7 @@
 				supplier   	@239
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$147" @245
-			location   	(2759, 1178)
+			location   	(4096, 1360)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7635,7 +8786,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$148" @246
 				Parent_View 	@245
-				location   	(1607, 618)
+				location   	(2944, 800)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979A700C0"
@@ -7644,7 +8795,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$149" @247
 				Parent_View 	@245
-				location   	(1607, 618)
+				location   	(2944, 800)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979A700C2"
@@ -7685,7 +8836,7 @@
 				supplier   	@239
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$153" @251
-			location   	(2752, 839)
+			location   	(2702, 821)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7701,7 +8852,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$154" @252
 				Parent_View 	@251
-				location   	(1600, 279)
+				location   	(1550, 261)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979B9010C"
@@ -7710,7 +8861,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$155" @253
 				Parent_View 	@251
-				location   	(1600, 279)
+				location   	(1550, 261)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979B9010E"
@@ -7878,7 +9029,7 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	11
-			    max_width  	1106)
+			    max_width  	1115)
 			width      	1318
 			height     	682
 			annotation 	8
@@ -7920,7 +9071,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2256, 2656)
+			location   	(2480, 2592)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7932,22 +9083,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@266
-			    location   	(2084, 2578)
+			    location   	(2069, 2388)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	344
+			    max_width  	822
 			    justify    	0
 			    label      	"EstadoCartera")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499732400E1"
-			width      	362
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@266
+			    location   	(2069, 2493)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	6
+			    max_width  	697)
+			width      	840
+			height     	432
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$159" @267
-			location   	(2227, 2224)
+			location   	(2362, 2129)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7963,7 +9131,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$160" @268
 				Parent_View 	@267
-				location   	(1075, 1664)
+				location   	(1210, 1569)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979C000B2"
@@ -7972,7 +9140,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$161" @269
 				Parent_View 	@267
-				location   	(1075, 1664)
+				location   	(1210, 1569)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"449979C000B4"
@@ -7983,7 +9151,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1392, 2896)
+			location   	(1216, 2816)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -7995,7 +9163,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@270
-			    location   	(835, 2692)
+			    location   	(659, 2612)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	1114
@@ -8007,7 +9175,7 @@
 			quidu      	"4499734A008C"
 			compartment 	(object Compartment
 			    Parent_View 	@270
-			    location   	(835, 2797)
+			    location   	(659, 2717)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -8021,20 +9189,20 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	6
-			    max_width  	947)
+			    max_width  	956)
 			width      	1132
 			height     	432
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$144" @271
-			location   	(1711, 2281)
+			location   	(1602, 2241)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449978DE0266"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$146" @272
 				Parent_View 	@271
-				location   	(-273, 1049)
+				location   	(-382, 1009)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8046,7 +9214,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @273
 				    Parent_View 	@272
-				    location   	(1841, 1945)
+				    location   	(1761, 1932)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8074,7 +9242,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$145" @274
 				Parent_View 	@271
-				location   	(-273, 1049)
+				location   	(-382, 1009)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8086,7 +9254,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @275
 				    Parent_View 	@274
-				    location   	(1509, 2581)
+				    location   	(1375, 2505)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8113,7 +9281,7 @@
 				supplier   	@270
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$171" @276
-			location   	(1086, 2590)
+			location   	(989, 2550)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8129,7 +9297,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$172" @277
 				Parent_View 	@276
-				location   	(-450, 942)
+				location   	(-547, 902)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997A19018C"
@@ -8138,7 +9306,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$173" @278
 				Parent_View 	@276
-				location   	(-450, 942)
+				location   	(-547, 902)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997A19018E"
@@ -8146,7 +9314,7 @@
 				supplier   	@270
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$174" @279
-			location   	(2016, 2721)
+			location   	(1920, 2690)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8162,7 +9330,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$175" @280
 				Parent_View 	@279
-				location   	(480, 1073)
+				location   	(384, 1042)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997A1B033E"
@@ -8171,7 +9339,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$176" @281
 				Parent_View 	@279
-				location   	(480, 1073)
+				location   	(384, 1042)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997A1B0340"
@@ -8185,13 +9353,13 @@
 		max_height 	28350
 		max_width  	21600
 		origin_x   	0
-		origin_y   	0
+		origin_y   	25
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::decisiones::Decision" @282
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1968, 256)
+			location   	(2832, 768)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8203,25 +9371,42 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@282
-			    location   	(1803, 178)
+			    location   	(2520, 539)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	330
+			    max_width  	624
 			    justify    	0
 			    label      	"Decision")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4499737A0117"
-			width      	348
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@282
+			    location   	(2520, 644)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	528)
+			width      	642
+			height     	482
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::Agente" @283
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1344, 256)
+			location   	(1872, 496)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8233,10 +9418,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@283
-			    location   	(1207, 178)
+			    location   	(1474, 17)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	274
+			    max_width  	796
 			    justify    	0
 			    label      	"Agente")
 			icon_style 	"Icon"
@@ -8245,7 +9430,7 @@
 			quidu      	"449972FA038A"
 			compartment 	(object Compartment
 			    Parent_View 	@283
-			    location   	(1207, 348)
+			    location   	(1474, 122)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -8259,20 +9444,20 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	17
-			    max_width  	0)
-			width      	292
-			height     	180
+			    max_width  	675)
+			width      	814
+			height     	982
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$135" @284
-			location   	(1641, 256)
+			location   	(2394, 643)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449978B2008C"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$137" @285
 				Parent_View 	@284
-				location   	(105, 0)
+				location   	(858, 387)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8284,7 +9469,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @286
 				    Parent_View 	@285
-				    location   	(1762, 215)
+				    location   	(2498, 631)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8312,7 +9497,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$136" @287
 				Parent_View 	@284
-				location   	(105, 0)
+				location   	(858, 387)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8324,7 +9509,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @288
 				    Parent_View 	@287
-				    location   	(1521, 215)
+				    location   	(2314, 578)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8354,7 +9539,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1344, 688)
+			location   	(736, 1472)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8366,10 +9551,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@289
-			    location   	(1107, 610)
+			    location   	(42, 1143)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	474
+			    max_width  	1388
 			    justify    	0
 			    label      	"BuzonMensajes")
 			icon_style 	"Icon"
@@ -8378,7 +9563,7 @@
 			quidu      	"449973C40218"
 			compartment 	(object Compartment
 			    Parent_View 	@289
-			    location   	(1107, 780)
+			    location   	(42, 1248)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -8392,20 +9577,20 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	11
-			    max_width  	0)
-			width      	492
-			height     	180
+			    max_width  	1182)
+			width      	1406
+			height     	682
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$162" @290
-			location   	(1344, 471)
+			location   	(1298, 987)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449979C50023"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$164" @291
 				Parent_View 	@290
-				location   	(144, -105)
+				location   	(98, 411)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8417,7 +9602,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @292
 				    Parent_View 	@291
-				    location   	(1303, 371)
+				    location   	(1404, 843)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8445,7 +9630,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$163" @293
 				Parent_View 	@290
-				location   	(144, -105)
+				location   	(98, 411)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8457,7 +9642,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @294
 				    Parent_View 	@293
-				    location   	(1303, 571)
+				    location   	(1140, 1070)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8487,7 +9672,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(304, 1360)
+			location   	(1328, 2384)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8499,7 +9684,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@295
-			    location   	(67, 1282)
+			    location   	(1091, 2306)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	474
@@ -8517,7 +9702,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(816, 1360)
+			location   	(1984, 2352)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8529,7 +9714,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@296
-			    location   	(532, 1282)
+			    location   	(1700, 2274)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	568
@@ -8547,7 +9732,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1328, 1360)
+			location   	(2640, 2352)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8559,49 +9744,19 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@297
-			    location   	(1093, 1282)
+			    location   	(2408, 2223)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	470
+			    max_width  	464
 			    justify    	0
 			    label      	"IDConversacion")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449973CB020E"
-			width      	488
-			height     	180
-			annotation 	8
-			autoResize 	TRUE)
-		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::IDAgente" @298
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(688, 256)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@298
-			    location   	(551, 178)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	274
-			    justify    	0
-			    label      	"IDAgente")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"449973290305"
 			compartment 	(object Compartment
-			    Parent_View 	@298
-			    location   	(551, 348)
+			    Parent_View 	@297
+			    location   	(2408, 2328)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -8615,20 +9770,67 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	3
-			    max_width  	0)
-			width      	292
-			height     	180
+			    max_width  	231)
+			width      	482
+			height     	282
+			annotation 	8
+			autoResize 	TRUE)
+		    (object ClassView "Class" "Logical View::stoxtreme::herramienta_agentes::agentes::IDAgente" @298
+			ShowCompartmentStereotypes 	TRUE
+			IncludeAttribute 	TRUE
+			IncludeOperation 	TRUE
+			location   	(432, 528)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@298
+			    location   	(217, 399)
+			    fill_color 	13434879
+			    nlines     	1
+			    max_width  	430
+			    justify    	0
+			    label      	"IDAgente")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"449973290305"
+			compartment 	(object Compartment
+			    Parent_View 	@298
+			    location   	(217, 504)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	363)
+			width      	448
+			height     	282
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$129" @299
-			location   	(1015, 256)
+			location   	(1060, 514)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"4499789B03C8"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$131" @300
 				Parent_View 	@299
-				location   	(375, -64)
+				location   	(420, 194)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8640,7 +9842,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @301
 				    Parent_View 	@300
-				    location   	(1161, 215)
+				    location   	(1382, 466)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8668,7 +9870,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$130" @302
 				Parent_View 	@299
-				location   	(375, -64)
+				location   	(420, 194)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8680,7 +9882,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @303
 				    Parent_View 	@302
-				    location   	(871, 215)
+				    location   	(738, 480)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8707,14 +9909,14 @@
 				supplier   	@298
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$168" @304
-			location   	(1016, 471)
+			location   	(550, 899)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"44997A03005E"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$170" @305
 				Parent_View 	@304
-				location   	(376, 151)
+				location   	(-90, 579)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8726,7 +9928,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @306
 				    Parent_View 	@305
-				    location   	(1145, 606)
+				    location   	(571, 1097)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8754,7 +9956,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$169" @307
 				Parent_View 	@304
-				location   	(376, 151)
+				location   	(-90, 579)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8766,7 +9968,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @308
 				    Parent_View 	@307
-				    location   	(888, 338)
+				    location   	(531, 702)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8796,7 +9998,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1968, 656)
+			location   	(3360, 1312)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8808,18 +10010,35 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@309
-			    location   	(1731, 578)
+			    location   	(2990, 1208)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	474
+			    max_width  	740
 			    justify    	0
 			    label      	"RecepcionMensaje")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449973F30279"
-			width      	492
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@309
+			    location   	(2990, 1313)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	2
+			    max_width  	628)
+			width      	758
+			height     	232
 			annotation 	8
 			autoResize 	TRUE)
 		    (object InheritView "" @310
@@ -8833,7 +10052,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(688, 944)
+			location   	(2112, 1472)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8845,10 +10064,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@311
-			    location   	(404, 866)
+			    location   	(1737, 1068)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	568
+			    max_width  	750
 			    justify    	0
 			    label      	"MensajeACL")
 			icon_style 	"Icon"
@@ -8857,7 +10076,7 @@
 			quidu      	"449973D3004C"
 			compartment 	(object Compartment
 			    Parent_View 	@311
-			    location   	(404, 1036)
+			    location   	(1737, 1173)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -8871,20 +10090,20 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	14
-			    max_width  	0)
-			width      	586
-			height     	180
+			    max_width  	638)
+			width      	768
+			height     	832
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$165" @312
-			location   	(1016, 815)
+			location   	(1583, 1472)
 			stereotype 	TRUE
 			line_color 	3342489
 			quidu      	"449979F7035A"
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$167" @313
 				Parent_View 	@312
-				location   	(232, 95)
+				location   	(799, 752)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8896,7 +10115,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @314
 				    Parent_View 	@313
-				    location   	(1080, 747)
+				    location   	(1469, 1514)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8924,7 +10143,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$166" @315
 				Parent_View 	@312
-				location   	(232, 95)
+				location   	(799, 752)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -8936,7 +10155,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @316
 				    Parent_View 	@315
-				    location   	(925, 807)
+				    location   	(1697, 1514)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -8963,7 +10182,7 @@
 				supplier   	@311
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$180" @317
-			location   	(495, 1151)
+			location   	(1578, 2090)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -8979,7 +10198,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$181" @318
 				Parent_View 	@317
-				location   	(-193, 255)
+				location   	(890, 1194)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B4E00FA"
@@ -8988,7 +10207,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$182" @319
 				Parent_View 	@317
-				location   	(-193, 255)
+				location   	(890, 1194)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B4E00FC"
@@ -8996,7 +10215,7 @@
 				supplier   	@311
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$183" @320
-			location   	(751, 1151)
+			location   	(2024, 2074)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9012,7 +10231,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$184" @321
 				Parent_View 	@320
-				location   	(63, 255)
+				location   	(1336, 1178)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B4F037D"
@@ -9021,7 +10240,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$185" @322
 				Parent_View 	@320
-				location   	(63, 255)
+				location   	(1336, 1178)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B4F0387"
@@ -9029,7 +10248,7 @@
 				supplier   	@311
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$186" @323
-			location   	(1007, 1151)
+			location   	(2458, 2049)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9045,7 +10264,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$187" @324
 				Parent_View 	@323
-				location   	(319, 255)
+				location   	(1770, 1153)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B52004C"
@@ -9054,7 +10273,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$188" @325
 				Parent_View 	@323
-				location   	(319, 255)
+				location   	(1770, 1153)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B520056"
@@ -9062,7 +10281,7 @@
 				supplier   	@311
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$189" @326
-			location   	(688, 599)
+			location   	(1191, 954)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9078,7 +10297,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$190" @327
 				Parent_View 	@326
-				location   	(0, -297)
+				location   	(503, 58)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B730035"
@@ -9087,7 +10306,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$191" @328
 				Parent_View 	@326
-				location   	(0, -297)
+				location   	(503, 58)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B73003F"
@@ -9098,7 +10317,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1968, 944)
+			location   	(3312, 1888)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9110,22 +10329,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@329
-			    location   	(1731, 866)
+			    location   	(2903, 1734)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	474
+			    max_width  	818
 			    justify    	0
 			    label      	"PlantillaMensajes")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449973ED00C2"
-			width      	492
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@329
+			    location   	(2903, 1839)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	4
+			    max_width  	694)
+			width      	836
+			height     	332
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$177" @330
-			location   	(1968, 799)
+			location   	(3337, 1574)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9141,7 +10377,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$178" @331
 				Parent_View 	@330
-				location   	(-16, -81)
+				location   	(1353, 694)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B4403BD"
@@ -9150,7 +10386,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$179" @332
 				Parent_View 	@330
-				location   	(-16, -81)
+				location   	(1353, 694)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997B4403BF"
@@ -9158,7 +10394,7 @@
 				supplier   	@309
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$195" @333
-			location   	(1351, 944)
+			location   	(2694, 1673)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9174,7 +10410,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$196" @334
 				Parent_View 	@333
-				location   	(-617, 0)
+				location   	(726, 729)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997C0E024B"
@@ -9183,7 +10419,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$197" @335
 				Parent_View 	@333
-				location   	(-617, 0)
+				location   	(726, 729)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997C0E024D"
@@ -9196,8 +10432,8 @@
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	44
-		origin_y   	0
+		origin_x   	1656
+		origin_y   	1131
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::stoxtreme::interfaz_remota::Operacion" @336
 			ShowCompartmentStereotypes 	TRUE
@@ -9225,6 +10461,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A9C020B"
+			compartment 	(object Compartment
+			    Parent_View 	@336
+			    location   	(222, 1316)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	381)
 			width      	470
 			height     	482
 			annotation 	8
@@ -9264,7 +10517,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(448, 416)
+			location   	(448, 512)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9276,10 +10529,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@338
-			    location   	(173, 112)
+			    location   	(94, 8)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	550
+			    max_width  	708
 			    justify    	0
 			    label      	"Cliente")
 			icon_style 	"Icon"
@@ -9288,7 +10541,7 @@
 			quidu      	"4499720A0280"
 			compartment 	(object Compartment
 			    Parent_View 	@338
-			    location   	(173, 508)
+			    location   	(94, 113)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -9302,9 +10555,9 @@
 			    fill_color 	16777215
 			    anchor     	2
 			    nlines     	18
-			    max_width  	0)
-			width      	568
-			height     	632
+			    max_width  	600)
+			width      	726
+			height     	1032
 			annotation 	8
 			autoResize 	TRUE)
 		    (object UsesView "" @339
@@ -9315,7 +10568,7 @@
 			supplier   	@336
 			line_style 	0)
 		    (object AssociationViewNew "$UNNAMED$201" @340
-			location   	(1016, 351)
+			location   	(1055, 377)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9331,7 +10584,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$202" @341
 				Parent_View 	@340
-				location   	(328, -257)
+				location   	(367, -231)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997E9600D0"
@@ -9340,7 +10593,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$203" @342
 				Parent_View 	@340
-				location   	(328, -257)
+				location   	(367, -231)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997E9600DA"
@@ -9373,6 +10626,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4498053903A2"
+			compartment 	(object Compartment
+			    Parent_View 	@343
+			    location   	(2028, 201)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	10
+			    max_width  	412)
 			width      	506
 			height     	632
 			annotation 	8
@@ -9400,22 +10670,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@345
-			    location   	(955, 676)
+			    location   	(954, 676)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	874
+			    max_width  	876
 			    justify    	0
 			    label      	"StoxtremeServiceLocator")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44997EC20282"
-			width      	892
+			compartment 	(object Compartment
+			    Parent_View 	@345
+			    location   	(954, 781)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	6
+			    max_width  	744)
+			width      	894
 			height     	432
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$207" @346
-			location   	(842, 609)
+			location   	(877, 678)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9431,7 +10718,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$208" @347
 				Parent_View 	@346
-				location   	(474, 385)
+				location   	(509, 454)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F060352"
@@ -9440,7 +10727,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$209" @348
 				Parent_View 	@346
-				location   	(474, 385)
+				location   	(509, 454)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F060354"
@@ -9451,7 +10738,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2272, 1504)
+			location   	(2400, 1520)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9463,7 +10750,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@349
-			    location   	(1911, 1430)
+			    location   	(2039, 1341)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	722
@@ -9473,12 +10760,29 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44997ECB02CB"
+			compartment 	(object Compartment
+			    Parent_View 	@349
+			    location   	(2039, 1446)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	5
+			    max_width  	606)
 			width      	740
-			height     	172
+			height     	382
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$204" @350
-			location   	(2272, 1066)
+			location   	(2343, 1022)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9494,7 +10798,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$205" @351
 				Parent_View 	@350
-				location   	(752, 394)
+				location   	(823, 350)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997EF800D1"
@@ -9503,7 +10807,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$206" @352
 				Parent_View 	@350
-				location   	(752, 394)
+				location   	(823, 350)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997EF800DB"
@@ -9514,7 +10818,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1392, 1488)
+			location   	(1440, 1616)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9526,22 +10830,39 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@353
-			    location   	(1082, 1414)
+			    location   	(1079, 1362)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	620
+			    max_width  	722
 			    justify    	0
 			    label      	"StoxtremeSoapBindingStub")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44997EE20089"
-			width      	638
-			height     	172
+			compartment 	(object Compartment
+			    Parent_View 	@353
+			    location   	(1079, 1467)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	8
+			    max_width  	612)
+			width      	740
+			height     	532
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$210" @354
-			location   	(1392, 1248)
+			location   	(1413, 1222)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9557,7 +10878,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$211" @355
 				Parent_View 	@354
-				location   	(464, 608)
+				location   	(485, 582)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F170108"
@@ -9566,7 +10887,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$212" @356
 				Parent_View 	@354
-				location   	(464, 608)
+				location   	(485, 582)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F17010A"
@@ -9574,7 +10895,7 @@
 				supplier   	@345
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$213" @357
-			location   	(1806, 1495)
+			location   	(1919, 1567)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9590,7 +10911,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$214" @358
 				Parent_View 	@357
-				location   	(878, 455)
+				location   	(991, 527)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F2201E0"
@@ -9599,7 +10920,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$215" @359
 				Parent_View 	@357
-				location   	(878, 455)
+				location   	(991, 527)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F2201E2"
@@ -9619,7 +10940,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(2704, 1328)
+			location   	(2928, 1408)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9631,7 +10952,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@360
-			    location   	(2317, 1099)
+			    location   	(2541, 1179)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	774
@@ -9641,6 +10962,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A4903E2"
+			compartment 	(object Compartment
+			    Parent_View 	@360
+			    location   	(2541, 1284)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	656)
 			width      	792
 			height     	482
 			annotation 	8
@@ -9671,6 +11009,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449805430284"
+			compartment 	(object Compartment
+			    Parent_View 	@361
+			    location   	(2355, 648)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	3
+			    max_width  	591)
 			width      	716
 			height     	282
 			annotation 	8
@@ -9732,6 +11087,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A0902BD"
+			compartment 	(object Compartment
+			    Parent_View 	@363
+			    location   	(655, 143)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	4
+			    max_width  	434)
 			width      	532
 			height     	332
 			annotation 	8
@@ -9762,6 +11134,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A9C020B"
+			compartment 	(object Compartment
+			    Parent_View 	@364
+			    location   	(78, 228)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	381)
 			width      	470
 			height     	482
 			annotation 	8
@@ -9770,7 +11159,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(320, 1888)
+			location   	(688, 2352)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9782,18 +11171,35 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@365
-			    location   	(96, 1810)
+			    location   	(16, 1998)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	448
+			    max_width  	1344
 			    justify    	0
 			    label      	"AlmacenMensajes")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4496D19302B1"
-			width      	466
-			height     	180
+			compartment 	(object Compartment
+			    Parent_View 	@365
+			    location   	(16, 2103)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	12
+			    max_width  	1144)
+			width      	1362
+			height     	732
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::stoxtreme::servidor::objeto_bolsa::fluctuaciones::SistemaOperaciones" @366
@@ -9822,12 +11228,29 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A0F014A"
+			compartment 	(object Compartment
+			    Parent_View 	@366
+			    location   	(21, 935)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	12
+			    max_width  	506)
 			width      	616
 			height     	732
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$216" @367
-			location   	(320, 1673)
+			location   	(503, 1767)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9843,7 +11266,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$217" @368
 				Parent_View 	@367
-				location   	(-176, 809)
+				location   	(7, 903)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F770015"
@@ -9852,7 +11275,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$218" @369
 				Parent_View 	@367
-				location   	(-176, 809)
+				location   	(7, 903)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F770017"
@@ -9929,7 +11352,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1120, 1648)
+			location   	(1184, 1456)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9941,7 +11364,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@376
-			    location   	(783, 1344)
+			    location   	(847, 1152)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	674
@@ -9951,12 +11374,29 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A02014B"
+			compartment 	(object Compartment
+			    Parent_View 	@376
+			    location   	(847, 1257)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	10
+			    max_width  	572)
 			width      	692
 			height     	632
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "$UNNAMED$228" @377
-			location   	(663, 1784)
+			location   	(949, 1878)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -9972,7 +11412,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$229" @378
 				Parent_View 	@377
-				location   	(-249, 952)
+				location   	(37, 1046)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997FA6030C"
@@ -9981,7 +11421,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$230" @379
 				Parent_View 	@377
-				location   	(-249, 952)
+				location   	(37, 1046)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997FA60316"
@@ -10011,17 +11451,34 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@381
-			    location   	(996, 443)
+			    location   	(995, 443)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	984
+			    max_width  	986
 			    justify    	0
 			    label      	"ObjetoBolsa")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"449809DB0376"
-			width      	1002
+			compartment 	(object Compartment
+			    Parent_View 	@381
+			    location   	(995, 548)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	7
+			    max_width  	838)
+			width      	1004
 			height     	482
 			annotation 	8
 			autoResize 	TRUE)
@@ -10040,7 +11497,7 @@
 			supplier   	@362
 			line_style 	0)
 		    (object AssociationViewNew "$UNNAMED$222" @384
-			location   	(807, 970)
+			location   	(806, 970)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -10056,7 +11513,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$223" @385
 				Parent_View 	@384
-				location   	(-249, 282)
+				location   	(-250, 282)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F890256"
@@ -10065,7 +11522,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$224" @386
 				Parent_View 	@384
-				location   	(-249, 282)
+				location   	(-250, 282)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F890260"
@@ -10073,7 +11530,7 @@
 				supplier   	@381
 				line_style 	0)))
 		    (object AssociationViewNew "$UNNAMED$225" @387
-			location   	(1317, 1122)
+			location   	(1349, 1026)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -10089,7 +11546,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$226" @388
 				Parent_View 	@387
-				location   	(261, 434)
+				location   	(293, 338)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F8B02F9"
@@ -10098,7 +11555,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$227" @389
 				Parent_View 	@387
-				location   	(261, 434)
+				location   	(293, 338)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44997F8B02FB"
@@ -10109,7 +11566,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
-			location   	(1920, 1824)
+			location   	(2112, 2112)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -10121,7 +11578,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@390
-			    location   	(1584, 1670)
+			    location   	(1776, 1958)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	672
@@ -10131,6 +11588,23 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"44980A3500B8"
+			compartment 	(object Compartment
+			    Parent_View 	@390
+			    location   	(1776, 2063)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    icon_style 	"Icon"
+			    fill_color 	16777215
+			    anchor     	2
+			    nlines     	4
+			    max_width  	569)
 			width      	690
 			height     	332
 			annotation 	8
@@ -10206,7 +11680,7 @@
 			supplier   	@391
 			line_style 	0)
 		    (object AssociationViewNew "$UNNAMED$246" @396
-			location   	(1920, 1536)
+			location   	(2005, 1680)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -10222,7 +11696,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "$UNNAMED$247" @397
 				Parent_View 	@396
-				location   	(144, 192)
+				location   	(229, 336)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44A0045300A3"
@@ -10231,7 +11705,7 @@
 				line_style 	0)
 			    (object RoleView "$UNNAMED$248" @398
 				Parent_View 	@396
-				location   	(144, 192)
+				location   	(229, 336)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44A0045300B3"
