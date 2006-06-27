@@ -19,9 +19,6 @@
 	
 	<modelos>
 		<modelo_psicologico id="psicologico1">
-			<parametro_modelo tipo="tiempo_espera">
-				<distribucion>normal2</distribucion>
-			</parametro_modelo>
 			<parametro_modelo tipo="numero_maximo_acciones_compra">
 				<valor>1000</valor>
 			</parametro_modelo>

@@ -9,6 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class XMLDownloader {
+	public static boolean DEBUG = true;
+	
 	public static void downloadAll(String dirLocal, String dirRemoto, String[] fichs) throws IOException{
 		for(int i=0; i < fichs.length; i++){
 			File local = new File(dirLocal+"/"+fichs[i]);
@@ -50,6 +52,9 @@ public class XMLDownloader {
 		osw.close();
 		isr.close();
 		reader.close();
+		
+		if(DEBUG)
+			System.err.println("Descargado el fichero: "+remoto);
 	}
 	
 	public static File sacaDirectorio(String ruta){

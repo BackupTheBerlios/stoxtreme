@@ -31,10 +31,13 @@ import cern.jet.random.Normal;
 import cern.jet.random.Poisson;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister;
+import cern.jet.random.engine.RandomEngine;
+import cern.jet.random.engine.RandomGenerator;
 
 import com.sun.org.apache.xpath.internal.XPathAPI;
 
 public class ConstructorAgentes {
+	private static RandomEngine random = new MersenneTwister(new Date());
 	public ArrayList<Agente> construyeAgentes(
 			Stoxtreme conexionBolsa, 
 			EstadoBolsa estado, 
@@ -51,13 +54,16 @@ public class ConstructorAgentes {
 		NodeIterator iterator = XPathAPI.selectNodeIterator(fichAgentes, "//comportamientos/comportamiento");
 		Element actual;
 		int numAgentes = parametros.getInt(ParametrosAgentes.Parametro.NUM_AGENTES);
-//		int tEspera = parametros.getInt(ParametrosAgentes.Parametro.TIEMPO_ESPERA);
+		int tiempo = parametros.getInt(ParametrosAgentes.Parametro.TIEMPO_ESPERA);
+		Normal normalTEspera = new Normal(tiempo, tiempo/4.0, random);
 		// Vamos generando por cada tipo de agentes
 		while((actual=(Element)iterator.nextNode())!=null){
 			int nAgentesCreacion = (int) (numAgentes * (Double.parseDouble(actual.getAttribute("porcentaje"))/100));
 			for(int i=0; i<nAgentesCreacion; i++){
 				ParametrosSocial ps = generaParametrosSocial(fichAgentes, actual.getAttribute("modelo_social"), distribuciones);
 				ParametrosPsicologicos  pp = generaParametrosPsicologico(fichAgentes, actual.getAttribute("modelo_psicologico"), distribuciones);
+				int tEspera = normalTEspera.nextInt();
+				pp.setParametro(ParametrosPsicologicos.Parametro.TIEMPO_ESPERA.toString(), Integer.toString(tEspera));
 				ComportamientoAgente c = (ComportamientoAgente)Class.forName(actual.getAttribute("tipo_comportamiento")).newInstance();
 				procesaSubComportamientos(fichAgentes, actual.getAttribute("id"), c);
 				Agente agente = new Agente(conexionBolsa,estado,consolaAgentes,modeloTabla,ps, pp);
@@ -136,7 +142,6 @@ public class ConstructorAgentes {
 
 	private Hashtable<String, AbstractDistribution> generaDistribuciones(Document d)throws Exception{
 		Hashtable<String, AbstractDistribution> t = new Hashtable<String, AbstractDistribution>();
-		MersenneTwister generador = new MersenneTwister(new Date());
 		// Cogemos las normales
 		NodeIterator iterator = XPathAPI.selectNodeIterator(d, "//dist_normal");
 		Element actual;
@@ -145,7 +150,7 @@ public class ConstructorAgentes {
 			String clave = actual.getAttribute("id");
 			double media = Double.parseDouble(actual.getAttribute("media"));
 			double desvTipica = Double.parseDouble(actual.getAttribute("desviacion_tipica"));
-			Normal normal = new Normal(media, desvTipica, generador);
+			Normal normal = new Normal(media, desvTipica, random);
 			t.put(clave, normal);
 		}
 		
@@ -155,7 +160,7 @@ public class ConstructorAgentes {
 		while((actual = (Element)iterator.nextNode())!=null){
 			String clave = actual.getAttribute("id");
 			double lambda = Double.parseDouble(actual.getAttribute("lambda"));
-			Poisson poisson = new Poisson(lambda, generador);
+			Poisson poisson = new Poisson(lambda, random);
 			t.put(clave, poisson);
 		}
 		
@@ -166,18 +171,14 @@ public class ConstructorAgentes {
 			String clave = actual.getAttribute("id");
 			double minimo = Double.parseDouble(actual.getAttribute("minimo"));
 			double maximo = Double.parseDouble(actual.getAttribute("maximo"));
-			Uniform uniforme = new Uniform(minimo, maximo, generador);
+			Uniform uniforme = new Uniform(minimo, maximo, random);
 			t.put(clave, uniforme);
 		}
 		return t;
 	}
 
-	private Document inicializaDOM(String fichero)throws Exception{
+	private static Document inicializaDOM(String fichero)throws Exception{
 		DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		return db.parse(new File(fichero));
 	}
-	
-//	public Agente crearNuevoAgente(ModeloBolsa modelo, String fichero, int numAgentes) throws Exception{
-//		
-//	}
 }

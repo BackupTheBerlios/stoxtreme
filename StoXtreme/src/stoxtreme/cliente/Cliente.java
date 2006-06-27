@@ -19,6 +19,7 @@ import org.xml.sax.SAXException;
 import stoxtreme.cliente.gui.MainFrameCliente;
 import stoxtreme.cliente.gui.DialogoInicial;
 import stoxtreme.cliente.infoLocal.InfoLocal;
+import stoxtreme.cliente.infoLocal.XMLDownloader;
 import stoxtreme.herramienta_agentes.HerramientaAgentes;
 import stoxtreme.herramienta_agentes.ParametrosAgentes;
 import stoxtreme.interfaz_remota.*;
@@ -48,7 +49,7 @@ public class Cliente{
 			e.printStackTrace();
 		}	
 	}
-	
+
 	public static void main(String[] args) {
 		PropertyConfigurator.configure("conf/log4j.properties");
 		Cliente c = new Cliente();
@@ -219,89 +220,90 @@ public class Cliente{
 		System.exit(0);
 	}
 	public void obtenerFicheros(String direccion) throws Exception{
-		URL url = null;
-		FileOutputStream fos = null;
-		InputStreamReader isr = null;
-		Reader in = null;
-		StringBuffer buffer = null;
-		OutputStreamWriter osw = null;
-		try{
-			url=new URL(direccion+URLCONF+"empresas.xml");
-			File f=new File("./conf/cliente/empresas.xml");
-			System.err.println(f.getAbsolutePath());
-			fos = new FileOutputStream(f);
-			isr = new InputStreamReader(url.openStream());
-			in = new BufferedReader(isr);
-			buffer = new StringBuffer();
-			int ch;
-			while((ch =in.read())>-1){
-				buffer.append((char)ch);
-			}
-			osw = new OutputStreamWriter(fos);
-			osw.append(buffer);
-		} 
-		 catch (Exception e) {
-			e.printStackTrace();
-		} 
-		if(osw != null)
-			osw.close();
-		if(in != null)
-			in.close();
-		if(fos != null)
-			fos.close();
-		if(isr!=null)
-			isr.close();
-		ArrayList ficheros=this.getNombreFicheros("./conf/cliente/empresas.xml");
-		int contador=0;
-		
-		while(contador<ficheros.size()){
-			try {
-				url= new  URL(direccion+URLCONF+ficheros.get(contador));
-				
-				File f = new File("./conf/cliente/"+ficheros.get(contador));
-				System.err.println(f.getAbsolutePath());
-				//f.createNewFile();
-				fos = new FileOutputStream(f);
-				isr = new InputStreamReader(url.openStream());
-				in = new BufferedReader(isr);
-				buffer = new StringBuffer();
-				int ch;
-				while((ch =in.read())>-1){
-					buffer.append((char)ch);
-				}
-				osw = new OutputStreamWriter(fos);
-				osw.append(buffer);
-			} 
-			 catch (Exception e) {
-				e.printStackTrace();
-			} 
-			if(osw != null)
-				osw.close();
-			if(in != null)
-				in.close();
-			if(fos != null)
-				fos.close();
-			if(isr!=null)
-				isr.close();
-			contador++;
-		}
+		XMLDownloader.download(new File("./conf/cliente/empresas.xml"), new URL(direccion+URLCONF+"empresas.xml"));
+//		URL url = null;
+//		FileOutputStream fos = null;
+//		InputStreamReader isr = null;
+//		Reader in = null;
+//		StringBuffer buffer = null;
+//		OutputStreamWriter osw = null;
+//		try{
+//			url=new URL();
+//			File f=new File("./conf/cliente/empresas.xml");
+//			System.err.println(f.getAbsolutePath());
+//			fos = new FileOutputStream(f);
+//			isr = new InputStreamReader(url.openStream());
+//			in = new BufferedReader(isr);
+//			buffer = new StringBuffer();
+//			int ch;
+//			while((ch =in.read())>-1){
+//				buffer.append((char)ch);
+//			}
+//			osw = new OutputStreamWriter(fos);
+//			osw.append(buffer);
+//		} 
+//		 catch (Exception e) {
+//			e.printStackTrace();
+//		} 
+//		if(osw != null)
+//			osw.close();
+//		if(in != null)
+//			in.close();
+//		if(fos != null)
+//			fos.close();
+//		if(isr!=null)
+//			isr.close();
+		String[] fichEmpresas=this.getNombreFicheros("./conf/cliente/empresas.xml");
+		XMLDownloader.downloadAll("./conf/cliente", direccion+URLCONF, fichEmpresas);
+//		
+//		int contador=0;
+//		while(fichEmpresas.size()>contador){
+//			try {
+//				url= new  URL(direccion+URLCONF+fichEmpresas.get(contador));
+//				
+//				File f = new File("./conf/cliente/"+fichEmpresas.get(contador));
+//				System.err.println(f.getAbsolutePath());
+//				//f.createNewFile();
+//				fos = new FileOutputStream(f);
+//				isr = new InputStreamReader(url.openStream());
+//				in = new BufferedReader(isr);
+//				buffer = new StringBuffer();
+//				int ch;
+//				while((ch =in.read())>-1){
+//					buffer.append((char)ch);
+//				}
+//				osw = new OutputStreamWriter(fos);
+//				osw.append(buffer);
+//			} 
+//			 catch (Exception e) {
+//				e.printStackTrace();
+//			} 
+//			if(osw != null)
+//				osw.close();
+//			if(in != null)
+//				in.close();
+//			if(fos != null)
+//				fos.close();
+//			if(isr!=null)
+//				isr.close();
+//			contador++;
+//		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public ArrayList getNombreFicheros(String fichEmpresas){
+	public String[] getNombreFicheros(String fichEmpresas){
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		//Lista de nombres de ficheros de configuracion
-		ArrayList ficheros=new ArrayList();
+		String[] ficheros = new String[numEmpresas];
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(new File(fichEmpresas));
 			NodeList nl = document.getElementsByTagName("emp");
 			String ruta=null;
 			//Obtengo los nombres de todas las empresas
-			for (int i=0; nl!=null && i<nl.getLength() && i<numEmpresas;i++){
+			for (int i=0; nl!=null && i<numEmpresas;i++){
 				ruta=((Element)nl.item(i)).getTextContent().trim();
 				String[] nombre=ruta.split("/");
-				ficheros.add(i,nombre[1].toString());
+				ficheros[i] = nombre[1].toString();
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
@@ -317,7 +319,7 @@ public class Cliente{
 	       // I/O error
 	       ioe.printStackTrace();
 	    }
-		return ficheros;
+	    return ficheros;
 	}
 	public boolean validar (String s){
 		boolean valido=true;
