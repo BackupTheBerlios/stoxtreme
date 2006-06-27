@@ -222,8 +222,27 @@ public class MainFrameCliente extends JFrame{
 	}
 	
 	private void pinta_actionPerformed(ActionEvent e){
-		System.out.println(e.getActionCommand());
 		split_graficas.setDividerLocation(300);
+		if (e.getActionCommand().equals("Ayuda Volumen")){
+			JTextPane menuAyuda=new JTextPane();
+			menuAyuda.setSize(200,200);
+			menuAyuda.setText("Para obtener el volumen de un valor realizar:\n"+
+					"1.-Seleccionar indicadores->Volumen\n2.-Elegir la fecha de"+
+					" comienzo del periodo que se desee consultar\n3.-Elegir la fecha final del periodo");
+			menuAyuda.setEditable(false);
+			JOptionPane.showMessageDialog(this,menuAyuda,"Ayuda Herramientas",JOptionPane.INFORMATION_MESSAGE);
+		}
+		if (e.getActionCommand().equals("Ayuda Estocastico")){
+			JTextPane menuAyuda=new JTextPane();
+			menuAyuda.setSize(200,200);
+			menuAyuda.setText("Para obtener la Gráfica del Estocástico de un valor realizar:\n"+
+					"1.-Seleccionar indicadores->Volumen\n2.-Elegir la fecha de"+
+					" comienzo del periodo que se desee consultar\n3.-Elegir la fecha final del periodo\n"+
+					"4.-Si la gráfica esta baja significa que la acción está sobre vendida"+
+					" con lo que es posible que suba\n5.- si la gráfica esta alta esta sobre comprado con lo que es posible que baje");
+			menuAyuda.setEditable(false);
+			JOptionPane.showMessageDialog(this,menuAyuda,"Ayuda Herramientas",JOptionPane.INFORMATION_MESSAGE);
+		}
 		//JOptionPane.showMessageDialog(tablaArribaIzq,null,"Has pulsado el volumen",JOptionPane.CANCEL_OPTION);
 	    if (e.getActionCommand().equals("Volumen")){
 			if(volumen) {
@@ -261,11 +280,13 @@ public class MainFrameCliente extends JFrame{
 				//split_graficas.setBottomComponent(p);
 			}	
 			else{
-				if(estocastico && e.getActionCommand().equals("Estocastico"))
+				if(estocastico && e.getActionCommand().equals("Estocastico")){
 					p3=getChartPanel3();
 			        graficas.put("estocastico",p3);
 					split_graficas.setBottomComponent(p3);
-				if(!volumen && !estocastico){
+				}
+				if(!volumen && !estocastico &&!(e.getActionCommand().equals("Ayuda Volumen")
+						||e.getActionCommand().equals("Ayuda Estocastico"))){
 //					split_graficas=null;
 //					split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 					split_graficas.remove(2);
@@ -350,9 +371,25 @@ public class MainFrameCliente extends JFrame{
 			}
 		    }				    
 		    );
-		JMenuItem help= new JMenu("Ayuda");
+		JMenu help= new JMenu("Ayuda");
+		JMenuItem volA=new JMenuItem("Ayuda Volumen");
+		JMenuItem estoA=new JMenuItem("Ayuda Estocastico");
+		volA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				pinta_actionPerformed(event);
+			}
+		    }				    
+		    );
+		estoA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				pinta_actionPerformed(event);
+			}
+		    }				    
+		    );
 		indicadores.add(vol);
 		indicadores.add(esto);
+		help.add(volA);
+		help.add(estoA);
 		JMenuBar barra=new JMenuBar();
 		barra.add(indicadores);
 		barra.add(help);	
@@ -487,29 +524,28 @@ private void calculaMaxenFecha(Calendar f){
 			int j=1;
 			String fechaAux;
 			XYSeries series = new XYSeries("Estocastico");
-			    while(c1.compareTo(c2)!=0){
-			    	calculaMaxenFecha(c1);
-					fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
-					//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
-					//DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
-					auxds.addValue((100*(cierre - min))/(max-min),"Estocastico",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
-					//System.out.println((100*(cierre - min))/(max-min));
-					series.add(j, (100*(cierre - min))/(max-min));
-					//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),(100*(cierre - min))/(max-min));
-					//auxds.addSeries(new TimeSeries("valores",Double.toString((100*(cierre - min))/(max-min))));
-					//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),aux.getVolumen());
-					c1.add(Calendar.DATE, 1);				    
+		    while(c1.compareTo(c2)!=0){
+		    	calculaMaxenFecha(c1);
+				fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
+				//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
+				//DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
+				auxds.addValue((100*(cierre - min))/(max-min),"Estocastico",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
+				//System.out.println((100*(cierre - min))/(max-min));
+				series.add(j, (100*(cierre - min))/(max-min));
+				//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),(100*(cierre - min))/(max-min));
+				//auxds.addSeries(new TimeSeries("valores",Double.toString((100*(cierre - min))/(max-min))));
+				//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),aux.getVolumen());
+				c1.add(Calendar.DATE, 1);				    
 
-				}
-			    XYDataset juegoDatos= new XYSeriesCollection(series);
-		        
-			    JFreeChart chart = 
-			     ChartFactory.createLineChart("Estocastico",  
-			        "Meses","Sesiones",auxds,PlotOrientation.VERTICAL,
-			        false,
-			        false, 
-			        true                // Show legend
-			        );    
+			}
+		    XYDataset juegoDatos= new XYSeriesCollection(series);	        
+		    JFreeChart chart = 
+		     ChartFactory.createLineChart("Estocastico",  
+		        "Meses","Sesiones",auxds,PlotOrientation.VERTICAL,
+		        false,
+		        false, 
+		        true                // Show legend
+		        );    
 			chartPlot = new XYPlot(
 				modeloPrecios.getVolumenSeleccionado(), 
 			    ejeX, ejeY,new XYLineAndShapeRenderer(true, false)); 
