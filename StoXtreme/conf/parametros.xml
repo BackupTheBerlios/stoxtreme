@@ -3,4 +3,5 @@
 	<tiempo>5000</tiempo>
 	<fichero_emp>conf/empresas.xml</fichero_emp>
 	<fichero_reg>conf/registrados.xml</fichero_reg>
+	<num_empresas>35</num_empresas>
 </parametros>
