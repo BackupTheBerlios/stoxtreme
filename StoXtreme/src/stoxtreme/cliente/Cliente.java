@@ -42,6 +42,7 @@ public class Cliente{
 	private Stoxtreme servidor;
 	private ReceptorMensajes receptor;
 	private HerramientaAgentes hAgentes;
+	private int numEmpresas;
 	
 	static{
 		try {
@@ -95,11 +96,12 @@ public class Cliente{
 							"Revise sus datos",JOptionPane.WARNING_MESSAGE);
 				else{
 					try{
-						boolean login=servidor.login(user.trim(),psw.trim());
-						if (!login)
+						int login=servidor.login(user.trim(),psw.trim());
+						if (login == -1)
 							JOptionPane.showMessageDialog(dialogoInicial, "El usuario no existe o el password es erroneo",
 									"Error",JOptionPane.ERROR_MESSAGE);
 						else{
+							numEmpresas=login;
 							conectado=true;
 						}
 							
@@ -126,7 +128,7 @@ public class Cliente{
 								JOptionPane.showMessageDialog(dialogoInicial, "Ya existe un usuario con ese nombre",
 									"Error",JOptionPane.ERROR_MESSAGE);
 							else{
-								servidor.login(user,psw);
+								numEmpresas=servidor.login(user,psw);
 								conectado=true;
 							}
 						}
@@ -252,7 +254,8 @@ public class Cliente{
 			isr.close();
 		ArrayList ficheros=this.getNombreFicheros("./conf/cliente/empresas.xml");
 		int contador=0;
-		while(ficheros.size()>contador){
+		
+		while(contador<ficheros.size()){
 			try {
 				url= new  URL(direccion+URLCONF+ficheros.get(contador));
 				
@@ -295,7 +298,7 @@ public class Cliente{
 			NodeList nl = document.getElementsByTagName("emp");
 			String ruta=null;
 			//Obtengo los nombres de todas las empresas
-			for (int i=0; nl!=null && i<nl.getLength();i++){
+			for (int i=0; nl!=null && i<nl.getLength() && i<numEmpresas;i++){
 				ruta=((Element)nl.item(i)).getTextContent().trim();
 				String[] nombre=ruta.split("/");
 				ficheros.add(i,nombre[1].toString());
@@ -360,6 +363,7 @@ public class Cliente{
 		try {
 			JOptionPane.showMessageDialog(gui, "El servidor ha finalizado inesperadamente");
 			desloguea();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

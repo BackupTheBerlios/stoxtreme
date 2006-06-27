@@ -104,9 +104,9 @@ public class StoXtremeSoapBindingSkeleton implements stoxtreme.interfaz_remota.S
         return ret;
     }
 
-    public boolean login(java.lang.String in0, java.lang.String in1) throws java.rmi.RemoteException
+    public int login(java.lang.String in0, java.lang.String in1) throws java.rmi.RemoteException
     {
-        boolean ret = impl.login(in0, in1);
+        int ret = impl.login(in0, in1);
         return ret;
     }
 

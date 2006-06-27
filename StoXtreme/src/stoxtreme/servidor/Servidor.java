@@ -75,9 +75,12 @@ public class Servidor implements Administrador, Stoxtreme{
 	private Servidor(){
 		
 	}
-	public boolean login(String usr, String psw){
+	public int login(String usr, String psw){
 		boolean b = gestorUsuarios.conectaUsuario(usr,psw);
-		return b;
+		if(!b) return -1;
+		else
+			// devuelve el numero de empresas
+			return Integer.parseInt(param.getNumEmpresas());
 	}
 	
 	public boolean registro(String usr, String psw){

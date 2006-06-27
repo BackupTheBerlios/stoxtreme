@@ -45,8 +45,8 @@ public class StoXtremeSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "in1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://schemas.xmlsoap.org/soap/encoding/", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
-        oper.setReturnClass(boolean.class);
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        oper.setReturnClass(int.class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "loginReturn"));
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
@@ -212,7 +212,7 @@ public class StoXtremeSoapBindingStub extends org.apache.axis.client.Stub implem
 }
     }
 
-    public boolean login(java.lang.String in0, java.lang.String in1) throws java.rmi.RemoteException {
+    public int login(java.lang.String in0, java.lang.String in1) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -233,9 +233,9 @@ public class StoXtremeSoapBindingStub extends org.apache.axis.client.Stub implem
         else {
             extractAttachments(_call);
             try {
-                return ((java.lang.Boolean) _resp).booleanValue();
+                return ((java.lang.Integer) _resp).intValue();
             } catch (java.lang.Exception _exception) {
-                return ((java.lang.Boolean) org.apache.axis.utils.JavaUtils.convert(_resp, boolean.class)).booleanValue();
+                return ((java.lang.Integer) org.apache.axis.utils.JavaUtils.convert(_resp, int.class)).intValue();
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {

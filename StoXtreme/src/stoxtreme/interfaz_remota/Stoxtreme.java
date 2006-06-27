@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 
 public interface Stoxtreme extends java.rmi.Remote {
     public boolean registro(String id, String pass) throws RemoteException;
-    public boolean login(String id, String pass) throws RemoteException;
+    public int login(String id, String pass) throws RemoteException;
     public int insertarOperacion(String id, Operacion op) throws RemoteException;
     public void cancelarOperacion(String id, int idOp) throws RemoteException;
 }
