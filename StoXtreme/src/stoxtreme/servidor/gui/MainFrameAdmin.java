@@ -55,14 +55,25 @@ public class MainFrameAdmin extends JFrame{
 	public MainFrameAdmin(){
 		super("Stock Xtreme: Administrador");
 	}
+	
+	JTabbedPane tabbed;
 	public void init(){
-		JTabbedPane tabbed = new JTabbedPane();
+		tabbed = new JTabbedPane();
 		tabbed.insertTab("Sesion", null, getPanelSesion(), "Control de la sesion", 0);
-		tabbed.insertTab("Evolución bolsa", null, getPanelControl(), "Control de los usuarios", 1);
-		tabbed.insertTab("Eventos", null, getPanelEventos(), "Control de los eventos", 2);
+		tabbed.insertTab("Evolución bolsa", null, new JPanel(), "Control de los usuarios", 1);
+		tabbed.insertTab("Eventos", null, new JPanel(), "Control de los eventos", 2);
 		tabbed.insertTab("Control de Agentes", null, getPanelAgentes(), "Control de los agentes",3);
 		getContentPane().add(tabbed);
+		tabbed.setEnabledAt(1,false);
+		tabbed.setEnabledAt(2,false);
 		setSize(new Dimension(800, 600));
+	}
+	
+	public void iniciaGUISesion(){
+		tabbed.removeTabAt(1);
+		tabbed.removeTabAt(1);
+		tabbed.insertTab("Evolución bolsa", null, getPanelControl(), "Control de los usuarios", 1);
+		tabbed.insertTab("Eventos", null, getPanelEventos(), "Control de los eventos", 2);
 	}
 	
 	private Component getPanelAgentes() {
@@ -99,11 +110,12 @@ public class MainFrameAdmin extends JFrame{
 		return fr;
 	}
 	
+	JList listaUsuarios;
 	private Component getPanelOpcionesInferior() {
 		JPanel panel = new JPanel(new BorderLayout());
-		JList lista = new JList(modeloUsuarios);
-		lista.setCellRenderer(modeloUsuarios.getListCellRenderer());
-		JScrollPane panelScrollIzqArriba = new JScrollPane(lista);
+		listaUsuarios = new JList(new DefaultListModel());
+//		listaUsuarios.setCellRenderer(modeloUsuarios.getListCellRenderer());
+		JScrollPane panelScrollIzqArriba = new JScrollPane(listaUsuarios);
 		
 		panelScrollIzqArriba.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		FakeInternalFrame panelIzqArriba = new FakeInternalFrame("Usuarios", panelScrollIzqArriba);
@@ -163,16 +175,15 @@ public class MainFrameAdmin extends JFrame{
 		JPanel panel = new JPanel(new BorderLayout());
 		ArrayList<String> ops = new ArrayList<String>();
 		ops.add("         Numero de empresas");
-		ops.add("Velocidad de simulación");
 		ops.add("Tiempo de fluctuacion");
-		ops.add("Fichero de historicos");
-		ops.add("Fichero de información");
+		ops.add("Fichero de empresas");
+		ops.add("Fichero de usuarios");
 		ops.add("Tick");
 		ops.add("Sesión continua");
 		
 		ArrayList<String> chooser = new ArrayList<String>();
-		chooser.add("Fichero de historicos");
-		chooser.add("Fichero de información");
+		chooser.add("Fichero de empresas");
+		chooser.add("Fichero de usuarios");
 		
 		opciones = new PanelOpciones(ops, null, chooser);
 		opciones.setCheckBox("Sesión continua");
@@ -272,6 +283,8 @@ public class MainFrameAdmin extends JFrame{
 		return modeloUsuarios;
 	}
 	public void setModeloUsuarios(ModeloListaUsuariosConectados modeloUsuarios) {
+		listaUsuarios.setModel(modeloUsuarios);
+		listaUsuarios.setCellRenderer(modeloUsuarios.getListCellRenderer());
 		this.modeloUsuarios = modeloUsuarios;
 	}
 	public ModeloTablaVariables getModeloVariables() {

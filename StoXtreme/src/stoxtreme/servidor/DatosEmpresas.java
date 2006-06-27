@@ -17,7 +17,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import stoxtreme.servidor.gui.MainFrameAdmin;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 /*
  * Fichero debe ser de la forma:
@@ -47,7 +46,7 @@ public class DatosEmpresas {
 			double cotiz=0;
 			String info=null;
 			//Obtengo todas las empresas y creo un objeto bolsa para cada una
-			for (int i=0; nl!=null && i<nl.getLength();i++){
+			for (int i=0; nl!=null && i<nl.getLength() && i<Integer.parseInt(parServ.getNumEmpresas());i++){
 				nombre=((Element)nl.item(i)).getAttribute("nombre");
 				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio
@@ -71,7 +70,7 @@ public class DatosEmpresas {
 	    }
 		int i=0;
 		Enumeration e=ht.keys();
-		while (e.hasMoreElements()){
+		while (e.hasMoreElements() && i< (Integer.parseInt(parServ.getNumEmpresas()))){
 			nombresEmpresas.add(i,e.nextElement().toString());	
 			i++;
 		}

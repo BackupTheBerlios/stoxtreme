@@ -17,6 +17,7 @@ public class ParametrosServidor {
 	public static String FICH_REG="ficheroRegistrados";
 	public static String TICK="tick";
 	public static String TIEMPO="tiempo";
+	public static String NUMEMPRESAS="numeroEmpresas";
 	
 	private Hashtable <String,Object> parametros;
 	
@@ -43,7 +44,9 @@ public class ParametrosServidor {
 	public String getFicheroRegistrados() {
 		return this.parametros.get(FICH_REG).toString();
 	}
-	
+	public String getNumEmpresas() {
+		return this.parametros.get(NUMEMPRESAS).toString();
+	}
 	//Modificador de la tabla hash "parametros"
 	public void modificarParams(String clave,Object valor){
 		parametros.put(clave,valor);
@@ -64,6 +67,8 @@ public class ParametrosServidor {
 			this.modificarParams(FICH_EMP,((Element)nl.item(0)).getTextContent().trim());
 			nl = document.getElementsByTagName("fichero_reg");
 			this.modificarParams(FICH_REG,((Element)nl.item(0)).getTextContent().trim());
+			nl = document.getElementsByTagName("num_empresas");
+			this.modificarParams(NUMEMPRESAS,((Element)nl.item(0)).getTextContent().trim());
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
 	       Exception  x = sxe;
