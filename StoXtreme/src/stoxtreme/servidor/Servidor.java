@@ -96,7 +96,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	public int insertarOperacion(String usuario, Operacion o){
 		
 		try{
-			System.out.println("USUARIO "+usuario+" INSERTA OPERACION");
+			System.out.println("USUARIO "+usuario+" INSERTA OPERACION: "+o);
 			IDS++;
 			String empresa = o.getEmpresa();
 			objetosBolsa.get(empresa.toUpperCase()).insertaOperacion(usuario, IDS, o);

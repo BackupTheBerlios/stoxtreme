@@ -25,7 +25,6 @@ public class Reloj{
 	}
 	
 	public void ejecuta(){
-		System.err.println("Paso");
 		Iterator<RelojListener> i = oyentes.iterator();
 		while(i.hasNext()){
 			i.next().paso();
