@@ -21,10 +21,10 @@
 		conf/arcelor.xml 		
 	</emp>
 	<emp nombre="BANCO POPULAR" cotizacion="11.18" global="FALSE">
-		conf/bancoPopular.xml 		
+		conf/banco_popular.xml 		
 	</emp>
 	<emp nombre="BANCO SABADELL" cotizacion="27.23" global="FALSE">
-		conf/bancoSabadell.xml 		
+		conf/banco_sabadell.xml 		
 	</emp>
 	<emp nombre="BANKINTER" cotizacion="48.28" global="FALSE">
 		conf/bankinter.xml 		
@@ -54,7 +54,7 @@
 		conf/gamesa.xml 		
 	</emp>
 	<emp nombre="GAS NATURAL" cotizacion="22.81" global="FALSE">
-		conf/gasNatural.xml 		
+		conf/gas_natural.xml 		
 	</emp>
 	<emp nombre="IBERDROLA" cotizacion="25.98" global="FALSE">
 		conf/iberdrola.xml 		
@@ -72,13 +72,13 @@
 		conf/metrovacesa.xml 		
 	</emp>
 	<emp nombre="NH HOTELES" cotizacion="14.47" global="FALSE">
-		conf/nh.xml 		
+		conf/nh_hoteles.xml 		
 	</emp>
 	<emp nombre="PRISA" cotizacion="12.19" global="FALSE">
 		conf/prisa.xml 		
 	</emp>
 	<emp nombre="R.E.E" cotizacion="26.53" global="FALSE">
-		conf/ree.xml 		
+		conf/r.e.e.xml 		
 	</emp>
  	<emp nombre="REPSOL" cotizacion="21.41" global="FALSE">
 		conf/repsol.xml 		
@@ -96,12 +96,12 @@
 		conf/telefonica.xml 		
 	</emp>
 	<emp nombre="TELEFONICA MOVILES" cotizacion="10.80" global="FALSE">
-		conf/telfMoviles.xml 		
+		conf/telefonica_moviles.xml 		
 	</emp>
 	<emp nombre="TPI" cotizacion="8.47" global="FALSE">
 		conf/tpi.xml 		
 	</emp>
 	<emp nombre="UNION FENOSA" cotizacion="30.30" global="FALSE">
-		conf/unionFenosa.xml 		
+		conf/union_fenosa.xml 		
 	</emp>	
 </empresas>

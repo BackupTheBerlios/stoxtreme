@@ -22,6 +22,7 @@ public class ParserInfoLocal {
 	public ParserInfoLocal(){
 	}
 	
+	@SuppressWarnings({"unchecked"})
 	public Hashtable<String, Vector> creaInfoLocal(String fichero, int numEmpresas) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Hashtable <String,Vector>ht=new Hashtable<String,Vector>();
@@ -31,14 +32,26 @@ public class ParserInfoLocal {
 			NodeList nl = document.getElementsByTagName("emp");
 			String nombre=null;
 			double cotiz=0;
+			Document empresaIndiv;
 			for (int i=0; nl!=null && i<nl.getLength() && i<numEmpresas;i++){
 				nombre=((Element)nl.item(i)).getAttribute("nombre");
 				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));
+				empresaIndiv = builder.parse(new File("./conf/cliente/"+nombre.toLowerCase().replace(" ","_")+".xml"));
+				NodeList nlIndiv=empresaIndiv.getElementsByTagName("capital_social");
 				//le quitamos los /t y /n del final y del principio
 				ht.put(nombre, new Vector());
 				Vector datos=ht.get(nombre);
 				datos.add(0,cotiz);
+				System.out.println("Precio ini "+cotiz);
+				datos.add(1,((Element)nlIndiv.item(0)).getAttribute("capital"));
+				System.out.println("Capital "+((Element)nlIndiv.item(0)).getAttribute("capital"));
+				datos.add(2,((Element)nlIndiv.item(0)).getAttribute("valor_nominal"));
+				System.out.println("Valor nominal "+((Element)nlIndiv.item(0)).getAttribute("valor_nominal"));
+				nlIndiv=empresaIndiv.getElementsByTagName("ampliaciones");
+				datos.add(3,((Element)nlIndiv.item(0)).getTextContent().trim());
+				System.out.println("Ampliaciones "+((Element)nlIndiv.item(0)).getTextContent().trim());
 				ht.put(nombre,datos);
+				nombre.toLowerCase();
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
@@ -56,11 +69,11 @@ public class ParserInfoLocal {
 	    }
 		return ht;
 	}
-	/*Si no encuentra un dato en el historico con la fecha solicitada
+	/* Si no encuentra un dato en el historico con la fecha solicitada
 	 * devuelve el dato del dia mas proximo.
 	 */
 	public static DatoHistorico getDatoHistorico(String empresa,String fecha){//String fecha){
-		String fichero=new String("./conf/cliente/"+empresa.toLowerCase()+".xml");
+		String fichero=new String("./conf/cliente/"+empresa.toLowerCase().replace(" ","_")+".xml");
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DatoHistorico dt= new DatoHistorico();
 		try {
