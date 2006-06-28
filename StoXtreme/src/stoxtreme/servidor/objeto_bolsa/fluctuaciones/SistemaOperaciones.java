@@ -120,6 +120,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         }
 
         public void cancelaOperacion(int idOperacion, String idAgente) {
+        	System.err.println("Cancelando: "+idOperacion+" de "+idAgente);
         	Hashtable operacion;
         	boolean encontrado=false;
         	boolean esCompra;
@@ -141,7 +142,10 @@ public class SistemaOperaciones /*implements RelojListener*/{
 	        		return;
 	        	}
         	}
-        	Enumeration claves=operacion.keys();
+        	
+        	System.err.println(listaCompras);
+        	System.err.println(listaVentas);
+        	Enumeration claves = operacion.keys();
         	while(claves.hasMoreElements()&&!encontrado){
         		String elemento=(String) claves.nextElement();
         		cadena=(Vector)operacion.get(elemento);
@@ -158,9 +162,11 @@ public class SistemaOperaciones /*implements RelojListener*/{
         					//System.out.println(elemento);
         				    operacion.remove(elemento);
         				    //cadena.removeAllElements();
+        				    
         				}
-        				else
+        				else{
         					cadena.setElementAt(acciones,0);
+        				}
         				System.out.println("se ha eliminado la operacion "+idOperacion);
         				AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_CANCELACION", idAgente));
         			}
@@ -176,43 +182,43 @@ public class SistemaOperaciones /*implements RelojListener*/{
                 // todas
         }
         public static void main(String[] args) {
-            //Hashtable cT=new Hashtable();
-            //Hashtable vT=new Hashtable();
-            //Double precio1=new Double(23.5f);
-            //Double precio2=new Double(25.5);
-            /*double precio1=(double)23.5;
-            double precio2=(double)25.5;
-            Vector compras=new Vector();
-            Vector compras2=new Vector();
-            Posicion c1,c2,c3,v1,v2,v3;
-            c1=new Posicion("comprador1",53,1);
-            c2=new Posicion("comprador2",32,2);
-            c3=new Posicion("comprador3",62,3);
-            compras.add(Integer.toString(85));
-            compras.add(c1);
-            compras.add(c2);
-            compras2.add(Integer.toString(62));
-            compras2.add(c3);
-            Vector ventas=new Vector();
-            Vector ventas2=new Vector();
-            cT.put(Double.toString(precio1),compras);
-            cT.put(Double.toString(precio2),compras2);
-            v1=new Posicion("vendedor1",25,4);
-            v2=new Posicion("vendedor2",10,5);
-            v3=new Posicion("vendedor3",15,6);
-            ventas.add(Integer.toString(25));
-            ventas.add(v1);
-            ventas2.add(Integer.toString(25));
-            ventas2.add(v2);
-            ventas2.add(v3);
-            vT.put(Double.toString(precio1),ventas);
-            vT.put(Double.toString(precio2),ventas2);*/
-            calculaPrecio(3.10,0.3,2.58);
-            //SistemaOperaciones so=new SistemaOperaciones(cT,vT);
-            //so.introduceCompra(1,"Pako",23.4,35);
-            //so.cancelaOperacion(1,"Compra");
-            //Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5);
-            //fluctuaciones1.paso();
+//            Hashtable cT=new Hashtable();
+//            Hashtable vT=new Hashtable();
+////            Double precio1=new Double(23.5f);
+////            Double precio2=new Double(25.5);
+//            double precio1=(double)23.5;
+//            double precio2=(double)25.5;
+//            Vector compras=new Vector();
+//            Vector compras2=new Vector();
+//            Posicion c1,c2,c3,v1,v2,v3;
+//            c1=new Posicion("comprador1",53,1);
+//            c2=new Posicion("comprador2",32,2);
+//            c3=new Posicion("comprador3",62,3);
+//            compras.add(Integer.toString(85));
+//            compras.add(c1);
+//            compras.add(c2);
+//            compras2.add(Integer.toString(62));
+//            compras2.add(c3);
+//            Vector ventas=new Vector();
+//            Vector ventas2=new Vector();
+//            cT.put(Double.toString(precio1),compras);
+//            cT.put(Double.toString(precio2),compras2);
+//            v1=new Posicion("vendedor1",25,4);
+//            v2=new Posicion("vendedor2",10,5);
+//            v3=new Posicion("vendedor3",15,6);
+//            ventas.add(Integer.toString(25));
+//            ventas.add(v1);
+//            ventas2.add(Integer.toString(25));
+//            ventas2.add(v2);
+//            ventas2.add(v3);
+//            vT.put(Double.toString(precio1),ventas);
+//            vT.put(Double.toString(precio2),ventas2);
+//            //calculaPrecio(3.10,0.3,2.58);
+//            SistemaOperaciones so=new SistemaOperaciones(cT,vT);
+//            so.introduceCompra(1,"Pako",23.4,40,35,0.5);
+//            so.cancelaOperacion(1,"Compra");
+//            Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5);
+//            fluctuaciones1.paso();
           }
 		public int getAccionesVenta() {
 			return nAccionesVenta;

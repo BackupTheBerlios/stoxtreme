@@ -29,6 +29,9 @@ public class Posicion {
 	return idAgente;
 
   }
-
+  
+  public String toString(){
+	  return idAgente+" "+numeroDeAcciones+" "+idOp;
+  }
 
 }

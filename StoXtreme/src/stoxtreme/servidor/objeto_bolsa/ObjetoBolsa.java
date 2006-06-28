@@ -64,6 +64,7 @@ public class ObjetoBolsa implements RelojListener{
 	
 	private Hashtable<Integer, String> mapaOpsAgentes = new Hashtable<Integer,String>(); 
 	public void insertaOperacion(String IDAgente,int idOperacion, Operacion op){
+		System.err.println(IDAgente+" "+idOperacion+" "+op);
 		mapaOpsAgentes.put(idOperacion, IDAgente);
 		if(op.getTipoOp()==Operacion.COMPRA)
 			sistemaOperaciones.introduceCompra(idOperacion, IDAgente, op.getPrecio(), op.getCantidad(),fluctuaciones.getPrecioActual(),fluctuaciones.getTick());
@@ -79,7 +80,7 @@ public class ObjetoBolsa implements RelojListener{
 		mapaOpsAgentes.remove(idOperacion);
 	}
 	public void setVariablesSistema(VariablesSistema variables, ParametrosServidor parametros) {
-		System.out.println("Pone variables "+ nombreEmpresa);
+//		System.out.println("Pone variables "+ nombreEmpresa);
 		sistemaOperaciones = new SistemaOperaciones(nAccionesInicial);
 		fluctuaciones = new Fluctuaciones(variables,sistemaOperaciones, parametros.getTick(),this.cotizacion,nombreEmpresa);
 	}

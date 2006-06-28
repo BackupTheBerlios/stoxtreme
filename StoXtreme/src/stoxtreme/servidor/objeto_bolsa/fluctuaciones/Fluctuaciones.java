@@ -200,11 +200,12 @@ public class Fluctuaciones {
 		    			aux.put(claveFinal,auxC);
 		    		sisOp.setListaCompras(aux);
 		    		precioM=Double.parseDouble(claveFinal);
+		    		return redondeo(precioM, 2);
 		    	}
 		    }
 	    }
-	    sisOp.setListaCompras(compra);
-	    sisOp.setListaVentas(venta);
+	    //sisOp.setListaCompras(compra);
+	    //sisOp.setListaVentas(venta);
 	    return redondeo(precioM, 2);
 	  }	  
 
@@ -227,13 +228,17 @@ public static void main(String[] args) {
 	Fluctuaciones fluc=new Fluctuaciones(so,0.3,25.3,"Sony-Ericson");
 	//fluc.getSisOp().introduceCompra(1,"Agente Smith",27.6,40,fluc.getPrecioActual(),fluc.getTick());
 	//fluc.getSisOp().introduceVenta(5,"Agente Rocio",27.6,30,fluc.getPrecioActual(),fluc.getTick());
-	fluc.getSisOp().introduceCompra(2,"Agente Pollo",27.6,20,fluc.getPrecioActual(),fluc.getTick());
-	fluc.getSisOp().introduceCompra(3,"Agente Pollo2",27.6,20,fluc.getPrecioActual(),fluc.getTick());
-	fluc.getSisOp().introduceCompra(5,"Agente Pollo3",27.6,70,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceCompra(2,"Agente Pollo",1,1,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceCompra(3,"Agente Pollo",1,1,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceCompra(4,"Agente Pollo",1,1,fluc.getPrecioActual(),fluc.getTick());
+	fluc.getSisOp().introduceCompra(5,"Agente Pollo",1,1,fluc.getPrecioActual(),fluc.getTick());
+	//fluc.getSisOp().introduceCompra(3,"Agente Pollo2",27.6,20,fluc.getPrecioActual(),fluc.getTick());
+	//fluc.getSisOp().introduceCompra(5,"Agente Pollo3",27.6,70,fluc.getPrecioActual(),fluc.getTick());
 	//fluc.getSisOp().introduceVenta(7,"Agente Yo",28.6,15,fluc.getPrecioActual(),fluc.getTick());
-	fluc.getSisOp().cancelaOperacion(9,"loko");
-	fluc.paso();
-	fluc.getSisOp().cancelaOperacion(2,"Agente Pollo");
+//	fluc.getSisOp().cancelaOperacion(9,"loko");
+	//fluc.paso();
+	fluc.getSisOp().cancelaOperacion(4,"Agente Pollo");
+	fluc.getSisOp().cancelaOperacion(5,"Agente Pollo");
 	//fluc.paso();
 	/*Hashtable cT=new Hashtable();
     Hashtable vT=new Hashtable();
