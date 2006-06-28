@@ -246,23 +246,43 @@ public class MainFrameCliente extends JFrame{
 		//JOptionPane.showMessageDialog(tablaArribaIzq,null,"Has pulsado el volumen",JOptionPane.CANCEL_OPTION);
 	    if (e.getActionCommand().equals("Volumen")){
 			if(volumen) {
-		    volumen = false;
+		    volumen = false;		   
 		    split_graficas.remove((Component)graficas.get("volumen"));
 		    graficas.remove("volumen");
+		    if (estocastico){
+		    	split_graficas.remove((Component)graficas.get("estocastico"));
+			    graficas.remove("estocastico");
+			    split_graficas.remove(2);
+			    graficas.put("estocastico",p3);
+			    split_graficas.setBottomComponent(p3);
+		    }
 		    }
 		    else {
 		    volumen = true;
+		    p2=getChartPanel2();
+		    graficas.put("volumen",p2);
+		    split_graficas.setBottomComponent(p2);
 		    
 		    }
 	    }
 	     if (e.getActionCommand().equals("Estocastico")){
 		    if(estocastico) {
-			    estocastico = false;
-			    split_graficas.remove((Component)graficas.get("estocastico"));
+			    estocastico = false;			    
+			    split_graficas.remove((Component)graficas.get("estocastico"));		
 			    graficas.remove("estocastico");
+			    if (volumen){
+			    	split_graficas.remove((Component)graficas.get("volumen"));
+				    graficas.remove("volumen");
+				    split_graficas.remove(2);
+				    graficas.put("volumen",p2);
+				    split_graficas.setBottomComponent(p2);
+			    }
 			    }
 			    else {
 			    estocastico = true;
+			    p3=getChartPanel3();
+		        graficas.put("estocastico",p3);
+				split_graficas.setBottomComponent(p3);
 			 }
 	    }
 	    JSplitPane aux=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -273,25 +293,14 @@ public class MainFrameCliente extends JFrame{
 			aux.setBottomComponent(p3);
 			split_graficas.setBottomComponent(aux);
 		}
-	    else if (volumen && e.getActionCommand().equals("Volumen")){
-				p2=getChartPanel2();
-			    graficas.put("volumen",p2);
-			    split_graficas.setBottomComponent(p2);			
-				//split_graficas.setBottomComponent(p);
-			}	
-			else{
-				if(estocastico && e.getActionCommand().equals("Estocastico")){
-					p3=getChartPanel3();
-			        graficas.put("estocastico",p3);
-					split_graficas.setBottomComponent(p3);
-				}
-				if(!volumen && !estocastico &&!(e.getActionCommand().equals("Ayuda Volumen")
+	    else 
+	    	if(!volumen && !estocastico &&!(e.getActionCommand().equals("Ayuda Volumen")
 						||e.getActionCommand().equals("Ayuda Estocastico"))){
 //					split_graficas=null;
 //					split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 					split_graficas.remove(2);
 				}
-			}
+			
 	
 	}
 	private Component getPanelIzquierdaArriba() {
