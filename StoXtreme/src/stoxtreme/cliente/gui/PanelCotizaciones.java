@@ -3,7 +3,6 @@ package stoxtreme.cliente.gui;
 import javax.swing.*;
 
 import stoxtreme.cliente.EstadoBolsa;
-import sun.security.krb5.internal.crypto.g;
 
 import java.awt.*;
 import java.awt.event.*;
