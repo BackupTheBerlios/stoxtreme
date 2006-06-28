@@ -203,20 +203,17 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	public void iniciaSesion() throws RemoteException {
 		// Consigue los parametros
-		param = new ParametrosServidor();
+		param=new ParametrosServidor();
+		if (!guiAdmin.getOpciones().getValor("         Numero de empresas").equals(""))
+			param.modificarParams("numeroEmpresas",new Integer(guiAdmin.getOpciones().getValor("         Numero de empresas")).intValue());
 		if (!guiAdmin.getOpciones().getValor("Tick").equals(""))
-			param.modificarParams(ParametrosServidor.TICK, new Double(guiAdmin.getOpciones()
-					.getValor("Tick")));
-		if (!guiAdmin.getOpciones().getValor("Tiempo de fluctuacion")
-				.equals(""))
-			param.modificarParams("Tiempo de fluctuacion", new Long(guiAdmin
-					.getOpciones().getValor("Tiempo de fluctuacion")));
-		if (guiAdmin.getOpciones().getValor("Fichero de empresas") != null)
-			param.modificarParams("ficheroEmpresas", guiAdmin.getOpciones()
-					.getValor("Fichero de empresas"));
-		if (guiAdmin.getOpciones().getValor("Fichero de usuarios") != null)
-			param.modificarParams("ficheroRegistrados", guiAdmin.getOpciones()
-					.getValor("Fichero de usuarios"));
+			param.modificarParams("tick",new Double(guiAdmin.getOpciones().getValor("Tick")));
+		if (!guiAdmin.getOpciones().getValor("Tiempo de fluctuacion").equals(""))
+			param.modificarParams("tiempo",new Long(guiAdmin.getOpciones().getValor("Tiempo de fluctuacion")));
+		if (guiAdmin.getOpciones().getValor("Fichero de empresas")!=null)
+			param.modificarParams("ficheroEmpresas",guiAdmin.getOpciones().getValor("Fichero de empresas"));
+		if (guiAdmin.getOpciones().getValor("Fichero de usuarios")!=null)
+			param.modificarParams("ficheroRegistrados",guiAdmin.getOpciones().getValor("Fichero de usuarios"));
 		
 		gestorUsuarios = new GestionUsuarios(param.getFicheroRegistrados());
 		guiAdmin.setModeloUsuarios(gestorUsuarios);
