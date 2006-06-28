@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <info>
-	<empresa nombre="ACERINOX" grupo="Materiales/Industria/Construccion">
+	<empresa nombre="ACERINOX" grupo="Materiales/Industria/Construcción">
 	 	<info_bursatil>
 			<capital_social capital="64875000" valor_nominal="0.25" num_acciones="259500000"/>
 	 		<participaciones> 

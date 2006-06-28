@@ -27,6 +27,7 @@ public class InfoLocal {
 	//Vector[2]:valor nominal
 	//Vector[3]:num ampliaciones capital
 	//Vector[4]:resumen
+	//Vector[5]:sector
 	private Hashtable<String,Vector> info;
 	private ArrayList <String>empresas;
 	private Vector datos;
@@ -60,6 +61,10 @@ public class InfoLocal {
 	public String getDescripcion(String empresa){
 		datos =info.get(empresa);
 		return datos.elementAt(4).toString();
+	}
+	public String getSector(String empresa){
+		datos =info.get(empresa);
+		return datos.elementAt(5).toString();
 	}
 	
 	public ArrayList<String> getEmpresas(){

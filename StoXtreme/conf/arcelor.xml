@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <info>
-	<empresa nombre="ARCELOR" grupo="Materiales/Industria/Construccion">
+	<empresa nombre="ARCELOR" grupo="Materiales/Industria/Construcción">
 	 	<info_bursatil>
 			<capital_social capital="3198871635" valor_nominal="5" num_acciones="639774327"/>
 	 		<participaciones> 

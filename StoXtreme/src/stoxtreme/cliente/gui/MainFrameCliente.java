@@ -149,8 +149,9 @@ public class MainFrameCliente extends JFrame{
 		            //
 		            StyledDocument doc = panelInfoEmpresa.getStyledDocument();
 		            try {
-		            	doc.remove(0, doc.getLength()-1);
+		            	doc.remove(0,doc.getLength()-1);
 		    			doc.insertString(0, empresa+"\n", null);
+		    			doc.insertString(doc.getLength()-1,"Sector: "+info.getSector(empresa)+"\n",null);
 		    			doc.insertString(doc.getLength()-1, "Capital social: "+info.getCapitalSocial(empresa)+"\n",null);
 		    			doc.insertString(doc.getLength()-1, "Valor nominal de cada accion: "+info.getValorNominal(empresa)+"\n",null);
 		    			doc.insertString(doc.getLength()-1, "Número de ampliaciones de capital: "+info.getAmpliacionesCapital(empresa)+"\n\n",null);

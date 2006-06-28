@@ -48,6 +48,8 @@ public class ParserInfoLocal {
 				datos.add(3,((Element)nlIndiv.item(0)).getTextContent().trim());
 				nlIndiv=empresaIndiv.getElementsByTagName("descripcion");
 				datos.add(4,((Element)nlIndiv.item(0)).getTextContent().trim());
+				nlIndiv=empresaIndiv.getElementsByTagName("empresa");
+				datos.add(5,((Element)nlIndiv.item(0)).getAttribute("grupo"));
 				ht.put(nombre,datos);
 			}
 	    } catch (SAXException sxe) {

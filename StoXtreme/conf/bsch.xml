@@ -2,9 +2,8 @@
 <info>
 	<empresa nombre="BSCH" grupo="Servicios financeros/Inmobiliarias">
 	 	<info_bursatil>
-			<capital_social capital="2127148289" valor_nominal="" num_acciones="2127148289"/>
-	 		<participaciones> 
-			</participaciones>
+			<capital_social capital="2127148289" valor_nominal="1" num_acciones="2127148289"/>
+	 		<participaciones> </participaciones>
 	 		<ampliaciones>0</ampliaciones>
 			<descripcion>El Banco es la sociedad matriz del Grupo Santander Central Hispano que
 actúa como una entidad "holding" tenedora de las acciones de las

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <info>
- 	<empresa nombre="BANCO SABADELL" grupo="Servicios Financieros/Inmobiliarias">
+ 	<empresa nombre="BANCO SABADELL" grupo="Servicios financieros/Inmobiliarias">
 	 	<info_bursatil>
 	 		<capital_social capital="153001710" valor_nominal="0.5" num_acciones="306003420"/>
 	 		<participaciones> 
 			</participaciones>
-	 		<ampliaciones>
-			</ampliaciones>
+	 		<ampliaciones>0</ampliaciones>
 			<descripcion>El Banco Sabadell encabeza el cuarto grupo bancario de España
 por volumen de activos. Integrado también por Banco Atlántico y
 Sabadell BancaPrivada, por marcas destacadas como Banco

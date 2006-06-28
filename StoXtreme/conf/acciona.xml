@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <info>
-	<empresa nombre="ACCIONA" grupo="Materiales/Industria/Construccion">
+	<empresa nombre="ACCIONA" grupo="Materiales/Industria/Construcción">
 	 	<info_bursatil>
 			<capital_social capital="63550000" valor_nominal="1" num_acciones="63550000"/>
 	 		<participaciones> 

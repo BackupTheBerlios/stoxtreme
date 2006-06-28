@@ -5,8 +5,7 @@
 	 		<capital_social capital="98223225" valor_nominal="0.2" num_acciones="491116125"/>
 	 		<participaciones> 
 			</participaciones>
-	 		<ampliaciones>
-			</ampliaciones>
+	 		<ampliaciones>0</ampliaciones>
 			<descripcion>Cintra es uno de los principales promotores privados de infraestructuras
 de transporte en el mundo, con una inversión comprometida superior
 a 1.800 millones de euros, que desarrolla su actividad en el mercado de

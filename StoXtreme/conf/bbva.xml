@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <info>
-	<empresa nombre="BBVA" grupo="Servicios financeros/Inmobiliarias">
+	<empresa nombre="BBVA" grupo="Servicios financieros/Inmobiliarias">
 	 	<info_bursatil>
 			<capital_social capital="1661517501" valor_nominal="1" num_acciones="1661517501"/>
 	 		<participaciones> 
