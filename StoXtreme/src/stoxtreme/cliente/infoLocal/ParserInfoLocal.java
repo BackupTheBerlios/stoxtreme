@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,22 +22,23 @@ public class ParserInfoLocal {
 	public ParserInfoLocal(){
 	}
 	
-	public Hashtable<String, Double> creaInfoLocal(String fichero, int numEmpresas) {
+	public Hashtable<String, Vector> creaInfoLocal(String fichero, int numEmpresas) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		Hashtable <String,Double>ht=new Hashtable<String,Double>();
+		Hashtable <String,Vector>ht=new Hashtable<String,Vector>();
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(new File(fichero));
 			NodeList nl = document.getElementsByTagName("emp");
 			String nombre=null;
 			double cotiz=0;
-			String info=null;
 			for (int i=0; nl!=null && i<nl.getLength() && i<numEmpresas;i++){
 				nombre=((Element)nl.item(i)).getAttribute("nombre");
 				cotiz=new Double(((Element)nl.item(i)).getAttribute("cotizacion"));
 				//le quitamos los /t y /n del final y del principio
-				info=((Element)nl.item(i)).getTextContent().trim();
-				ht.put(nombre,new Double(cotiz));
+				ht.put(nombre, new Vector());
+				Vector datos=ht.get(nombre);
+				datos.add(0,cotiz);
+				ht.put(nombre,datos);
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing
