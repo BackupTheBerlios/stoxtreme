@@ -69,7 +69,7 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 		while(ids.hasMoreElements()){
 			String id = (String)ids.nextElement();
 			Object o = esperando.get(id);
-			if(o!=null){
+			if(o != null){
 				synchronized(o){
 					o.notify();
 				}

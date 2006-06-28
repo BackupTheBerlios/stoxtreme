@@ -22,8 +22,6 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 			EstadoBolsa bolsa){
 		IDAgente.setUsuario(nombreUsuario);
 		this.notif = new Notificador();
-		//receptor = new ReceptorMensajes("alonso", ReceptorMensajes.WEB_SERVICE, URLAXIS+"StoXtremeMsg");
-//		receptor.addListener(this);
 	}
 	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer,String>();

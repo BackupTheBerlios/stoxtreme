@@ -146,7 +146,7 @@ public class Cliente{
 		opPendientes = new OperacionesPendientes();
 		System.err.println("Creando Cartera");
 		cartera = new CarteraAcciones();
-		System.err.println("Creando Estado de la Bolsa");
+		System.err.println("Creando Estado de la Bolsa: "+numEmpresas);
 		InfoLocal.crearInstancia("./conf/cliente/empresas.xml", numEmpresas);
 		InfoLocal infoLocal = InfoLocal.getInstance();
 		eBolsa = new EstadoBolsa(infoLocal);
