@@ -68,10 +68,11 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 		Enumeration<String> ids = esperando.keys();
 		while(ids.hasMoreElements()){
 			String id = (String)ids.nextElement();
-			System.out.println("Despierto a: "+id);
 			Object o = esperando.get(id);
-			synchronized(o){
-				o.notify();
+			if(o!=null){
+				synchronized(o){
+					o.notify();
+				}
 			}
 		}
 	}
@@ -100,7 +101,6 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 			esperando.put(ID, cerrojo);
 			while(!isNuevos(ID)){
 				synchronized (cerrojo) {
-//					System.out.println("Espero("+ID+")");
 					cerrojo.wait();
 				}
 			}
