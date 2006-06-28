@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <empresas>
 	<emp nombre="ABERTIS" cotizacion="18.17" global="FALSE">
 		conf/abertis.xml 		
