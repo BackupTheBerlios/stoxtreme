@@ -80,6 +80,12 @@ public class Servidor implements Administrador, Stoxtreme{
 		if(!b) return -1;
 		else
 			// devuelve el numero de empresas
+			try{
+				System.out.println(param.getNumEmpresas());
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 			return Integer.parseInt(param.getNumEmpresas());
 	}
 	
@@ -197,7 +203,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	
 	public void iniciaSesion() throws RemoteException {
 		// Consigue los parametros
-		ParametrosServidor param = new ParametrosServidor();
+		param = new ParametrosServidor();
 		if (!guiAdmin.getOpciones().getValor("Tick").equals(""))
 			param.modificarParams(ParametrosServidor.TICK, new Double(guiAdmin.getOpciones()
 					.getValor("Tick")));
