@@ -42,16 +42,13 @@ public class ParserInfoLocal {
 				ht.put(nombre, new Vector());
 				Vector datos=ht.get(nombre);
 				datos.add(0,cotiz);
-				System.out.println("Precio ini "+cotiz);
 				datos.add(1,((Element)nlIndiv.item(0)).getAttribute("capital"));
-				System.out.println("Capital "+((Element)nlIndiv.item(0)).getAttribute("capital"));
 				datos.add(2,((Element)nlIndiv.item(0)).getAttribute("valor_nominal"));
-				System.out.println("Valor nominal "+((Element)nlIndiv.item(0)).getAttribute("valor_nominal"));
 				nlIndiv=empresaIndiv.getElementsByTagName("ampliaciones");
 				datos.add(3,((Element)nlIndiv.item(0)).getTextContent().trim());
-				System.out.println("Ampliaciones "+((Element)nlIndiv.item(0)).getTextContent().trim());
+				nlIndiv=empresaIndiv.getElementsByTagName("descripcion");
+				datos.add(4,((Element)nlIndiv.item(0)).getTextContent().trim());
 				ht.put(nombre,datos);
-				nombre.toLowerCase();
 			}
 	    } catch (SAXException sxe) {
 	       // Error generated during parsing

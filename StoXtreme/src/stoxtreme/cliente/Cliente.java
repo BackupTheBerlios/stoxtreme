@@ -2,7 +2,6 @@ package stoxtreme.cliente;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;

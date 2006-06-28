@@ -8,7 +8,10 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.plaf.TableHeaderUI;
 import javax.swing.table.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 import mseries.Calendar.MDateSelectorConstraints;
 import mseries.Calendar.MDefaultPullDownConstraints;
@@ -33,11 +36,13 @@ import stoxtreme.cliente.infoLocal.InfoLocal;
 import stoxtreme.cliente.infoLocal.ParserInfoLocal;
 import stoxtreme.interfaz_remota.Operacion;
 
+@SuppressWarnings("serial")
 public class MainFrameCliente extends JFrame{
 	private ModeloCartera modeloCartera;
 	//private JTabbedPane tabbedPane;
 	private ModeloOpPendientes modeloOpPendientes;
 	private ModeloPrecioAccionesGrafico modeloPrecios;
+	private ModeloListaEmpresas modeloLEmpresas;
 	private InfoLocal info=InfoLocal.getInstance();
 	private Cliente cliente;
 	public boolean volumen;
@@ -56,6 +61,7 @@ public class MainFrameCliente extends JFrame{
 	private Hashtable graficas=new Hashtable();
 	private HerramientaAgentesPanel hAgentes;
 	private EstadoBolsa eBolsa;
+	private JTextPane panelInfoEmpresa;
 	private JPanel p2;
 	private JPanel p3;
 	double max =0;
@@ -73,6 +79,7 @@ public class MainFrameCliente extends JFrame{
 		this.modeloCartera = modeloCartera;
 		this.modeloOpPendientes = modeloOpPendientes;
 		this.modeloPrecios = eBolsa.getMAcciones();
+		this.modeloLEmpresas=new ModeloListaEmpresas(info.getEmpresas());
 		this.volumen =false;
 		this.estocastico =false;
 		this.hAgentes=hAgentes;
@@ -122,52 +129,57 @@ public class MainFrameCliente extends JFrame{
 	}
 	
 	public JPanel getPanelEmpresas(){
+		TableSorter sorterEmpresas = new TableSorter(modeloLEmpresas);
+		final JTable tabla = new JTable(sorterEmpresas);
+		sorterEmpresas.setTableHeader(tabla.getTableHeader());
+		tabla.getTableHeader().setToolTipText("Pinche en cualquier empresa para ver información sobre ella");
+		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ListSelectionModel rowSM = tabla.getSelectionModel();
+		rowSM.addListSelectionListener(new ListSelectionListener() {
+		    public void valueChanged(ListSelectionEvent e) {
+		        //Ignore extra messages.
+		    	String empresa=null;
+		        if (e.getValueIsAdjusting()) return;
+		        ListSelectionModel lsm =
+		            (ListSelectionModel)e.getSource();
+		        if (!lsm.isSelectionEmpty()) {
+		            int selectedRow = lsm.getMinSelectionIndex();
+		            empresa=tabla.getValueAt(selectedRow,0).toString();
+		            System.out.println(empresa);
+		            //
+		            StyledDocument doc = panelInfoEmpresa.getStyledDocument();
+		            try {
+		            	doc.remove(0, doc.getLength()-1);
+		    			doc.insertString(0, empresa+"\n", null);
+		    			doc.insertString(doc.getLength()-1, "Capital social: "+info.getCapitalSocial(empresa)+"\n",null);
+		    			doc.insertString(doc.getLength()-1, "Valor nominal de cada accion: "+info.getValorNominal(empresa)+"\n",null);
+		    			doc.insertString(doc.getLength()-1, "Número de ampliaciones de capital: "+info.getAmpliacionesCapital(empresa)+"\n\n",null);
+		    			doc.insertString(doc.getLength()-1,info.getDescripcion(empresa)+"\n", null);
+		            } catch (BadLocationException ex) {
+		    			ex.printStackTrace();
+		    		}
+		        }
+		    }
+		});
+
 		JPanel panelEmpresas=new JPanel();
 		panelEmpresas.setLayout(new BoxLayout(panelEmpresas,BoxLayout.Y_AXIS));
-		String[] headers = {" ","Empresa"};
-		JTable tabla=new JTable(35,2);
-		tabla.setSelectionBackground((new Color(130,130,200)).brighter());
-		JPanel dateSelector= new JPanel();
-		JPanel daySelector= new JPanel(new BorderLayout());
-		JPanel monthSelector= new JPanel(new BorderLayout());
-		JPanel yearSelector= new JPanel(new BorderLayout());
 		JPanel botonHistorico=new JPanel();
-		JPanel fechaHistorico=new JPanel();
-		String[] anyos = {"2004","2005"};
-		String[] meses = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio",
-				"Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
-		String[] dias = {"01","02","03","04","05","06","07","08","09","10","11","12",
-				"13","14","15","16","17","18","19","20","21","22","23","24","25","26",
-				"27","28","29","30","31"};
-		JLabel a=new JLabel("Año");
-		JLabel m=new JLabel("Mes");
-		JLabel d=new JLabel("Dia");
-		JComboBox anyo=new JComboBox(anyos);
-		JComboBox mes=new JComboBox(meses);
-		JComboBox dia=new JComboBox(dias);
-		daySelector.add(dia,BorderLayout.SOUTH);
-		daySelector.add(d,BorderLayout.CENTER);
-		monthSelector.add(mes,BorderLayout.SOUTH);
-		monthSelector.add(m,BorderLayout.CENTER);
-		yearSelector.add(anyo,BorderLayout.SOUTH);
-		yearSelector.add(a,BorderLayout.CENTER);
-		fechaHistorico.add(daySelector);
-		fechaHistorico.add(monthSelector);
-		fechaHistorico.add(yearSelector);
-		botonHistorico.add(new JButton("Consultar Historico"));
-		dateSelector.add(fechaHistorico);
-		dateSelector.add(botonHistorico);
+		botonHistorico.add(new JButton("Consultar Histórico"));
 		panelEmpresas.add(new JScrollPane(tabla));
-		panelEmpresas.add(new FakeInternalFrame("Seleccionar Fecha",dateSelector));
 		panelEmpresas.add(botonHistorico);
-		panelEmpresas.setSize(200,600);
+		panelEmpresas.setSize(100,600);
 		return new FakeInternalFrame("Empresas",panelEmpresas);
 	}
 	
-	public JPanel getVisualizador(){
-		JPanel visio =new JPanel();
-		visio.setSize(600,600);
-		return visio;
+	public Component getVisualizador(){
+		//JPanel panelInfo=new JPanel();
+		panelInfoEmpresa = new JTextPane();
+		panelInfoEmpresa.setSize(700,600);
+		JScrollPane panelScroll=new JScrollPane(panelInfoEmpresa);
+		//panelInfo.add(panelScroll);
+		FakeInternalFrame frame = new FakeInternalFrame("Información", panelScroll);
+		return frame;
 	}
 	
 	public Component getPanelPrincipal(){
@@ -300,8 +312,7 @@ public class MainFrameCliente extends JFrame{
 //					split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 					split_graficas.remove(2);
 				}
-			
-	
+
 	}
 	private Component getPanelIzquierdaArriba() {
 		JPanel panel = new JPanel(new BorderLayout());
@@ -454,7 +465,7 @@ private JPanel getChartPanel2(){
 			    while(c1.compareTo(c2)!=0){
 					fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
 					//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
-					DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
+					DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase().replace(" ","_"),fechaAux);
 					System.err.println("Fecha: "+c1.get(Calendar.MONTH)+ " Volumen: "+aux.getVolumen());
 					//auxds.addValue(aux.getVolumen(),"Volumen",c1.getTime());
 					auxds.addValue(aux.getVolumen(),"Volumen",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
@@ -481,7 +492,7 @@ private void calculaMaxenFecha(Calendar f){
 	DatoHistorico aux;
 	while(i<7){
 		String fechaAux=f.get(Calendar.DAY_OF_MONTH)+"/"+(f.get(Calendar.MONTH)+1)+"/"+f.get(Calendar.YEAR);
-		aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
+		aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase().replace(" ","_"),fechaAux);
 		if (aux.getPrecioMaximo()>max){
 			max=aux.getPrecioMaximo();
 		}
@@ -705,7 +716,6 @@ private void calculaMaxenFecha(Calendar f){
 		TableSorter sorterPrecios = new TableSorter(modeloPrecios);
 		JTable tabla = new JTable(sorterPrecios);
 		sorterPrecios.setTableHeader(tabla.getTableHeader());
-		
 		tabla.getColumn(tabla.getColumnName(1)).setCellRenderer(modeloPrecios.getRenderer());
 		
 		tabla.addMouseListener(new MouseAdapter(){
@@ -721,46 +731,5 @@ private void calculaMaxenFecha(Calendar f){
 		FakeInternalFrame frame = new FakeInternalFrame("Empresas", new JScrollPane(tabla));
 		frame.setPreferredSize(new Dimension(500, 150));
 		return frame;
-	}
-
-	
-	public static void main(String[] args){
-		ArrayList lEmpresas = new ArrayList();
-		lEmpresas.add("Empresa1");
-		lEmpresas.add("Empresa2");
-		lEmpresas.add("Empresa3");
-		ModeloOpPendientes mOpPendientes = new ModeloOpPendientes();
-		ModeloCartera mCartera = new ModeloCartera();
-		ModeloPrecioAccionesGrafico mPrecios = new ModeloPrecioAccionesGrafico(lEmpresas,new Date(105,7,26));
-		//Cliente p=new Cliente("Pako");
-		MainFrameCliente gui = new MainFrameCliente(mCartera, mOpPendientes, mPrecios);
-		gui.init();
-		gui.pack();
-		gui.setVisible(true);
-		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.COMPRA, 100, "Empresa1", 10.0f), 10);
-		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.VENTA, 100, "Empresa2", 10.0f), 50);
-		
-		mCartera.insertarAcciones("Empresa1", 100,2);
-		mCartera.insertarAcciones("Empresa2", 200,2);
-		
-		int i=0;
-		int j=270;
-		while(true){
-			i++;
-			j+=(Math.random()>0.5?1:-1);
-			if(i<540){
-				mPrecios.insertaValor("Empresa1", i);
-				mPrecios.insertaValor("Empresa2", 540-i);
-				mPrecios.insertaValor("Empresa3", j);
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 }
