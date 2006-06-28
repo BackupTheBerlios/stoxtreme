@@ -743,8 +743,8 @@ private void calculaMaxenFecha(Calendar f){
 		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.COMPRA, 100, "Empresa1", 10.0f), 10);
 		mOpPendientes.insertarOperacion(new Operacion("ID1", Operacion.VENTA, 100, "Empresa2", 10.0f), 50);
 		
-		mCartera.insertarAcciones("Empresa1", 100);
-		mCartera.insertarAcciones("Empresa2", 200);
+		mCartera.insertarAcciones("Empresa1", 100,2);
+		mCartera.insertarAcciones("Empresa2", 200,2);
 		
 		int i=0;
 		int j=270;

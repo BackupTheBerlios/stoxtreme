@@ -20,7 +20,7 @@ public class CarteraAcciones {
 
 	public void actualiza(Operacion o, int cantidad) {
 		if(o.getTipoOp()==Operacion.COMPRA){
-			mCartera.insertarAcciones(o.getEmpresa(), cantidad);
+			mCartera.insertarAcciones(o.getEmpresa(), cantidad,o.getPrecio());
 		}
 		else if(o.getTipoOp()==Operacion.VENTA){
 			mCartera.restaAcciones(o.getEmpresa(), cantidad);
