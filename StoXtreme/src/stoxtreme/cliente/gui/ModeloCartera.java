@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import javax.swing.table.AbstractTableModel;
 
 public class ModeloCartera extends AbstractTableModel{
-	private static String[] nCol = {"Empresa", "Numero Acciones","Precios Medio por Accion"};
+	private static String[] nCol = {"Empresa", "Numero Acciones","precios"};
 	private ArrayList<String> nombreEmpresas;
 	private Hashtable<String, Integer> cartera;
 	private Hashtable<String, Double> precios;
