@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.servidor.VariablesSistema;
+import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 /**
  * <p>Título: </p>
@@ -49,8 +50,8 @@ public class Fluctuaciones {
     Enumeration listaClaves;
     double max, min;
     String claveI;
-    max= pActual + 10;
-    min= pActual - 10;
+    max= pActual + 5;
+    min= pActual - 5;
     listaClaves=vTotal.keys();
     while (listaClaves.hasMoreElements()){
       claveI=(String)listaClaves.nextElement();
@@ -73,10 +74,10 @@ public class Fluctuaciones {
   }
   //cambiar para el proyecto total
   public double paso(){
-    double nuevoValor=calculaValorTitulo();
+    pActual=calculaValorTitulo();
     String nomEmpresa="PRECIO_"+empresa.toUpperCase();
-    varS.cambiaVariable(nomEmpresa,new Double(nuevoValor));
-    return nuevoValor;
+    varS.cambiaVariable(nomEmpresa,new Double(pActual));
+    return pActual;
   }
   
   

@@ -21,8 +21,6 @@ import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
  *
  */
 public class SistemaOperaciones /*implements RelojListener*/{
-        //private Hashtable<Double, ArrayList<Object>> listaCompras;
-        //private Hashtable<Double, ArrayList<Object>> listaVentas;
         private Hashtable listaCompras;
         private Hashtable listaVentas;
         private int nAccionesVenta;
@@ -34,7 +32,6 @@ public class SistemaOperaciones /*implements RelojListener*/{
           listaCompras=new Hashtable();
           listaVentas=new Hashtable();
           this.nAccionesVenta = nAccionesVenta;
-          //this.precioEstimado=(nAccionesVenta%2)+0.5;
           this.precioEstimado=1;
           idscompras = new TreeSet();
           idsventas = new TreeSet();
@@ -74,7 +71,6 @@ public class SistemaOperaciones /*implements RelojListener*/{
         	Posicion p1;
         	int idOp;
         	Integer num= new Integer(numAcciones);
-        	//preciodef=
         	if (listaCompras.containsKey(Double.toString(calculaPrecio(precioA,tick,precio)))){
         		compra=(Vector) listaCompras.get(Double.toString(calculaPrecio(precioA,tick,precio)));
         		accionesTotales=(Integer)compra.firstElement();
@@ -159,9 +155,7 @@ public class SistemaOperaciones /*implements RelojListener*/{
         				acciones=new Integer(acciones.intValue()-pi.getNumeroDeAcciones());
         				if (acciones.toString().equals("0")) {
         					cadena.removeAllElements(); 
-        					//System.out.println(elemento);
         				    operacion.remove(elemento);
-        				    //cadena.removeAllElements();
         				    
         				}
         				else{
@@ -181,45 +175,6 @@ public class SistemaOperaciones /*implements RelojListener*/{
                 // se almacenaran las cancelaciones y cuando pase un tiempo se efectuaran
                 // todas
         }
-        public static void main(String[] args) {
-//            Hashtable cT=new Hashtable();
-//            Hashtable vT=new Hashtable();
-////            Double precio1=new Double(23.5f);
-////            Double precio2=new Double(25.5);
-//            double precio1=(double)23.5;
-//            double precio2=(double)25.5;
-//            Vector compras=new Vector();
-//            Vector compras2=new Vector();
-//            Posicion c1,c2,c3,v1,v2,v3;
-//            c1=new Posicion("comprador1",53,1);
-//            c2=new Posicion("comprador2",32,2);
-//            c3=new Posicion("comprador3",62,3);
-//            compras.add(Integer.toString(85));
-//            compras.add(c1);
-//            compras.add(c2);
-//            compras2.add(Integer.toString(62));
-//            compras2.add(c3);
-//            Vector ventas=new Vector();
-//            Vector ventas2=new Vector();
-//            cT.put(Double.toString(precio1),compras);
-//            cT.put(Double.toString(precio2),compras2);
-//            v1=new Posicion("vendedor1",25,4);
-//            v2=new Posicion("vendedor2",10,5);
-//            v3=new Posicion("vendedor3",15,6);
-//            ventas.add(Integer.toString(25));
-//            ventas.add(v1);
-//            ventas2.add(Integer.toString(25));
-//            ventas2.add(v2);
-//            ventas2.add(v3);
-//            vT.put(Double.toString(precio1),ventas);
-//            vT.put(Double.toString(precio2),ventas2);
-//            //calculaPrecio(3.10,0.3,2.58);
-//            SistemaOperaciones so=new SistemaOperaciones(cT,vT);
-//            so.introduceCompra(1,"Pako",23.4,40,35,0.5);
-//            so.cancelaOperacion(1,"Compra");
-//            Fluctuaciones fluctuaciones1 = new Fluctuaciones(so,(double)5.0,(double)20.5);
-//            fluctuaciones1.paso();
-          }
 		public int getAccionesVenta() {
 			return nAccionesVenta;
 		}
