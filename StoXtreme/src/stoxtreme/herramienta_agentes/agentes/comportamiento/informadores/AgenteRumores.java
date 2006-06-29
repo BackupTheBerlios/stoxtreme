@@ -22,11 +22,9 @@ public class AgenteRumores extends ComportamientoAgente{
 			
 			if(Math.random() > 0.5){
 				m.setContenidoString(empresa+",1.8");
-				System.err.println("RUMOR POSITIVO");
 			}
 			else{
 				m.setContenidoString(empresa+",0.8");
-				System.err.println("RUMOR NEGATIVO");
 			}
 			
 			MandarMensaje decision = new MandarMensaje(false, m);

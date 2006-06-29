@@ -79,13 +79,6 @@ public class Servidor implements Administrador, Stoxtreme{
 		boolean b = gestorUsuarios.conectaUsuario(usr,psw);
 		if(!b) return -1;
 		else
-			// devuelve el numero de empresas
-			try{
-				System.out.println(param.getNumEmpresas());
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
 			return Integer.parseInt(param.getNumEmpresas());
 	}
 	
@@ -96,7 +89,6 @@ public class Servidor implements Administrador, Stoxtreme{
 	public int insertarOperacion(String usuario, Operacion o){
 		
 		try{
-			System.out.println("USUARIO "+usuario+" INSERTA OPERACION: "+o);
 			IDS++;
 			String empresa = o.getEmpresa();
 			objetosBolsa.get(empresa.toUpperCase()).insertaOperacion(usuario, IDS, o);

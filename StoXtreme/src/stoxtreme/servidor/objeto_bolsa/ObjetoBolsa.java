@@ -59,7 +59,6 @@ public class ObjetoBolsa implements RelojListener{
 	
 	private Hashtable<Integer, String> mapaOpsAgentes = new Hashtable<Integer,String>(); 
 	public void insertaOperacion(String IDAgente,int idOperacion, Operacion op){
-		System.err.println(IDAgente+" "+idOperacion+" "+op);
 		mapaOpsAgentes.put(idOperacion, IDAgente);
 		if(op.getTipoOp()==Operacion.COMPRA)
 			sistemaOperaciones.introduceCompra(idOperacion, IDAgente, op.getPrecio(), op.getCantidad(),fluctuaciones.getPrecioActual(),fluctuaciones.getTick());

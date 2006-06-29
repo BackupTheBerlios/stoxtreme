@@ -123,27 +123,6 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 		}
 	}
 	
-//	public static void main(String[] args){
-//		try {
-//			AlmacenMensajes almacen = AlmacenMensajes.getInstance();
-//			new Lector("alonso", almacen).start();
-//			new Lector("itziar", almacen).start();
-//			new Lector("ivan", almacen).start();
-//			
-//			almacen.enviaMensaje(new Mensaje("HOLA", "MGLOBAL", Mensaje.GLOBAL));
-//			System.out.println("Durmiendo global");
-//			Thread.currentThread().sleep(1000);
-//			System.out.println("Despierto global");
-//			almacen.enviaMensaje(new Mensaje("ADIOS", "MGLOBAL", Mensaje.GLOBAL));
-//			almacen.enviaMensaje(new Mensaje("HOLA", "MPRIV", "alonso"));
-//			System.out.println("Durmiendo privado");
-//			Thread.currentThread().sleep(1000);
-//			System.out.println("despierto privado");
-//			almacen.enviaMensaje(new Mensaje("ADIOS", "MPRIV", "alonso"));
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	private static class Lector extends Thread{
 		AlmacenMensajes almacen;

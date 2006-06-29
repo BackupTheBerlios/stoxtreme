@@ -116,7 +116,6 @@ public class SistemaOperaciones /*implements RelojListener*/{
         }
 
         public void cancelaOperacion(int idOperacion, String idAgente) {
-        	System.err.println("Cancelando: "+idOperacion+" de "+idAgente);
         	Hashtable operacion;
         	boolean encontrado=false;
         	boolean esCompra;

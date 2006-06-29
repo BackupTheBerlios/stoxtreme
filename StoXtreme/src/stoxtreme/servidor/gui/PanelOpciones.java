@@ -151,8 +151,7 @@ public class PanelOpciones extends JPanel{
 		try {
 			layout = (SpringLayout) parent.getLayout();
 		} catch (ClassCastException exc) {
-			System.err
-					.println("The first argument to makeCompactGrid must use SpringLayout.");
+			System.err.println("The first argument to makeCompactGrid must use SpringLayout.");
 			return;
 		}
 

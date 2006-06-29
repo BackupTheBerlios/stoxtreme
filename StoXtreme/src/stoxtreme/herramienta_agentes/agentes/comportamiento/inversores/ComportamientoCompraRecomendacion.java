@@ -93,6 +93,7 @@ public class ComportamientoCompraRecomendacion extends ComportamientoAgente{
 	}
 	
 	public void onRecepcionInform(IDAgente ids, String msg){
+		//FIXME: alonso mola
 		System.out.println(ids.toString()+" "+msg);
 	}
 
