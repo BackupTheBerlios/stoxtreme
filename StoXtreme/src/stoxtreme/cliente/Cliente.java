@@ -29,7 +29,6 @@ public class Cliente{
 	private static final String URLAXIS = "/axis/services/";
 	private static final String URLCONF = "/Stoxtreme/config/";
 	private static final String FICH_CONF_AGENTES = "conf/confAgentes.xml";
-	
 	private String nUsuario;
 	private String password;
 	private EstadoBolsa eBolsa;
@@ -194,7 +193,6 @@ public class Cliente{
 			opPendientes.quitaOperacion(vOp);
 		}
 		else{
-			System.err.println(idDestino+" "+idOp+" "+cantidad+" "+precio);
 			hAgentes.notificarOperacion(idDestino, idOp, cantidad, precio);
 		}
 	}
@@ -221,7 +219,6 @@ public class Cliente{
 	public void obtenerFicheros(String direccion) throws Exception{
 		XMLDownloader.download(new File("./conf/cliente/empresas.xml"), new URL(direccion+URLCONF+"empresas.xml"));
 		String[] fichEmpresas=this.getNombreFicheros("./conf/cliente/empresas.xml");
-		System.out.println("ficheros: "+fichEmpresas.length);
 		XMLDownloader.downloadAll("./conf/cliente", direccion+URLCONF, fichEmpresas);
 	}
 	
@@ -276,7 +273,7 @@ public class Cliente{
 			JOptionPane.showMessageDialog(gui,contenido);
 		}
 		else{
-			System.out.println("Mensaje informacion: "+contenido);
+			//System.out.println("Mensaje informacion: "+contenido);
 		}
 	}
 

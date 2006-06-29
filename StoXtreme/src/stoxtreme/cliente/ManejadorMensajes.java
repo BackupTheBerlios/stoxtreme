@@ -12,7 +12,6 @@ public class ManejadorMensajes implements IMensajeriaListener{
 	}
 	
 	public synchronized void onMensaje(Mensaje m){
-		System.out.println("RECIBIDO MENSAJE " +m.getDestinatario()+" "+ m.getContenido());
 		
 		if(m.getTipoMensaje().equals("NOTIFICACION_OPERACION")){
 			String[] mss = m.getContenido().split(",");
@@ -39,7 +38,6 @@ public class ManejadorMensajes implements IMensajeriaListener{
 			cliente.finSimulacion();
 		}
 		else{
-			System.out.println("Mensaje("+m.getTipoMensaje()+"): "+ m.getContenido());
 		}
 	}
 }

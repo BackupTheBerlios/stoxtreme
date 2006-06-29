@@ -41,7 +41,7 @@ public class Perceptor implements ListenerNotificador{
 			int tipoOp = opPendientes.getTipoOperacion(idOp);
 			
 			if(empresa == null){
-				System.err.println("EMPRESA NULL!!! "+ idOp+" "+cantidad+" "+precio);
+				//System.err.println("EMPRESA NULL!!! "+ idOp+" "+cantidad+" "+precio);
 				return;
 			}
 			

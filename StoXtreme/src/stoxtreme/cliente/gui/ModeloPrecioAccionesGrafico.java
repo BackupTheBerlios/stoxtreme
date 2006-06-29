@@ -95,7 +95,6 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 	}
 	
 	public void cambiaSeleccion(int row){
-		System.out.println(row);
 	}
 	
 	public void setValueAt(Object value, int row, int col) {

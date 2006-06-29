@@ -149,8 +149,6 @@ public class MainFrameCliente extends JFrame{
 		        if (!lsm.isSelectionEmpty()) {
 		            int selectedRow = lsm.getMinSelectionIndex();
 		            empresaInfo=tabla.getValueAt(selectedRow,0).toString();
-		            System.out.println(empresaInfo);
-		            //
 		            StyledDocument doc = panelInfoEmpresa.getStyledDocument();
 		            try {
 		            	doc.remove(0,doc.getLength());
@@ -449,11 +447,9 @@ private JPanel getGraficaHistorica(){
         entryField.addMFieldListener(new MFieldListener(){
             public void fieldEntered(FocusEvent e)
             {
-                System.out.println("Entered");
             }
             public void fieldExited(FocusEvent e)
             {
-                System.out.println("Exited");
             }
         });
 
@@ -541,8 +537,6 @@ private JPanel getChartPanel2(){
 			c2.setTime(fechaFin);
 			ejeX.setMaximumDate(c2.getTime());
 			ejeX.setMinimumDate(c1.getTime());
-			System.out.println(fechaIni.toString());
-			System.out.println(fechaFin.toString());
 			DefaultCategoryDataset auxds = new DefaultCategoryDataset();
 			int j=0;
 			String fechaAux;
@@ -553,7 +547,6 @@ private JPanel getChartPanel2(){
 					fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
 					//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
 					DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase().replace(" ","_"),fechaAux);
-					System.err.println("Fecha: "+c1.get(Calendar.MONTH)+ " Volumen: "+aux.getVolumen());
 					//auxds.addValue(aux.getVolumen(),"Volumen",c1.getTime());
 					auxds.addValue(aux.getVolumen(),"Volumen",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
 					//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),aux.getVolumen());
@@ -621,8 +614,6 @@ private void calculaMaxenFecha(Calendar f){
 			c1.setTime(fechaIni);
 			Calendar c2 = Calendar.getInstance();
 			c2.setTime(fechaFin);
-			System.out.println(fechaIni.toString());
-			System.out.println(fechaFin.toString());
 			ejeX.setMaximumDate(c2.getTime());
 			ejeX.setMinimumDate(c1.getTime());
 			NumberAxis ejeY = new NumberAxis();
@@ -698,7 +689,6 @@ private void calculaMaxenFecha(Calendar f){
 
 	public void actionPerformed (ActionEvent e)
 	{
-	System.out.println(e.getActionCommand()); 	
 	if (e.getActionCommand().compareTo("Volumen")==0) volumen=true;
 
 	}
