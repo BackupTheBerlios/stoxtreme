@@ -1,5 +1,7 @@
 package stoxtreme.cliente;
 
+import javax.swing.JOptionPane;
+
 import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 
@@ -30,7 +32,7 @@ public class ManejadorMensajes implements IMensajeriaListener{
 			EstadoBolsa eBolsa = cliente.getEstadoBolsa();
 			eBolsa.cambiaValor(empresa, nuevoPrecio);
 		}
-		else if(m.getTipoMensaje().equals("INFORMACION")){
+		else if(m.getTipoMensaje().equals("INFORMACION")||m.getTipoMensaje().equals("RUMOR_AGENTES")){
 			cliente.informar(m.getContenido());
 		}
 		else if(m.getTipoMensaje().equals("FINSESION")){
