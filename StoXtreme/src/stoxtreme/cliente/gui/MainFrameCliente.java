@@ -62,6 +62,7 @@ public class MainFrameCliente extends JFrame{
 	private HerramientaAgentesPanel hAgentes;
 	private EstadoBolsa eBolsa;
 	private JTextPane panelInfoEmpresa;
+	private boolean grafHistorico=false;
 	private JPanel p2;
 	private JPanel p3;
 	double max =0;
@@ -124,8 +125,10 @@ public class MainFrameCliente extends JFrame{
 	}
 
 	public JSplitPane getPanelInfo(){
-		JSplitPane panelInfo=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,getPanelEmpresas(),getVisualizador());
-	return panelInfo;
+		panelInfo = new JPanel(new BorderLayout());
+		panelInfo.add(getVisualizador(), BorderLayout.CENTER);
+		JSplitPane panel=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,getPanelEmpresas(),panelInfo);
+		return panel;
 	}
 	
 	public JPanel getPanelEmpresas(){
@@ -166,19 +169,46 @@ public class MainFrameCliente extends JFrame{
 		JPanel panelEmpresas=new JPanel();
 		panelEmpresas.setLayout(new BoxLayout(panelEmpresas,BoxLayout.Y_AXIS));
 		JPanel botonHistorico=new JPanel();
-		botonHistorico.add(new JButton("Consultar Histórico"));
+		JButton historico=new JButton("Consultar Histórico");
+		botonHistorico.add(historico);
+		historico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				mimetodo();				
+			}
+		    }				    
+		    );
 		panelEmpresas.add(new JScrollPane(tabla));
 		panelEmpresas.add(botonHistorico);
 		panelEmpresas.setSize(100,600);
 		return new FakeInternalFrame("Empresas",panelEmpresas);
 	}
 	
+	
+	public void mimetodo(){
+		grafHistorico = ! grafHistorico;
+		
+		if(grafHistorico){
+			// Se muestra el split
+			JSplitPane panelCortado=new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+					getVisualizador(),
+					new FakeInternalFrame("Histórico",getgraficaHistorica()));	
+			this.panelInfo.removeAll();
+			panelInfo.add(panelCortado);
+			panelInfo.updateUI();
+		}
+		else{
+			// Se quita
+			panelInfo.removeAll();
+			panelInfo.add(getVisualizador());
+			panelInfo.updateUI();
+		}
+	}
+	
+	
+	JPanel panelInfo;
 	public Component getVisualizador(){
-		//JPanel panelInfo=new JPanel();
 		panelInfoEmpresa = new JTextPane();
-		panelInfoEmpresa.setSize(700,600);
 		JScrollPane panelScroll=new JScrollPane(panelInfoEmpresa);
-		//panelInfo.add(panelScroll);
 		FakeInternalFrame frame = new FakeInternalFrame("Información", panelScroll);
 		return frame;
 	}
@@ -507,6 +537,66 @@ private void calculaMaxenFecha(Calendar f){
 		}
 	}	
 }
+	private JPanel getgraficaHistorica(){
+		
+		try {
+			MDateEntryField entryField = new MDateEntryField();
+
+	        MDateSelectorConstraints c = new MDefaultPullDownConstraints();
+	        entryField.setConstraints(c);
+	        entryField.addMFieldListener(new MFieldListener(){
+	            public void fieldEntered(FocusEvent e)
+	            {
+	                //System.out.println("Entered");
+	            }
+	            public void fieldExited(FocusEvent e)
+	            {
+	                //System.out.println("Exited");
+	            }
+	        });	        
+	        Date fechaIni;
+			JOptionPane.showMessageDialog(this,entryField,"Fecha de Inicial",JOptionPane.INFORMATION_MESSAGE);
+			fechaIni = entryField.getValue();
+			JOptionPane.showMessageDialog(this,entryField,"Fecha de Final",JOptionPane.INFORMATION_MESSAGE);
+	        Date fechaFin=entryField.getValue();
+	        DateAxis ejeX = new DateAxis();
+			Calendar c1 = Calendar.getInstance();
+			c1.setTime(fechaIni);
+			Calendar c2 = Calendar.getInstance();
+			c2.setTime(fechaFin);
+			ejeX.setMaximumDate(c2.getTime());
+			ejeX.setMinimumDate(c1.getTime());
+			NumberAxis ejeY = new NumberAxis();
+			ejeY.setRange(new Range(0, 540));
+			DefaultCategoryDataset auxds = new DefaultCategoryDataset();
+			//TimeSeriesCollection auxds = new TimeSeriesCollection();
+//			int j=1;
+			String fechaAux;
+			//XYSeries series = new XYSeries("Historico");
+		    while(c1.compareTo(c2)!=0){
+				fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
+				//CAMBIAR EMPRESA SELCCIONADA
+				DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase().replace(" ","_"),fechaAux);
+				auxds.addValue(aux.getPrecioCierre(),"Historico",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
+				//series.add(j, aux.getPrecioCierre());
+				c1.add(Calendar.DATE, 1);				    
+
+			}
+		    //XYDataset juegoDatos= new XYSeriesCollection(series);	        
+		    JFreeChart chart = 
+		     ChartFactory.createLineChart("Estocastico",  
+		        "Dias","Sesiones",auxds,PlotOrientation.VERTICAL,
+		        true,
+		        true, 
+		        true                // Show legend
+		        );    
+			ChartPanel panel = new ChartPanel(chart);
+			return panel;
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+	}
 //formula del estocastico 100*(C-Min/max-min) c es el cierre
 	private JPanel getChartPanel3(){
 		try {
