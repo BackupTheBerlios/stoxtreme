@@ -24,11 +24,6 @@ public class ObjetoBolsa implements RelojListener{
 	InformacionXML infoXML;
 	//El numero de acciones inicial son las acciones que todavia no posee ningún agente
 	int nAccionesInicial;
-	/*public ObjetoBolsa(String nombreEmpresa, double cotizacion, String Informacion,
-			SistemaEventos sistEventos, EmisorMensajes smg, VariablesSistema var){
-		sistemaOperaciones = new SistOperaciones();
-		fluctuaciones = new Fluctuaciones(sistemaOperaciones, var.getTick(), var.getPrecioInicial(nombreEmpresa));
-	}*/
 	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion){
 		this.nombreEmpresa=nombreEmpresa;
 		this.cotizacion=cotizacion;
@@ -70,9 +65,6 @@ public class ObjetoBolsa implements RelojListener{
 			sistemaOperaciones.introduceCompra(idOperacion, IDAgente, op.getPrecio(), op.getCantidad(),fluctuaciones.getPrecioActual(),fluctuaciones.getTick());
 		if(op.getTipoOp()==Operacion.VENTA)
 			sistemaOperaciones.introduceVenta(idOperacion, IDAgente, op.getPrecio(), op.getCantidad(),fluctuaciones.getPrecioActual(),fluctuaciones.getTick());
-		// Notificamos siempre
-//		String c = Integer.toString(op.getCantidad());
-//		AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion)+","+c, "NOTIFICACION_OPERACION", IDAgente));
 	}
 	
 	public void cancelarOperacion(int idOperacion){
@@ -80,7 +72,6 @@ public class ObjetoBolsa implements RelojListener{
 		mapaOpsAgentes.remove(idOperacion);
 	}
 	public void setVariablesSistema(VariablesSistema variables, ParametrosServidor parametros) {
-//		System.out.println("Pone variables "+ nombreEmpresa);
 		sistemaOperaciones = new SistemaOperaciones(nAccionesInicial);
 		fluctuaciones = new Fluctuaciones(variables,sistemaOperaciones, parametros.getTick(),this.cotizacion,nombreEmpresa);
 	}
