@@ -137,8 +137,6 @@ public class SistemaOperaciones /*implements RelojListener*/{
 	        	}
         	}
         	
-        	System.err.println(listaCompras);
-        	System.err.println(listaVentas);
         	Enumeration claves = operacion.keys();
         	while(claves.hasMoreElements()&&!encontrado){
         		String elemento=(String) claves.nextElement();
@@ -159,7 +157,6 @@ public class SistemaOperaciones /*implements RelojListener*/{
         				else{
         					cadena.setElementAt(acciones,0);
         				}
-        				System.out.println("se ha eliminado la operacion "+idOperacion);
         				AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Integer.toString(idOperacion), "NOTIFICACION_CANCELACION", idAgente));
         			}
         			i++;

@@ -185,7 +185,6 @@ public class Fluctuaciones {
 		    			else{
 		    				sisOp.setAccionesVenta(sisOp.getAccionesVenta()-pC.getNumeroDeAcciones());
 			        		sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),pC.getNumeroDeAcciones(),Double.parseDouble(claveFinal));
-		    				System.out.println("He comprado "+(pC.getNumeroDeAcciones()));
 			        		auxC.remove(i);
 			        		//i++;
 		    			}
