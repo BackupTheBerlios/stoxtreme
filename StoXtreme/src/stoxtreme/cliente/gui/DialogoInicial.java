@@ -1,43 +1,26 @@
 package stoxtreme.cliente.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
 
-
-import stoxtreme.cliente.Cliente;
-import stoxtreme.servidor.Servidor;
-
-
+@SuppressWarnings("serial")
 public class DialogoInicial extends JFrame{
 	private JButton login;
 	private JButton registrar;
-	private JTextField user;
-	private JPasswordField password;
-	private JLabel usuario;
-	private JLabel pass;
 	private JPanel principal;
 	private String id;
 	private String psw;
@@ -95,13 +78,6 @@ public class DialogoInicial extends JFrame{
 		panel.setPreferredSize(new Dimension(480, 500));
 		return panel;
 	}
-	private void setID(String valor){
-		this.id = valor;
-	}
-	
-	private void setPass(String valor){
-		this.psw = valor;
-	}
 	
 	//Panel Principal
 	private PanelOpciones panelOpciones;
@@ -128,38 +104,9 @@ public class DialogoInicial extends JFrame{
 		return frame;
 		
 	}
-	private Component getCentralPanel(){
-		JPanel panel = new JPanel(new GridLayout(2,1));
-		panel.add(this.getPUser());
-		panel.add(this.getPPass());
-		return panel;
-	}
-	//Panel del Nombre de Usuario
-	private Component getPUser(){
-		JPanel PUser=new JPanel(new BorderLayout());
-		PUser.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		usuario=new JLabel("Nombre de usuario   ");
-		user=new JTextField();
-		user.setToolTipText("Introduzca su nombre de usuario");
-		user.setPreferredSize(new Dimension(120,20));
-		PUser.add(usuario,BorderLayout.WEST);
-		PUser.add(user,BorderLayout.EAST);
-		return PUser;
-	}
-	
-	//Panel de la Contrase�a
-	private Component getPPass(){
-		JPanel PPass=new JPanel(new BorderLayout());
-		PPass.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		pass=new JLabel("Password");
-		password=new JPasswordField();
-		password.setToolTipText("Introduzca su password");
-		password.setPreferredSize(new Dimension(120,20));
-		PPass.add(pass,BorderLayout.WEST);
-		PPass.add(password,BorderLayout.EAST);
-		return PPass;
-	}
-	
+
+
+
 	public void botonLogin_actionPerformed(ActionEvent e){
 		id = panelOpciones.getValor(NUSUARIO);
 		psw = panelOpciones.getValor(NPASS);
