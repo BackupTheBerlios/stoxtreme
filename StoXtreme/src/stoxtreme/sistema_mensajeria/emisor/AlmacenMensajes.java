@@ -157,7 +157,6 @@ public class AlmacenMensajes implements StoxtremeMensajes{
 			Mensaje m = null;
 			while(true){
 				m = almacen.getSiguienteMensaje(nombre);
-				System.out.println(nombre+":"+" mensaje("+m.getDestinatario()+")"+m.getTipoMensaje()+"-"+m.getContenido());
 			}
 		}
 	}
