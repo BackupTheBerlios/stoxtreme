@@ -801,9 +801,11 @@ private void calculaMaxenFecha(Calendar f){
 				chartPlot.setDataset(modeloPrecios.getPreciosSeleccionados());
 				JTable t = (JTable)e.getSource();
 				int row =  t.getSelectedRow();
-				precioSeleccionado.setText(t.getModel().getValueAt(row, 1).toString());
-				empresaSeleccionada.setSelectedItem(t.getModel().getValueAt(row, 0).toString());
-				tipoSeleccionado.setSelectedItem("Compra");
+				if(row != -1){
+					precioSeleccionado.setText(t.getModel().getValueAt(row, 1).toString());
+					empresaSeleccionada.setSelectedItem(t.getModel().getValueAt(row, 0).toString());
+					tipoSeleccionado.setSelectedItem("Compra");
+				}
 			}
 		});
 		FakeInternalFrame frame = new FakeInternalFrame("Empresas", new JScrollPane(tabla));

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.Perceptor;
@@ -14,7 +15,7 @@ import stoxtreme.interfaz_remota.Stoxtreme;
 
 /* Objeto mediador entre los agentes y la herramienta agentes */
 public class MonitorAgentes extends Thread{
-	private PriorityQueue<Decision> colaPeticiones;
+	private PriorityBlockingQueue<Decision> colaPeticiones;
 	private int ciclo;
 	private ArrayList<Agente> listaAgentes;
 	private ArrayList<TimerListener> listaTimerListeners;
@@ -28,7 +29,7 @@ public class MonitorAgentes extends Thread{
 		this.conexion = conexion;
 		this.consola = consola;
 		this.pausa = false;
-		colaPeticiones = new PriorityQueue<Decision>();
+		colaPeticiones = new PriorityBlockingQueue<Decision>();
 		ciclo = 0;
 		exit = false;
 		esperaTimer = new Object();

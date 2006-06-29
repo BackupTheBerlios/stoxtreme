@@ -163,7 +163,6 @@ public class DialogoInsercionEvento extends JDialog implements ActionListener{
 		try {
 			ObjetoCondicion c = new ObjetoCondicion(descripcion, Servidor.getInstance().getVariablesSistema());
 		} catch (ParseException e) {
-			e.printStackTrace();
 			return false;
 		}
 		return true;
