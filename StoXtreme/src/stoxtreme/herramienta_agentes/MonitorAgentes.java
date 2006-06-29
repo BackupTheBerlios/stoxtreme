@@ -71,7 +71,19 @@ public class MonitorAgentes extends Thread{
 		//	Ejecuta todas las peticiones de la cola de prioridad hasta
 		// 	La que sea igual al ciclo actual
 		while(colaPeticiones.size()>0 && colaPeticiones.peek().getTiempoEjecucion() <= ciclo){
-			colaPeticiones.poll().ejecuta();
+			Decision decision = colaPeticiones.poll();
+			
+			boolean ejecutada;
+			do{
+				ejecutada = true;
+				try{
+					decision.ejecuta();
+				}
+				catch(Exception e){
+					System.err.println(e.getMessage());
+					ejecutada = false;
+				}
+			}while(!ejecutada);
 		}
 	}
 	
