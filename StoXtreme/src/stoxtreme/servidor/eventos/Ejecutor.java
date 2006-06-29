@@ -34,7 +34,7 @@ public class Ejecutor {
 		if (s.equals("Problema_Altadis".toUpperCase())){
 			AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Preocupación_Altadis,"RUMOR_AGENTES",Mensaje.GLOBAL));
 		}
-		if (s.equals("split_Telefonica".toUpperCase())){
+		if (s.equals("split_Telefónica".toUpperCase())){
 			AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(split_Telefonica,"RUMOR_AGENTES",Mensaje.GLOBAL));
 		}
 		if (s.equals("Rumor_FCC".toUpperCase())){
