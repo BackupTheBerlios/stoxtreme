@@ -191,7 +191,7 @@ public class PanelConfigAgentes extends JPanel{
 			}
 		});
 		JButton boton2 = new JButton("-");
-		boton1.addActionListener(new ActionListener(){
+		boton2.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				subComportamiento();
 			}
@@ -379,7 +379,11 @@ public class PanelConfigAgentes extends JPanel{
 	}
 	
 	public void subComportamiento(){
-		
+		TreePath path = arbolComportamientos.getSelectionPath();
+		MutableTreeNode nodo = (MutableTreeNode)path.getLastPathComponent();
+		if(!modeloComportamientos.getRoot().equals(nodo)){
+			modeloComportamientos.removeNodeFromParent(nodo);
+		}
 	}
 	
 	public void addDistribucion(){

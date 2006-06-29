@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import stoxtreme.cliente.EstadoBolsa;
+import stoxtreme.cliente.gui.FakeInternalFrame;
 import stoxtreme.cliente.gui.HerramientaAgentesPanel;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.ConstructorAgentes;
@@ -43,48 +44,9 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		super.addListaAgentes(agentes);
 	}
 	
-	//private static final String URLAXIS = "http://localhost:8080/axis/services/";
-//	public static void main(String[] args){
-//		try{
-//			ParametrosAgentes parametros = new ParametrosAgentes();
-//			EstadoBolsa bolsa = EstadoBolsa.getInstanciaGlobal();
-//			bolsa.insertaEmpresa("ENDESA", 10.0);
-//			bolsa.insertaEmpresa("TELECINCO", 20.0);
-//			bolsa.insertaEmpresa("ANTENA3", 30.0);
-//			bolsa.insertaEmpresa("REPSOL", 40.0);
-//			
-//			HerramientaAgentes hAgentes = new HerramientaAgentes("alonso", bolsa, parametros);
-//			
-//			JFrame frame = new JFrame("Agentes: 0");
-//			
-//			frame.getContentPane().add(hAgentes);
-//			frame.setSize(new Dimension(800, 600));
-//			frame.setVisible(true);
-//			
-//			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//			StoxtremeServiceLocator locator = new StoxtremeServiceLocator();
-//			Stoxtreme stoxtreme = locator.getStoXtreme(new URL(URLAXIS+"StoXtreme"));
-//			hAgentes.start(stoxtreme);
-//			
-//		}
-//		catch(Exception e){
-//			e.printStackTrace();
-//		}
-//	}
+
 	public void addNotificadorListener(String id, ListenerNotificador n) {
 		notif.addListener(id, n);
-	}
-
-//	protected void nOperacion(String id, int idOp, int cantidad, double precio) {
-//		notif.notificar(id, idOp, cantidad, precio);
-//	}
-//
-//	protected void nCancelacion(String id, int idOp) {
-//		notif.notificarCancelacion(id, idOp);
-//	}
-
-	public void onTick(int tick) {
-		//frame.setTitle("Agentes: "+tick);
 	}
 
 	public void notificarOperacion(String idDestino, int idOp, int cantidad, double precio) {
@@ -126,5 +88,10 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void onTick(int tick) {
+		incrementaTick(tick);
+		//		frame.setTitle("Ciclo ")
 	}
 }

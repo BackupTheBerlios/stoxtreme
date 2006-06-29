@@ -38,7 +38,6 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 	private JButton botonReiniciar;
 	private Cliente cliente;
 	
-	private boolean parado = true;
 	private JFrame frame;
 	
 	private JScrollPane scrollTextoConsola;
@@ -67,12 +66,14 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		tablaAgentes.getColumnModel().getColumn(0).setMaxWidth(7);
 	}
 	
+	FakeInternalFrame frameAgentes;
+	
 	public Component getPanelIzquierdo(){
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(getPanelIzquierdoArriba(), BorderLayout.CENTER);
 		panel.add(getPanelIzquierdoAbajo(), BorderLayout.SOUTH);
-		FakeInternalFrame frame = new FakeInternalFrame("Agentes en el sistema", panel);
-		return frame;
+		frameAgentes = new FakeInternalFrame("Agentes en el sistema. Ciclo: 0", panel);
+		return frameAgentes;
 	}
 	
 	public Component getPanelIzquierdoArriba(){
@@ -319,5 +320,10 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes{
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void incrementaTick(int tick){
+		String titulo = "Agentes en el sistema. Ciclo: "+tick;
+		frameAgentes.setTitle(titulo);
 	}
 }

@@ -57,25 +57,33 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 	public DialogoInsertarDistribucion(JFrame frame, String id, String tipo, double p1, double p2) {
 		this(frame);
 		// Ahora seteamos los valores antiguos
-		panelOpciones.setValor("Distribucion", tipo);
+		
 		panelOpciones.setValor("Identificador", id);
 		
 		panelDependiente.removeAll();
-		if(UNIFORME.equals(tipo)){
+		if("Uniforme".equals(tipo)){
 			panelDependiente.add(getPanelOpcionesUniforme());
+			panelOpciones.setValor("Distribucion", UNIFORME);
 			panelParametros.setValor("Media", Double.toString(p1));
+			pack();
+			panelDependiente.updateUI();
 		}
-		else if(NORMAL.equals(tipo)){
+		else if("Normal".equals(tipo)){
+			panelOpciones.setValor("Distribucion", NORMAL);
 			panelDependiente.add(getPanelOpcionesNormal());
 			panelParametros.setValor("Media", Double.toString(p1));
-			panelParametros.setValor("Desviacion tipica", Double.toString(p1));
+			panelParametros.setValor("Desviacion tipica", Double.toString(p2));
+			pack();
+			panelDependiente.updateUI();
 		}
 		else{
+			panelOpciones.setValor("Distribucion", POISSON);
 			panelDependiente.add(getPanelOpcionesPoisson());
 			panelParametros.setValor("Lambda", Double.toString(p1));
+			pack();
+			panelDependiente.updateUI();
 		}
-		panelDependiente.updateUI();
-		pack();
+		
 		setSize(new Dimension(300, this.getHeight()));
 	}
 

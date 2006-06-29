@@ -33,11 +33,12 @@ public class FakeInternalFrame extends JPanel{
 	}
 	
 	public FakeInternalFrame damePanel(){return this;}
+	private JLabel tituloLabel;
 	public JPanel getBarraTitulo(){
 		JPanel panel = new JPanel();
 		panel.setBackground(colorRotulo);
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JLabel tituloLabel = new JLabel(titulo);
+		tituloLabel = new JLabel(titulo);
 		tituloLabel.setForeground(Color.white);
 		panel.add(tituloLabel);
 		return panel;
@@ -45,5 +46,14 @@ public class FakeInternalFrame extends JPanel{
 	
 	public void setMenuBar(JMenuBar menuBar){
 		panelPrincipal.add(menuBar, BorderLayout.NORTH);
+	}
+	
+	public void setTitle(String title){
+		tituloLabel.setText(title);
+		this.titulo = title;
+	}
+	
+	public String getTitle(){
+		return titulo;
 	}
 }

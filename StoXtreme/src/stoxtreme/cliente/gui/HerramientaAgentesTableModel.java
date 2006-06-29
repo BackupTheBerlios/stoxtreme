@@ -14,7 +14,7 @@ public class HerramientaAgentesTableModel extends AbstractTableModel{
 	private static String[] columnas = {" ","IDAgente", "Estado Actual", "Comportamiento", "Ganancias"};
 	private TreeSet<Integer> seleccionadas = new TreeSet<Integer>();
 	private ArrayList<Agente> elementos = new ArrayList<Agente>(); 
-
+	
 	public void setAgentes(ArrayList<Agente> agentes){
 		elementos = agentes;
 		fireTableDataChanged();
