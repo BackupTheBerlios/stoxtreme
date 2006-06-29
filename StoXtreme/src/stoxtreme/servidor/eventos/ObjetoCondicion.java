@@ -1,6 +1,5 @@
 package stoxtreme.servidor.eventos;
 
-import java.io.*;
 import java.util.*;
 
 import stoxtreme.servidor.VariablesSistema;

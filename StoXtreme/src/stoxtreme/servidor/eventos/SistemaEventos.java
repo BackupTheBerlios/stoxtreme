@@ -1,17 +1,13 @@
 package stoxtreme.servidor.eventos;
 
-import java.awt.event.ActionEvent;
 import java.util.*;
-import javax.swing.table.AbstractTableModel;
 
-import stoxtreme.servidor.Servidor;
 import stoxtreme.servidor.VariablesListener;
 import stoxtreme.servidor.VariablesSistema;
 import stoxtreme.servidor.eventos.evaluador.ParseException;
-import stoxtreme.servidor.gui.DialogoInsercionEvento;
-import stoxtreme.servidor.gui.MainFrameAdmin;
 import stoxtreme.servidor.gui.ModeloTablaEventos;
 
+@SuppressWarnings({"serial","unchecked"})
 public class SistemaEventos extends ModeloTablaEventos implements VariablesListener{
 	private VariablesSistema variables;
 	private ArrayList<ObjetoCondicion> listaCondiciones;

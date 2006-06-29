@@ -12,7 +12,9 @@ public class XMLDownloader {
 	public static boolean DEBUG = true;
 	
 	public static void downloadAll(String dirLocal, String dirRemoto, String[] fichs) throws IOException{
+		System.out.println("En XML download: "+fichs.length);
 		for(int i=0; i < fichs.length; i++){
+			System.out.println("entro:"+i);
 			File local = new File(dirLocal+"/"+fichs[i]);
 			URL remoto = new URL(dirRemoto+"/"+fichs[i]);
 			download(local,remoto);

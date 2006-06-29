@@ -220,73 +220,9 @@ public class Cliente{
 	}
 	public void obtenerFicheros(String direccion) throws Exception{
 		XMLDownloader.download(new File("./conf/cliente/empresas.xml"), new URL(direccion+URLCONF+"empresas.xml"));
-//		URL url = null;
-//		FileOutputStream fos = null;
-//		InputStreamReader isr = null;
-//		Reader in = null;
-//		StringBuffer buffer = null;
-//		OutputStreamWriter osw = null;
-//		try{
-//			url=new URL();
-//			File f=new File("./conf/cliente/empresas.xml");
-//			System.err.println(f.getAbsolutePath());
-//			fos = new FileOutputStream(f);
-//			isr = new InputStreamReader(url.openStream());
-//			in = new BufferedReader(isr);
-//			buffer = new StringBuffer();
-//			int ch;
-//			while((ch =in.read())>-1){
-//				buffer.append((char)ch);
-//			}
-//			osw = new OutputStreamWriter(fos);
-//			osw.append(buffer);
-//		} 
-//		 catch (Exception e) {
-//			e.printStackTrace();
-//		} 
-//		if(osw != null)
-//			osw.close();
-//		if(in != null)
-//			in.close();
-//		if(fos != null)
-//			fos.close();
-//		if(isr!=null)
-//			isr.close();
 		String[] fichEmpresas=this.getNombreFicheros("./conf/cliente/empresas.xml");
+		System.out.println("ficheros: "+fichEmpresas.length);
 		XMLDownloader.downloadAll("./conf/cliente", direccion+URLCONF, fichEmpresas);
-//		
-//		int contador=0;
-//		while(fichEmpresas.size()>contador){
-//			try {
-//				url= new  URL(direccion+URLCONF+fichEmpresas.get(contador));
-//				
-//				File f = new File("./conf/cliente/"+fichEmpresas.get(contador));
-//				System.err.println(f.getAbsolutePath());
-//				//f.createNewFile();
-//				fos = new FileOutputStream(f);
-//				isr = new InputStreamReader(url.openStream());
-//				in = new BufferedReader(isr);
-//				buffer = new StringBuffer();
-//				int ch;
-//				while((ch =in.read())>-1){
-//					buffer.append((char)ch);
-//				}
-//				osw = new OutputStreamWriter(fos);
-//				osw.append(buffer);
-//			} 
-//			 catch (Exception e) {
-//				e.printStackTrace();
-//			} 
-//			if(osw != null)
-//				osw.close();
-//			if(in != null)
-//				in.close();
-//			if(fos != null)
-//				fos.close();
-//			if(isr!=null)
-//				isr.close();
-//			contador++;
-//		}
 	}
 	
 	public String[] getNombreFicheros(String fichEmpresas){

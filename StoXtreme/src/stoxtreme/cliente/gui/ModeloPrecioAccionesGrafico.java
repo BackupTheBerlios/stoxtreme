@@ -10,28 +10,26 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 import org.jfree.data.time.TimeSeriesCollection;
 
+@SuppressWarnings("serial")
 public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 	private ArrayList listaEmpresas;
-	private Hashtable colorEmpresa;
 	private ArrayList seleccionado;
 	private Hashtable valoresAcciones;
 	private Hashtable volumenAcciones;
 	
+	@SuppressWarnings("unchecked")
 	public ModeloPrecioAccionesGrafico(ArrayList lEmpresas,Date fecha){
 		listaEmpresas = new ArrayList();
-		colorEmpresa = new Hashtable();
 		seleccionado = new ArrayList();
 		valoresAcciones = new Hashtable();
 		volumenAcciones = new Hashtable();
-		if(lEmpresas.size()>1){
+		if(lEmpresas.size()>=1){
 			for(int i=0; i<lEmpresas.size(); i++){
 				String empresa = (String)lEmpresas.get(i);
 				valoresAcciones.put(empresa, new ValoresEmpresa(empresa,1));
@@ -66,6 +64,7 @@ public class ModeloPrecioAccionesGrafico extends AbstractTableModel{
 		}
 		
 	}
+	@SuppressWarnings("unchecked")
 	public Class getColumnClass(int columnIndex){
 		switch(columnIndex){
 			case 0: return String.class; 

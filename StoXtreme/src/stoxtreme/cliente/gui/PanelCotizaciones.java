@@ -6,18 +6,12 @@ import stoxtreme.cliente.EstadoBolsa;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class PanelCotizaciones extends JPanel implements ActionListener{
-//	private static final String empresas[] = 
-//	{	"ANTENA 3","ABERTIS","ACS","ACERINOX","ALTADIS","ACCIONA","BBVA","BANKINTER","CINTRA",
-//		"ENDESA","ENAGAS","FCC","GRUPO FERROVIAL","GAMESA","GAS NATURAL","IBERDROLA","IBERIA",
-//		"INDRA SISTEMAS","INDITEX","ARCELOR","CORP MAPFRE","METROVACESA","BANCO POPULAR","PRISA",
-//		"RED ELECTRICA ESP","REPSOL YPF","BANCO SABADELL","BSCH","SOGECABLE","SACYR VALLEHERMOSO",
-//		"TELEFONICA","TELEF.MOVILES","TELECINCO","TPI","UNION FENOSA"
-//	};
+
 	
 	ArrayList<String> empresas;
 	private double[] cotizaciones;
@@ -38,6 +32,9 @@ public class PanelCotizaciones extends JPanel implements ActionListener{
 		}
 		
 		siguienteIndice = 1;
+		if(empresas.size() == 1){
+			siguienteIndice = 0;
+		}
 		listaMovimientos = new ArrayList<PrecioGraficoMoviendose>();
 		
 		Timer timer = new Timer(100,this);

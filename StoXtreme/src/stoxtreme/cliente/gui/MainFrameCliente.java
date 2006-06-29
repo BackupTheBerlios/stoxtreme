@@ -1,7 +1,6 @@
 package stoxtreme.cliente.gui;
 
 import java.awt.*;
-import java.awt.List;
 import java.awt.event.*;
 import java.text.ParseException;
 import java.util.*;
@@ -61,8 +60,10 @@ public class MainFrameCliente extends JFrame{
 	private Hashtable graficas=new Hashtable();
 	private HerramientaAgentesPanel hAgentes;
 	private EstadoBolsa eBolsa;
-	private JTextPane panelInfoEmpresa;
 	private boolean grafHistorico=false;
+	private JPanel panelInfo;
+	private JTextPane panelInfoEmpresa;
+	private String empresaInfo;
 	private JPanel p2;
 	private JPanel p3;
 	double max =0;
@@ -84,6 +85,7 @@ public class MainFrameCliente extends JFrame{
 		this.volumen =false;
 		this.estocastico =false;
 		this.hAgentes=hAgentes;
+		this.panelInfoEmpresa=new JTextPane();
 	}
 	
 	public MainFrameCliente(ModeloCartera cartera2, ModeloOpPendientes opPendientes, ModeloPrecioAccionesGrafico precios) {
@@ -141,27 +143,27 @@ public class MainFrameCliente extends JFrame{
 		rowSM.addListSelectionListener(new ListSelectionListener() {
 		    public void valueChanged(ListSelectionEvent e) {
 		        //Ignore extra messages.
-		    	String empresa=null;
 		        if (e.getValueIsAdjusting()) return;
 		        ListSelectionModel lsm =
 		            (ListSelectionModel)e.getSource();
 		        if (!lsm.isSelectionEmpty()) {
 		            int selectedRow = lsm.getMinSelectionIndex();
-		            empresa=tabla.getValueAt(selectedRow,0).toString();
-		            System.out.println(empresa);
+		            empresaInfo=tabla.getValueAt(selectedRow,0).toString();
+		            System.out.println(empresaInfo);
 		            //
 		            StyledDocument doc = panelInfoEmpresa.getStyledDocument();
 		            try {
-		            	doc.remove(0,doc.getLength()-1);
-		    			doc.insertString(0, empresa+"\n", null);
-		    			doc.insertString(doc.getLength()-1,"Sector: "+info.getSector(empresa)+"\n",null);
-		    			doc.insertString(doc.getLength()-1, "Capital social: "+info.getCapitalSocial(empresa)+"\n",null);
-		    			doc.insertString(doc.getLength()-1, "Valor nominal de cada accion: "+info.getValorNominal(empresa)+"\n",null);
-		    			doc.insertString(doc.getLength()-1, "Número de ampliaciones de capital: "+info.getAmpliacionesCapital(empresa)+"\n\n",null);
-		    			doc.insertString(doc.getLength()-1,info.getDescripcion(empresa)+"\n", null);
+		            	doc.remove(0,doc.getLength());
+		    			doc.insertString(0, empresaInfo+"\n\n", null);
+		    			doc.insertString(doc.getLength()-1,"Sector: "+info.getSector(empresaInfo)+"\n",null);
+		    			doc.insertString(doc.getLength()-1, "Capital social: "+info.getCapitalSocial(empresaInfo)+"\n",null);
+		    			doc.insertString(doc.getLength()-1, "Valor nominal de cada accion: "+info.getValorNominal(empresaInfo)+"\n",null);
+		    			doc.insertString(doc.getLength()-1, "Número de ampliaciones de capital: "+info.getAmpliacionesCapital(empresaInfo)+"\n\n",null);
+		    			doc.insertString(doc.getLength()-1,info.getDescripcion(empresaInfo)+"\n", null);
 		            } catch (BadLocationException ex) {
 		    			ex.printStackTrace();
 		    		}
+		            panelInfoEmpresa.setCaretPosition(0);
 		        }
 		    }
 		});
@@ -173,7 +175,7 @@ public class MainFrameCliente extends JFrame{
 		botonHistorico.add(historico);
 		historico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				mimetodo();				
+				dividirInfoScreen();				
 			}
 		    }				    
 		    );
@@ -184,14 +186,15 @@ public class MainFrameCliente extends JFrame{
 	}
 	
 	
-	public void mimetodo(){
+	public void dividirInfoScreen(){
 		grafHistorico = ! grafHistorico;
-		
 		if(grafHistorico){
 			// Se muestra el split
 			JSplitPane panelCortado=new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 					getVisualizador(),
-					new FakeInternalFrame("Histórico",getgraficaHistorica()));	
+					new FakeInternalFrame("Histórico",getGraficaHistorica()));
+			panelCortado.setSize(500,900);
+			panelCortado.setDividerLocation(0.3);
 			this.panelInfo.removeAll();
 			panelInfo.add(panelCortado);
 			panelInfo.updateUI();
@@ -205,12 +208,65 @@ public class MainFrameCliente extends JFrame{
 	}
 	
 	
-	JPanel panelInfo;
 	public Component getVisualizador(){
-		panelInfoEmpresa = new JTextPane();
 		JScrollPane panelScroll=new JScrollPane(panelInfoEmpresa);
 		FakeInternalFrame frame = new FakeInternalFrame("Información", panelScroll);
 		return frame;
+	}
+	
+private JPanel getGraficaHistorica(){
+		
+		try {
+			MDateEntryField entryField = new MDateEntryField();
+	        MDefaultPullDownConstraints c= new MDefaultPullDownConstraints();
+	        entryField.setConstraints(c);
+	        entryField.setSize(new Dimension(300,200));
+	        entryField.addMFieldListener(new MFieldListener(){
+	            public void fieldEntered(FocusEvent e)
+	            {
+	                //System.out.println("Entered");
+	            }
+	            public void fieldExited(FocusEvent e)
+	            {
+	                //System.out.println("Exited");
+	            }
+	        });	        
+	        Date fechaIni;
+			JOptionPane.showMessageDialog(this,entryField,"Fecha Inicial",JOptionPane.INFORMATION_MESSAGE);
+			fechaIni = entryField.getValue();
+			JOptionPane.showMessageDialog(this,entryField,"Fecha Final",JOptionPane.INFORMATION_MESSAGE);
+	        Date fechaFin=entryField.getValue();
+	        DateAxis ejeX = new DateAxis();
+			Calendar c1 = Calendar.getInstance();
+			c1.setTime(fechaIni);
+			Calendar c2 = Calendar.getInstance();
+			c2.setTime(fechaFin);
+			ejeX.setMaximumDate(c2.getTime());
+			ejeX.setMinimumDate(c1.getTime());
+			NumberAxis ejeY = new NumberAxis();
+			ejeY.setRange(new Range(0, 540));
+			DefaultCategoryDataset auxds = new DefaultCategoryDataset();
+			String fechaAux;
+		    while(c1.compareTo(c2)!=0){
+				fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
+				//CAMBIAR EMPRESA SELCCIONADA
+				DatoHistorico aux=ParserInfoLocal.getDatoHistorico(empresaInfo.toLowerCase().replace(" ","_"),fechaAux);
+				auxds.addValue(aux.getPrecioCierre(),"Precio de cierre",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]+"/"+fechaAux.split("/")[2]);
+				c1.add(Calendar.DATE, 1);				    
+			}
+		    JFreeChart chart = 
+		     ChartFactory.createLineChart(empresaInfo,  
+		        "Fecha","Precio de cierre",auxds,PlotOrientation.VERTICAL,
+		        true,
+		        true, 
+		        true                // Show legend
+		        );    
+			ChartPanel panel = new ChartPanel(chart);
+			return panel;
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+			return null;
+		}
 	}
 	
 	public Component getPanelPrincipal(){
@@ -474,9 +530,9 @@ private JPanel getChartPanel2(){
 	            }
 	        });	        
 	        Date fechaIni;
-			JOptionPane.showMessageDialog(this,entryField,"Fecha de Inicial",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,entryField,"Fecha Inicial",JOptionPane.INFORMATION_MESSAGE);
 			fechaIni = entryField.getValue();
-			JOptionPane.showMessageDialog(this,entryField,"Fecha de Final",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,entryField,"Fecha Final",JOptionPane.INFORMATION_MESSAGE);
 	        Date fechaFin=entryField.getValue();
 	        DateAxis ejeX = new DateAxis();
 			Calendar c1 = Calendar.getInstance();
@@ -537,66 +593,7 @@ private void calculaMaxenFecha(Calendar f){
 		}
 	}	
 }
-	private JPanel getgraficaHistorica(){
-		
-		try {
-			MDateEntryField entryField = new MDateEntryField();
-
-	        MDateSelectorConstraints c = new MDefaultPullDownConstraints();
-	        entryField.setConstraints(c);
-	        entryField.addMFieldListener(new MFieldListener(){
-	            public void fieldEntered(FocusEvent e)
-	            {
-	                //System.out.println("Entered");
-	            }
-	            public void fieldExited(FocusEvent e)
-	            {
-	                //System.out.println("Exited");
-	            }
-	        });	        
-	        Date fechaIni;
-			JOptionPane.showMessageDialog(this,entryField,"Fecha de Inicial",JOptionPane.INFORMATION_MESSAGE);
-			fechaIni = entryField.getValue();
-			JOptionPane.showMessageDialog(this,entryField,"Fecha de Final",JOptionPane.INFORMATION_MESSAGE);
-	        Date fechaFin=entryField.getValue();
-	        DateAxis ejeX = new DateAxis();
-			Calendar c1 = Calendar.getInstance();
-			c1.setTime(fechaIni);
-			Calendar c2 = Calendar.getInstance();
-			c2.setTime(fechaFin);
-			ejeX.setMaximumDate(c2.getTime());
-			ejeX.setMinimumDate(c1.getTime());
-			NumberAxis ejeY = new NumberAxis();
-			ejeY.setRange(new Range(0, 540));
-			DefaultCategoryDataset auxds = new DefaultCategoryDataset();
-			//TimeSeriesCollection auxds = new TimeSeriesCollection();
-//			int j=1;
-			String fechaAux;
-			//XYSeries series = new XYSeries("Historico");
-		    while(c1.compareTo(c2)!=0){
-				fechaAux=c1.get(Calendar.DAY_OF_MONTH)+"/"+(c1.get(Calendar.MONTH)+1)+"/"+c1.get(Calendar.YEAR);
-				//CAMBIAR EMPRESA SELCCIONADA
-				DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase().replace(" ","_"),fechaAux);
-				auxds.addValue(aux.getPrecioCierre(),"Historico",fechaAux.split("/")[0]+"/"+fechaAux.split("/")[1]);
-				//series.add(j, aux.getPrecioCierre());
-				c1.add(Calendar.DATE, 1);				    
-
-			}
-		    //XYDataset juegoDatos= new XYSeriesCollection(series);	        
-		    JFreeChart chart = 
-		     ChartFactory.createLineChart("Estocastico",  
-		        "Dias","Sesiones",auxds,PlotOrientation.VERTICAL,
-		        true,
-		        true, 
-		        true                // Show legend
-		        );    
-			ChartPanel panel = new ChartPanel(chart);
-			return panel;
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-			return null;
-		}
-	}
+	
 //formula del estocastico 100*(C-Min/max-min) c es el cierre
 	private JPanel getChartPanel3(){
 		try {
@@ -615,9 +612,9 @@ private void calculaMaxenFecha(Calendar f){
 	            }
 	        });	        
 	        Date fechaIni;
-			JOptionPane.showMessageDialog(this,entryField,"Fecha de Inicial",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,entryField,"Fecha Inicial",JOptionPane.INFORMATION_MESSAGE);
 			fechaIni = entryField.getValue();
-			JOptionPane.showMessageDialog(this,entryField,"Fecha de Final",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,entryField,"Fecha Final",JOptionPane.INFORMATION_MESSAGE);
 	        Date fechaFin=entryField.getValue();
 	        DateAxis ejeX = new DateAxis();
 			Calendar c1 = Calendar.getInstance();

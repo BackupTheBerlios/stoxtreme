@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 
+@SuppressWarnings("serial")
 public class ValoresEmpresa extends TimeSeries{
 	// La sesi�n de bolsa va desde las 8.30 hasta las 17.30
 	// calculando en multiplos de minuto.
@@ -28,6 +29,7 @@ public class ValoresEmpresa extends TimeSeries{
 		Calendar c2 = Calendar.getInstance();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void insertarSiguienteValor(double valor){
 		if(preciosSesion.size()==0)
 			inicioSesion = valor;
@@ -51,5 +53,9 @@ public class ValoresEmpresa extends TimeSeries{
 		else{
 			return false;
 		}
+	}
+	
+	public String toString(){
+		return preciosSesion.toString();
 	}
 }
