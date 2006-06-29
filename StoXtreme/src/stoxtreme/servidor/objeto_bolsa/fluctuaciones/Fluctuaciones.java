@@ -178,7 +178,6 @@ public class Fluctuaciones {
 		    			Posicion pC=(Posicion)auxC.get(i);
 		    			if (pC.getNumeroDeAcciones()>sisOp.getAccionesVenta()){
 		    				pC.setNumeroDeAcciones(pC.getNumeroDeAcciones()-sisOp.getAccionesVenta());
-			        		System.out.println("He comprado "+(sisOp.getAccionesVenta()));
 		    				sisOp.notificaOperacion(pC.getIDAgente(),pC.getIdOperacion(),sisOp.getAccionesVenta(),Double.parseDouble(claveFinal));
 			        		sisOp.setAccionesVenta(0);
 			        		acabado=true;

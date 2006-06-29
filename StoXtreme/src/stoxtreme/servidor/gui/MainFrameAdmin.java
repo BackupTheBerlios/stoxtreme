@@ -179,14 +179,14 @@ public class MainFrameAdmin extends JFrame{
 		ops.add("Fichero de empresas");
 		ops.add("Fichero de usuarios");
 		ops.add("Tick");
-		ops.add("Sesión continua");
+		//ops.add("Sesión continua");
 		
 		ArrayList<String> chooser = new ArrayList<String>();
 		chooser.add("Fichero de empresas");
 		chooser.add("Fichero de usuarios");
 		
 		opciones = new PanelOpciones(ops, null, chooser);
-		opciones.setCheckBox("Sesión continua");
+		//opciones.setCheckBox("Sesión continua");
 		
 		panel.add(opciones, BorderLayout.NORTH);
 		JPanel panelBlanco = new JPanel();

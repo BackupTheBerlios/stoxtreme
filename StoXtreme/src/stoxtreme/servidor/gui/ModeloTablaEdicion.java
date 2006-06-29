@@ -135,7 +135,6 @@ public abstract class ModeloTablaEdicion extends AbstractTableModel implements T
 			else{
 				valores.put(params_social[rowIndex], aValue.toString());
 			}
-			System.out.println(aValue);
 		}
 		else if(columnIndex == 2){
 			if(tipo == MODELO_PSICOLOGICO){

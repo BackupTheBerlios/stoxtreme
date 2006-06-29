@@ -23,7 +23,6 @@ public class Ejecutor {
 	// TODO: IMPLEMENTAR LA CLASE, QUIZAS EJECUTAR DEBERIA SER ESTATICO
 	public static void ejecuta(String s){
 		if (s.equals(OPA_Endesa.toUpperCase())){
-			System.out.println("Ya lo he lanzado");
 			AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(OPA_Endesa,"RUMOR_AGENTES",Mensaje.GLOBAL));
 		}
 		if (s.equals("Amp_Cap_TPI".toUpperCase())){

@@ -133,7 +133,6 @@ public class SistemaOperaciones /*implements RelojListener*/{
 	        		esCompra=false;
 	        	}
 	        	else{
-	        		System.out.println("No existe la operacion deseada "+idOperacion);
 	        		return;
 	        	}
         	}
