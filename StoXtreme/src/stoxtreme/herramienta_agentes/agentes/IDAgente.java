@@ -3,7 +3,7 @@ package stoxtreme.herramienta_agentes.agentes;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class IDAgente {
 

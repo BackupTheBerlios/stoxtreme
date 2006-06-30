@@ -3,7 +3,7 @@ package stoxtreme.servidor.objeto_bolsa.informacion;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class Informacion {
 	private InfoBursatil iBursatil;

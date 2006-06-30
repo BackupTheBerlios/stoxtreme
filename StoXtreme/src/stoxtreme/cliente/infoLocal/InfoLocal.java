@@ -16,7 +16,7 @@ import stoxtreme.cliente.infoLocal.ParserInfoLocal;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class InfoLocal {
 	//Vector[0]:precio inicial de la accion

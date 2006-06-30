@@ -14,7 +14,7 @@ import javax.swing.table.TableCellEditor;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public abstract class EditorOpPendientes extends AbstractCellEditor implements TableCellEditor {
 

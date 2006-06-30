@@ -10,7 +10,7 @@ import stoxtreme.interfaz_remota.Administrador;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class AdministradorServiceLocator extends org.apache.axis.client.Service implements stoxtreme.servicio_web.AdministradorService {
 

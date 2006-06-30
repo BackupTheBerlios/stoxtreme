@@ -26,7 +26,7 @@ import javax.swing.SpringLayout;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class PanelOpciones extends JPanel {
 	private ArrayList<String> claves;

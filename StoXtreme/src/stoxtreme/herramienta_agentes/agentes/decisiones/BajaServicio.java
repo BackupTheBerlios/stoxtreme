@@ -3,7 +3,7 @@ package stoxtreme.herramienta_agentes.agentes.decisiones;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class BajaServicio extends Decision {
 	private String servicio;

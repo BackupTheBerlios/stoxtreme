@@ -6,7 +6,7 @@ package stoxtreme.servidor.eventos.evaluador;
 /**
  *  Description of the Interface
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface EvaluadorConstants {
 

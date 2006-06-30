@@ -13,7 +13,7 @@ import stoxtreme.herramienta_agentes.agentes.Agente;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class HerramientaAgentesTableModel extends AbstractTableModel {
 	private TreeSet<Integer> seleccionadas = new TreeSet<Integer>();

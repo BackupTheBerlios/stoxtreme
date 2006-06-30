@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 @SuppressWarnings("serial")
 public class PanelCotizaciones extends JPanel implements ActionListener {

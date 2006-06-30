@@ -19,7 +19,7 @@ import stoxtreme.interfaz_remota.Stoxtreme;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class MonitorAgentes extends Thread {
 	private PriorityBlockingQueue<Decision> colaPeticiones;

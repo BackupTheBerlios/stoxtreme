@@ -10,7 +10,7 @@ import stoxtreme.interfaz_remota.StoxtremeMensajes;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class StoxtremeMensajesServiceLocator extends org.apache.axis.client.Service implements stoxtreme.servicio_web.StoxtremeMensajesService {
 

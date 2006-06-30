@@ -19,7 +19,7 @@ import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
  *
  *  Empresa: </p>
  *
- *@author     sin atribuir
+ *@author     Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  *@version    1.0
  */
 //OJO EL PRIMER ELEMENTO QUE LLEVA EL NUMERO DE ACCIONES ES UN STRING AUNK SEA UN NUMERO

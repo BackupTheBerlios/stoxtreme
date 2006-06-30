@@ -11,7 +11,7 @@ package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
  *
  *  Empresa: </p>
  *
- *@author     sin atribuir
+ *@author     Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  *@version    1.0
  */
 public class Posicion {

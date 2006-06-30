@@ -25,7 +25,7 @@ import org.apache.xml.serialize.OutputFormat;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class UsuariosRegistrados {
 	private Hashtable<String, String> registrados;

@@ -10,7 +10,7 @@ package stoxtreme.servidor.eventos.evaluador;
  *  to customize your error reporting mechanisms so long as you retain the
  *  public fields.
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ParseException extends Exception {
 

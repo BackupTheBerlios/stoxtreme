@@ -8,7 +8,7 @@ package stoxtreme.interfaz_remota;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class Operacion implements java.io.Serializable {
 

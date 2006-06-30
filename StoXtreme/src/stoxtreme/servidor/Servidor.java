@@ -33,7 +33,7 @@ import org.w3c.dom.Element;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class Servidor implements Administrador, Stoxtreme {
 	boolean iniciado = false;

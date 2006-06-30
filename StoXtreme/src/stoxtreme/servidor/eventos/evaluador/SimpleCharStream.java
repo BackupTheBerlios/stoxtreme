@@ -7,7 +7,7 @@ package stoxtreme.servidor.eventos.evaluador;
  *  An implementation of interface CharStream, where the stream is assumed to
  *  contain only ASCII characters (without unicode processing).
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 
 public class SimpleCharStream {

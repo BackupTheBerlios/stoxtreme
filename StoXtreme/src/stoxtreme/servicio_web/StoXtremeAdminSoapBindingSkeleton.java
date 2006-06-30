@@ -11,7 +11,7 @@ import stoxtreme.servidor.Servidor;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class StoXtremeAdminSoapBindingSkeleton implements stoxtreme.interfaz_remota.Administrador, org.apache.axis.wsdl.Skeleton {
 	private stoxtreme.interfaz_remota.Administrador impl;

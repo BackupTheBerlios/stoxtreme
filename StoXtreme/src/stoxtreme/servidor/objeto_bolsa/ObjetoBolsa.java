@@ -16,7 +16,7 @@ import stoxtreme.servidor.objeto_bolsa.informacion.informacion_XML.InformacionXM
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ObjetoBolsa implements RelojListener {
 	String nombreEmpresa;

@@ -10,7 +10,7 @@ import stoxtreme.interfaz_remota.Stoxtreme;
 /**
  *  Description of the Interface
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface StoxtremeService extends javax.xml.rpc.Service {
 	/**

@@ -9,7 +9,7 @@ import org.jfree.data.time.TimeSeries;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 @SuppressWarnings("serial")
 public class ValoresEmpresa extends TimeSeries {

@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ModeloTablaVariables extends AbstractTableModel {
 	private Hashtable<String, Double> valorVariables;

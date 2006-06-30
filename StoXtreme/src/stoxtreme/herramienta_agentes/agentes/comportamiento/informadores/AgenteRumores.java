@@ -11,7 +11,7 @@ import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Performative;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class AgenteRumores extends ComportamientoAgente {
 

@@ -9,7 +9,7 @@ import stoxtreme.herramienta_agentes.agentes.ParametrosSocial;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ModeloSocial {
 	private ParametrosSocial p;

@@ -11,7 +11,7 @@ import stoxtreme.interfaz_remota.Stoxtreme;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class StoXtremeSoapBindingStub extends org.apache.axis.client.Stub implements stoxtreme.interfaz_remota.Stoxtreme {
 	private java.util.Vector cachedSerClasses = new java.util.Vector();

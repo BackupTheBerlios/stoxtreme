@@ -5,7 +5,7 @@ import stoxtreme.interfaz_remota.Operacion;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class IntroducirOperacion extends Decision {
 	private Operacion o;

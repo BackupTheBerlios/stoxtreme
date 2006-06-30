@@ -5,7 +5,7 @@ import stoxtreme.servidor.objeto_bolsa.informacion.InfoBursatil;
 /**
  *  Description of the Interface
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface IInformacion {
 	// Participaciones, ampliaciones de capital, etc...

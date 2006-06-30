@@ -4,7 +4,7 @@ import java.util.Hashtable;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class EstadoCartera {
 	private Hashtable<String, Integer> cartera;

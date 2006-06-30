@@ -7,7 +7,7 @@ import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public abstract class RecepcionMensaje extends Decision implements Cloneable {
 	/**

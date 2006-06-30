@@ -8,7 +8,7 @@ package stoxtreme.interfaz_remota;
 /**
  *  Description of the Interface
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface Administrador extends java.rmi.Remote {
 	/**

@@ -4,8 +4,7 @@ import stoxtreme.herramienta_agentes.agentes.IDAgente;
 
 /**
  *  Description of the Class
- *
- *@author    Chris Seguin
+ *	@autor Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class IDConversacion {
 	private String ID = new String("Conversation" + (++ids));

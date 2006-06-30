@@ -18,7 +18,7 @@ import javax.swing.table.TableCellRenderer;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ComboTextoCellEditor extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 	private ArrayList<Component> lista;

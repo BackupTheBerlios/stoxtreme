@@ -11,7 +11,7 @@ import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class EstadoBolsa extends ModeloTablaPrecioAcciones implements VariablesListener {
 	private Hashtable<String, String> escucha;

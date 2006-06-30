@@ -6,7 +6,7 @@ package stoxtreme.servidor.eventos.evaluador;
 /**
  *  Describes the input token stream.
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 
 public class Token {

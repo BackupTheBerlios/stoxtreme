@@ -17,7 +17,7 @@ import stoxtreme.servidor.gui.PanelOpciones;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class DialogoInsertarSubomportamiento extends JDialog {
 	private String[] tiposComportamiento;
