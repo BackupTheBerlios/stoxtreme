@@ -4,22 +4,37 @@ import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.StoxtremeMensajes;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
-public class HiloConsultaLocal extends Thread{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class HiloConsultaLocal extends Thread {
 	ReceptorMensajes receptor;
-	
-	public HiloConsultaLocal(ReceptorMensajes mensajes){
+
+
+	/**
+	 *  Constructor for the HiloConsultaLocal object
+	 *
+	 *@param  mensajes  Description of Parameter
+	 */
+	public HiloConsultaLocal(ReceptorMensajes mensajes) {
 		receptor = mensajes;
 	}
-	
-	public void run(){
-		try{
+
+
+	/**
+	 *  Main processing method for the HiloConsultaLocal object
+	 */
+	public void run() {
+		try {
 			StoxtremeMensajes stoxtreme = AlmacenMensajes.getInstance();
-			while(true){
+			while (true) {
 				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());
 				receptor.notifica(m);
 			}
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

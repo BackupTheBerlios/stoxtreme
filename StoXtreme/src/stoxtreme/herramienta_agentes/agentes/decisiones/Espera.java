@@ -2,19 +2,39 @@ package stoxtreme.herramienta_agentes.agentes.decisiones;
 
 import stoxtreme.herramienta_agentes.agentes.Agente;
 
-public class Espera extends Decision{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class Espera extends Decision {
 
-	public Espera(int tiempoEspera){
+	/**
+	 *  Constructor for the Espera object
+	 *
+	 *@param  tiempoEspera  Description of Parameter
+	 */
+	public Espera(int tiempoEspera) {
 		super(tiempoEspera);
 	}
-	
+
+
+	/**
+	 *  Description of the Method
+	 */
 	public void ejecuta() {
-		synchronized(agente){
+		synchronized (agente) {
 			agente.notify();
 		}
 	}
-	
-	public String toString(){
+
+
+	/**
+	 *  Converts to a String representation of the object.
+	 *
+	 *@return    A string representation of the object.
+	 */
+	public String toString() {
 		return "Espero hasta el ciclo " + getTiempoEjecucion();
 	}
 }

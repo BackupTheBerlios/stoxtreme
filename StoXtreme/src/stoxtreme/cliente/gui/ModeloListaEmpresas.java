@@ -4,34 +4,75 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
 @SuppressWarnings("serial")
-public class ModeloListaEmpresas extends AbstractTableModel{
-	
+public class ModeloListaEmpresas extends AbstractTableModel {
+
 	private ArrayList listaEmpresas = new ArrayList();
-	
-	@SuppressWarnings("unchecked")
-	public ModeloListaEmpresas(ArrayList lEmpresas){
-		listaEmpresas=lEmpresas;
+
+
+
+	/**
+	 *  Constructor for the ModeloListaEmpresas object
+	 *
+	 *@param  lEmpresas  Description of Parameter
+	 */
+	public
+	@SuppressWarnings("unchecked") ModeloListaEmpresas(ArrayList lEmpresas) {
+		listaEmpresas = lEmpresas;
 	}
-	
+
+
+	/**
+	 *  Gets the RowCount attribute of the ModeloListaEmpresas object
+	 *
+	 *@return    The RowCount value
+	 */
 	public int getRowCount() {
 		return listaEmpresas.size();
 	}
 
+
+	/**
+	 *  Gets the ColumnCount attribute of the ModeloListaEmpresas object
+	 *
+	 *@return    The ColumnCount value
+	 */
 	public int getColumnCount() {
 		return 1;
 	}
 
+
+	/**
+	 *  Gets the ValueAt attribute of the ModeloListaEmpresas object
+	 *
+	 *@param  rowIndex     Description of Parameter
+	 *@param  columnIndex  Description of Parameter
+	 *@return              The ValueAt value
+	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return listaEmpresas.get(rowIndex);
 	}
-	
-	public String getColumnName(int columnIndex){
-		switch(columnIndex){
-		case 0: return "Empresa";
-		default: return "Ver en grafico";
+
+
+	/**
+	 *  Gets the ColumnName attribute of the ModeloListaEmpresas object
+	 *
+	 *@param  columnIndex  Description of Parameter
+	 *@return              The ColumnName value
+	 */
+	public String getColumnName(int columnIndex) {
+		switch (columnIndex) {
+			case 0:
+				return "Empresa";
+			default:
+				return "Ver en grafico";
+		}
 	}
-}
 
 }
 //	private ArrayList listaEmpresas;
@@ -39,7 +80,7 @@ public class ModeloListaEmpresas extends AbstractTableModel{
 //	private ArrayList seleccionado;
 //	//private Hashtable valoresAcciones;
 //	//private Hashtable volumenAcciones;
-//	
+//
 //	public ModeloListaEmpresas(ArrayList lEmpresas,Date fecha){
 //		listaEmpresas = new ArrayList();
 //		//colorEmpresa = new Hashtable();
@@ -56,7 +97,7 @@ public class ModeloListaEmpresas extends AbstractTableModel{
 //			seleccionado.add(lEmpresas.get(0));
 //		}
 //	}
-//	
+//
 //	public String getColumnName(int columnIndex){
 //		switch(columnIndex){
 //		case 0: return "Empresa";
@@ -79,17 +120,17 @@ public class ModeloListaEmpresas extends AbstractTableModel{
 ////			case 1: return new Double(((ValoresEmpresa)valoresAcciones.get(empresa)).ultimoPrecio());
 //			default: return new Boolean(seleccionado.contains(empresa));
 //		}
-//		
+//
 //	}
 //	public Class getColumnClass(int columnIndex){
 //		switch(columnIndex){
-//			case 0: return String.class; 
-//			case 1: return Double.class; 
+//			case 0: return String.class;
+//			case 1: return Double.class;
 //			case 2: return Boolean.class;
 //			default: return Object.class;
 //		}
 //	}
-//	
+//
 //	public TableCellRenderer getRenderer(){
 //		TableCellRenderer renderer = new DefaultTableCellRenderer(){
 //			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -105,15 +146,15 @@ public class ModeloListaEmpresas extends AbstractTableModel{
 //		};
 //		return renderer;
 //	}
-//	
+//
 //	public boolean isCellEditable(int row, int colum){
 //		return colum==2;
 //	}
-//	
+//
 //	public void cambiaSeleccion(int row){
 //		System.out.println(row);
 //	}
-//	
+//
 //	public void setValueAt(Object value, int row, int col) {
 //		if(col==2){
 //			String empresa = (String)listaEmpresas.get(row);
@@ -125,7 +166,7 @@ public class ModeloListaEmpresas extends AbstractTableModel{
 //			}
 //		}
 //	}
-//	
+//
 //	public void insertaValor(String empresa, double valor){
 //		((ValoresEmpresa)valoresAcciones.get(empresa)).insertarSiguienteValor(valor);
 //		fireTableCellUpdated(listaEmpresas.indexOf(empresa), 1);
@@ -169,7 +210,7 @@ public class ModeloListaEmpresas extends AbstractTableModel{
 //
 //	private String empresaEscucha = null;
 //	private JTextField textEscucha = null;
-//	
+//
 //	public void escuchaPrecio(String empresa, JTextField precioSeleccionado) {
 //		empresaEscucha = empresa;
 //		textEscucha = precioSeleccionado;

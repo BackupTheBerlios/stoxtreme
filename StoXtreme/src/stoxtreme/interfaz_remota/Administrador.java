@@ -1,17 +1,60 @@
 /**
- * Administrador.java
- *
- * This file was auto-generated from WSDL
- * by the Apache Axis 1.3 Oct 05, 2005 (05:23:37 EDT) WSDL2Java emitter.
+ *  Administrador.java This file was auto-generated from WSDL by the Apache
+ *  Axis 1.3 Oct 05, 2005 (05:23:37 EDT) WSDL2Java emitter.
  */
 
 package stoxtreme.interfaz_remota;
 
+/**
+ *  Description of the Interface
+ *
+ *@author    Chris Seguin
+ */
 public interface Administrador extends java.rmi.Remote {
-    public void iniciarServidor() throws java.rmi.RemoteException;
-    public void pararServidor() throws java.rmi.RemoteException;
-    public void iniciaSesion() throws java.rmi.RemoteException;
-    public void finalizaSesion() throws java.rmi.RemoteException;
-    public void showGUI() throws java.rmi.RemoteException;
-    public void hideGUI() throws java.rmi.RemoteException;
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  java.rmi.RemoteException  Description of Exception
+	 */
+	public void iniciarServidor() throws java.rmi.RemoteException;
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  java.rmi.RemoteException  Description of Exception
+	 */
+	public void pararServidor() throws java.rmi.RemoteException;
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  java.rmi.RemoteException  Description of Exception
+	 */
+	public void iniciaSesion() throws java.rmi.RemoteException;
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  java.rmi.RemoteException  Description of Exception
+	 */
+	public void finalizaSesion() throws java.rmi.RemoteException;
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  java.rmi.RemoteException  Description of Exception
+	 */
+	public void showGUI() throws java.rmi.RemoteException;
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  java.rmi.RemoteException  Description of Exception
+	 */
+	public void hideGUI() throws java.rmi.RemoteException;
 }

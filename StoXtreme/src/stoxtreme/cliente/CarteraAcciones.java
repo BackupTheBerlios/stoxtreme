@@ -5,26 +5,54 @@ import java.awt.Component;
 import stoxtreme.cliente.gui.ModeloCartera;
 import stoxtreme.interfaz_remota.Operacion;
 
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
 public class CarteraAcciones {
 	private ModeloCartera mCartera;
-	
-	public CarteraAcciones(){
+
+
+	/**
+	 *  Constructor for the CarteraAcciones object
+	 */
+	public CarteraAcciones() {
 		mCartera = new ModeloCartera();
 	}
 
-	public ModeloCartera getMCartera() {
-		return mCartera;
-	}
 
+	/**
+	 *  Sets the MCartera attribute of the CarteraAcciones object
+	 *
+	 *@param  cartera  The new MCartera value
+	 */
 	public void setMCartera(ModeloCartera cartera) {
 		mCartera = cartera;
 	}
 
+
+	/**
+	 *  Gets the MCartera attribute of the CarteraAcciones object
+	 *
+	 *@return    The MCartera value
+	 */
+	public ModeloCartera getMCartera() {
+		return mCartera;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  o         Description of Parameter
+	 *@param  cantidad  Description of Parameter
+	 */
 	public void actualiza(Operacion o, int cantidad) {
-		if(o.getTipoOp()==Operacion.COMPRA){
-			mCartera.insertarAcciones(o.getEmpresa(), cantidad,o.getPrecio());
+		if (o.getTipoOp() == Operacion.COMPRA) {
+			mCartera.insertarAcciones(o.getEmpresa(), cantidad, o.getPrecio());
 		}
-		else if(o.getTipoOp()==Operacion.VENTA){
+		else if (o.getTipoOp() == Operacion.VENTA) {
 			mCartera.restaAcciones(o.getEmpresa(), cantidad);
 		}
 	}

@@ -2,23 +2,46 @@ package stoxtreme.herramienta_agentes.agentes.decisiones;
 
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.MensajeACL;
 
-public class MandarMensaje extends Decision{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class MandarMensaje extends Decision {
 	private MensajeACL mensaje;
 	private boolean privado;
-	
+
+
+	/**
+	 *  Constructor for the MandarMensaje object
+	 *
+	 *@param  privado  Description of Parameter
+	 *@param  mensaje  Description of Parameter
+	 */
 	public MandarMensaje(boolean privado, MensajeACL mensaje) {
 		super();
 		this.mensaje = mensaje;
 		this.privado = privado;
 	}
 
+
+	/**
+	 *  Description of the Method
+	 */
 	public void ejecuta() {
-		if(!privado){
+		if (!privado) {
 			mensaje.setSender(agente.getIDAgente());
 		}
 		agente.enviarMensaje(mensaje);
 	}
-	public String toString(){
-		return "Mando mensaje acl "+mensaje;
+
+
+	/**
+	 *  Converts to a String representation of the object.
+	 *
+	 *@return    A string representation of the object.
+	 */
+	public String toString() {
+		return "Mando mensaje acl " + mensaje;
 	}
 }

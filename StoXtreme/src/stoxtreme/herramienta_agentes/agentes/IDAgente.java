@@ -1,28 +1,68 @@
 package stoxtreme.herramienta_agentes.agentes;
 
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
 public class IDAgente {
-	private static int IDS=0;
-	private static String idUsuario;
-	public static void setUsuario(String id){
-		idUsuario = id;
-	}
-	public static IDAgente BROADCAST = new IDAgente("BROADCAST");
-	
+
 	private String idAgente;
-	public IDAgente(){
-		idAgente = "Agente"+(++IDS);
+	/**
+	 *  Description of the Field
+	 */
+	public static IDAgente BROADCAST = new IDAgente("BROADCAST");
+	private static int IDS = 0;
+	private static String idUsuario;
+
+
+	/**
+	 *  Constructor for the IDAgente object
+	 */
+	public IDAgente() {
+		idAgente = "Agente" + (++IDS);
 	}
-	
-	private IDAgente(String idAgente){
+
+
+	/**
+	 *  Constructor for the IDAgente object
+	 *
+	 *@param  idAgente  Description of Parameter
+	 */
+	private IDAgente(String idAgente) {
 		this.idAgente = idAgente;
 	}
-	
-	public String toString(){
-		return idUsuario+"#"+idAgente;
+
+
+	/**
+	 *  Converts to a String representation of the object.
+	 *
+	 *@return    A string representation of the object.
+	 */
+	public String toString() {
+		return idUsuario + "#" + idAgente;
 	}
-	
-	public boolean equals(Object o){
-		return (o instanceof IDAgente) 
-			&& ((IDAgente)o).toString().equals(this.toString());
+
+
+	/**
+	 *  Compares this to the parameter.
+	 *
+	 *@param  o  the reference object with which to compare.
+	 *@return    <tt>true</tt> if this object is the same as the obj argument;
+	 *      <tt>false</tt> otherwise.
+	 */
+	public boolean equals(Object o) {
+		return (o instanceof IDAgente)
+				&& ((IDAgente) o).toString().equals(this.toString());
+	}
+
+
+	/**
+	 *  Sets the Usuario attribute of the IDAgente class
+	 *
+	 *@param  id  The new Usuario value
+	 */
+	public static void setUsuario(String id) {
+		idUsuario = id;
 	}
 }

@@ -17,68 +17,158 @@ import javax.swing.table.TableCellEditor;
 
 import stoxtreme.interfaz_remota.Operacion;
 
-public class ModeloOpPendientes extends AbstractTableModel{
-	private static String[] nCol = {" ","IDOperacion", "Tipo", "Empresa", "Cantidad", "Precio"};
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class ModeloOpPendientes extends AbstractTableModel {
 	private Hashtable<Integer, Operacion> opPendientes;
 	private ArrayList listaIDS;
-	
-	public ModeloOpPendientes(){
+
+	private DefaultTableCellRenderer renderer =
+		new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+				JButton b = new JButton(new ImageIcon("cancel.png"));
+				b.setEnabled(true);
+				b.setBorderPainted(false);
+				return b;
+			}
+		};
+	private static String[] nCol = {" ", "IDOperacion", "Tipo", "Empresa", "Cantidad", "Precio"};
+
+
+	/**
+	 *  Constructor for the ModeloOpPendientes object
+	 */
+	public ModeloOpPendientes() {
 		opPendientes = new Hashtable<Integer, Operacion>();
 		listaIDS = new ArrayList();
 	}
+
+
+	/**
+	 *  Gets the RowCount attribute of the ModeloOpPendientes object
+	 *
+	 *@return    The RowCount value
+	 */
 	public int getRowCount() {
 		return listaIDS.size();
 	}
 
+
+	/**
+	 *  Gets the ColumnCount attribute of the ModeloOpPendientes object
+	 *
+	 *@return    The ColumnCount value
+	 */
 	public int getColumnCount() {
 		return nCol.length;
 	}
-	public String getColumnName(int index){
+
+
+	/**
+	 *  Gets the ColumnName attribute of the ModeloOpPendientes object
+	 *
+	 *@param  index  Description of Parameter
+	 *@return        The ColumnName value
+	 */
+	public String getColumnName(int index) {
 		return nCol[index];
 	}
+
+
+	/**
+	 *  Gets the ValueAt attribute of the ModeloOpPendientes object
+	 *
+	 *@param  rowIndex     Description of Parameter
+	 *@param  columnIndex  Description of Parameter
+	 *@return              The ValueAt value
+	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		switch(columnIndex){
-			case 0: return null;
-			case 1: return listaIDS.get(rowIndex);
-			case 2: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getTipoOp()==Operacion.COMPRA?"COMPRA":"VENTA";
-			case 3: return ((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getEmpresa();
-			case 4: return new Integer(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getCantidad());
-			default: return new Double(((Operacion)opPendientes.get(listaIDS.get(rowIndex))).getPrecio());
+		switch (columnIndex) {
+			case 0:
+				return null;
+			case 1:
+				return listaIDS.get(rowIndex);
+			case 2:
+				return ((Operacion) opPendientes.get(listaIDS.get(rowIndex))).getTipoOp() == Operacion.COMPRA ? "COMPRA" : "VENTA";
+			case 3:
+				return ((Operacion) opPendientes.get(listaIDS.get(rowIndex))).getEmpresa();
+			case 4:
+				return new Integer(((Operacion) opPendientes.get(listaIDS.get(rowIndex))).getCantidad());
+			default:
+				return new Double(((Operacion) opPendientes.get(listaIDS.get(rowIndex))).getPrecio());
 		}
 	}
-	
-	public void insertarOperacion(Operacion o, int idOp){
+
+
+	/**
+	 *  Gets the CellEditable attribute of the ModeloOpPendientes object
+	 *
+	 *@param  row  Description of Parameter
+	 *@param  col  Description of Parameter
+	 *@return      The CellEditable value
+	 */
+	public boolean isCellEditable(int row, int col) {
+		return col == 0;
+	}
+
+
+	/**
+	 *  Gets the Renderer attribute of the ModeloOpPendientes object
+	 *
+	 *@return    The Renderer value
+	 */
+	public DefaultTableCellRenderer getRenderer() {
+		return renderer;
+	}
+
+
+	/**
+	 *  Gets the Operacion attribute of the ModeloOpPendientes object
+	 *
+	 *@param  idOp  Description of Parameter
+	 *@return       The Operacion value
+	 */
+	public Operacion getOperacion(int idOp) {
+		return opPendientes.get(idOp);
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  o     Description of Parameter
+	 *@param  idOp  Description of Parameter
+	 */
+	public void insertarOperacion(Operacion o, int idOp) {
 		listaIDS.add(new Integer(idOp));
 		opPendientes.put(new Integer(idOp), o);
-		fireTableRowsInserted(listaIDS.size()-1, listaIDS.size()-1);
+		fireTableRowsInserted(listaIDS.size() - 1, listaIDS.size() - 1);
 	}
-	
-	public void borrarOperacion(int idOp){
-		int i = listaIDS.indexOf(new Integer(idOp)); 
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  idOp  Description of Parameter
+	 */
+	public void borrarOperacion(int idOp) {
+		int i = listaIDS.indexOf(new Integer(idOp));
 		listaIDS.remove(i);
 		opPendientes.remove(new Integer(idOp));
 		fireTableDataChanged();
 		//fireTableRowsDeleted(i, i);
 	}
-	
-	public boolean isCellEditable(int row, int col){
-		return col==0;
-	}
-	
-	private DefaultTableCellRenderer renderer = new DefaultTableCellRenderer(){
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			JButton b = new JButton(new ImageIcon("cancel.png"));
-			b.setEnabled(true);
-			b.setBorderPainted(false);
-			return b;
-		}
-	};
-	public DefaultTableCellRenderer getRenderer(){
-		return renderer;
-	}
-	public Operacion getOperacion(int idOp) {
-		return opPendientes.get(idOp);
-	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  idOp  Description of Parameter
+	 *@return       Description of the Returned Value
+	 */
 	public boolean contains(int idOp) {
 		return opPendientes.containsKey(idOp);
 	}

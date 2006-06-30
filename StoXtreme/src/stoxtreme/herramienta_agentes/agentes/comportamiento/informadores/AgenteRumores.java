@@ -8,31 +8,50 @@ import stoxtreme.herramienta_agentes.agentes.decisiones.MandarMensaje;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.MensajeACL;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Performative;
 
-public class AgenteRumores extends ComportamientoAgente{
-	public void configure() {
-		
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class AgenteRumores extends ComportamientoAgente {
+
+	/**
+	 *  Gets the NombreComportamiento attribute of the AgenteRumores object
+	 *
+	 *@return    The NombreComportamiento value
+	 */
+	public String getNombreComportamiento() {
+		return "Propagador Rumores";
 	}
-	
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void configure() {
+
+	}
+
+
+	/**
+	 *  Description of the Method
+	 */
 	public void generacionDecisiones() {
-		if(Math.random() < 0.1){
+		if (Math.random() < 0.1) {
 			MensajeACL m = new MensajeACL();
 			m.addReceiver(IDAgente.BROADCAST);
 			m.setPerformative(Performative.INFORM);
 			String empresa = estadoBolsa.dameEmpresaAleatoria();
-			
-			if(Math.random() > 0.5){
-				m.setContenidoString(empresa+",1.8");
+
+			if (Math.random() > 0.5) {
+				m.setContenidoString(empresa + ",1.8");
 			}
-			else{
-				m.setContenidoString(empresa+",0.8");
+			else {
+				m.setContenidoString(empresa + ",0.8");
 			}
-			
+
 			MandarMensaje decision = new MandarMensaje(false, m);
 			decisiones.add(decision);
 		}
 	}
-	
-	public String getNombreComportamiento() {
-		return "Propagador Rumores";
-	}
-}	
+}

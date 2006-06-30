@@ -18,7 +18,12 @@ import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Stoxtreme;
 import stoxtreme.servidor.Servidor;
 
-public class Agente extends Thread{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class Agente extends Thread {
 	private IDAgente ID;
 	private Perceptor p;
 	private BuzonMensajes buzon;
@@ -35,61 +40,172 @@ public class Agente extends Thread{
 	private HerramientaAgentesTableModel modeloTabla;
 	private StringBuffer output = new StringBuffer();
 	private String estado;
-	
-	public Agente (Stoxtreme conexionBolsa, EstadoBolsa estado, ConsolaAgentes consolaAgentes, HerramientaAgentesTableModel modeloTabla, ParametrosSocial ps, ParametrosPsicologicos pp){
+
+
+	/**
+	 *  Constructor for the Agente object
+	 *
+	 *@param  conexionBolsa   Description of Parameter
+	 *@param  estado          Description of Parameter
+	 *@param  consolaAgentes  Description of Parameter
+	 *@param  modeloTabla     Description of Parameter
+	 *@param  ps              Description of Parameter
+	 *@param  pp              Description of Parameter
+	 */
+	public Agente(Stoxtreme conexionBolsa, EstadoBolsa estado, ConsolaAgentes consolaAgentes, HerramientaAgentesTableModel modeloTabla, ParametrosSocial ps, ParametrosPsicologicos pp) {
 		ID = new IDAgente();
 		p = new Perceptor();
 		this.modeloTabla = modeloTabla;
-		
+
 		modeloSocial = new ModeloSocial(ps);
 		modeloPsicologico = new ModeloPsicologico(pp);
 		estadoBolsa = estado;
 		estadoCartera = new EstadoCartera();
-		
+
 		this.conexionBolsa = conexionBolsa;
 		this.consolaAgentes = consolaAgentes;
-		
+
 		opPendientes = new OperacionesPendientes();
 		p.setAgente(this);
 		p.setOperacionesPendientes(opPendientes);
 		p.setEstadoBolsa(estadoBolsa);
 		p.setEstadoCartera(estadoCartera);
-		
+
 		this.alive = true;
 		buzon = new BuzonMensajes(ID);
 	}
-	
-	public void addComportamiento(ComportamientoAgente c){
+
+
+	/**
+	 *  Sets the Alive attribute of the Agente object
+	 *
+	 *@param  estado  The new Alive value
+	 */
+	public void setAlive(boolean estado) {
+		alive = estado;
+	}
+
+
+	/**
+	 *  Gets the IDString attribute of the Agente object
+	 *
+	 *@return    The IDString value
+	 */
+	public String getIDString() {
+		return ID.toString();
+	}
+
+
+	/**
+	 *  Gets the Perceptor attribute of the Agente object
+	 *
+	 *@return    The Perceptor value
+	 */
+	public Perceptor getPerceptor() {
+		return p;
+	}
+
+
+	/**
+	 *  Gets the Estado attribute of the Agente object
+	 *
+	 *@return    The Estado value
+	 */
+	public String getEstado() {
+		return estado;
+	}
+
+
+	/**
+	 *  Gets the StringComportamiento attribute of the Agente object
+	 *
+	 *@return    The StringComportamiento value
+	 */
+	public String getStringComportamiento() {
+		return this.comportamiento.getNombreComportamiento();
+	}
+
+
+	/**
+	 *  Gets the Ganancias attribute of the Agente object
+	 *
+	 *@return    The Ganancias value
+	 */
+	public double getGanancias() {
+		return this.ganancias;
+	}
+
+
+	/**
+	 *  Gets the IDAgente attribute of the Agente object
+	 *
+	 *@return    The IDAgente value
+	 */
+	public IDAgente getIDAgente() {
+		return ID;
+	}
+
+
+	/**
+	 *  Gets the ModeloSocial attribute of the Agente object
+	 *
+	 *@return    The ModeloSocial value
+	 */
+	public ModeloSocial getModeloSocial() {
+		return this.modeloSocial;
+	}
+
+
+	/**
+	 *  Gets the Output attribute of the Agente object
+	 *
+	 *@return    The Output value
+	 */
+	public StringBuffer getOutput() {
+		return output;
+	}
+
+
+	/**
+	 *  Adds a feature to the Comportamiento attribute of the Agente object
+	 *
+	 *@param  c  The feature to be added to the Comportamiento attribute
+	 */
+	public void addComportamiento(ComportamientoAgente c) {
 		this.comportamiento = c;
 		p.addGeneradorDecisiones(comportamiento);
-		
+
 		comportamiento.setModeloPsicologico(modeloPsicologico);
 		comportamiento.setModeloSocial(modeloSocial);
 		comportamiento.setEstadoBolsa(estadoBolsa);
 		comportamiento.setEstadoCartera(estadoCartera);
 		comportamiento.setOperacionesPendientes(opPendientes);
 		comportamiento.configureAll();
-		
+
 		Decision d = comportamiento.getDecisionEspera();
 		d.setAgente(this);
 		d.insertarEnMonitor();
 	}
 
+
 	// Analiza los cambios en la bolsa y cambia la estrategia
-	public void run(){
-		while(alive){
+	/**
+	 *  Main processing method for the Agente object
+	 */
+	public void run() {
+		while (alive) {
 			// Nadie le interrumpe mientras toma las
 			// decisiones
 			ArrayList<Decision> decisiones;
 			String nuevoEstado;
-			
-			synchronized(this){
+
+			synchronized (this) {
 				comportamiento.generaDecisionesAll();
 				decisiones = comportamiento.getDecisiones();
-				synchronized(decisiones){
+				synchronized (decisiones) {
 					nuevoEstado = comportamiento.getEstadoComportamiento();
 					Iterator<Decision> itDec = decisiones.iterator();
-					while(itDec.hasNext()){
+					while (itDec.hasNext()) {
 						Decision actual = itDec.next();
 						actual.setAgente(this);
 						actual.insertarEnMonitor();
@@ -102,29 +218,32 @@ public class Agente extends Thread{
 				espera.insertarEnMonitor();
 				imprime(espera);
 			}
-			
-			if(!nuevoEstado.equals(estado)){
+
+			if (!nuevoEstado.equals(estado)) {
 				estado = nuevoEstado;
 				fireUpdateTable();
 			}
-			
+
 			try {
-				synchronized(this){
+				synchronized (this) {
 					wait();
 				}
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 				alive = false;
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	
-	public void setAlive(boolean estado){
-		alive = estado;
-	}
-	public void insertarOperacion(Operacion o){
-		if(alive){
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  o  Description of Parameter
+	 */
+	public void insertarOperacion(Operacion o) {
+		if (alive) {
 			String empresa = o.getEmpresa();
 			int tipo = o.getTipoOp();
 			int numAcciones = o.getCantidad();
@@ -132,105 +251,140 @@ public class Agente extends Thread{
 
 			try {
 				int i = conexionBolsa.insertarOperacion(this.ID.toString(), o);
-				if(i!= -1){
+				if (i != -1) {
 					opPendientes.insertaOperacionPendiente(i, empresa, tipo, numAcciones, precio);
 				}
-			} catch (RemoteException e) {
+			}
+			catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	public void cancelarOperacion(int operacion){
-		if(alive){
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  operacion  Description of Parameter
+	 */
+	public void cancelarOperacion(int operacion) {
+		if (alive) {
 			try {
-				conexionBolsa.cancelarOperacion(this.ID.toString(),operacion);
-			} catch (RemoteException e) {
+				conexionBolsa.cancelarOperacion(this.ID.toString(), operacion);
+			}
+			catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	public String getIDString(){
-		return ID.toString();
-	}
-	
-	public void abandonarModelo(){
-		if(alive){
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void abandonarModelo() {
+		if (alive) {
 			setAlive(false);
 			modeloTabla.eliminaAgente(this);
 		}
 	}
-	
-	public void enviarMensaje(MensajeACL m){
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  m  Description of Parameter
+	 */
+	public void enviarMensaje(MensajeACL m) {
 		m.setSender(ID);
 		buzon.send(m);
 	}
 
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  decision  Description of Parameter
+	 */
 	public void imprime(Decision decision) {
 		consolaAgentes.insertarAccion(getIDString(), decision.toString());
 		output.append(decision.toString());
 		output.append('\n');
 	}
 
-	public Perceptor getPerceptor() {
-		return p;
-	}
-	
-	public String getEstado(){
-		return estado;
-	}
-	
-	public String getStringComportamiento(){
-		return this.comportamiento.getNombreComportamiento();
-	}
-	
-	public double getGanancias(){
-		return this.ganancias;
-	}
 
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  servicio  Description of Parameter
+	 */
 	public void altaServicio(String servicio) {
 		buzon.altaServicio(ID, servicio);
 	}
 
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  servicio  Description of Parameter
+	 */
 	public void bajaServicio(String servicio) {
 		buzon.bajaServicio(ID, servicio);
 	}
 
-	public IDAgente getIDAgente() {
-		return ID;
-	}
 
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  n   Description of Parameter
+	 *@param  p2  Description of Parameter
+	 *@param  r   Description of Parameter
+	 */
 	public void recibeMensaje(int n, PlantillaMensajes p2, RecepcionMensaje r) {
 		buzon.receive(n, p2, r);
 	}
 
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  servicio     Description of Parameter
+	 *@param  proveedores  Description of Parameter
+	 */
 	public void requestServicio(String servicio, ArrayList<IDAgente> proveedores) {
-		 ArrayList<IDAgente> lista = buzon.getAgentesServicio(servicio);
-		 for(int i=0; i<lista.size(); i++){
-			 proveedores.add(lista.get(i));
-		 }
+		ArrayList<IDAgente> lista = buzon.getAgentesServicio(servicio);
+		for (int i = 0; i < lista.size(); i++) {
+			proveedores.add(lista.get(i));
+		}
 	}
 
-	public ModeloSocial getModeloSocial() {
-		return this.modeloSocial;
-	}
 
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  d  Description of Parameter
+	 */
 	public void decrementaBeneficio(double d) {
-		ganancias-=d;
+		ganancias -= d;
 		fireUpdateTable();
 	}
 
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  d  Description of Parameter
+	 */
 	public void incrementaBeneficio(double d) {
-		ganancias+=d;
+		ganancias += d;
 		fireUpdateTable();
 	}
-	
-	public void fireUpdateTable(){
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void fireUpdateTable() {
 		modeloTabla.cambioEnAgente(getIDString());
-	}
-	
-	public StringBuffer getOutput(){
-		return output;
 	}
 }

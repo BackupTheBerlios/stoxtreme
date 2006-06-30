@@ -23,20 +23,47 @@ import javax.swing.JTextField;
 import javax.swing.Spring;
 import javax.swing.SpringLayout;
 
-public class PanelOpciones extends JPanel{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class PanelOpciones extends JPanel {
 	private ArrayList<String> claves;
 	private ArrayList<String> password;
 	private ArrayList<String> chooser;
-	private Hashtable<String,JComponent> opciones;
-	private Hashtable<String,String> vChooser;
+	private Hashtable<String, JComponent> opciones;
+	private Hashtable<String, String> vChooser;
 
-	public PanelOpciones(ArrayList<String> claves){
+
+	/**
+	 *  Constructor for the PanelOpciones object
+	 *
+	 *@param  claves  Description of Parameter
+	 */
+	public PanelOpciones(ArrayList<String> claves) {
 		this(claves, new ArrayList<String>(), new ArrayList<String>());
 	}
-	public PanelOpciones(ArrayList<String> claves, ArrayList<String> passw){
+
+
+	/**
+	 *  Constructor for the PanelOpciones object
+	 *
+	 *@param  claves  Description of Parameter
+	 *@param  passw   Description of Parameter
+	 */
+	public PanelOpciones(ArrayList<String> claves, ArrayList<String> passw) {
 		this(claves, passw, new ArrayList<String>());
 	}
-	
+
+
+	/**
+	 *  Constructor for the PanelOpciones object
+	 *
+	 *@param  claves    Description of Parameter
+	 *@param  password  Description of Parameter
+	 *@param  choosers  Description of Parameter
+	 */
 	public PanelOpciones(
 			ArrayList<String> claves,
 			ArrayList<String> password,
@@ -45,19 +72,19 @@ public class PanelOpciones extends JPanel{
 		this.claves = claves;
 		this.chooser = choosers;
 		this.password = password;
-		opciones = new Hashtable<String,JComponent>();
-		for(int i=0; i<claves.size(); i++){
+		opciones = new Hashtable<String, JComponent>();
+		for (int i = 0; i < claves.size(); i++) {
 			opciones.put(claves.get(i), new JTextField());
 		}
-		if(password != null){
-			for(int i=0; i<password.size(); i++){
+		if (password != null) {
+			for (int i = 0; i < password.size(); i++) {
 				opciones.put(password.get(i), new JPasswordField());
 			}
 		}
-		
-		vChooser = new Hashtable<String,String>();
-		if(choosers != null){
-			for(int i=0; i<choosers.size(); i++){
+
+		vChooser = new Hashtable<String, String>();
+		if (choosers != null) {
+			for (int i = 0; i < choosers.size(); i++) {
 				JPanel panel = new JPanel(new BorderLayout());
 				panel.add(opciones.get(choosers.get(i)), BorderLayout.CENTER);
 				JButton boton = new JButton("...");
@@ -67,90 +94,163 @@ public class PanelOpciones extends JPanel{
 			}
 		}
 
-		try{
+		try {
 			init();
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public String getValor(String opcion){
+
+
+	/**
+	 *  Sets the Valor attribute of the PanelOpciones object
+	 *
+	 *@param  opcion  The new Valor value
+	 *@param  valor   The new Valor value
+	 */
+	public void setValor(String opcion, String valor) {
+		if (chooser.contains(opcion)) {
+			vChooser.put(opcion, valor);
+		}
+		else if (password.contains(opcion)) {
+			// No dejamos setear los password
+		}
+		else {
+			Component comp = opciones.get(opcion);
+			if (comp instanceof JComboBox) {
+				((JComboBox) comp).setSelectedItem(valor);
+			}
+			else {
+				((JTextField) comp).setText(valor);
+			}
+		}
+	}
+
+
+	/**
+	 *  Sets the Opcionalidad attribute of the PanelOpciones object
+	 *
+	 *@param  opcion   The new Opcionalidad value
+	 *@param  valores  The new Opcionalidad value
+	 */
+	public void setOpcionalidad(String opcion, String[] valores) {
+		JComboBox combo = new JComboBox(valores);
+		opciones.put(opcion, combo);
+		init();
+		updateUI();
+	}
+
+
+	/**
+	 *  Sets the Opcionalidad attribute of the PanelOpciones object
+	 *
+	 *@param  opcion    The new Opcionalidad value
+	 *@param  valores   The new Opcionalidad value
+	 *@param  listener  The new Opcionalidad value
+	 */
+	public void setOpcionalidad(String opcion, String[] valores, ActionListener listener) {
+		JComboBox combo = new JComboBox(valores);
+		combo.addActionListener(listener);
+		opciones.put(opcion, combo);
+		init();
+		updateUI();
+	}
+
+
+	/**
+	 *  Sets the CheckBox attribute of the PanelOpciones object
+	 *
+	 *@param  opcion  The new CheckBox value
+	 */
+	public void setCheckBox(String opcion) {
+		JCheckBox check = new JCheckBox();
+		opciones.put(opcion, check);
+		init();
+		updateUI();
+	}
+
+
+	/**
+	 *  Gets the Valor attribute of the PanelOpciones object
+	 *
+	 *@param  opcion  Description of Parameter
+	 *@return         The Valor value
+	 */
+	public String getValor(String opcion) {
 		String s;
-		if(chooser.contains(opcion)){
+		if (chooser.contains(opcion)) {
 			s = vChooser.get(opcion);
 		}
-		else if(password != null && password.contains(opcion)){
-			s = new String(((JPasswordField)opciones.get(opcion)).getPassword());
+		else if (password != null && password.contains(opcion)) {
+			s = new String(((JPasswordField) opciones.get(opcion)).getPassword());
 		}
-		else{
+		else {
 			Component comp = opciones.get(opcion);
-			if(comp instanceof JCheckBox){
-				if(((JCheckBox)comp).isSelected()){
+			if (comp instanceof JCheckBox) {
+				if (((JCheckBox) comp).isSelected()) {
 					return "true";
 				}
-				else{
+				else {
 					return "false";
 				}
 			}
-			else if(comp instanceof JComboBox){
-				s = (String)((JComboBox)comp).getSelectedItem();
+			else if (comp instanceof JComboBox) {
+				s = (String) ((JComboBox) comp).getSelectedItem();
 			}
-			else{
-				s = ((JTextField)comp).getText();
+			else {
+				s = ((JTextField) comp).getText();
 			}
 		}
 		return s;
 	}
-	
-	public void setValor(String opcion, String valor){
-		if(chooser.contains(opcion)){
-			vChooser.put(opcion,valor);
-		}
-		else if(password.contains(opcion)){
-			// No dejamos setear los password
-		}
-		else{
-			Component comp = opciones.get(opcion);
-			if(comp instanceof JComboBox){
-				((JComboBox)comp).setSelectedItem(valor);
-			}
-			else{
-				((JTextField)comp).setText(valor);
-			}
-		}
-	}
-	
-	public void init(){
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void init() {
 		add(getPanelPrincipal(), BorderLayout.CENTER);
 	}
-	
+
+
+	/**
+	 *  Gets the PanelPrincipal attribute of the PanelOpciones object
+	 *
+	 *@return    The PanelPrincipal value
+	 */
 	private Component getPanelPrincipal() {
 		JPanel panel = new JPanel(new SpringLayout());
 		for (int i = 0; i < claves.size(); i++) {
-		    JLabel l = new JLabel(claves.get(i), JLabel.TRAILING);
-		    panel.add(l);
-		    JComponent textField = opciones.get(claves.get(i));
-		    l.setLabelFor(textField);
-		    panel.add(textField);
+			JLabel l = new JLabel(claves.get(i), JLabel.TRAILING);
+			panel.add(l);
+			JComponent textField = opciones.get(claves.get(i));
+			l.setLabelFor(textField);
+			panel.add(textField);
 		}
-		makeCompactGrid(panel,opciones.size(), 2, 6, 6, 6, 6);
+		makeCompactGrid(panel, opciones.size(), 2, 6, 6, 6, 6);
 		return panel;
 	}
 
-	private static SpringLayout.Constraints getConstraintsForCell(int row,
-			int col, Container parent, int cols) {
-		SpringLayout layout = (SpringLayout) parent.getLayout();
-		Component c = parent.getComponent(row * cols + col);
-		return layout.getConstraints(c);
-	}
-	
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  parent    Description of Parameter
+	 *@param  rows      Description of Parameter
+	 *@param  cols      Description of Parameter
+	 *@param  initialX  Description of Parameter
+	 *@param  initialY  Description of Parameter
+	 *@param  xPad      Description of Parameter
+	 *@param  yPad      Description of Parameter
+	 */
 	public static void makeCompactGrid(Container parent, int rows, int cols,
 			int initialX, int initialY, int xPad, int yPad) {
 		SpringLayout layout;
 		try {
 			layout = (SpringLayout) parent.getLayout();
-		} catch (ClassCastException exc) {
+		}
+		catch (ClassCastException exc) {
 			System.err.println("The first argument to makeCompactGrid must use SpringLayout.");
 			return;
 		}
@@ -195,6 +295,24 @@ public class PanelOpciones extends JPanel{
 		pCons.setConstraint(SpringLayout.EAST, x);
 	}
 
+
+	/**
+	 *  Gets the ConstraintsForCell attribute of the PanelOpciones class
+	 *
+	 *@param  row     Description of Parameter
+	 *@param  col     Description of Parameter
+	 *@param  parent  Description of Parameter
+	 *@param  cols    Description of Parameter
+	 *@return         The ConstraintsForCell value
+	 */
+	private static SpringLayout.Constraints getConstraintsForCell(int row,
+			int col, Container parent, int cols) {
+		SpringLayout layout = (SpringLayout) parent.getLayout();
+		Component c = parent.getComponent(row * cols + col);
+		return layout.getConstraints(c);
+	}
+
+
 //	private Component getPanelPrincipal2() {
 //		JPanel panelDerecho = new JPanel(new GridLayout(opciones.size(), 1, 10, 10));
 //		JPanel panelIzquierdo = new JPanel(new GridLayout(opciones.size(), 1));
@@ -209,55 +327,53 @@ public class PanelOpciones extends JPanel{
 //		panel.add(panelDerecho, BorderLayout.EAST);
 //		return panel;
 //	}
-	private static class ListenerOpcion implements ActionListener{
+	/**
+	 *  Description of the Class
+	 *
+	 *@author    Chris Seguin
+	 */
+	private static class ListenerOpcion implements ActionListener {
 		private String opcion;
 		private JComponent component;
-		private Hashtable<String,String> vChooser;
+		private Hashtable<String, String> vChooser;
 		private JComponent papa;
-		
-		public ListenerOpcion(JComponent papa, String opcion, JComponent component, Hashtable<String,String> vChooser) {
+
+
+		/**
+		 *  Constructor for the ListenerOpcion object
+		 *
+		 *@param  papa       Description of Parameter
+		 *@param  opcion     Description of Parameter
+		 *@param  component  Description of Parameter
+		 *@param  vChooser   Description of Parameter
+		 */
+		public ListenerOpcion(JComponent papa, String opcion, JComponent component, Hashtable<String, String> vChooser) {
 			this.opcion = opcion;
 			this.component = component;
 			this.vChooser = vChooser;
 			this.papa = papa;
 		}
-		
+
+
+		/**
+		 *  Description of the Method
+		 *
+		 *@param  arg0  Description of Parameter
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			JFileChooser chooser = new JFileChooser(".");
-			if(chooser.showOpenDialog(papa) == JFileChooser.APPROVE_OPTION){
+			if (chooser.showOpenDialog(papa) == JFileChooser.APPROVE_OPTION) {
 				File f = chooser.getSelectedFile();
 				vChooser.put(opcion, f.getAbsolutePath());
-				
-				if(component instanceof JTextField){
-					((JTextField)component).setText(f.getAbsolutePath());
+
+				if (component instanceof JTextField) {
+					((JTextField) component).setText(f.getAbsolutePath());
 				}
-				else{
-					((JPasswordField)component).setText(f.getAbsolutePath());
+				else {
+					((JPasswordField) component).setText(f.getAbsolutePath());
 				}
 			}
 		}
-		
-	}
-	
-	public void setOpcionalidad(String opcion, String[] valores){
-		JComboBox combo = new JComboBox(valores);
-		opciones.put(opcion, combo);
-		init();
-		updateUI();
-	}
-	
-	public void setOpcionalidad(String opcion, String[] valores, ActionListener listener){
-		JComboBox combo = new JComboBox(valores);
-		combo.addActionListener(listener);
-		opciones.put(opcion, combo);
-		init();
-		updateUI();
-	}
-	
-	public void setCheckBox(String opcion){
-		JCheckBox check = new JCheckBox();
-		opciones.put(opcion, check);
-		init();
-		updateUI();
+
 	}
 }

@@ -14,15 +14,46 @@ import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.PlantillaMensaj
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Protocol;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.RecepcionMensaje;
 
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
 public class AgenteAnalisisFundamental extends ComportamientoAgente {
-	public static String NOMBRE_SERVICIO = "analisis_fundamental";
 
 	private double precioRecomendacion;
+	/**
+	 *  Description of the Field
+	 */
+	public static String NOMBRE_SERVICIO = "analisis_fundamental";
 
-	public void generacionDecisiones() {
-		
+
+	/**
+	 *  Gets the NombreComportamiento attribute of the AgenteAnalisisFundamental
+	 *  object
+	 *
+	 *@return    The NombreComportamiento value
+	 */
+	public String getNombreComportamiento() {
+		return "Analisis Fundamental";
 	}
 
+
+	/**
+	 *  Description of the Method
+	 */
+	public void generacionDecisiones() {
+
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  reply    Description of Parameter
+	 *@param  empresa  Description of Parameter
+	 *@param  agente   Description of Parameter
+	 */
 	public void darRecomendacion(String reply, String empresa, IDAgente agente) {
 //		if(!MediadorOperaciones.getMediadorGlobal().getBanco().retiraDinero(precioRecomendacion,
 //				agente.toString())){
@@ -44,49 +75,55 @@ public class AgenteAnalisisFundamental extends ComportamientoAgente {
 		decisiones.add(new MandarMensaje(false, m));
 	}
 
+
+	/**
+	 *  Description of the Method
+	 */
 	public void configure() {
 		this.precioRecomendacion = modeloPsicologico.precioRecomendacion();
 
-		RecepcionMensaje recepcion = new RecepcionMensaje() {
-			public void ejecuta() {
-				String with = mensajeRecibido.getReply_with();
-				String contenido = mensajeRecibido.getContenidoString();
-				IDAgente envio = mensajeRecibido.getSender();
+		RecepcionMensaje recepcion =
+			new RecepcionMensaje() {
+				public void ejecuta() {
+					String with = mensajeRecibido.getReply_with();
+					String contenido = mensajeRecibido.getContenidoString();
+					IDAgente envio = mensajeRecibido.getSender();
 
-				if (!contenido.contains(",")) {
-					MensajeACL m = new MensajeACL();
-					m.addReceiver(envio);
-					m.setReply_with(with);
-					m.setProtocol(Protocol.REQUEST);
-					m.setPerformative(Performative.FAILURE);
-					decisiones.add(new MandarMensaje(false, m));
-				}
-				String[] split = contenido.split(",");
-				String empresa = split[0];
-				double precio = Double.parseDouble(split[1]);
+					if (!contenido.contains(",")) {
+						MensajeACL m = new MensajeACL();
+						m.addReceiver(envio);
+						m.setReply_with(with);
+						m.setProtocol(Protocol.REQUEST);
+						m.setPerformative(Performative.FAILURE);
+						decisiones.add(new MandarMensaje(false, m));
+					}
+					String[] split = contenido.split(",");
+					String empresa = split[0];
+					double precio = Double.parseDouble(split[1]);
 
-				if (envio == null) {
-					envio = mensajeRecibido.getReply_to();
-				}
+					if (envio == null) {
+						envio = mensajeRecibido.getReply_to();
+					}
 
-				if (precio < precioRecomendacion) {
-					MensajeACL m = new MensajeACL();
-					m.addReceiver(envio);
-					m.setReply_with(with);
-					m.setProtocol(Protocol.REQUEST);
-					m.setPerformative(Performative.FAILURE);
-					decisiones.add(new MandarMensaje(false, m));
-				} else {
-					MensajeACL m = new MensajeACL();
-					m.addReceiver(envio);
-					m.setReply_with(with);
-					m.setProtocol(Protocol.REQUEST);
-					m.setPerformative(Performative.AGREE);
-					decisiones.add(new MandarMensaje(false, m));
+					if (precio < precioRecomendacion) {
+						MensajeACL m = new MensajeACL();
+						m.addReceiver(envio);
+						m.setReply_with(with);
+						m.setProtocol(Protocol.REQUEST);
+						m.setPerformative(Performative.FAILURE);
+						decisiones.add(new MandarMensaje(false, m));
+					}
+					else {
+						MensajeACL m = new MensajeACL();
+						m.addReceiver(envio);
+						m.setReply_with(with);
+						m.setProtocol(Protocol.REQUEST);
+						m.setPerformative(Performative.AGREE);
+						decisiones.add(new MandarMensaje(false, m));
+					}
+					darRecomendacion(with, empresa, envio);
 				}
-				darRecomendacion(with, empresa, envio);
-			}
-		};
+			};
 		PlantillaMensajes plantilla = new PlantillaMensajes();
 		plantilla.add(PlantillaMensajes.Campos.PERFORMATIVE,
 				Performative.REQUEST);
@@ -94,9 +131,5 @@ public class AgenteAnalisisFundamental extends ComportamientoAgente {
 		decisiones.add(new RecibirMensaje(2, plantilla, recepcion));
 
 		decisiones.add(new AltaServicio(NOMBRE_SERVICIO));
-	}
-
-	public String getNombreComportamiento() {
-		return "Analisis Fundamental";
 	}
 }

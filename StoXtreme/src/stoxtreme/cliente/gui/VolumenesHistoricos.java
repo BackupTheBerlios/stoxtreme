@@ -18,11 +18,23 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-public class VolumenesHistoricos extends TimeSeries{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class VolumenesHistoricos extends TimeSeries {
 	private ArrayList preciosSesion;
 	private Calendar c;
-	
-	public VolumenesHistoricos(String empresa, int cadaCuanto){
+
+
+	/**
+	 *  Constructor for the VolumenesHistoricos object
+	 *
+	 *@param  empresa     Description of Parameter
+	 *@param  cadaCuanto  Description of Parameter
+	 */
+	public VolumenesHistoricos(String empresa, int cadaCuanto) {
 		super(empresa);
 		preciosSesion = new ArrayList(cadaCuanto * 540);
 		timePeriodClass = Minute.class;
@@ -30,11 +42,17 @@ public class VolumenesHistoricos extends TimeSeries{
 		c.set(Calendar.AM_PM, Calendar.AM);
 		c.set(Calendar.HOUR, 8);
 		c.set(Calendar.MINUTE, 30);
-		
+
 		Calendar c2 = Calendar.getInstance();
 	}
-	
-	public void insertarSiguienteValor(double valor){
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  valor  Description of Parameter
+	 */
+	public void insertarSiguienteValor(double valor) {
 		preciosSesion.add(new Double(valor));
 		addOrUpdate(new Minute(c.getTime()), valor);
 		fireSeriesChanged();

@@ -14,45 +14,98 @@ import javax.swing.JPanel;
 import stoxtreme.servidor.gui.FakeInternalFrame;
 import stoxtreme.servidor.gui.PanelOpciones;
 
-public class DialogoInsertarSubomportamiento extends JDialog{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class DialogoInsertarSubomportamiento extends JDialog {
 	private String[] tiposComportamiento;
 	private PanelOpciones panelOpciones;
-	
+
 	private String id;
 	private String tipoComportamiento;
-	
+
 	private boolean aceptado;
-	
+
+
+	/**
+	 *  Constructor for the DialogoInsertarSubomportamiento object
+	 *
+	 *@param  frame   Description of Parameter
+	 *@param  tiposC  Description of Parameter
+	 */
 	public DialogoInsertarSubomportamiento(
 			JFrame frame, String[] tiposC) {
 		super(frame);
 		this.tiposComportamiento = tiposC;
-		try{
+		try {
 			init();
 			pack();
 			setModal(true);
 			setLocation(
-					frame.getLocationOnScreen().x+ (frame.getWidth()/2)-getWidth()/2,
-					frame.getLocationOnScreen().y+ (frame.getHeight()/2)-getHeight()/2
-			);
+					frame.getLocationOnScreen().x + (frame.getWidth() / 2) - getWidth() / 2,
+					frame.getLocationOnScreen().y + (frame.getHeight() / 2) - getHeight() / 2
+					);
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void init(){
-		getContentPane().add(new FakeInternalFrame("Insertar Comportamiento",getPanelPrincipal()));
+
+
+	/**
+	 *  Sets the Id attribute of the DialogoInsertarSubomportamiento object
+	 *
+	 *@param  id  The new Id value
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
-	
-	public Component getPanelPrincipal(){
+
+
+	/**
+	 *  Sets the TipoComportamiento attribute of the
+	 *  DialogoInsertarSubomportamiento object
+	 *
+	 *@param  tipoComportamiento  The new TipoComportamiento value
+	 */
+	public void setTipoComportamiento(String tipoComportamiento) {
+		this.tipoComportamiento = tipoComportamiento;
+	}
+
+
+	/**
+	 *  Sets the Aceptado attribute of the DialogoInsertarSubomportamiento object
+	 *
+	 *@param  aceptado  The new Aceptado value
+	 */
+	public void setAceptado(boolean aceptado) {
+		this.aceptado = aceptado;
+	}
+
+
+	/**
+	 *  Gets the PanelPrincipal attribute of the DialogoInsertarSubomportamiento
+	 *  object
+	 *
+	 *@return    The PanelPrincipal value
+	 */
+	public Component getPanelPrincipal() {
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.add(getPanelSuperior(),BorderLayout.CENTER);
-		panel.add(getPanelBotones(),BorderLayout.SOUTH);
+		panel.add(getPanelSuperior(), BorderLayout.CENTER);
+		panel.add(getPanelBotones(), BorderLayout.SOUTH);
 		return panel;
 	}
-	
-	public Component getPanelSuperior(){
+
+
+	/**
+	 *  Gets the PanelSuperior attribute of the DialogoInsertarSubomportamiento
+	 *  object
+	 *
+	 *@return    The PanelSuperior value
+	 */
+	public Component getPanelSuperior() {
 		ArrayList<String> opciones = new ArrayList<String>();
 		opciones.add("Identificador");
 		opciones.add("Tipo de Comportamiento");
@@ -60,60 +113,92 @@ public class DialogoInsertarSubomportamiento extends JDialog{
 		panelOpciones.setOpcionalidad("Tipo de Comportamiento", tiposComportamiento);
 		return panelOpciones;
 	}
-	public void botonAceptar_actionPerformed(){
+
+
+	/**
+	 *  Gets the PanelBotones attribute of the DialogoInsertarSubomportamiento
+	 *  object
+	 *
+	 *@return    The PanelBotones value
+	 */
+	public Component getPanelBotones() {
+		JPanel panel = new JPanel();
+		JButton botonAceptar = new JButton("Aceptar");
+		botonAceptar.addActionListener(
+					new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							botonAceptar_actionPerformed();
+						}
+					});
+		panel.add(botonAceptar);
+		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar.addActionListener(
+					new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							botonCancelar_actionPerformed();
+						}
+					});
+		panel.add(botonCancelar);
+		return panel;
+	}
+
+
+	/**
+	 *  Gets the Id attribute of the DialogoInsertarSubomportamiento object
+	 *
+	 *@return    The Id value
+	 */
+	public String getId() {
+		return id;
+	}
+
+
+	/**
+	 *  Gets the TipoComportamiento attribute of the
+	 *  DialogoInsertarSubomportamiento object
+	 *
+	 *@return    The TipoComportamiento value
+	 */
+	public String getTipoComportamiento() {
+		return tipoComportamiento;
+	}
+
+
+	/**
+	 *  Gets the Aceptado attribute of the DialogoInsertarSubomportamiento object
+	 *
+	 *@return    The Aceptado value
+	 */
+	public boolean isAceptado() {
+		return aceptado;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void init() {
+		getContentPane().add(new FakeInternalFrame("Insertar Comportamiento", getPanelPrincipal()));
+	}
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void botonAceptar_actionPerformed() {
 		aceptado = true;
 		id = panelOpciones.getValor("Identificador");
 		tipoComportamiento = panelOpciones.getValor("Tipo de Comportamiento");
 		setVisible(false);
 	}
-	
-	public void botonCancelar_actionPerformed(){
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void botonCancelar_actionPerformed() {
 		aceptado = false;
 		setVisible(false);
 	}
-	
-	public Component getPanelBotones(){
-		JPanel panel = new JPanel();
-		JButton botonAceptar = new JButton("Aceptar");
-		botonAceptar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				botonAceptar_actionPerformed();
-			}
-		});
-		panel.add(botonAceptar);
-		JButton botonCancelar = new JButton("Cancelar");
-		botonCancelar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				botonCancelar_actionPerformed();
-			}
-		});
-		panel.add(botonCancelar);
-		return panel;
-	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getTipoComportamiento() {
-		return tipoComportamiento;
-	}
-
-	public void setTipoComportamiento(String tipoComportamiento) {
-		this.tipoComportamiento = tipoComportamiento;
-	}
-
-	public boolean isAceptado() {
-		return aceptado;
-	}
-
-	public void setAceptado(boolean aceptado) {
-		this.aceptado = aceptado;
-	}
-	
-	
 }

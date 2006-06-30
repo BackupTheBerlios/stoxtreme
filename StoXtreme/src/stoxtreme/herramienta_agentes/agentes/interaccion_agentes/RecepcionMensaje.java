@@ -4,18 +4,43 @@ import java.util.ArrayList;
 
 import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 
-public abstract class RecepcionMensaje extends Decision implements Cloneable{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public abstract class RecepcionMensaje extends Decision implements Cloneable {
+	/**
+	 *  Description of the Field
+	 */
 	protected MensajeACL mensajeRecibido;
-	
-	public RecepcionMensaje(){
+
+
+	/**
+	 *  Constructor for the RecepcionMensaje object
+	 */
+	public RecepcionMensaje() {
 
 	}
-	
-	public void setMensaje(MensajeACL m){
+
+
+	/**
+	 *  Sets the Mensaje attribute of the RecepcionMensaje object
+	 *
+	 *@param  m  The new Mensaje value
+	 */
+	public void setMensaje(MensajeACL m) {
 		this.mensajeRecibido = m;
 	}
-	
-	public Object clone() throws CloneNotSupportedException{
+
+
+	/**
+	 *  Creates an exact copy of this object.
+	 *
+	 *@return                                 Description of the Returned Value
+	 *@exception  CloneNotSupportedException  Description of Exception
+	 */
+	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
 }

@@ -4,25 +4,53 @@ import java.util.ArrayList;
 
 import stoxtreme.servidor.gui.MainFrameAdmin;
 
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
 public class UsuariosConectados {
-	ArrayList <String> conectados;	
-	
+	ArrayList<String> conectados;
+
+
 	//Constructora
-	public UsuariosConectados(){
-		conectados=new ArrayList <String>();
+	/**
+	 *  Constructor for the UsuariosConectados object
+	 */
+	public UsuariosConectados() {
+		conectados = new ArrayList<String>();
 	}
-	
+
+
 	//Comprueba si el usuario ya esta conectado
-	public boolean yaConectado(String id){
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  id  Description of Parameter
+	 *@return     Description of the Returned Value
+	 */
+	public boolean yaConectado(String id) {
 		return this.conectados.contains(id);
 	}
-	
+
+
 	//Añade el usuario a la lista de conectados
-	public void insertaUsuario(String id){
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  id  Description of Parameter
+	 */
+	public void insertaUsuario(String id) {
 		this.conectados.add(id);
 	}
-	
-	public void quitarUsuario(String id){
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  id  Description of Parameter
+	 */
+	public void quitarUsuario(String id) {
 		this.conectados.remove(id);
 	}
 }

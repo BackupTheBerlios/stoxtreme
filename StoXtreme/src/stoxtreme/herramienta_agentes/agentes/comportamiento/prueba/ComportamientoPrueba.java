@@ -9,22 +9,43 @@ import stoxtreme.herramienta_agentes.agentes.decisiones.*;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.cliente.infoLocal.*;
 
-public class ComportamientoPrueba extends ComportamientoAgente{
-	public void configure() {
-		
-	}
-	
-	public void generacionDecisiones() {
-		ParserInfoLocal parser= new ParserInfoLocal();
-		DatoHistorico dh =parser.getDatoHistorico("endesa","02/01/2004");
-		Double precio1=dh.getPrecioCierre();
-		dh=parser.getDatoHistorico("endesa", "09/12/2004");
-		Double precio2=dh.getPrecioCierre();
-		if(precio2>precio1)
-			decisiones.add(new IntroducirOperacion(new Operacion(null,Operacion.COMPRA,100,"ENDESA",InfoLocal.getInstance().getPrecioInicial("ENDESA"))));
-	}
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class ComportamientoPrueba extends ComportamientoAgente {
 
+	/**
+	 *  Gets the NombreComportamiento attribute of the ComportamientoPrueba
+	 *  object
+	 *
+	 *@return    The NombreComportamiento value
+	 */
 	public String getNombreComportamiento() {
 		return "Prueba";
+	}
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void configure() {
+
+	}
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void generacionDecisiones() {
+		ParserInfoLocal parser = new ParserInfoLocal();
+		DatoHistorico dh = parser.getDatoHistorico("endesa", "02/01/2004");
+		Double precio1 = dh.getPrecioCierre();
+		dh = parser.getDatoHistorico("endesa", "09/12/2004");
+		Double precio2 = dh.getPrecioCierre();
+		if (precio2 > precio1) {
+			decisiones.add(new IntroducirOperacion(new Operacion(null, Operacion.COMPRA, 100, "ENDESA", InfoLocal.getInstance().getPrecioInicial("ENDESA"))));
+		}
 	}
 }

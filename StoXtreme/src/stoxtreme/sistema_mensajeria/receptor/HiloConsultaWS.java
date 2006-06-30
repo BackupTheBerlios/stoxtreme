@@ -10,38 +10,54 @@ import stoxtreme.interfaz_remota.StoxtremeMensajes;
 import stoxtreme.servicio_web.StoxtremeMensajesServiceLocator;
 import stoxtreme.servicio_web.StoxtremeServiceLocator;
 
-public class HiloConsultaWS extends Thread{
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class HiloConsultaWS extends Thread {
 	private ReceptorMensajes receptor;
 	private String url;
 	private boolean parar = false;
-	
-	public HiloConsultaWS(ReceptorMensajes mensajesWS, String url){
+
+
+	/**
+	 *  Constructor for the HiloConsultaWS object
+	 *
+	 *@param  mensajesWS  Description of Parameter
+	 *@param  url         Description of Parameter
+	 */
+	public HiloConsultaWS(ReceptorMensajes mensajesWS, String url) {
 		receptor = mensajesWS;
 		this.url = url;
 	}
-	
-	public void run(){
-		try{
+
+
+	/**
+	 *  Main processing method for the HiloConsultaWS object
+	 */
+	public void run() {
+		try {
 			StoxtremeMensajesServiceLocator locator = new StoxtremeMensajesServiceLocator();
 			StoxtremeMensajes stoxtreme;
-			if(url!=null){
+			if (url != null) {
 				stoxtreme = locator.getStoXtremeMsg(new URL(url));
 			}
-			else{
+			else {
 				stoxtreme = locator.getStoXtremeMsg();
 			}
-				
-			while(!parar){
+
+			while (!parar) {
 				Mensaje m = stoxtreme.getSiguienteMensaje(receptor.getUsuario());
-				if("FIN".equals(m.getTipoMensaje())){
+				if ("FIN".equals(m.getTipoMensaje())) {
 					parar = true;
 				}
-				if(m!=null){
+				if (m != null) {
 					receptor.notifica(m);
 				}
 			}
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

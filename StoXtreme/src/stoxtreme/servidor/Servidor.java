@@ -30,24 +30,16 @@ import org.apache.catalina.startup.Embedded;
 import org.apache.log4j.PropertyConfigurator;
 import org.w3c.dom.Element;
 
-public class Servidor implements Administrador, Stoxtreme{
-	/**/
-	private static Servidor _instance = new Servidor();
-	boolean iniciado=false;
-	
-	public static Servidor getInstance(){
-		return _instance;
-	}
-	static{
-		try {
-			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-	}
-	/**/
-	private static int IDS = 0;
-	/* COMPONENTES DEL SERVIDOR */
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+public class Servidor implements Administrador, Stoxtreme {
+	boolean iniciado = false;
+	/*
+	 *  COMPONENTES DEL SERVIDOR
+	 */
 	// Empresas dentro de la bolsa
 	private Hashtable<String, ObjetoBolsa> objetosBolsa;
 	// Datos de las empresas
@@ -62,7 +54,7 @@ public class Servidor implements Administrador, Stoxtreme{
 	private GestionUsuarios gestorUsuarios;
 	// Parametros del sistema
 	private ParametrosServidor param;
-	// Registro Operaciones	
+	// Registro Operaciones
 	private RegistroOperaciones regOperaciones;
 	// Interfaz grafica
 	private MainFrameAdmin guiAdmin;
@@ -70,143 +62,235 @@ public class Servidor implements Administrador, Stoxtreme{
 	private EstadoBolsa estadoBolsa;
 	// Servidor Tomcat
 	private Embedded webServer;
-	
+
+	private Hashtable<Integer, ObjetoBolsa> mapaIDs = new Hashtable<Integer, ObjetoBolsa>();
+	/*
+	 *
+	 */
+	private static Servidor _instance = new Servidor();
+	/*
+	 *
+	 */
+	private static int IDS = 0;
+
+
 	//Constructora
-	private Servidor(){
-		
+	/**
+	 *  Constructor for the Servidor object
+	 */
+	private Servidor() {
+
 	}
-	public int login(String usr, String psw){
-		boolean b = gestorUsuarios.conectaUsuario(usr,psw);
-		if(!b) return -1;
-		else
+
+
+	/**
+	 *  Gets the VariablesSistema attribute of the Servidor object
+	 *
+	 *@return    The VariablesSistema value
+	 */
+	public VariablesSistema getVariablesSistema() {
+		return variables;
+	}
+
+
+	/**
+	 *  Gets the GUI attribute of the Servidor object
+	 *
+	 *@return    The GUI value
+	 */
+	public JFrame getGUI() {
+		return this.guiAdmin;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  usr  Description of Parameter
+	 *@param  psw  Description of Parameter
+	 *@return      Description of the Returned Value
+	 */
+	public int login(String usr, String psw) {
+		boolean b = gestorUsuarios.conectaUsuario(usr, psw);
+		if (!b) {
+			return -1;
+		}
+		else {
 			return Integer.parseInt(param.getNumEmpresas());
+		}
 	}
-	
-	public boolean registro(String usr, String psw){
-		return gestorUsuarios.registraUsuario(usr,psw);
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  usr  Description of Parameter
+	 *@param  psw  Description of Parameter
+	 *@return      Description of the Returned Value
+	 */
+	public boolean registro(String usr, String psw) {
+		return gestorUsuarios.registraUsuario(usr, psw);
 	}
-	
-	public int insertarOperacion(String usuario, Operacion o){
-		
-		try{
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  usuario  Description of Parameter
+	 *@param  o        Description of Parameter
+	 *@return          Description of the Returned Value
+	 */
+	public int insertarOperacion(String usuario, Operacion o) {
+
+		try {
 			IDS++;
 			String empresa = o.getEmpresa();
 			objetosBolsa.get(empresa.toUpperCase()).insertaOperacion(usuario, IDS, o);
 			regOperaciones.insertarOperacion(o);
 			mapaIDs.put(IDS, objetosBolsa.get(empresa));
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return IDS;
 	}
-	
-	private Hashtable<Integer, ObjetoBolsa> mapaIDs = new Hashtable<Integer,ObjetoBolsa>();
-	public void cancelarOperacion(String usuario, int idop){
-		try{
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  usuario  Description of Parameter
+	 *@param  idop     Description of Parameter
+	 */
+	public void cancelarOperacion(String usuario, int idop) {
+		try {
 			mapaIDs.get(idop).cancelarOperacion(idop);
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void iniciarTomcat() throws Exception{
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  Exception  Description of Exception
+	 */
+	public void iniciarTomcat() throws Exception {
 		PropertyConfigurator.configure("conf/log4j.properties");
 		String path = new File(".").getAbsolutePath();
 		Host host = null;
 		Engine engine = null;
-		
+
 		System.setProperty("catalina.base", path);
-		
+
 		webServer = new Embedded();
 		engine = webServer.createEngine();
 		engine.setDefaultHost("localhost");
-		host = webServer.createHost("localhost", path+"/webapps");
+		host = webServer.createHost("localhost", path + "/webapps");
 		host.setAutoDeploy(true);
 		host.setDeployOnStartup(true);
 		engine.addChild(host);
-		
+
 		//Context context = embedded.createContext("", path+"/webapps/ROOT");
-		Context axisContext = webServer.createContext("/axis", path+"/webapps/axis");
-		Context confContext = webServer.createContext("/Stoxtreme/config", path+"/conf");
-		
+		Context axisContext = webServer.createContext("/axis", path + "/webapps/axis");
+		Context confContext = webServer.createContext("/Stoxtreme/config", path + "/conf");
+
 		//host.addChild(context);
 		host.addChild(axisContext);
 		host.addChild(confContext);
-		
+
 		webServer.addEngine(engine);
-		
-		Connector connector = webServer.createConnector((InetAddress)null,8080,false);
+
+		Connector connector = webServer.createConnector((InetAddress) null, 8080, false);
 		webServer.addConnector(connector);
-		
+
 		try {
 			webServer.start();
-		} catch (LifecycleException e) {
+		}
+		catch (LifecycleException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
 	}
-	
-	public static void main(String[] argv){
-		try {
-			Servidor.getInstance().iniciarServidor();
-			Servidor.getInstance().showGUI();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void iniciarServidor() throws RemoteException{
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  RemoteException  Description of Exception
+	 */
+	public void iniciarServidor() throws RemoteException {
 		try {
 			iniciarTomcat();
-		} catch (Exception e1) {
-			
+		}
+		catch (Exception e1) {
+
 		}
 		guiAdmin = new MainFrameAdmin();
 		guiAdmin.setServidor(this);
 		guiAdmin.init();
-		
-		guiAdmin.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e) {
-				try {
-					pararServidor();
-				} catch (RemoteException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-	}
-	
 
+		guiAdmin.addWindowListener(
+					new WindowAdapter() {
+						public void windowClosing(WindowEvent e) {
+							try {
+								pararServidor();
+							}
+							catch (RemoteException e1) {
+								e1.printStackTrace();
+							}
+						}
+					});
+
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  RemoteException  Description of Exception
+	 */
 	public void pararServidor() throws RemoteException {
-		if(reloj!=null)
+		if (reloj != null) {
 			reloj.pararReloj();
+		}
 		finalizaSesion();
 		try {
 			webServer.stop();
-		} catch (LifecycleException e) {
+		}
+		catch (LifecycleException e) {
 			e.printStackTrace();
 		}
 		System.exit(0);
 	}
-	
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  RemoteException  Description of Exception
+	 */
 	public void iniciaSesion() throws RemoteException {
 		// Consigue los parametros
-		param=new ParametrosServidor();
-		if (!guiAdmin.getOpciones().getValor("         Numero de empresas").equals(""))
-			param.modificarParams("numeroEmpresas",new Integer(guiAdmin.getOpciones().getValor("         Numero de empresas")).intValue());
-		if (!guiAdmin.getOpciones().getValor("Tick").equals(""))
-			param.modificarParams("tick",new Double(guiAdmin.getOpciones().getValor("Tick")));
-		if (!guiAdmin.getOpciones().getValor("Tiempo de fluctuacion").equals(""))
-			param.modificarParams("tiempo",new Long(guiAdmin.getOpciones().getValor("Tiempo de fluctuacion")));
-		if (guiAdmin.getOpciones().getValor("Fichero de empresas")!=null)
-			param.modificarParams("ficheroEmpresas",guiAdmin.getOpciones().getValor("Fichero de empresas"));
-		if (guiAdmin.getOpciones().getValor("Fichero de usuarios")!=null)
-			param.modificarParams("ficheroRegistrados",guiAdmin.getOpciones().getValor("Fichero de usuarios"));
-		
+		param = new ParametrosServidor();
+		if (!guiAdmin.getOpciones().getValor("         Numero de empresas").equals("")) {
+			param.modificarParams("numeroEmpresas", new Integer(guiAdmin.getOpciones().getValor("         Numero de empresas")).intValue());
+		}
+		if (!guiAdmin.getOpciones().getValor("Tick").equals("")) {
+			param.modificarParams("tick", new Double(guiAdmin.getOpciones().getValor("Tick")));
+		}
+		if (!guiAdmin.getOpciones().getValor("Tiempo de fluctuacion").equals("")) {
+			param.modificarParams("tiempo", new Long(guiAdmin.getOpciones().getValor("Tiempo de fluctuacion")));
+		}
+		if (guiAdmin.getOpciones().getValor("Fichero de empresas") != null) {
+			param.modificarParams("ficheroEmpresas", guiAdmin.getOpciones().getValor("Fichero de empresas"));
+		}
+		if (guiAdmin.getOpciones().getValor("Fichero de usuarios") != null) {
+			param.modificarParams("ficheroRegistrados", guiAdmin.getOpciones().getValor("Fichero de usuarios"));
+		}
+
 		gestorUsuarios = new GestionUsuarios(param.getFicheroRegistrados());
 		guiAdmin.setModeloUsuarios(gestorUsuarios);
 		objetosBolsa = new Hashtable<String, ObjetoBolsa>();
@@ -232,20 +316,20 @@ public class Servidor implements Administrador, Stoxtreme{
 		guiAdmin.setModeloPrecios(estadoBolsa);
 		guiAdmin.setServidor(this);
 		guiAdmin.iniciaGUISesion();
-		
+
 		reloj = new Reloj(param.getTiempo());
 		// Insertamos en el reloj los objetos bolsa
 		Enumeration eObBols = objetosBolsa.keys();
-		while(eObBols.hasMoreElements()){
+		while (eObBols.hasMoreElements()) {
 			reloj.addListener(objetosBolsa.get(eObBols.nextElement()));
 		}
 		reloj.addListener(variables);
 		//}
-		
-		try{
+
+		try {
 			//sistEventos.insertarEvento("tiempo==5", "dihola_alonso", false);
 		}
-		catch(Exception ex){
+		catch (Exception ex) {
 			ex.printStackTrace();
 			System.exit(-1);
 		}
@@ -255,29 +339,85 @@ public class Servidor implements Administrador, Stoxtreme{
 		// Inicia la sesion
 	}
 
-	public void pausarSesion(){
+
+	/**
+	 *  Description of the Method
+	 */
+	public void pausarSesion() {
 		reloj.pararReloj();
 	}
-	
-	public void reanudarSesion(){
+
+
+	/**
+	 *  Description of the Method
+	 */
+	public void reanudarSesion() {
 		reloj.reanudarReloj();
 	}
-	
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  RemoteException  Description of Exception
+	 */
 	public void finalizaSesion() throws RemoteException {
-		AlmacenMensajes.getInstance().insertarMensajeGlobal(new Mensaje("FINSESION","FINSESION",Mensaje.GLOBAL));
+		AlmacenMensajes.getInstance().insertarMensajeGlobal(new Mensaje("FINSESION", "FINSESION", Mensaje.GLOBAL));
 		// TODO: FALTA REINICIAR
 	}
-	
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  RemoteException  Description of Exception
+	 */
 	public void showGUI() throws RemoteException {
 		guiAdmin.setVisible(true);
 	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@exception  RemoteException  Description of Exception
+	 */
 	public void hideGUI() throws RemoteException {
 		guiAdmin.setVisible(false);
 	}
-	public VariablesSistema getVariablesSistema() {
-		return variables;
+
+
+	/**
+	 *  Gets the Instance attribute of the Servidor class
+	 *
+	 *@return    The Instance value
+	 */
+	public static Servidor getInstance() {
+		return _instance;
 	}
-	public JFrame getGUI() {
-		return this.guiAdmin;
+
+
+	/**
+	 *  The main program for the Servidor class
+	 *
+	 *@param  argv  The command line arguments
+	 */
+	public static void main(String[] argv) {
+		try {
+			Servidor.getInstance().iniciarServidor();
+			Servidor.getInstance().showGUI();
+
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	static {
+		try {
+			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
