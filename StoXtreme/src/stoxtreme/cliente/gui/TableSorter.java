@@ -235,10 +235,10 @@ public class TableSorter extends AbstractTableModel {
     }
 
     public int modelIndex(int viewIndex) {
-        Row row = getViewToModel()[viewIndex];
+        Row[] rows = getViewToModel();
         int ret = 0; 
-        if(row != null){
-        	ret = row.modelIndex; 
+        if(rows != null && rows[viewIndex] != null){
+        	ret = rows[viewIndex].modelIndex; 
         }
         return ret;
     }

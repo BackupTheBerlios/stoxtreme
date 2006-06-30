@@ -61,13 +61,13 @@ public class MonitorAgentes extends Thread{
 		listaTimerListeners.remove(listener);
 	}
 	
-	public synchronized void addDecision(Decision decision) {
+	public void addDecision(Decision decision) {
 		// Añade una peticion a la cola de peticiones, es synchronized
 		// para que no aumenten el ciclo mientras se procesa
 		decision.addTActual(ciclo);
 		colaPeticiones.add(decision);
 	}
-	public void ejecutaPeticiones(){
+	public synchronized void ejecutaPeticiones(){
 		//	Ejecuta todas las peticiones de la cola de prioridad hasta
 		// 	La que sea igual al ciclo actual
 		while(colaPeticiones.size()>0 && colaPeticiones.peek().getTiempoEjecucion() <= ciclo){

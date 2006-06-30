@@ -56,11 +56,13 @@ public abstract class ComportamientoAgente {
 		}
 	}
 	public void generaDecisionesAll(){
-		generacionDecisiones();
-		if(subComportamientos != null){
-			Iterator<ComportamientoAgente> it = subComportamientos.iterator();
-			while(it.hasNext()){
-				it.next().generaDecisionesAll();
+		synchronized(decisiones){
+			generacionDecisiones();
+			if(subComportamientos != null){
+				Iterator<ComportamientoAgente> it = subComportamientos.iterator();
+				while(it.hasNext()){
+					it.next().generaDecisionesAll();
+				}
 			}
 		}
 	}
@@ -89,7 +91,9 @@ public abstract class ComportamientoAgente {
 	public void notifica(int notificacion){
 		if(decisionesEsperaNotificacion.containsKey(notificacion)){
 			Decision d = decisionesEsperaNotificacion.remove(notificacion);
-			decisiones.add(d);
+			synchronized(decisiones){
+				decisiones.add(d);
+			}
 		}
 		// Avisa a todos los subcomportamientos
 		if(subComportamientos!= null){
