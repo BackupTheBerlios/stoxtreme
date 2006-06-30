@@ -390,14 +390,6 @@ private JPanel getGraficaHistorica(){
 			aux.setBottomComponent(p3);
 			split_graficas.setBottomComponent(aux);
 		}
-	    else 
-	    	if(!volumen && !estocastico &&!(e.getActionCommand().equals("Ayuda Volumen")
-						||e.getActionCommand().equals("Ayuda Estocastico"))){
-//					split_graficas=null;
-//					split_graficas=new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-					split_graficas.remove(2);
-				}
-
 	}
 	private Component getPanelIzquierdaArriba() {
 		JPanel panel = new JPanel(new BorderLayout());

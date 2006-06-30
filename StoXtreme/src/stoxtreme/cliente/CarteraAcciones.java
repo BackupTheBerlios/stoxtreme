@@ -1,5 +1,7 @@
 package stoxtreme.cliente;
 
+import java.awt.Component;
+
 import stoxtreme.cliente.gui.ModeloCartera;
 import stoxtreme.interfaz_remota.Operacion;
 

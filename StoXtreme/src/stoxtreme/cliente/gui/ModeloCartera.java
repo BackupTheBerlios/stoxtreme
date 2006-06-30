@@ -1,8 +1,10 @@
 package stoxtreme.cliente.gui;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import stoxtreme.interfaz_remota.Mensaje;
@@ -78,7 +80,7 @@ public class ModeloCartera extends AbstractTableModel{
 			}
 		}
 		else{
-			//AlmacenMensajes.getInstance().enviaMensaje(new Mensaje("No puedes vender acciones que no posees","INFORMACION",))
+			System.out.println();
 		}
 	}
 }
