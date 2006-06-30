@@ -15,15 +15,17 @@ import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Protocol;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.RecepcionMensaje;
 
 /**
- *  Description of the Class
+ *  Implementacion del comportamiento para el analisis fundamental
  *
- *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
+ *  @author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class AgenteAnalisisFundamental extends ComportamientoAgente {
-
+	/**
+	 *  Precio de la recomendacion
+	 */
 	private double precioRecomendacion;
 	/**
-	 *  Description of the Field
+	 *  Constante que define el nombre del servicio
 	 */
 	public static String NOMBRE_SERVICIO = "analisis_fundamental";
 
