@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <usuarios>
 	<usuario id="alonso" psw="alonso"/>
 	<usuario id="ivan"
         psw="ivan"/>
 	<usuario id="itzi" psw="itzi"/>
-</usuarios>
+<usuario
+        id="rocio" psw="rocio"/></usuarios>
