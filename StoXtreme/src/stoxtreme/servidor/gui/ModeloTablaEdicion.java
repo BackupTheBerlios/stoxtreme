@@ -42,7 +42,6 @@ public abstract class ModeloTablaEdicion extends AbstractTableModel implements T
 	 *  Description of the Field
 	 */
 	public static String[] params_psicologicos = {
-			"tiempo_espera",
 			"numero_maximo_acciones_compra",
 			"numero_minimo_acciones_compra",
 			"numero_maximo_acciones_venta",
@@ -358,4 +357,8 @@ public abstract class ModeloTablaEdicion extends AbstractTableModel implements T
 	 *  Description of the Method
 	 */
 	public abstract void actualiza();
+	
+	public Hashtable getValores(){
+		return valores;
+	}
 }

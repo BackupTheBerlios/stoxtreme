@@ -106,6 +106,24 @@ public class PanelConfigAgentes extends JPanel {
 		atribModelo.setValor("Ratio respawn", Double.toString(ratioRespawn));
 		atribModelo.setValor("Atenuacion rumor", Double.toString(atenuacion));
 	}
+	
+	public PanelOpciones getAtributos() {
+		return atribModelo;
+	}
+	public DefaultListModel getDistribuciones(){
+		return modeloListaDistribucion;
+	}
+	
+	public DefaultListModel getSociales(){
+		return modeloListaSocial;
+	}
+	public DefaultListModel getPsicologicos(){
+		return modeloListaPsicologica;
+	}
+	
+	public DefaultTreeModel getComportamientos(){
+		return modeloComportamientos;
+	}
 
 
 	/**
@@ -136,7 +154,7 @@ public class PanelConfigAgentes extends JPanel {
 				saveXML(fich);
 			}
 			catch (Exception e) {
-				JOptionPane.showMessageDialog(this, "Fallo en la carga del XML", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Fallo al guardar el XML", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -229,7 +247,6 @@ public class PanelConfigAgentes extends JPanel {
 		}
 	}
 
-
 	/**
 	 *  Adds a feature to the Distribucion attribute of the PanelConfigAgentes
 	 *  object
@@ -305,8 +322,9 @@ public class PanelConfigAgentes extends JPanel {
 	/**
 	 *  Adds a feature to the Social attribute of the PanelConfigAgentes object
 	 */
+	@SuppressWarnings("serial")
 	public void addSocial() {
-		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, modeloListaDistribucion);
+		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_social.length, modeloListaDistribucion);
 		String id = JOptionPane.showInputDialog(this, "Introduzca identificador para el modelo");
 		ModeloTablaEdicion modelo =
 			new ModeloTablaEdicion(ModeloTablaEdicion.MODELO_SOCIAL, editor, id) {
@@ -354,6 +372,7 @@ public class PanelConfigAgentes extends JPanel {
 	 *  Adds a feature to the Psicologico attribute of the PanelConfigAgentes
 	 *  object
 	 */
+	@SuppressWarnings("serial")
 	public void addPsicologico() {
 		pararEdicion();
 		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, modeloListaDistribucion);
@@ -416,7 +435,7 @@ public class PanelConfigAgentes extends JPanel {
 	 *@exception  Exception  Description of Exception
 	 */
 	public void saveXML(File fich) throws Exception {
-
+		CargaXMLAgentes.guarda(fich,this);
 	}
 
 
@@ -447,6 +466,7 @@ public class PanelConfigAgentes extends JPanel {
 	 *@param  valores   Description of Parameter
 	 *@param  distribs  Description of Parameter
 	 */
+	@SuppressWarnings("serial")
 	public void insModeloSocial(
 			String id,
 			Hashtable<String, Double> valores,
@@ -489,6 +509,7 @@ public class PanelConfigAgentes extends JPanel {
 	 *@param  valores   Description of Parameter
 	 *@param  distribs  Description of Parameter
 	 */
+	@SuppressWarnings("serial")
 	public void insModeloPsicologico(
 			String id,
 			Hashtable<String, Double> valores,
@@ -865,6 +886,7 @@ public class PanelConfigAgentes extends JPanel {
 	 *@param  subcomportamiento  Description of Parameter
 	 *@return                    The NodoSubcomportamientos value
 	 */
+	@SuppressWarnings("unchecked")
 	private MutableTreeNode getNodoSubcomportamientos(Hashtable<String, Object> subcomportamiento) {
 		String id = (String) subcomportamiento.get("id");
 		String tipoComportamiento = (String) subcomportamiento.get("tipo_comportamiento");
@@ -906,7 +928,7 @@ public class PanelConfigAgentes extends JPanel {
 	 *
 	 *@author    Chris Seguin
 	 */
-	private class ElementoDistribucion {
+	public class ElementoDistribucion {
 		/**
 		 *  Description of the Field
 		 */
@@ -1057,7 +1079,7 @@ public class PanelConfigAgentes extends JPanel {
 	 *
 	 *@author    Chris Seguin
 	 */
-	private class ElementoComportamiento {
+	public class ElementoComportamiento {
 		private String id;
 		private String modeloPsicologico;
 		private String modeloSocial;
@@ -1234,7 +1256,7 @@ public class PanelConfigAgentes extends JPanel {
 	 *
 	 *@author    Chris Seguin
 	 */
-	private class Par {
+	public class Par {
 		private ModeloTablaEdicion modelo;
 		private ComboTextoCellEditor editor;
 
