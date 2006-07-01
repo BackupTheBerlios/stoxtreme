@@ -61,6 +61,7 @@ public class PanelConfigAgentes extends JPanel {
 			"stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoAleatorio",
 			"stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoCompraRecomendacion",
 			"stoxtreme.herramienta_agentes.agentes.comportamiento.inversores.ComportamientoRumor",
+			"stoxtreme.herramienta_agentes.agentes.comportamiento.clasificador.ComportamientoAprendizaje"
 			};
 
 
