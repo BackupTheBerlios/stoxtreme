@@ -22,7 +22,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	private ArrayList<Agente> agentes;
 	private MonitorAgentes monitor;
 	private Notificador notif;
-
+	
 	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer, String>();
 
 
@@ -34,7 +34,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	 */
 	public HerramientaAgentes(
 			String nombreUsuario,
-			EstadoBolsa bolsa) {
+			EstadoBolsa bolsa){
 		IDAgente.setUsuario(nombreUsuario);
 		this.notif = new Notificador();
 	}
@@ -49,6 +49,18 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	 *@param  eBolsa              Description of Parameter
 	 *@exception  Exception       Description of Exception
 	 */
+
+	private double max_agentes;
+	private double min_agentes;
+	private double min_tespera;
+	private double max_tespera;
+	private String tespera_distrib;
+	private double max_gasto;
+	private double ratio_respawn;
+	private double atenuacion_rumor;
+	
+	private ConstructorAgentes constructor;
+	
 	public void start(ParametrosAgentes parametros, String ficheroConfAgentes, Stoxtreme servidor, EstadoBolsa eBolsa) throws Exception {
 		int tCiclo = parametros.getInt(ParametrosAgentes.Parametro.TCICLO);
 		monitor = new MonitorAgentes(servidor, this, tCiclo);
@@ -56,12 +68,22 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		Decision.setMonitor(monitor);
 		BuzonMensajes.setMonitor(monitor);
 
-		ConstructorAgentes constructor = new ConstructorAgentes();
+		constructor = new ConstructorAgentes();
 		agentes = constructor.construyeAgentes(
 				monitor.getConexionBolsa(),
 				eBolsa, monitor.getConsolaAgentes(),
 				notif, modeloTabla,
 				ficheroConfAgentes, parametros);
+		
+		max_agentes = constructor.getMaxAgentes();
+		min_agentes = constructor.getMinAgentes();
+		min_tespera = constructor.getMinTEspera();
+		max_tespera = constructor.getMaxTEspera();
+		tespera_distrib = constructor.getDistribucionEspera();
+		max_gasto = constructor.getMaxGasto();
+		ratio_respawn = constructor.getRatioRewspanwn();
+		atenuacion_rumor = constructor.getAtenuacionRumor();
+			
 		monitor.start();
 		super.addListaAgentes(agentes);
 	}
@@ -138,7 +160,7 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 
 		try {
 			synchronized (monitor) {
-				ConstructorAgentes constructor = new ConstructorAgentes();
+				constructor = new ConstructorAgentes();
 				agentes = constructor.construyeAgentes(
 						monitor.getConexionBolsa(),
 						bolsa, monitor.getConsolaAgentes(),
@@ -160,7 +182,46 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 	 *@param  tick  Description of Parameter
 	 */
 	public void onTick(int tick) {
+		int numAgentes = agentes.size();
+		// Cada multiplo de 20 borra el agente con menos dinero
+		if(numAgentes > min_agentes && tick != 0 && tick%20 == 0){
+			eliminaPeorAgente();
+		}
+		double aleatorio = ConstructorAgentes.random.nextDouble();
+		if(aleatorio <= ratio_respawn && numAgentes < max_agentes){
+			respawn();
+		}
 		incrementaTick(tick);
-		//		frame.setTitle("Ciclo ")
+	}
+
+
+	private void respawn() {
+		// Generamos un nuevo agente del tipo que toque
+		Agente agente = constructor.nuevoAgente();
+		for (int i = 0; i < agente.getModeloSocial().getNumConocidos(); i++) {
+			int r = (int) (Math.random()) * agentes.size();
+			agente.getModeloSocial().addConocido(agentes.get(r).getIDAgente());
+		}
+		synchronized (monitor) {
+			modeloTabla.addAgente(agente);
+			monitor.addAgente(agente);
+			agente.start();
+		}
+		monitor.getConsolaAgentes().insertarAccion(agente.getIDString(), "Entra en bolsa");
+	}
+
+	private void eliminaPeorAgente() {
+		int iMin = -1;
+		double cantidadMinima = Double.MAX_VALUE;
+		for(int i=0; i<agentes.size(); i++){
+			double cantidad = agentes.get(i).getGanancias();
+			if(cantidad < cantidadMinima){
+				cantidadMinima = cantidad;
+				iMin = i;
+			}
+		}
+		Agente agente = agentes.get(iMin);
+		agente.abandonarModelo();
+		System.err.println("Eliminamos el agente: "+agente.getIDString());
 	}
 }

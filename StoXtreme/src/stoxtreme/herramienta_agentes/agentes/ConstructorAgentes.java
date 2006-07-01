@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -11,8 +12,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.traversal.NodeIterator;
 
 import stoxtreme.cliente.EstadoBolsa;
@@ -32,7 +31,6 @@ import cern.jet.random.Poisson;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister;
 import cern.jet.random.engine.RandomEngine;
-import cern.jet.random.engine.RandomGenerator;
 
 import com.sun.org.apache.xpath.internal.XPathAPI;
 
@@ -42,9 +40,33 @@ import com.sun.org.apache.xpath.internal.XPathAPI;
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ConstructorAgentes {
-	private static RandomEngine random = new MersenneTwister(new Date());
-
-
+	public static RandomEngine random = new MersenneTwister(new Date());
+	private Hashtable<String,Integer> numAgentesComportamiento;
+	private Hashtable<String,Double> porcentajesComportamientos;
+	private Hashtable<String,Class> classesComportamientos;
+	private Hashtable<String,String> psiComportamientos;
+	private Hashtable<String,String> socComportamientos;
+	
+	double max_agentes;
+	double min_agentes;
+	double min_tespera;
+	double max_tespera;
+	String tespera_distrib;
+	double max_gasto;
+	double ratio_respawn;
+	double atenuacion_rumor;
+	int numAgentes;
+	
+	private Stoxtreme conexion;
+	private EstadoBolsa estadoBolsa;
+	private ConsolaAgentes consolaAgentes;
+	private Notificador notif;
+	private HerramientaAgentesTableModel modeloTabla;
+	private ParametrosAgentes parametros;
+	private Document document;
+	private Hashtable<String,AbstractDistribution> distribuciones;
+	private Normal normalTEspera;
+	
 	/**
 	 *  Description of the Method
 	 *
@@ -62,30 +84,69 @@ public class ConstructorAgentes {
 			Stoxtreme conexionBolsa,
 			EstadoBolsa estado,
 			ConsolaAgentes consolaAgentes,
-			Notificador notif, HerramientaAgentesTableModel modeloTabla, String fichero,
+			Notificador notif, 
+			HerramientaAgentesTableModel modeloTabla, 
+			String fichero,
 			ParametrosAgentes parametros
-			) throws Exception {
+	) throws Exception {
+		
+		this.conexion = conexionBolsa;
+		this.estadoBolsa = estado;
+		this.consolaAgentes = consolaAgentes;
+		this.notif = notif;
+		this.modeloTabla = modeloTabla;
+		this.parametros = parametros;
 		ArrayList<Agente> agentes = new ArrayList<Agente>();
 		// Parseamos el fichero
-		Document fichAgentes = inicializaDOM(fichero);
-		// Primero generamos las distribuciones de probabilidad
-		Hashtable<String, AbstractDistribution> distribuciones = generaDistribuciones(fichAgentes);
+		document = inicializaDOM(fichero);
+		// Conseguimos los datos de la herramienta
+		Element raiz = document.getDocumentElement();
+		
+		this.max_agentes = Double.parseDouble(raiz.getAttribute("max_agentes"));
+		this.min_agentes = Double.parseDouble(raiz.getAttribute("min_agentes"));
+		this.max_tespera = Double.parseDouble(raiz.getAttribute("max_tespera"));
+		this.min_tespera = Double.parseDouble(raiz.getAttribute("min_tespera"));
+		this.atenuacion_rumor = Double.parseDouble(raiz.getAttribute("atenuacion_rumor"));
+		this.ratio_respawn = Double.parseDouble(raiz.getAttribute("ratio_respawn"));
+		this.tespera_distrib = raiz.getAttribute("tespera_distrib");
+		
+		// Generamos las distribuciones de probabilidad
+		distribuciones = generaDistribuciones(document);
 		// Creamos los parametros sociales y psicologicos de los modelos
-		NodeIterator iterator = XPathAPI.selectNodeIterator(fichAgentes, "//comportamientos/comportamiento");
+		NodeIterator iterator = XPathAPI.selectNodeIterator(document, "//comportamientos/comportamiento");
 		Element actual;
-		int numAgentes = parametros.getInt(ParametrosAgentes.Parametro.NUM_AGENTES);
+		numAgentes = parametros.getInt(ParametrosAgentes.Parametro.NUM_AGENTES);
 		int tiempo = parametros.getInt(ParametrosAgentes.Parametro.TIEMPO_ESPERA);
-		Normal normalTEspera = new Normal(tiempo, tiempo / 4.0, random);
+		normalTEspera = new Normal(tiempo, tiempo / 4.0, random);
+		numAgentesComportamiento = new Hashtable<String,Integer>();
+		porcentajesComportamientos = new Hashtable<String,Double>();
+		classesComportamientos = new Hashtable<String,Class>();
+		psiComportamientos = new Hashtable<String,String>();
+		socComportamientos = new Hashtable<String,String>();
+		
 		// Vamos generando por cada tipo de agentes
 		while ((actual = (Element) iterator.nextNode()) != null) {
-			int nAgentesCreacion = (int) (numAgentes * (Double.parseDouble(actual.getAttribute("porcentaje")) / 100));
+			String identificador = actual.getAttribute("id");
+			double porcentaje = Double.parseDouble(actual.getAttribute("porcentaje"))/100;
+			int nAgentesCreacion = (int) (numAgentes * porcentaje);
+			Class tipoComportamiento = Class.forName(actual.getAttribute("tipo_comportamiento"));
+			String social = actual.getAttribute("modelo_social");
+			String psicologico = actual.getAttribute("modelo_psicologico");
+			
+			numAgentesComportamiento.put(identificador,nAgentesCreacion);
+			porcentajesComportamientos.put(identificador, porcentaje);
+			classesComportamientos.put(identificador, tipoComportamiento);
+			psiComportamientos.put(identificador, psicologico);
+			socComportamientos.put(identificador, social);
+			
 			for (int i = 0; i < nAgentesCreacion; i++) {
-				ParametrosSocial ps = generaParametrosSocial(fichAgentes, actual.getAttribute("modelo_social"), distribuciones);
-				ParametrosPsicologicos pp = generaParametrosPsicologico(fichAgentes, actual.getAttribute("modelo_psicologico"), distribuciones);
+				ParametrosSocial ps = generaParametrosSocial(document, social, distribuciones);
+				ParametrosPsicologicos pp = generaParametrosPsicologico(document, psicologico, distribuciones);
 				int tEspera = normalTEspera.nextInt();
 				pp.setParametro(ParametrosPsicologicos.Parametro.TIEMPO_ESPERA.toString(), Integer.toString(tEspera));
-				ComportamientoAgente c = (ComportamientoAgente) Class.forName(actual.getAttribute("tipo_comportamiento")).newInstance();
-				procesaSubComportamientos(fichAgentes, actual.getAttribute("id"), c);
+				ComportamientoAgente c = (ComportamientoAgente) tipoComportamiento.newInstance();
+				c.setIdentificador(identificador);
+				procesaSubComportamientos(document, identificador, c);
 				Agente agente = new Agente(conexionBolsa, estado, consolaAgentes, modeloTabla, ps, pp);
 				agente.addComportamiento(c);
 				//double dineroInicial = java.lang.Double.parseDouble(modelo.getDineroInicial());
@@ -245,5 +306,87 @@ public class ConstructorAgentes {
 	private static Document inicializaDOM(String fichero) throws Exception {
 		DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		return db.parse(new File(fichero));
+	}
+
+
+	public double getMaxAgentes() {
+		return max_agentes;
+	}
+
+
+	public double getMinAgentes() {
+		return min_agentes;
+	}
+
+
+	public double getMinTEspera() {
+		return min_tespera;
+	}
+
+
+	public double getMaxTEspera() {
+		return max_tespera;
+	}
+
+
+	public String getDistribucionEspera() {
+		return tespera_distrib;
+	}
+
+
+	public double getMaxGasto() {
+		return max_gasto;
+	}
+
+
+	public double getRatioRewspanwn() {
+		return ratio_respawn;
+	}
+
+
+	public double getAtenuacionRumor() {
+		return atenuacion_rumor;
+	}
+
+	public Agente nuevoAgente() {
+		Enumeration<String> claves = classesComportamientos.keys();
+		numAgentes++;
+		Agente agente = null;
+		
+		double min = Double.MAX_VALUE;
+		String minId = null;
+		while(claves.hasMoreElements()){
+			String id = claves.nextElement();
+			int num = numAgentesComportamiento.get(id);
+			double porcentaje = porcentajesComportamientos.get(id);
+			// Buscamos el que tiene mayor diferencia
+			double actual = (((double)numAgentes)/((double)num))-porcentaje ;
+			if(actual < min){
+				min = actual;
+				minId = id;
+			}
+		}
+		System.err.println("Nuevo agente, comportamiento: " + minId);
+		ParametrosPsicologicos pp;
+		ParametrosSocial ps;
+		try {
+			pp = generaParametrosPsicologico(document, psiComportamientos.get(minId), distribuciones);
+			ps = generaParametrosSocial(document, socComportamientos.get(minId), distribuciones);
+			int tEspera = normalTEspera.nextInt();
+			pp.setParametro(ParametrosPsicologicos.Parametro.TIEMPO_ESPERA.toString(), Integer.toString(tEspera));
+			ComportamientoAgente c = (ComportamientoAgente) classesComportamientos.get(minId).newInstance();
+			c.setIdentificador(minId);
+			procesaSubComportamientos(document, minId, c);
+			agente = new Agente(
+					conexion, estadoBolsa, consolaAgentes, modeloTabla,
+					ps, pp);
+			agente.addComportamiento(c);
+			notif.addListener(agente.getIDString(), agente.getPerceptor());
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return agente;
 	}
 }

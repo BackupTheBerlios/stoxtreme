@@ -15,18 +15,6 @@ import stoxtreme.cliente.infoLocal.*;
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ComportamientoPrueba extends ComportamientoAgente {
-
-	/**
-	 *  Gets the NombreComportamiento attribute of the ComportamientoPrueba
-	 *  object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public String getNombreComportamiento() {
-		return "Prueba";
-	}
-
-
 	/**
 	 *  Description of the Method
 	 */

@@ -122,7 +122,7 @@ public class Agente extends Thread {
 	 *@return    The StringComportamiento value
 	 */
 	public String getStringComportamiento() {
-		return this.comportamiento.getNombreComportamiento();
+		return this.comportamiento.getIdentificador();
 	}
 
 
@@ -192,32 +192,30 @@ public class Agente extends Thread {
 	/**
 	 *  Main processing method for the Agente object
 	 */
-	public void run() {
+	public synchronized void run() {
 		while (alive) {
 			// Nadie le interrumpe mientras toma las
 			// decisiones
 			ArrayList<Decision> decisiones;
 			String nuevoEstado;
 
-			synchronized (this) {
-				comportamiento.generaDecisionesAll();
-				decisiones = comportamiento.getDecisiones();
-				synchronized (decisiones) {
-					nuevoEstado = comportamiento.getEstadoComportamiento();
-					Iterator<Decision> itDec = decisiones.iterator();
-					while (itDec.hasNext()) {
-						Decision actual = itDec.next();
-						actual.setAgente(this);
-						actual.insertarEnMonitor();
-						imprime(actual);
-					}
-					decisiones.clear();
+			comportamiento.generaDecisionesAll();
+			decisiones = comportamiento.getDecisiones();
+			synchronized (decisiones) {
+				nuevoEstado = comportamiento.getEstadoComportamiento();
+				Iterator<Decision> itDec = decisiones.iterator();
+				while (itDec.hasNext()) {
+					Decision actual = itDec.next();
+					actual.setAgente(this);
+					actual.insertarEnMonitor();
+					imprime(actual);
 				}
-				Decision espera = comportamiento.getDecisionEspera();
-				espera.setAgente(this);
-				espera.insertarEnMonitor();
-				imprime(espera);
+				decisiones.clear();
 			}
+			Decision espera = comportamiento.getDecisionEspera();
+			espera.setAgente(this);
+			espera.insertarEnMonitor();
+			imprime(espera);
 
 			if (!nuevoEstado.equals(estado)) {
 				estado = nuevoEstado;
@@ -225,9 +223,7 @@ public class Agente extends Thread {
 			}
 
 			try {
-				synchronized (this) {
-					wait();
-				}
+				wait();
 			}
 			catch (InterruptedException e) {
 				alive = false;
@@ -284,10 +280,12 @@ public class Agente extends Thread {
 	 */
 	public void abandonarModelo() {
 		if (alive) {
+			imprime("Abandono la bolsa");
 			setAlive(false);
 			modeloTabla.eliminaAgente(this);
 		}
 	}
+
 
 
 	/**
@@ -311,7 +309,12 @@ public class Agente extends Thread {
 		output.append(decision.toString());
 		output.append('\n');
 	}
-
+	
+	private void imprime(String string) {
+		consolaAgentes.insertarAccion(getIDString(), string);
+		output.append(string);
+		output.append('\n');
+	}
 
 	/**
 	 *  Description of the Method

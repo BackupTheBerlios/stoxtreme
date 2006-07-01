@@ -19,15 +19,6 @@ import stoxtreme.interfaz_remota.Operacion;
  */
 public class ComportamientoRumor extends ComportamientoAgente {
 
-	/**
-	 *  Gets the NombreComportamiento attribute of the ComportamientoRumor object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public String getNombreComportamiento() {
-		return "Rumor";
-	}
-
 
 	/**
 	 *  Description of the Method

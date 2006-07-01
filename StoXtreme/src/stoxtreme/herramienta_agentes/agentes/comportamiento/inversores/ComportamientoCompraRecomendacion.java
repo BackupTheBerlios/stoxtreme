@@ -27,17 +27,6 @@ public class ComportamientoCompraRecomendacion extends ComportamientoAgente {
 
 
 	/**
-	 *  Gets the NombreComportamiento attribute of the
-	 *  ComportamientoCompraRecomendacion object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public String getNombreComportamiento() {
-		return "Compra Recomendacion";
-	}
-
-
-	/**
 	 *  Description of the Method
 	 */
 	public void configure() {

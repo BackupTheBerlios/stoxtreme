@@ -10,17 +10,6 @@ import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class AgentePublicidad extends ComportamientoAgente {
-
-	/**
-	 *  Gets the NombreComportamiento attribute of the AgentePublicidad object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public String getNombreComportamiento() {
-		return "Publicidad";
-	}
-
-
 	/**
 	 *  Description of the Method
 	 */

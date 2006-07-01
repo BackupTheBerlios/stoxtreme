@@ -13,18 +13,6 @@ import stoxtreme.interfaz_remota.Operacion;
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ComportamientoAleatorio extends ComportamientoAgente {
-
-	/**
-	 *  Gets the NombreComportamiento attribute of the ComportamientoAleatorio
-	 *  object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public String getNombreComportamiento() {
-		return "Aleatorio";
-	}
-
-
 	/**
 	 *  Description of the Method
 	 */

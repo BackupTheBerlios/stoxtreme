@@ -14,17 +14,6 @@ import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.Performative;
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class AgenteRumores extends ComportamientoAgente {
-
-	/**
-	 *  Gets the NombreComportamiento attribute of the AgenteRumores object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public String getNombreComportamiento() {
-		return "Propagador Rumores";
-	}
-
-
 	/**
 	 *  Description of the Method
 	 */

@@ -245,15 +245,6 @@ public abstract class ComportamientoAgente {
 
 
 	/**
-	 *  Gets the NombreComportamiento attribute of the ComportamientoAgente
-	 *  object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public abstract String getNombreComportamiento();
-
-
-	/**
 	 *  Description of the Method
 	 */
 	public void configureAll() {
@@ -358,4 +349,15 @@ public abstract class ComportamientoAgente {
 	 *  Description of the Method
 	 */
 	public abstract void configure();
+
+	
+	String identificador;
+	
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
+	}
+	
+	public String getIdentificador(){
+		return identificador;
+	}
 }

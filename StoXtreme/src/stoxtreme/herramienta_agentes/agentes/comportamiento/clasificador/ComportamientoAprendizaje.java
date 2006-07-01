@@ -25,28 +25,28 @@ public class ComportamientoAprendizaje extends ComportamientoAgente{
 	}
 	
 	public void generacionDecisiones() {
-		tiempo++;
-		// Revisa las operaciones pendientes para asignar los pesos 
-		int[] opPendientes = operacionesPendientes.getOperacionesPendientes();
-		// Si se ha efectuado una venta reparto el beneficio entre sus
-		// compras asociadas.
-		// Si se ha efectuado una compra la marco para que la venta le de
-		// beneficio.
-		
-		String empresa = estadoBolsa.dameEmpresaAleatoria();
-		double precioEmpresa = estadoBolsa.getPrecioActualEmpresa(empresa);
-		mundoClasificador.registraPrecio(empresa, precioEmpresa);
-		SistClasificador clasificador = clasificadores.get(empresa);
-		Decision accion = clasificador.encajaReglas(mundoClasificador);
-		decisiones.add(accion);
-		
-		// FIXME: Para cambiar el clasificador no puede tener compras marcadas sin venta
-		// o borrarlas
-		if(tiempo%10 == 0){
-			// Evoluciona un sistema clasificador aleatoriamente
-			SistClasificador nuevo = AGenetico.generaNuevasReglas(clasificador);
-			clasificadores.put(empresa, nuevo);
-		}
+//		tiempo++;
+//		// Revisa las operaciones pendientes para asignar los pesos 
+//		int[] opPendientes = operacionesPendientes.getOperacionesPendientes();
+//		// Si se ha efectuado una venta reparto el beneficio entre sus
+//		// compras asociadas.
+//		// Si se ha efectuado una compra la marco para que la venta le de
+//		// beneficio.
+//		
+//		String empresa = estadoBolsa.dameEmpresaAleatoria();
+//		double precioEmpresa = estadoBolsa.getPrecioActualEmpresa(empresa);
+//		mundoClasificador.registraPrecio(empresa, precioEmpresa);
+//		SistClasificador clasificador = clasificadores.get(empresa);
+//		Decision accion = clasificador.encajaReglas(mundoClasificador);
+//		decisiones.add(accion);
+//		
+//		// FIXME: Para cambiar el clasificador no puede tener compras marcadas sin venta
+//		// o borrarlas
+//		if(tiempo%10 == 0){
+//			// Evoluciona un sistema clasificador aleatoriamente
+//			SistClasificador nuevo = AGenetico.generaNuevasReglas(clasificador);
+//			clasificadores.put(empresa, nuevo);
+//		}
 	}
 	
 	public Operacion generaCompra(){

@@ -31,17 +31,6 @@ public class AgenteAnalisisFundamental extends ComportamientoAgente {
 
 
 	/**
-	 *  Gets the NombreComportamiento attribute of the AgenteAnalisisFundamental
-	 *  object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public String getNombreComportamiento() {
-		return "Analisis Fundamental";
-	}
-
-
-	/**
 	 *  Description of the Method
 	 */
 	public void generacionDecisiones() {

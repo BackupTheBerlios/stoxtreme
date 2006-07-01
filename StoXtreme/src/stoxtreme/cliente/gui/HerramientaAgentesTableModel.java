@@ -204,4 +204,10 @@ public class HerramientaAgentesTableModel extends AbstractTableModel {
 		elementos.remove(index);
 		fireTableRowsDeleted(index, index);
 	}
+
+
+	public void addAgente(Agente agente) {
+		elementos.add(agente);
+		fireTableRowsInserted(elementos.size()-1, elementos.size()-1);
+	}
 }

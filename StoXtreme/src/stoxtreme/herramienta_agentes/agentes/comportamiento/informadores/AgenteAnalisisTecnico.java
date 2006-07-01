@@ -29,17 +29,6 @@ public class AgenteAnalisisTecnico extends ComportamientoAgente {
 
 
 	/**
-	 *  Gets the NombreComportamiento attribute of the AgenteAnalisisTecnico
-	 *  object
-	 *
-	 *@return    The NombreComportamiento value
-	 */
-	public String getNombreComportamiento() {
-		return "Analisis Tecnico";
-	}
-
-
-	/**
 	 *  Description of the Method
 	 */
 	public void generacionDecisiones() {

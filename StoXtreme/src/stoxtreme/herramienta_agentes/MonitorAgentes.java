@@ -88,7 +88,6 @@ public class MonitorAgentes extends Thread {
 	 *@param  a  The feature to be added to the Agente attribute
 	 */
 	public void addAgente(Agente a) {
-		listaAgentes.add(a);
 	}
 
 
@@ -98,7 +97,6 @@ public class MonitorAgentes extends Thread {
 	 *@param  a  Description of Parameter
 	 */
 	public void removeAgente(Agente a) {
-		listaAgentes.remove(a);
 	}
 
 
