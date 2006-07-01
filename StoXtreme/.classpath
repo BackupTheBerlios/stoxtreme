@@ -35,5 +35,6 @@
 	<classpathentry kind="lib" path="lib/axis-ant.jar"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
 	<classpathentry kind="lib" path="lib/MDateSelector14-00347.jar"/>
+	<classpathentry kind="lib" path="lib/jgap.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
