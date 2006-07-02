@@ -4,7 +4,6 @@ import stoxtreme.servidor.gui.ModeloTablaEdicion;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -40,6 +39,7 @@ import stoxtreme.servidor.gui.FakeInternalFrame;
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
+@SuppressWarnings("serial")
 public class PanelConfigAgentes extends JPanel {
 	JTable tablaEdicion;
 	private PanelOpciones atribModelo;
