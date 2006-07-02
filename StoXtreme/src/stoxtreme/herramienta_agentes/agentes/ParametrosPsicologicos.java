@@ -2,9 +2,21 @@ package stoxtreme.herramienta_agentes.agentes;
 
 import java.util.EnumMap;
 
+/**
+ * Clase que encapsula los parametros del modelo psicologico para los agentes.
+ * 
+ * @author Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
+ */
 public class ParametrosPsicologicos {
-	private EnumMap<Parametro,String> parametros = new EnumMap<Parametro,String>(Parametro.class);
+	/**
+	 * Mapa con los atributos de los parametros sociales
+	 */
+	private EnumMap<Parametro,String> parametros = 
+		new EnumMap<Parametro,String>(Parametro.class);
 	
+	/**
+	 * Enumerado de los parametros
+	 */
 	public enum Parametro{
 		TIEMPO_ESPERA,
 		NUMERO_MAXIMO_ACCIONES_COMPRA,
@@ -24,132 +36,45 @@ public class ParametrosPsicologicos {
 		
 	}
 	
+	/**
+	 * Cambia el valor del del parametro pasado por parametro
+	 * por el valor.
+	 * 
+	 * @param parametro  Parametro que deseamos cambiar en el modelo
+	 * @param valor      Valor asignado
+	 */
 	public void setParametro(String p, String v){
 		Parametro param = Parametro.valueOf(p);
 		parametros.put(param, v);
 	}
 	
+	/**
+	 * Obtiene el valor del parametro como un valor entero
+	 * 
+	 * @param parametro  Parametro del que deseamos obtener el valor
+	 * @return			 Valor entero que se obtiene del parametro
+	 */
 	public int getParamInt(Parametro p){
 		return (int)Double.parseDouble(parametros.get(p));
 	}
+	
+	/**
+	 * Obtiene el valor del parametro como un valor real
+	 * 
+	 * @param parametro  Parametro del que deseamos obtener el valor
+	 * @return			 Valor real que se obtiene del parametro
+	 */
 	public double getParamDouble(Parametro p){
 		return Double.parseDouble(parametros.get(p));
 	}
+	
+	/**
+	 * Obtiene el valor del parametro como una cadena de caracteres
+	 * 
+	 * @param parametro  Parametro del que deseamos obtener el valor
+	 * @return			 Valor de cadena que se obtiene del parametro
+	 */
 	public String getParamString(Parametro p){
 		return parametros.get(p);
 	}
-//	private double tiempoEspera;
-//	private int numeroMaximoAccionesCompra;
-//	private int numeroMinimoAccionesCompra;
-//	private int numeroMaximoAccionesVenta;
-//	private int numeroMinimoAccionesVenta;
-//	private int numeroMaximoCancelaciones;
-//	
-//	private double porcentajeMaximoCompra;
-//	private double porcentajeMaximoVenta;
-//	private double porcentajeMinimoCompra;
-//	private double porcentajeMinimoVenta;
-//	private double porcentajeSubidaPrecio;
-//	private double porcentajeBajadaPrecio;
-//	
-//	public ParametrosPsicologicos(){
-//		tiempoEspera = 0;
-//	}
-//	
-//	// GETTERS Y SETTERS
-//	public void setTiempoEspera(double tiempoEspera) {
-//		this.tiempoEspera = tiempoEspera;
-//	}
-//
-//	public double getTiempoEspera() {
-//		return tiempoEspera;
-//	}
-//
-//	public void setNumeroMaximoAccionesCompra(int numeroMaximoAccionesCompra) {
-//		this.numeroMaximoAccionesCompra = numeroMaximoAccionesCompra;
-//	}
-//
-//	public int getNumeroMaximoAccionesCompra() {
-//		return numeroMaximoAccionesCompra;
-//	}
-//
-//	public void setNumeroMaximoAccionesVenta(int numeroMaximoAccionesVenta) {
-//		this.numeroMaximoAccionesVenta = numeroMaximoAccionesVenta;
-//	}
-//
-//	public int getNumeroMaximoAccionesVenta() {
-//		return numeroMaximoAccionesVenta;
-//	}
-//
-//	public void setPorcentajeMaximoCompra(double porcentajeMaximoCompra) {
-//		this.porcentajeMaximoCompra = porcentajeMaximoCompra;
-//	}
-//
-//	public double getPorcentajeMaximoCompra() {
-//		return porcentajeMaximoCompra;
-//	}
-//
-//	public void setPorcentajeMaximoVenta(double porcentajeMaximoVenta) {
-//		this.porcentajeMaximoVenta = porcentajeMaximoVenta;
-//	}
-//
-//	public double getPorcentajeMaximoVenta() {
-//		return porcentajeMaximoVenta;
-//	}
-//
-//	public void setPorcentajeMinimoCompra(double porcentajeMinimoCompra) {
-//		this.porcentajeMinimoCompra = porcentajeMinimoCompra;
-//	}
-//
-//	public double getPorcentajeMinimoCompra() {
-//		return porcentajeMinimoCompra;
-//	}
-//
-//	public void setPorcentajeMinimoVenta(double porcentajeMinimoVenta) {
-//		this.porcentajeMinimoVenta = porcentajeMinimoVenta;
-//	}
-//
-//	public double getPorcentajeMinimoVenta() {
-//		return porcentajeMinimoVenta;
-//	}
-//
-//	public double getPorcentajeSubidaPrecio() {
-//		return porcentajeSubidaPrecio;
-//	}
-//	
-//	public void setPorcentajeSubidaPrecio(double porcentaje) {
-//		this.porcentajeSubidaPrecio = porcentaje;
-//	}
-//	
-//	public double getPorcentajeBajadaPrecio() {
-//		return porcentajeBajadaPrecio;
-//	}
-//	
-//	public void setPorcentajeBajadaPrecio(double porcentaje) {
-//		this.porcentajeBajadaPrecio = porcentaje;
-//	}
-//
-//	public void setNumeroMinimoAccionesCompra(int numeroMinimoAccionesCompra) {
-//		this.numeroMinimoAccionesCompra = numeroMinimoAccionesCompra;
-//	}
-//
-//	public int getNumeroMinimoAccionesCompra() {
-//		return numeroMinimoAccionesCompra;
-//	}
-//
-//	public void setNumeroMinimoAccionesVenta(int numeroMinimoAccionesVenta) {
-//		this.numeroMinimoAccionesVenta = numeroMinimoAccionesVenta;
-//	}
-//
-//	public int getNumeroMinimoAccionesVenta() {
-//		return numeroMinimoAccionesVenta;
-//	}
-//
-//	public int getNumeroMaximoCancelaciones() {
-//		return numeroMaximoCancelaciones;
-//	}
-//	
-//	public void setNumeroMaximoCancelaciones(int numCancelaciones) {
-//		this.numeroMaximoCancelaciones = numCancelaciones;
-//	}
 }

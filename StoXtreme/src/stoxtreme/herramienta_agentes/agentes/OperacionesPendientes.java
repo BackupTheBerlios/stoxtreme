@@ -7,18 +7,39 @@ import java.util.HashSet;
 import stoxtreme.interfaz_remota.Operacion;
 
 /**
- *  Description of the Class
+ *  Clase de los objetos que controlan cuales son las operaciones pendientes
+ *  que posee el agente en la bolsa
  *
- *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
+ *  @author  Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class OperacionesPendientes {
+	/**
+	 *  Nombre de las empresas en las que invierte el agente.
+	 *  La clave es el identificador de las operaciones y 
+	 *  el valor es la empresa a la que esta asignada esa operacion.
+	 */
 	private Hashtable<Integer, String> empresasPendientes;
+	
+	/**
+	 *  Guarda en esta estructura los datos del identificador de la 
+	 *  operacion de compra guardada
+	 */
 	private Hashtable<Integer, OperacionLocal> comprasPendientes;
+	
+	/**
+	 *  Gurada en esta estructura los datos del identificador de la
+	 *  operacion de venta guardada
+	 */
 	private Hashtable<Integer, OperacionLocal> ventasPendientes;
+	
+	/**
+	 * Tabla que guarda las cancelaciones a la espera de notificacion
+	 */
 	private HashSet<Integer> cancelacionPendiente;
 	
 	/**
-	 *  Constructor for the OperacionesPendientes object
+	 *  Constructor de la clase de las operaciones pendientes.
+	 *  Simplemente inicializa las estructuras de datos necesarias.
 	 */
 	public OperacionesPendientes() {
 		empresasPendientes = new Hashtable<Integer, String>();
@@ -29,11 +50,11 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Gets the PendienteCancelacion attribute of the OperacionesPendientes
-	 *  object
+	 *  Obtiene si la cancelación por entrada esta a la espera de notificacion
+	 *  o no.
 	 *
-	 *@param  nCancelacion  Description of Parameter
-	 *@return               The PendienteCancelacion value
+	 *@param  nCancelacion  Identificador de la operación a cancelar
+	 *@return               Cierto si esta esperando a ser notificada, falsa en otro caso
 	 */
 	public boolean isPendienteCancelacion(int nCancelacion) {
 		return cancelacionPendiente.contains(nCancelacion);
@@ -41,21 +62,21 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Gets the EmpresaOperacion attribute of the OperacionesPendientes object
+	 *  Obtiene la empresa asociada a la operacion asignada al identificador insertado por
+	 *  entrada.
 	 *
-	 *@param  idOp  Description of Parameter
-	 *@return       The EmpresaOperacion value
+	 *  @param  idOp  Identificador de la operacion
+	 *  @return       Nombre de la empresa asignada al identificador
 	 */
 	public String getEmpresaOperacion(int idOp) {
 		return empresasPendientes.get(idOp);
 	}
 
-
 	/**
-	 *  Gets the TipoOperacion attribute of the OperacionesPendientes object
+	 *  Obtiene el tipo de operacion asignada al identificador
 	 *
-	 *@param  idOp  Description of Parameter
-	 *@return       The TipoOperacion value
+	 *  @param  idOp  Identificador de la operacion
+	 *  @return       Tipo del identificador de entrada
 	 */
 	public int getTipoOperacion(int idOp) {
 		if (comprasPendientes.containsKey(idOp)) {
@@ -68,10 +89,10 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Gets the PrecioOperacion attribute of the OperacionesPendientes object
+	 *  Obtiene el precio de la operacion insertada en la bolsa
 	 *
-	 *@param  idOp  Description of Parameter
-	 *@return       The PrecioOperacion value
+	 *  @param  idOp  Identificador de la operacion
+	 *  @return       Precio al que esta insertada la operacion
 	 */
 	public double getPrecioOperacion(int idOp) {
 		if (comprasPendientes.containsKey(idOp)) {
@@ -84,10 +105,10 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Gets the OperacionesPendientes attribute of the OperacionesPendientes
-	 *  object
+	 *  Obtiene un array con todas los identificadores de las operaciones a la 
+	 *  espera de notificacion.
 	 *
-	 *@return    The OperacionesPendientes value
+	 *  @return    Array con los identificadores a la espera de identificacion
 	 */
 	public int[] getOperacionesPendientes() {
 		int[] opsPendientes = new int[empresasPendientes.size()];
@@ -101,13 +122,13 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta una operacion en la lista de operaciones pendientes
 	 *
-	 *@param  operacion    Description of Parameter
-	 *@param  empresa      Description of Parameter
-	 *@param  tipoOp       Description of Parameter
-	 *@param  numAcciones  Description of Parameter
-	 *@param  precio       Description of Parameter
+	 *  @param  operacion    Identificador de la operacion
+	 *  @param  empresa      Empresa sobre la que se realiza la operacion
+	 *  @param  tipoOp       Tipo de operacion (compra o venta)
+	 *  @param  numAcciones  Cantidad de acciones que maneja la operacion
+	 *  @param  precio       Precio al que se inserta la operacion
 	 */
 	public void insertaOperacionPendiente(int operacion, String empresa, int tipoOp, int numAcciones, double precio) {
 		empresasPendientes.put(operacion, empresa);
@@ -116,7 +137,6 @@ public class OperacionesPendientes {
 			tabla = comprasPendientes;
 		}
 		else {
-			// Operacion.VENTA
 			tabla = ventasPendientes;
 		}
 		tabla.put(operacion, new OperacionLocal(empresa, numAcciones, precio));
@@ -124,9 +144,9 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta la cancelacion en la lista de operaciones pendientes
 	 *
-	 *@param  nCancelacion  Description of Parameter
+	 *  @param  nCancelacion  Identificador de la operacion de la que esperamos la operacion
 	 */
 	public void insertarCancelacionPendiente(int nCancelacion) {
 		cancelacionPendiente.add(nCancelacion);
@@ -134,9 +154,10 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Notificacion de una cancelacion.
+	 *  Borra el identificador de la lista de cancelaciones pendientes.
 	 *
-	 *@param  idOp  Description of Parameter
+	 *  @param  idOp  Identificador de la operacion
 	 */
 	public void cancelaOp(int idOp) {
 		comprasPendientes.remove(idOp);
@@ -147,10 +168,10 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Comprueba si hay operaciones pendientes de una empresa
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          Description of the Returned Value
+	 *  @param  empresa  Nombre de la empresa que deseamos comprobar la existencia de operacion pendiente
+	 *  @return          Cierto si hay una operacion pendiente de la empresa, falso en otro caso.
 	 */
 	public boolean hayOperacionesPendientes(String empresa) {
 		return empresasPendientes.contains(empresa);
@@ -158,10 +179,11 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Borra una cantidad determinada de acciones del numero de acciones
+	 *  de la operacion pendiente.
 	 *
-	 *@param  idOp      Description of Parameter
-	 *@param  cantidad  Description of Parameter
+	 *  @param  idOp      Identificador de la operacion
+	 *  @param  cantidad  Numero de acciones
 	 */
 	public void restaAcciones(int idOp, int cantidad) {
 		if (comprasPendientes.containsKey(idOp)) {
@@ -180,29 +202,26 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Devuelve un identificador de una operacion pendiente aleatoria
 	 *
-	 *@return    Description of the Returned Value
+	 *  @return  Identificador de la operacion
 	 */
 	public int dameOperacionAleatoria() {
 		Enumeration<Integer> enu = empresasPendientes.keys();
 		int n = (int) (Math.random() * (double) empresasPendientes.size());
-
 		int actual = -1;
 		for (int i = 0; i <= n; i++) {
 			// Avanza n-1
 			actual = enu.nextElement();
 		}
-
 		return actual;
 	}
 
-
 	/**
-	 *  Description of the Method
+	 *  Comprueba si una operacion existe en las listas de operaciones pendientes
 	 *
-	 *@param  id  Description of Parameter
-	 *@return     Description of the Returned Value
+	 *  @param  id  Identificador de la operacion
+	 *  @return     Cierto si la operacion esta a la espera de notificacion
 	 */
 	public boolean estaOperacion(int id) {
 		boolean estaC = comprasPendientes.containsKey(id);
@@ -212,9 +231,9 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Obtenemos una lista de las operaciones a la espera de notificacion
 	 *
-	 *@return    Description of the Returned Value
+	 *  @return    Lista con los identificadores de las operaciones a la espera de notificacion
 	 */
 	public ArrayList<Integer> dameOperacionesPendientes() {
 		ArrayList<Integer> lista = new ArrayList<Integer>();
@@ -232,22 +251,32 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Class
-	 *
-	 *@author    Chris Seguin
+	 *  Clase utilizada para encapsular los parametros necesarios para el funcionamiento de
+	 *  la clase
 	 */
 	private class OperacionLocal {
+		/**
+		 * Empresa sobre la que se realiza la operacion
+		 */
 		private String empresa;
+		
+		/**
+		 * Cantidad de acciones de la operacion
+		 */
 		private int cantidad;
+		
+		/**
+		 * Precio de la operacion
+		 */
 		private double precio;
 
 
 		/**
-		 *  Constructor for the OperacionLocal object
+		 *  Constructor del objeto auxiliar
 		 *
-		 *@param  empresa   Description of Parameter
-		 *@param  cantidad  Description of Parameter
-		 *@param  precio    Description of Parameter
+		 *  @param  empresa   Description of Parameter
+		 *  @param  cantidad  Description of Parameter
+		 *  @param  precio    Description of Parameter
 		 */
 		public OperacionLocal(String empresa, int cantidad, double precio) {
 			setEmpresa(empresa);

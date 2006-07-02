@@ -8,20 +8,40 @@ import stoxtreme.herramienta_agentes.agentes.comportamiento.ComportamientoAgente
 import stoxtreme.interfaz_remota.Operacion;
 
 /**
- *  Description of the Class
+ *  Objeto de percepcion de los agentes.
+ *  Esta pendiente de los cambios tanto en la bolsa como en la cartera
+ *  para notificar estos cambios en las estructuras internas del agente.
  *
- *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
+ *  @author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class Perceptor implements ListenerNotificador {
+	/**
+	 * Estado global de la bolsa
+	 */
 	private EstadoBolsa estadoBolsa = null;
+	
+	/**
+	 * Estado de la cartera del agente
+	 */
 	private EstadoCartera estadoCartera = null;
+	
+	/**
+	 * Operaciones pendientes de notificacion
+	 */
 	private OperacionesPendientes opPendientes = null;
+	
+	/**
+	 * Comportamientos a los que debe avisar el notificador
+	 */
 	private ArrayList<ComportamientoAgente> gDecisiones = null;
+	
+	/**
+	 * Agente al que esta asociado el perceptor
+	 */
 	private Agente agente;
 
-
 	/**
-	 *  Constructor for the Perceptor object
+	 *  Constructor del objeto perceptor
 	 */
 	public Perceptor() {
 		gDecisiones = new ArrayList<ComportamientoAgente>();
@@ -29,39 +49,36 @@ public class Perceptor implements ListenerNotificador {
 
 
 	/**
-	 *  Sets the EstadoBolsa attribute of the Perceptor object
+	 *  Inserta el estado de la bolsa en el objeto de percepcion
 	 *
-	 *@param  estado  The new EstadoBolsa value
+	 *  @param  estado  El estado global de la bolsa
 	 */
 	public void setEstadoBolsa(EstadoBolsa estado) {
 		estadoBolsa = estado;
 	}
 
-
 	/**
-	 *  Sets the EstadoCartera attribute of the Perceptor object
+	 *  Inserta el estado de la cartera correspondiente con el perceptor
 	 *
-	 *@param  estado  The new EstadoCartera value
+	 *  @param  estado  El estado de la cartera del agente
 	 */
 	public void setEstadoCartera(EstadoCartera estado) {
 		estadoCartera = estado;
 	}
 
-
 	/**
-	 *  Sets the OperacionesPendientes attribute of the Perceptor object
+	 *  Inserta las operaciones pendientes del agente
 	 *
-	 *@param  opPendientes  The new OperacionesPendientes value
+	 *  @param  opPendientes  Las operaciones pendientes
 	 */
 	public void setOperacionesPendientes(OperacionesPendientes opPendientes) {
 		this.opPendientes = opPendientes;
 	}
 
-
 	/**
 	 *  Sets the Agente attribute of the Perceptor object
 	 *
-	 *@param  agente  The new Agente value
+	 *  @param  agente  The new Agente value
 	 */
 	public void setAgente(Agente agente) {
 		this.agente = agente;
@@ -69,22 +86,20 @@ public class Perceptor implements ListenerNotificador {
 
 
 	/**
-	 *  Adds a feature to the GeneradorDecisiones attribute of the Perceptor
-	 *  object
+	 *  Inserta un nuevo comportamiento dentro del perceptor
 	 *
-	 *@param  gDeci  The feature to be added to the GeneradorDecisiones attribute
+	 *  @param  gDeci  Comportamiento que queremos insertar
 	 */
 	public void addGeneradorDecisiones(ComportamientoAgente gDeci) {
 		this.gDecisiones.add(gDeci);
 	}
 
-
 	/**
-	 *  Description of the Method
+	 *  Metodo para la notificacion de una realizacion de una operacion
 	 *
-	 *@param  idOp      Description of Parameter
-	 *@param  cantidad  Description of Parameter
-	 *@param  precio    Description of Parameter
+	 *  @param  idOp      Identificador de la operacion realizada
+	 *  @param  cantidad  Cantidad de acciones cruzadas en la operacion
+	 *  @param  precio    Precio al que se han cruzado las operaciones
 	 */
 	public void onNotificacionOp(int idOp, int cantidad, double precio) {
 		if (estadoBolsa != null && estadoCartera != null &&
@@ -93,7 +108,6 @@ public class Perceptor implements ListenerNotificador {
 			int tipoOp = opPendientes.getTipoOperacion(idOp);
 
 			if (empresa == null) {
-				//System.err.println("EMPRESA NULL!!! "+ idOp+" "+cantidad+" "+precio);
 				return;
 			}
 
@@ -114,9 +128,9 @@ public class Perceptor implements ListenerNotificador {
 
 
 	/**
-	 *  Description of the Method
+	 *  Metodo invocado en la cancelacion de una operacion
 	 *
-	 *@param  idOp  Description of Parameter
+	 *  @param  idOp  Identificador de la operación cancelada
 	 */
 	public void onCancelacionOp(int idOp) {
 		opPendientes.cancelaOp(idOp);
