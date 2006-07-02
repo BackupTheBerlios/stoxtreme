@@ -2,7 +2,7 @@ package stoxtreme.servidor;
 import java.util.*;
 
 /**
- *  Description of the Class
+ *  Clase que lleva el control del tiempo
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -14,7 +14,7 @@ public class Reloj {
 
 
 	/**
-	 *  Constructor for the Reloj object
+	 *  Default Constructor for the Reloj object
 	 */
 	public Reloj() {
 		this(500);
@@ -26,7 +26,7 @@ public class Reloj {
 	/**
 	 *  Constructor for the Reloj object
 	 *
-	 *@param  ms  Description of Parameter
+	 *@param  ms  Número de milisegundos entre paso y paso
 	 */
 	public Reloj(long ms) {
 		this.oyentes = new ArrayList<RelojListener>();
@@ -47,7 +47,7 @@ public class Reloj {
 
 
 	/**
-	 *  Description of the Method
+	 *  Todos los objetos que escuchan al reloj ejecutan un paso de tiempo
 	 */
 	public void ejecuta() {
 		Iterator<RelojListener> i = oyentes.iterator();
@@ -58,7 +58,7 @@ public class Reloj {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicia el reloj
 	 */
 	public void iniciarReloj() {
 		parado = false;
@@ -67,7 +67,7 @@ public class Reloj {
 
 
 	/**
-	 *  Description of the Method
+	 *  Reinicia el reloj
 	 */
 	public void reiniciarReloj() {
 		timer = new Timer(true);
@@ -76,7 +76,7 @@ public class Reloj {
 
 
 	/**
-	 *  Description of the Method
+	 *  Para el reloj
 	 */
 	public void pararReloj() {
 		if (!parado) {
@@ -88,7 +88,7 @@ public class Reloj {
 
 
 	/**
-	 *  Description of the Method
+	 *  Reanuda el reloj
 	 */
 	public void reanudarReloj() {
 		iniciarReloj();
@@ -96,9 +96,9 @@ public class Reloj {
 
 
 	/**
-	 *  Description of the Class
+	 *  //TODO
 	 *
-	 *@author    Chris Seguin
+	 *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
 	 */
 	private class Ejecucion extends TimerTask {
 		private Reloj reloj;
@@ -107,7 +107,7 @@ public class Reloj {
 		/**
 		 *  Constructor for the Ejecucion object
 		 *
-		 *@param  r  Description of Parameter
+		 *@param  r  Reloj que mide el tiempo
 		 */
 		public Ejecucion(Reloj r) {
 			this.reloj = r;

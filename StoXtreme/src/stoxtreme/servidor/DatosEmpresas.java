@@ -28,7 +28,7 @@ import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
  *  </empresas>
  */
 /**
- *  Description of the Class
+ *  Parser que inicializa los ObjetoBolsa con los datos de empresas.xml
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -56,10 +56,10 @@ public class DatosEmpresas {
 
 
 	/**
-	 *  Description of the Method
+	 *  Crea los ObjetosBolsa con sus datos iniciales (nombre de empresa, cotización de título, número de acciones)
 	 *
-	 *@param  parServ  Description of Parameter
-	 *@return          Description of the Returned Value
+	 *@param  parServ  Los parámetros del servidor
+	 *@return          Una tabla hash de ObjetoBolsa, con clave nombre de la empresa
 	 */
 	public Hashtable<String, ObjetoBolsa> creaObjetosBolsa(ParametrosServidor parServ) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

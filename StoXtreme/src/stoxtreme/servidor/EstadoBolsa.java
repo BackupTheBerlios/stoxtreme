@@ -9,10 +9,11 @@ import stoxtreme.servidor.gui.ModeloTablaPrecioAcciones;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 /**
- *  Description of the Class
+ *  Guarda una representación del estado actual de la bolsa
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
+@SuppressWarnings("serial")
 public class EstadoBolsa extends ModeloTablaPrecioAcciones implements VariablesListener {
 	private Hashtable<String, String> escucha;
 
@@ -20,7 +21,7 @@ public class EstadoBolsa extends ModeloTablaPrecioAcciones implements VariablesL
 	/**
 	 *  Constructor for the EstadoBolsa object
 	 *
-	 *@param  datos  Description of Parameter
+	 *@param  datos  Array que contiene los nombres de las empresas que cotizan en la sesión actual
 	 */
 	public EstadoBolsa(DatosEmpresas datos) {
 		super();
@@ -36,10 +37,11 @@ public class EstadoBolsa extends ModeloTablaPrecioAcciones implements VariablesL
 
 
 	/**
-	 *  Description of the Method
+	 *  Cambia el estado de las variables del sistema asociadas a los precios de las acciones.
+	 *  También genera un mensaje global para informar a todos los usuarios.
 	 *
-	 *@param  var    Description of Parameter
-	 *@param  value  Description of Parameter
+	 *@param  var    Variable del sistema que cambia de estado
+	 *@param  value  Nuevo estado al que pasa la variable
 	 */
 	public void cambioEstadoVariable(String var, Object value) {
 		if (escucha.containsKey(var)) {

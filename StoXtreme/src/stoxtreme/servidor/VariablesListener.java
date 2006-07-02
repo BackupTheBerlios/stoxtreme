@@ -1,16 +1,16 @@
 package stoxtreme.servidor;
 
 /**
- *  Description of the Interface
+ *  Interfaz para tratar con variables del sistema
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface VariablesListener {
 	/**
-	 *  Description of the Method
+	 *  Metodo que ejecuta las acciones a especificar
 	 *
-	 *@param  var    Description of Parameter
-	 *@param  value  Description of Parameter
+	 *@param  var    Nombre de la variable
+	 *@param  value  Nuevo valor
 	 */
 	public void cambioEstadoVariable(String var, Object value);
 }

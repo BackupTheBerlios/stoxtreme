@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- *  Description of the Class
+ *  Guarda los parámetros de la simulación actual
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -21,23 +21,23 @@ public class ParametrosServidor {
 
 	private Hashtable<String, Object> parametros;
 	/**
-	 *  Description of the Field
+	 *  Fichero con datos generales de las empresas que pueden cotizar
 	 */
 	public static String FICH_EMP = "ficheroEmpresas";
 	/**
-	 *  Description of the Field
+	 *  Fichero con los datos de los usuarios ya registrados
 	 */
 	public static String FICH_REG = "ficheroRegistrados";
 	/**
-	 *  Description of the Field
+	 *  Máxima variación de un paso a otro en el precio de una acción
 	 */
 	public static String TICK = "tick";
 	/**
-	 *  Description of the Field
+	 *  Indica cada cuanto tiempo se producce un paso
 	 */
 	public static String TIEMPO = "tiempo";
 	/**
-	 *  Description of the Field
+	 *  Número de empresas que cotizan en la sesión actual
 	 */
 	public static String NUMEMPRESAS = "numeroEmpresas";
 
@@ -105,10 +105,10 @@ public class ParametrosServidor {
 	//Modificador de la tabla hash "parametros"
 
 	/**
-	 *  Description of the Method
+	 *  Modificador de parámetros
 	 *
-	 *@param  clave  Description of Parameter
-	 *@param  valor  Description of Parameter
+	 *@param  clave  Nombre del parámetro
+	 *@param  valor  Nuevo valor del parámetro
 	 */
 	public void modificarParams(String clave, Object valor) {
 		parametros.put(clave, valor);
@@ -117,9 +117,9 @@ public class ParametrosServidor {
 
 	//Vuelca en "parametros" la informacion del fichero XML
 	/**
-	 *  Description of the Method
+	 *  Parser que carga la información del fichero parametros.xml en un objeto de esta clase
 	 *
-	 *@param  fichero  Description of Parameter
+	 *@param  fichero  Ruta del fichero parametros.xml
 	 */
 	public void leeFicheroParametros(String fichero) {
 		DocumentBuilderFactory factory;

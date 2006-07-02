@@ -14,7 +14,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.InetAddress;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -28,10 +27,9 @@ import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Embedded;
 import org.apache.log4j.PropertyConfigurator;
-import org.w3c.dom.Element;
 
 /**
- *  Description of the Class
+ *  Esta clase se ocupa de tramitar las peticiones de los usuarios
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -104,11 +102,11 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Login del usuario
 	 *
-	 *@param  usr  Description of Parameter
-	 *@param  psw  Description of Parameter
-	 *@return      Description of the Returned Value
+	 *@param  usr  Nombre de usuario
+	 *@param  psw  contraseña
+	 *@return      El número de empresas que hay en la simulación
 	 */
 	public int login(String usr, String psw) {
 		boolean b = gestorUsuarios.conectaUsuario(usr, psw);
@@ -122,11 +120,11 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Registra a un nuevo usuario
 	 *
-	 *@param  usr  Description of Parameter
-	 *@param  psw  Description of Parameter
-	 *@return      Description of the Returned Value
+	 *@param  usr  Nombre de usuario
+	 *@param  psw  Contraseña
+	 *@return      Un booleano que indica si toda ha ido bien
 	 */
 	public boolean registro(String usr, String psw) {
 		return gestorUsuarios.registraUsuario(usr, psw);
@@ -134,11 +132,11 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta una operación en la cola del ObjetoBolsa correspondiente
 	 *
-	 *@param  usuario  Description of Parameter
-	 *@param  o        Description of Parameter
-	 *@return          Description of the Returned Value
+	 *@param  usuario  Id del usuario que envía la operacion
+	 *@param  o        Operación a insertar
+	 *@return          El id de operación
 	 */
 	public int insertarOperacion(String usuario, Operacion o) {
 
@@ -157,10 +155,10 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Cancela una operación previamente insertada
 	 *
-	 *@param  usuario  Description of Parameter
-	 *@param  idop     Description of Parameter
+	 *@param  usuario  Id del usuario que cancela la operación
+	 *@param  idop     Id de la operación a cancelar
 	 */
 	public void cancelarOperacion(String usuario, int idop) {
 		try {
@@ -173,9 +171,9 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicia el servidor de aplicaciones tomcat
 	 *
-	 *@exception  Exception  Description of Exception
+	 *@exception  Exception  Excepción al iniciar Tomcat
 	 */
 	public void iniciarTomcat() throws Exception {
 		PropertyConfigurator.configure("conf/log4j.properties");
@@ -217,9 +215,9 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicia el servidor (Tomcat, interfaz gráfica)
 	 *
-	 *@exception  RemoteException  Description of Exception
+	 *@exception  RemoteException  Excepción al iniciar el servicio
 	 */
 	public void iniciarServidor() throws RemoteException {
 		try {
@@ -248,7 +246,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Para el servidor (para el reloj, finaliza la sesión en curso y para el Tomcat)
 	 *
 	 *@exception  RemoteException  Description of Exception
 	 */
@@ -268,7 +266,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicia una nueva sesión (carga los parámetros, inicia los ObjetoBolsa, el sistema de eventos y el reloj)
 	 *
 	 *@exception  RemoteException  Description of Exception
 	 */
@@ -341,7 +339,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Para el reloj, pausando la sesión
 	 */
 	public void pausarSesion() {
 		reloj.pararReloj();
@@ -349,7 +347,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Vuelve a activar el reloj, reanudando la sesión
 	 */
 	public void reanudarSesion() {
 		reloj.reanudarReloj();
@@ -357,7 +355,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Termina la simulación en curso
 	 *
 	 *@exception  RemoteException  Description of Exception
 	 */
@@ -368,7 +366,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Muestra la interfaz gráfica de administrador
 	 *
 	 *@exception  RemoteException  Description of Exception
 	 */
@@ -378,7 +376,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Description of the Method
+	 *  Oculta la interfaz gráfica de administrador
 	 *
 	 *@exception  RemoteException  Description of Exception
 	 */

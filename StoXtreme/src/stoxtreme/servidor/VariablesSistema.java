@@ -9,10 +9,11 @@ import stoxtreme.servidor.gui.ModeloTablaVariables;
 import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
 
 /**
- *  Description of the Class
+ *  Clase que representa a los objetos sobre los que se pueden añadir eventos
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
+@SuppressWarnings("serial")
 public class VariablesSistema extends ModeloTablaVariables implements RelojListener {
 
 	private Hashtable<String, Double> variables;
@@ -39,8 +40,8 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 	/**
 	 *  Sets the Value attribute of the VariablesSistema object
 	 *
-	 *@param  variable  The new Value value
-	 *@param  valor     The new Value value
+	 *@param  variable  Variable a cambiar
+	 *@param  valor     El valor de la variable
 	 */
 	public void setValue(String variable, double valor) {
 		variables.put(variable, valor);
@@ -50,8 +51,8 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 	/**
 	 *  Gets the Value attribute of the VariablesSistema object
 	 *
-	 *@param  variable  Description of Parameter
-	 *@return           The Value value
+	 *@param  variable  La variable que me interesa
+	 *@return           El valor de dicha variable
 	 */
 	public Object getValue(String variable) {
 		return variables.get(variable);
@@ -59,12 +60,11 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Description of the Method
+	 *  Ejecuta un paso sobre la variable VAR_TIEMPO
 	 */
 	public void paso() {
 		long t = (long) variables.get(VAR_TIEMPO).longValue();
 		cambiaVariable(VAR_TIEMPO, t + 1);
-//		System.out.println(variables.get(VAR_TIEMPO));
 	}
 
 
@@ -94,10 +94,10 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Description of the Method
+	 *  Si la variable ya existia, cambia su valor. Sino, la inserta y la inicializa.
 	 *
-	 *@param  var    Description of Parameter
-	 *@param  value  Description of Parameter
+	 *@param  var    Variable a cambiar
+	 *@param  value  Nuevo valor
 	 */
 	public void cambiaVariable(String var, double value) {
 		if (!variables.containsKey(var)) {
@@ -115,9 +115,9 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Description of the Method
+	 *  Añade los precios de todas las empresas a la lista de variables
 	 *
-	 *@param  objetosBolsa  Description of Parameter
+	 *@param  objetosBolsa  Los ObjetoBolsa (empresas) de la simualación
 	 */
 	public void insertaPrecios(Hashtable<String, ObjetoBolsa> objetosBolsa) {
 		Enumeration e = objetosBolsa.keys();
@@ -133,10 +133,10 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Description of the Method
+	 *  Metodo para ver si una variable ya existe
 	 *
-	 *@param  variable  Description of Parameter
-	 *@return           Description of the Returned Value
+	 *@param  variable  Nombre de la variable
+	 *@return           Un booleano que me indica si ya existia
 	 */
 	public boolean hasVariable(String variable) {
 		return variables.containsKey(variable);

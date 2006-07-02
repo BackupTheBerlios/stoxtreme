@@ -1,13 +1,13 @@
 package stoxtreme.servidor;
 
 /**
- *  Description of the Interface
+ *  Interfaz para los objetos que escuchan al reloj
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface RelojListener {
 	/**
-	 *  Description of the Method
+	 *  Metodo que ejecuta las acciones correspondientes en cada paso
 	 */
 	public void paso();
 }
