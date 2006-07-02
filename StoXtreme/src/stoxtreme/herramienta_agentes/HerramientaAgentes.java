@@ -1,10 +1,8 @@
 package stoxtreme.herramienta_agentes;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import stoxtreme.cliente.EstadoBolsa;
-import stoxtreme.cliente.gui.FakeInternalFrame;
 import stoxtreme.cliente.gui.HerramientaAgentesPanel;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 import stoxtreme.herramienta_agentes.agentes.ConstructorAgentes;
@@ -14,53 +12,94 @@ import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
 import stoxtreme.interfaz_remota.Stoxtreme;
 
 /**
- *  Description of the Class
+ *  Clase principal de la herramienta de agentes
  *
- *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
+ *  @author  Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
+@SuppressWarnings("serial")
 public class HerramientaAgentes extends HerramientaAgentesPanel implements TimerListener {
+	/**
+	 * Lista de los agentes en la herramienta 
+	 */
 	private ArrayList<Agente> agentes;
+	
+	/**
+	 * Monitor de los agentes que controla la toma de decisiones y la
+	 * ejecucion de las mismas 
+	 */
 	private MonitorAgentes monitor;
+	
+	/**
+	 * Notificador de las operaciones a los agentes
+	 */
 	private Notificador notif;
 	
-	private Hashtable<Integer, String> mapIDPr = new Hashtable<Integer, String>();
-
-
 	/**
-	 *  Constructor for the HerramientaAgentes object
+	 *  Constructor de la herramienta de agentes
 	 *
-	 *@param  nombreUsuario  Description of Parameter
-	 *@param  bolsa          Description of Parameter
+	 *@param  nombreUsuario  Nombre de usuario, necesario para los identificadores
 	 */
-	public HerramientaAgentes(
-			String nombreUsuario,
-			EstadoBolsa bolsa){
+	public HerramientaAgentes(String nombreUsuario){
 		IDAgente.setUsuario(nombreUsuario);
 		this.notif = new Notificador();
 	}
 
-
 	/**
-	 *  Description of the Method
-	 *
-	 *@param  parametros          Description of Parameter
-	 *@param  ficheroConfAgentes  Description of Parameter
-	 *@param  servidor            Description of Parameter
-	 *@param  eBolsa              Description of Parameter
-	 *@exception  Exception       Description of Exception
+	 * Numero máximo de agentes en el contenedor
 	 */
-
 	private double max_agentes;
+	
+	/**
+	 * Numero minimo de agentes en el contenedor
+	 */
 	private double min_agentes;
+	
+	/**
+	 * Tiempo minimo de espera
+	 */
 	private double min_tespera;
+	
+	/**
+	 * Tiempo maximo de espera
+	 */
 	private double max_tespera;
+	
+	/**
+	 * Distribucion usada por los tiempos de espera
+	 */
 	private String tespera_distrib;
+	
+	/**
+	 * Gasto máximo permitido a los agentes
+	 */
 	private double max_gasto;
+	
+	/**
+	 * Probabilidad de que un agente entre en la bolsa
+	 */
 	private double ratio_respawn;
+	
+	/**
+	 * Atenuación que sufre un rumor al pasar de agente a agente
+	 */
 	private double atenuacion_rumor;
 	
+	/**
+	 * Constructor de los agentes.
+	 *   - Crea inicialmente todos los agentes.
+	 *   - Inserta nuevos agentes.
+	 */
 	private ConstructorAgentes constructor;
 	
+	/**
+	 *  Comienza el contenedor de agentes
+	 *
+	 *  @param  parametros          Parametros del contenedor de agentes
+	 *  @param  ficheroConfAgentes  Ruta al fichero de configuracion de agentes
+	 *  @param  servidor            Referencia a la interfaz remota
+	 *  @param  eBolsa              Estado 
+	 *  @exception  Exception       Description of Exception
+	 */
 	public void start(ParametrosAgentes parametros, String ficheroConfAgentes, Stoxtreme servidor, EstadoBolsa eBolsa) throws Exception {
 		int tCiclo = parametros.getInt(ParametrosAgentes.Parametro.TCICLO);
 		monitor = new MonitorAgentes(servidor, this, tCiclo);
@@ -88,56 +127,50 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		super.addListaAgentes(agentes);
 	}
 
-
 	/**
-	 *  Adds the specified Notificador listener to receive Notificador events
-	 *  from this component. If listener l is null, no exception is thrown and no
-	 *  action is performed.
+	 *  Inserta un oyente en el notificador. Ante un evento el notificador
+	 *  le notificará de la realizacion de la operacion.W
 	 *
-	 *@param  id  Contains the NotificadorListener for NotificadorEvent data.
-	 *@param  n   Contains the NotificadorListener for NotificadorEvent data.
+	 *  @param  id  Identificador del observador
+	 *  @param  listener  Observador que deseamos añadir al notificador
 	 */
 	public void addNotificadorListener(String id, ListenerNotificador n) {
 		notif.addListener(id, n);
 	}
 
-
 	/**
-	 *  Description of the Method
+	 *  Notifica una operación al observador concreto
 	 *
-	 *@param  idDestino  Description of Parameter
-	 *@param  idOp       Description of Parameter
-	 *@param  cantidad   Description of Parameter
-	 *@param  precio     Description of Parameter
+	 *  @param  id        Identificador del observador a informar
+	 *  @param  idOp      Identificador de la operacion que notifica
+	 *  @param  cantidad  Cantidad de acciones cruzadas
+	 *  @param  precio    Precio de cruce
 	 */
 	public void notificarOperacion(String idDestino, int idOp, int cantidad, double precio) {
 		notif.notificar(idDestino, idOp, cantidad, precio);
 		insertarNotificacion(idDestino, "Operacion efectuada: " + idOp + "(" + cantidad + "," + precio + ")");
 	}
 
-
 	/**
-	 *  Description of the Method
+	 *  Notifica una cancelacion de una operación al observador
 	 *
-	 *@param  idDestino  Description of Parameter
-	 *@param  idOp       Description of Parameter
+	 *  @param  id    Identificador del observador a informar
+	 *  @param  idOp  Identificador de la operacion cancelada
 	 */
 	public void notificarCancelacion(String idDestino, int idOp) {
 		notif.notificarCancelacion(idDestino, idOp);
 		insertarNotificacion(idDestino, "Cancelacion efectuada: " + idOp);
 	}
 
-
 	/**
-	 *  Description of the Method
+	 *  Pausa en el sistema de agentes
 	 */
 	public void pausarAgentes() {
 		monitor.pausar();
 	}
 
-
 	/**
-	 *  Description of the Method
+	 *  Reauna la simulacion despues de una pausa
 	 */
 	public void reanudarAgentes() {
 		monitor.reanudar();
@@ -145,12 +178,12 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 
 
 	/**
-	 *  Description of the Method
+	 *  Reinicia el sistema de agentes
 	 *
-	 *@param  parametros          Description of Parameter
-	 *@param  ficheroConfAgentes  Description of Parameter
-	 *@param  servidor            Description of Parameter
-	 *@param  bolsa               Description of Parameter
+	 *  @param  parametros          Parametros del sistema de agentes
+	 *  @param  ficheroConfAgentes  Ruta del fichero de configuracion de agentes
+	 *  @param  servidor            Referencia al objeto remoto de servidor
+	 *  @param  bolsa               Estado global de la bolsa
 	 */
 	public void reiniciar(ParametrosAgentes parametros, String ficheroConfAgentes, Stoxtreme servidor, EstadoBolsa bolsa) {
 		for (int i = 0; i < agentes.size(); i++) {
@@ -177,9 +210,10 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 
 
 	/**
-	 *  Description of the Method
+	 * Recepcion de un tick de reloj
 	 *
-	 *@param  tick  Description of Parameter
+	 * @param  tick  tick de tiempo recibido
+	 * 
 	 */
 	public void onTick(int tick) {
 		int numAgentes = agentes.size();
@@ -194,7 +228,10 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		incrementaTick(tick);
 	}
 
-
+	/**
+	 *  Genera un nuevo agente.
+	 *
+	 */
 	private void respawn() {
 		// Generamos un nuevo agente del tipo que toque
 		Agente agente = constructor.nuevoAgente();
@@ -210,6 +247,11 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 		monitor.getConsolaAgentes().insertarAccion(agente.getIDString(), "Entra en bolsa");
 	}
 
+	/**
+	 *  Elimina el peor agente de la simulacion si este sobrepasa el 
+	 *  limite permitido
+	 *
+	 */
 	private void eliminaPeorAgente() {
 		int iMin = -1;
 		double cantidadMinima = Double.MAX_VALUE;
@@ -220,8 +262,9 @@ public class HerramientaAgentes extends HerramientaAgentesPanel implements Timer
 				iMin = i;
 			}
 		}
-		Agente agente = agentes.get(iMin);
-		agente.abandonarModelo();
-		System.err.println("Eliminamos el agente: "+agente.getIDString());
+		if(cantidadMinima < -max_gasto){
+			Agente agente = agentes.get(iMin);
+			agente.abandonarModelo();
+		}
 	}
 }

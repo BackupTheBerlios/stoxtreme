@@ -1,38 +1,44 @@
 package stoxtreme.herramienta_agentes;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
 
-
 /**
- *  Description of the Class
+ *  Notificador del sistema de agentes.
+ *  El notificador se encarga de actualizar a todos los observadores
+ *  de realizaciones en las operaciones, y las cancelaciones.
+ *  También notifica los cambios de precios en las acciones
  *
- *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
+ *  @author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class Notificador {
+	/**
+	 *  Mapa que asigna a los identificadores de los observadores
+	 *  el objeto de listener asociado para la posible notificacion
+	 */
 	private static Hashtable<String, ListenerNotificador> observadores =
 			new Hashtable<String, ListenerNotificador>();
 
 
 	/**
-	 *  Adds the specified listener to receive events from this component. If
-	 *  listener l is null, no exception is thrown and no action is performed.
+	 *  Inserta un oyente en el notificador. Ante un evento el notificador
+	 *  le notificará de la realizacion de la operacion.W
 	 *
-	 *@param  id  The feature to be added to the attribute
-	 *@param  a   The feature to be added to the attribute
+	 *  @param  id  Identificador del observador
+	 *  @param  listener  Observador que deseamos añadir al notificador
 	 */
-	public void addListener(String id, ListenerNotificador a) {
-		observadores.put(id, a);
+	public void addListener(String id, ListenerNotificador listener) {
+		if(id != null && listener != null){
+			observadores.put(id, listener);
+		}
 	}
 
-
 	/**
-	 *  Description of the Method
+	 *  Notifica una operación al observador concreto
 	 *
-	 *@param  id        Description of Parameter
-	 *@param  idOp      Description of Parameter
-	 *@param  cantidad  Description of Parameter
-	 *@param  precio    Description of Parameter
+	 *  @param  id        Identificador del observador a informar
+	 *  @param  idOp      Identificador de la operacion que notifica
+	 *  @param  cantidad  Cantidad de acciones cruzadas
+	 *  @param  precio    Precio de cruce
 	 */
 	public void notificar(String id, int idOp, int cantidad, double precio) {
 		observadores.get(id).onNotificacionOp(idOp, cantidad, precio);
@@ -40,10 +46,10 @@ public class Notificador {
 
 
 	/**
-	 *  Description of the Method
+	 *  Notifica una cancelacion de una operación al observador
 	 *
-	 *@param  id    Description of Parameter
-	 *@param  idOp  Description of Parameter
+	 *  @param  id    Identificador del observador a informar
+	 *  @param  idOp  Identificador de la operacion cancelada
 	 */
 	public void notificarCancelacion(String id, int idOp) {
 		observadores.get(id).onCancelacionOp(idOp);

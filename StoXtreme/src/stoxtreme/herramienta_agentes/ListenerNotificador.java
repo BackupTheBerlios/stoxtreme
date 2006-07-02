@@ -1,26 +1,24 @@
 package stoxtreme.herramienta_agentes;
 
 /**
- *  Description of the Interface
+ *  Interfaz de los observadores del notificador
  *
- *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
+ *  @author  Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface ListenerNotificador {
-	//public void onCambioPrecioAccion(String empresa, double nuevoPrecio);
 	/**
-	 *  Description of the Method
+	 *  Notificacion del cruce de una operacion
 	 *
-	 *@param  idOp      Description of Parameter
-	 *@param  cantidad  Description of Parameter
-	 *@param  precio    Description of Parameter
+	 *  @param  idOp      Identificador de una operacion
+	 *  @param  cantidad  Cantidad de acciones cruzadas
+	 *  @param  precio    Precio de cruce
 	 */
 	public void onNotificacionOp(int idOp, int cantidad, double precio);
 
-
 	/**
-	 *  Description of the Method
+	 *  Notificacion de una cancelacion
 	 *
-	 *@param  idOp  Description of Parameter
+	 *  @param  idOp  Identificacion de la operacion cancelada
 	 */
 	public void onCancelacionOp(int idOp);
 }

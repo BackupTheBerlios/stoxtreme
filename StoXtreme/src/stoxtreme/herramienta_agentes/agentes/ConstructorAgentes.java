@@ -366,7 +366,6 @@ public class ConstructorAgentes {
 				minId = id;
 			}
 		}
-		System.err.println("Nuevo agente, comportamiento: " + minId);
 		ParametrosPsicologicos pp;
 		ParametrosSocial ps;
 		try {
