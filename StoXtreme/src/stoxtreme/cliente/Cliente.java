@@ -212,7 +212,7 @@ public class Cliente {
 		eBolsa = new EstadoBolsa(infoLocal);
 		System.err.println("Creando Parametros");
 		System.err.println("Creando Agentes");
-		hAgentes = new HerramientaAgentes(nUsuario, eBolsa);
+		hAgentes = new HerramientaAgentes(nUsuario);
 		gui = new MainFrameCliente(this, cartera.getMCartera(), opPendientes.getMOpPendientes(), eBolsa, hAgentes);
 		hAgentes.setFrame(gui);
 		gui.init();
