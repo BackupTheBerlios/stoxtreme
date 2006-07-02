@@ -1,4 +1,5 @@
 package stoxtreme.herramienta_agentes.agentes;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
@@ -8,8 +9,6 @@ import java.util.Hashtable;
  */
 public class EstadoCartera {
 	private Hashtable<String, Integer> cartera;
-
-
 	/**
 	 *  Constructor for the EstadoCartera object
 	 */

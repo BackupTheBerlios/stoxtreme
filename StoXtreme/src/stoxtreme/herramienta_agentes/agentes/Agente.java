@@ -7,7 +7,6 @@ import java.util.Iterator;
 import stoxtreme.cliente.EstadoBolsa;
 import stoxtreme.cliente.gui.HerramientaAgentesTableModel;
 import stoxtreme.herramienta_agentes.ConsolaAgentes;
-import stoxtreme.herramienta_agentes.MonitorAgentes;
 import stoxtreme.herramienta_agentes.agentes.comportamiento.*;
 import stoxtreme.herramienta_agentes.agentes.decisiones.*;
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.BuzonMensajes;
@@ -16,7 +15,6 @@ import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.PlantillaMensaj
 import stoxtreme.herramienta_agentes.agentes.interaccion_agentes.RecepcionMensaje;
 import stoxtreme.interfaz_remota.Operacion;
 import stoxtreme.interfaz_remota.Stoxtreme;
-import stoxtreme.servidor.Servidor;
 
 /**
  *  Description of the Class
@@ -283,9 +281,10 @@ public class Agente extends Thread {
 			imprime("Abandono la bolsa");
 			setAlive(false);
 			modeloTabla.eliminaAgente(this);
+			
+			
 		}
 	}
-
 
 
 	/**

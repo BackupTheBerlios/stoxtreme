@@ -10,6 +10,7 @@ public class Regla{
 	// y una accion.
 	private Codificacion codificacion;
 	private double beneficio;
+	private double dineroPuja;
 	
 	public static int COMPRA = 1;
 	public static int VENTA = 2;
@@ -40,111 +41,111 @@ public class Regla{
 		beneficio = 0;
 	}
 	
-	public boolean encaja(int time, Mundo mundo){
+	public boolean encaja(String empresa, int time, Mundo mundo){
 		boolean encaja = true;
 		
-		double p10Ciclos = mundo.getPrecio(time -10);
-		double p30Ciclos = mundo.getPrecio(time - 30);
-		double pInicio = mundo.getPrecio(0);
-		double pActual = mundo.getPrecio(time);
+		double p10Ciclos = mundo.getPrecio(empresa,time -10);
+		double p30Ciclos = mundo.getPrecio(empresa,time - 30);
+		double pInicio = mundo.getPrecio(empresa,0);
+		double pActual = mundo.getPrecio(empresa,time);
 		
 		if(codificacion.getCharAt(0) != '#'){
 			double diferencia = p10Ciclos - pActual;
 			if(codificacion.getCharAt(0)=='1'){
-				encaja &= diferencia/pActual > 0.25;
+				encaja &= diferencia/p10Ciclos > 0.25;
 			}
 			else{
-				encaja &= !(diferencia/pActual > 0.25);
+				encaja &= !(diferencia/p10Ciclos > 0.25);
 			}
 		}
 		
 		if(codificacion.getCharAt(1) != '#'){
 			double diferencia = p10Ciclos - pActual;
 			if(codificacion.getCharAt(1)=='1'){
-				encaja &= diferencia/pActual > 0.5;
+				encaja &= diferencia/p10Ciclos > 0.5;
 			}
 			else{
-				encaja &= !(diferencia/pActual > 0.5);
+				encaja &= !(diferencia/p10Ciclos > 0.5);
 			}		
 		}
 		
 		if(codificacion.getCharAt(2) != '#'){
 			double diferencia = p10Ciclos - pActual;
 			if(codificacion.getCharAt(0)=='1'){
-				encaja &= diferencia/pActual < -0.25;
+				encaja &= diferencia/p10Ciclos < -0.25;
 			}
 			else{
-				encaja &= !(diferencia/pActual < -0.25);
+				encaja &= !(diferencia/p10Ciclos < -0.25);
 			}
 		}
 		
 		if(codificacion.getCharAt(3) != '#'){
 			double diferencia = p10Ciclos - pActual;
 			if(codificacion.getCharAt(0)=='1'){
-				encaja &= diferencia/pActual < -0.5;
+				encaja &= diferencia/p10Ciclos < -0.5;
 			}
 			else{
-				encaja &= !(diferencia/pActual < -0.5);
+				encaja &= !(diferencia/p10Ciclos < -0.5);
 			}	
 		}
 		
 		if(codificacion.getCharAt(4) != '#'){
 			double diferencia = p30Ciclos - pActual;
 			if(codificacion.getCharAt(0)=='1'){
-				encaja &= diferencia/pActual > 0.25;
+				encaja &= diferencia/p10Ciclos > 0.25;
 			}
 			else{
-				encaja &= !(diferencia/pActual > 0.25);
+				encaja &= !(diferencia/p10Ciclos > 0.25);
 			}
 		}
 		
 		if(codificacion.getCharAt(5) != '#'){
 			double diferencia = p30Ciclos - pActual;
 			if(codificacion.getCharAt(1)=='1'){
-				encaja &= diferencia/pActual > 0.5;
+				encaja &= diferencia/p30Ciclos > 0.5;
 			}
 			else{
-				encaja &= !(diferencia/pActual > 0.5);
+				encaja &= !(diferencia/p30Ciclos > 0.5);
 			}		
 		}
 		
 		if(codificacion.getCharAt(6) != '#'){
 			double diferencia = p30Ciclos - pActual;
 			if(codificacion.getCharAt(0)=='1'){
-				encaja &= diferencia/pActual < -0.25;
+				encaja &= diferencia/p30Ciclos < -0.25;
 			}
 			else{
-				encaja &= !(diferencia/pActual < -0.25);
+				encaja &= !(diferencia/p30Ciclos < -0.25);
 			}
 		}
 		
 		if(codificacion.getCharAt(7) != '#'){
 			double diferencia = p30Ciclos - pActual;
 			if(codificacion.getCharAt(0)=='1'){
-				encaja &= diferencia/pActual < -0.5;
+				encaja &= diferencia/p30Ciclos < -0.5;
 			}
 			else{
-				encaja &= !(diferencia/pActual < -0.5);
+				encaja &= !(diferencia/p30Ciclos < -0.5);
 			}	
 		}
 		
 		if(codificacion.getCharAt(8) != '#'){
 			double diferencia = pInicio - pActual;
 			if(codificacion.getCharAt(0)=='1'){
-				encaja &= diferencia/pActual > 0.5;
+				encaja &= diferencia/pInicio > 0.5;
 			}
 			else{
-				encaja &= !(diferencia/pActual > 0.5);
+				encaja &= !(diferencia/pInicio > 0.5);
 			}
 		}
 		
 		if(codificacion.getCharAt(9) != '#'){
 			double diferencia = pInicio - pActual;
 			if(codificacion.getCharAt(0)=='1'){
-				encaja &= diferencia/pActual < -0.5;
+				encaja &= diferencia/pInicio < -0.5;
 			}
 			else{
-				encaja &= !(diferencia/pActual < -0.5);
+				encaja &= !(diferencia/pInicio < -0.5);
 			}
 		}
 		
@@ -201,5 +202,14 @@ public class Regla{
 
 	public void addBeneficio(double d) {
 		beneficio += d;
+		dineroPuja += d;
+	}
+	
+	public double getDineroPuja(){
+		return dineroPuja;
+	}
+	
+	public void subDineroPuja(double dinero){
+		dineroPuja -= dinero;
 	}
 }

@@ -147,4 +147,23 @@ public class ModeloPsicologico {
 	public double precioCompraRecomendacion() {
 		return p.getParamDouble(ParametrosPsicologicos.Parametro.PRECIO_COMPRA_RECOMENDACION);
 	}
+
+
+	public int getNumeroMaximoCompra() {
+		return p.getParamInt(ParametrosPsicologicos.Parametro.NUMERO_MAXIMO_ACCIONES_COMPRA);
+	}
+
+
+	public int getNumeroMinimoCompra() {
+		return p.getParamInt(ParametrosPsicologicos.Parametro.NUMERO_MINIMO_ACCIONES_COMPRA);
+	}
+	
+	public int getNumeroMaximoVenta() {
+		return p.getParamInt(ParametrosPsicologicos.Parametro.NUMERO_MAXIMO_ACCIONES_VENTA);
+	}
+
+
+	public int getNumeroMinimoVenta() {
+		return p.getParamInt(ParametrosPsicologicos.Parametro.NUMERO_MINIMO_ACCIONES_VENTA);
+	}
 }

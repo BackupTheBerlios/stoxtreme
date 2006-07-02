@@ -44,7 +44,7 @@ public class AGenetico {
 			
 			// Ahora cojo las 10 mejores reglas y sustituyen a las antiguas
 			List lista = genotipo.getFittestChromosomes(10);
-			nuevo = new SistClasificador(10);
+			nuevo = new SistClasificador(antiguo.getEmpresa(), 10);
 			for(int i=0; i<lista.size(); i++){
 				Chromosome crom = (Chromosome)lista.get(i);
 				Regla r = new Regla(crom);

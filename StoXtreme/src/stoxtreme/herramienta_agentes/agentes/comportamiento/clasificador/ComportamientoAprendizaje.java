@@ -21,7 +21,7 @@ public class ComportamientoAprendizaje extends ComportamientoAgente{
 		ArrayList<String> empresas = estadoBolsa.getEmpresas();
 		
 		for(int i=0; i<empresas.size(); i++){
-			clasificadores.put(empresas.get(i), new SistClasificador(10));
+			clasificadores.put(empresas.get(i), new SistClasificador(empresas.get(i),10));
 		}
 	}
 	
@@ -29,58 +29,59 @@ public class ComportamientoAprendizaje extends ComportamientoAgente{
 	}
 	
 	public void _generacionDecisiones() {
-		tiempo++;
 		// Revisa las operaciones pendientes para asignar los pesos 
 		Enumeration<String> empresas = clasificadores.keys();
 
 		while(empresas.hasMoreElements()){
 			String empresa = empresas.nextElement();
-			ArrayList<Integer> operacionesRealizadas = compruebaRealizadas(empresa);
-			SistClasificador clasificador = clasificadores.get(empresa);
-			for(int i=0; i<operacionesRealizadas.size(); i++){
-				clasificador.asignaPesos(operacionesRealizadas.get(i));
-			}
+			double precio = estadoBolsa.getPrecioActualEmpresa(empresa);
+			mundoClasificador.registraPrecio(tiempo, empresa, precio);
 		}
 		
 		String empresa = estadoBolsa.dameEmpresaAleatoria();
 		double precioEmpresa = estadoBolsa.getPrecioActualEmpresa(empresa);
-		mundoClasificador.registraPrecio(empresa, precioEmpresa);
+		mundoClasificador.registraPrecio(tiempo, empresa, precioEmpresa);
 		
 		SistClasificador clasificador = clasificadores.get(empresa);
-		Regla regla = clasificador.encajaReglas(mundoClasificador);
+		Regla regla = clasificador.encajaReglas(tiempo, mundoClasificador);
 		
 		if( regla!=null && regla.getAccion() == Regla.COMPRA){
-			Operacion op = generaCompra(regla);
+			Operacion op = generaCompra(empresa, regla);
 			decisiones.add(new IntroducirOperacion(op));
 		}
 		else if(regla!=null && regla.getAccion() == Regla.VENTA){
-			Operacion op = generaVenta(regla);
+			Operacion op = generaVenta(empresa, regla);
 			decisiones.add(new IntroducirOperacion(op));
 		}
 		
-		// FIXME: Para cambiar el clasificador no puede tener compras marcadas sin venta
-		// o borrarlas
-		if(tiempo%10 == 0){
+		if(clasificador.todasLasReglasEjecutadas()){
 			// Evoluciona un sistema clasificador aleatoriamente
 			SistClasificador nuevo = AGenetico.generaNuevasReglas(clasificador);
 			clasificadores.put(empresa, nuevo);
 		}
+		tiempo++;
 	}
 	
-	private ArrayList<Integer> compruebaRealizadas(String empresa) {
-		ArrayList<Integer> realizadas = new ArrayList<Integer>();
+	public Operacion generaCompra(String empresa, Regla regla){
+		double precio = estadoBolsa.getPrecioActualEmpresa(empresa);
+		int max = modeloPsicologico.getNumeroMaximoCompra();
+		int min = modeloPsicologico.getNumeroMinimoCompra();
+		int cantidad = min + (int)((max-min)*regla.getPrecision());
 		
-		return realizadas;
-	}
-
-	public Operacion generaCompra(Regla regla){
+		clasificadores.get(empresa).asignaPesosCompra(regla, cantidad*precio);
 		// Tengo que asociarlo con una venta, o si no, guardarlo
 		// para asociarlo posteriormente
-		return null;
+		return new Operacion(null, Operacion.COMPRA, cantidad, empresa, precio);
 	}
 	
-	public Operacion generaVenta(Regla regla){
+	public Operacion generaVenta(String empresa, Regla regla){
+		double precio = estadoBolsa.getPrecioActualEmpresa(empresa);
+		int max = modeloPsicologico.getNumeroMaximoVenta();
+		int min = modeloPsicologico.getNumeroMinimoVenta();
+		int cantidad = min + (int)((max-min)*regla.getPrecision());
+		
+		clasificadores.get(empresa).asignaPesosVenta(regla, cantidad*precio);
 		// Lo asocio con una o varias compras
-		return null;
+		return new Operacion(null, Operacion.COMPRA, cantidad, empresa, precio);
 	}
 }	

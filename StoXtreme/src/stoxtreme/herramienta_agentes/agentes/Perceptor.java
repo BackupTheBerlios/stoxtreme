@@ -107,7 +107,7 @@ public class Perceptor implements ListenerNotificador {
 					agente.incrementaBeneficio(cantidad * precio);
 					break;
 			}
-
+			
 			opPendientes.restaAcciones(idOp, cantidad);
 		}
 	}

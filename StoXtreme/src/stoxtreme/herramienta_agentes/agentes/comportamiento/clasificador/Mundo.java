@@ -1,47 +1,27 @@
 package stoxtreme.herramienta_agentes.agentes.comportamiento.clasificador;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 public class Mundo {
-	private static double[] precio = 
-	{
-		23.0,22.871,22.738,22.895,22.784,22.509,22.302,
-		22.222,21.948,22.004,21.713,21.429,21.406,21.132,
-		21.169,21.253,21.314,21.563,21.689,21.902,21.79,
-		21.612,21.683,21.817,21.971,22.107,21.984,21.814,
-		21.864,21.833,21.99,21.875,22.133,22.308,22.406,
-		22.606,22.753,22.716,22.838,22.702,22.534,22.657,
-		22.57,22.339,22.561,22.774,23.036,22.914,22.78,
-		22.655,22.511,22.462,22.553,22.842,22.985,23.033,
-		22.926,22.655,22.755,22.597,22.751,22.818,22.54,
-		22.64,22.606,22.324,22.355,22.623,22.858,22.993,
-		23.01,23.217,23.432,23.581,23.755,23.859,23.772,
-		23.477,23.49,23.316,23.423,23.17,23.085,23.065,
-		22.867,23.148,23.427,23.589,23.32,23.22,23.264,
-		23.167,23.248,23.051,23.145,23.152,23.347,23.247,
-		23.023,22.985,22.924,22.751,22.639,22.708,22.863,
-		23.115,23.075,23.07,22.882,22.784,22.625,22.427,
-		22.669,22.728,22.992,23.138,23.4,23.42,23.398,23.518,
-		23.491,23.436,23.314,23.302,23.332,23.312,23.354,
-		23.162,22.917,22.914,22.659,22.912,22.951,23.127,23.124,
-		23.08,22.953,22.808,22.776,22.51,22.507,22.407,
-		22.165,22.373,22.658,22.847,23.138,23.325,23.534,23.385,
-		23.633,23.877,23.629,23.699,23.51,23.547,23.574,23.804,
-		23.806,23.878,23.923,23.973,24.051,24.254,24.444,24.173,
-		24.271,24.245,24.341,24.285,24.45,24.205,24.055,24.251,
-		24.535,24.654,24.601,24.847,24.851,24.84,24.911,24.949,
-		25.207,25.345,25.264,25.171,25.426,25.411,25.219,25.116,
-		25.023,25.222,25.064,25.28,25.396,25.277,25.48,25.577,
-		25.282,25.323,25.076
-	};
+	private Hashtable<String,ArrayList<Double>> precio;
 	
 	public static double redondeo(double numero, int nDecimales){
 		return Math.floor((Math.pow(10, nDecimales)*numero)+0.5)/Math.pow(10, nDecimales);
 	}
 	
-	public double getPrecio(int time){
-		return precio[time];
+	public Mundo() {
+		precio = new Hashtable<String,ArrayList<Double>>(); 
+	}
+	
+	public double getPrecio(String empresa, int time){
+		return precio.get(empresa).get(time);
 	}
 
-	public void registraPrecio(String empresa, double precioEmpresa) {
-		// TODO Auto-generated method stub
-		
+	public void registraPrecio(int time, String empresa, double precioEmpresa) {
+		if(!precio.containsKey(empresa)){
+			precio.put(empresa, new ArrayList<Double>());
+		}
+		precio.get(empresa).add(time, precioEmpresa);
 	}
 }

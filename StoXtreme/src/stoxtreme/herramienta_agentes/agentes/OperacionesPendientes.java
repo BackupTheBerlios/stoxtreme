@@ -17,8 +17,6 @@ public class OperacionesPendientes {
 	private Hashtable<Integer, OperacionLocal> ventasPendientes;
 	private HashSet<Integer> cancelacionPendiente;
 	
-	private ArrayList<Integer> realizadas;
-
 	/**
 	 *  Constructor for the OperacionesPendientes object
 	 */
@@ -27,7 +25,6 @@ public class OperacionesPendientes {
 		comprasPendientes = new Hashtable<Integer, OperacionLocal>();
 		ventasPendientes = new Hashtable<Integer, OperacionLocal>();
 		cancelacionPendiente = new HashSet<Integer>();
-		realizadas = new ArrayList<Integer>();
 	}
 
 
