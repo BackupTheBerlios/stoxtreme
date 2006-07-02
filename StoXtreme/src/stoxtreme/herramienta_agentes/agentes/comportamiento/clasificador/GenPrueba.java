@@ -8,15 +8,14 @@ import org.jgap.RandomGenerator;
 import org.jgap.UnsupportedRepresentationException;
 
 public class GenPrueba extends BaseGene{
-	public static Configuration config;
 	private Codificacion cod;
 	
 	public GenPrueba()throws Exception{
-		super(config);
+		super(AGenetico.configuration);
 		this.cod = new Codificacion();
 	}
 	public GenPrueba(Codificacion cod) throws Exception{
-		super(config);
+		super(AGenetico.configuration);
 		this.cod = cod;
 	}
 	

@@ -12,11 +12,12 @@ import stoxtreme.interfaz_remota.Operacion;
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class OperacionesPendientes {
-	Hashtable<Integer, String> empresasPendientes;
-	Hashtable<Integer, OperacionLocal> comprasPendientes;
-	Hashtable<Integer, OperacionLocal> ventasPendientes;
-	HashSet<Integer> cancelacionPendiente;
-
+	private Hashtable<Integer, String> empresasPendientes;
+	private Hashtable<Integer, OperacionLocal> comprasPendientes;
+	private Hashtable<Integer, OperacionLocal> ventasPendientes;
+	private HashSet<Integer> cancelacionPendiente;
+	
+	private ArrayList<Integer> realizadas;
 
 	/**
 	 *  Constructor for the OperacionesPendientes object
@@ -26,6 +27,7 @@ public class OperacionesPendientes {
 		comprasPendientes = new Hashtable<Integer, OperacionLocal>();
 		ventasPendientes = new Hashtable<Integer, OperacionLocal>();
 		cancelacionPendiente = new HashSet<Integer>();
+		realizadas = new ArrayList<Integer>();
 	}
 
 

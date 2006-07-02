@@ -4,8 +4,8 @@ import java.util.Date;
 import cern.jet.random.engine.MersenneTwister;
 
 public class Codificacion {
-	private static int NUMBITS = 10;
-	private static MersenneTwister random = new MersenneTwister(new Date());
+	private static int NUMBITS = 11;
+	public static MersenneTwister random = new MersenneTwister(new Date());
 	private char[] cadena;
 	
 	public Codificacion() {
@@ -47,5 +47,24 @@ public class Codificacion {
 
 	public char getCharAt(int i) {
 		return cadena[i];
+	}
+
+	public int getNumComodines() {
+		int nComodines = 0;
+		for(int i=0; i<cadena.length; i++){
+			if(cadena[i]=='#') nComodines++;
+		}
+		return nComodines;
+	}
+
+	public double similitud(Codificacion codificacion) {
+		int iguales = 0;
+		for(int i=0; i<cadena.length; i++){
+			if( cadena[i]=='#' || codificacion.getCharAt(i) == '#' ||
+					cadena[i] == codificacion.getCharAt(i)){ 
+				iguales++;
+			}
+		}
+		return iguales / NUMBITS;
 	}
 }

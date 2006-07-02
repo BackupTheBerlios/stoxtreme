@@ -6,7 +6,8 @@ import stoxtreme.herramienta_agentes.agentes.decisiones.Decision;
 public class SistClasificador{
 	private ArrayList<Regla> reglas;
 	private int numReglas;
-	
+
+		
 	public SistClasificador(int numReglas) {
 		this.numReglas = numReglas;
 		reglas = new ArrayList<Regla>();
@@ -19,7 +20,7 @@ public class SistClasificador{
 		}
 	}
 
-	public Decision encajaReglas(Mundo mundoClasificador) {
+	public Regla encajaReglas(Mundo mundoClasificador) {
 		// Primero consigo las reglas que encajen en el mundo
 		// Con las reglas que han encajado tenemos que pujar
 		
@@ -41,10 +42,18 @@ public class SistClasificador{
 	public double aptitudSimilitud(Regla regla) {
 		double acumulado = 0.0;
 		for(int i=0; i<reglas.size(); i++){
-			double bonificacion = reglas.get(i).getBonificacion();
+			double bonificacion = reglas.get(i).getBeneficio();
 			double similitud = reglas.get(i).similitud(regla);
 			acumulado += bonificacion*similitud;
 		}
 		return acumulado;
+	}
+	
+	public double damePrecision(Regla regla){
+		return 0.0;
+	}
+
+	public void asignaPesos(int operacion) {
+		// TODO Auto-generated method stub
 	}
 }

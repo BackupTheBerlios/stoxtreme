@@ -13,16 +13,16 @@ import org.jgap.impl.DefaultConfiguration;
 @SuppressWarnings("serial")
 public class AGenetico {
 	private static SistClasificador _antiguo;
-	private static Configuration configuration;
+	public static Configuration configuration = null;
 	
-	static{
+	public static void creaConfiguracion(){
+		if(configuration != null) return;
 		try {
 			configuration = new DefaultConfiguration();
 			Chromosome sampleChromosome = new Chromosome(configuration, new Gene[]{new GenPrueba()});
 			configuration.setSampleChromosome(sampleChromosome);
 			configuration.setPopulationSize(100);
 			configuration.setFitnessFunction(new FuncionAptitud());
-			GenPrueba.config = configuration;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
