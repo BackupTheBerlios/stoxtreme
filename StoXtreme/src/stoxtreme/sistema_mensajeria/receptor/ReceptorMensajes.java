@@ -6,7 +6,7 @@ import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.sistema_mensajeria.IMensajeriaListener;
 
 /**
- *  Description of the Class
+ *  Clase que permite enviar un mensaje a una serie de oyentes
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -15,20 +15,20 @@ public class ReceptorMensajes {
 	private Thread hiloConsulta;
 	private String usuario;
 	/**
-	 *  Description of the Field
+	 *  Indica si es de local
 	 */
 	public static final int LOCAL = 1;
 	/**
-	 *  Description of the Field
+	 *  Indica si es de Web Service
 	 */
 	public static final int WEB_SERVICE = 2;
 
 
 	/**
-	 *  Constructor for the ReceptorMensajes object
+	 *  Constructor de ReceptorMensajes 
 	 *
-	 *@param  usuario  Description of Parameter
-	 *@param  tipo     Description of Parameter
+	 *@param  usuario  Usuario Asociado
+	 *@param  tipo     Tipo de consulta(Local o WS)
 	 */
 	public ReceptorMensajes(String usuario, int tipo) {
 		this(usuario, tipo, null);
@@ -36,11 +36,11 @@ public class ReceptorMensajes {
 
 
 	/**
-	 *  Constructor for the ReceptorMensajes object
+	 *  Constructor de ReceptorMensajes 
 	 *
-	 *@param  usuario  Description of Parameter
-	 *@param  tipo     Description of Parameter
-	 *@param  url      Description of Parameter
+	 *@param  usuario  Usuario Asociado
+	 *@param  tipo     Tipo de consulta(Local o WS)
+	 *@param  url      Dirección URL
 	 */
 	public ReceptorMensajes(String usuario, int tipo, String url) {
 		listaOyentes = new ArrayList();
@@ -56,9 +56,9 @@ public class ReceptorMensajes {
 
 
 	/**
-	 *  Gets the Usuario attribute of the ReceptorMensajes object
+	 *  Nos devuelve el usuario asociado
 	 *
-	 *@return    The Usuario value
+	 *@return    valor del usuario
 	 */
 	public String getUsuario() {
 		return usuario;
@@ -66,10 +66,10 @@ public class ReceptorMensajes {
 
 
 	/**
-	 *  Adds the specified listener to receive events from this component. If
-	 *  listener l is null, no exception is thrown and no action is performed.
+	 * Añadimos un listener específico para recivir eventos del componente si el listener 
+	 * es null , no lanzaremos excepción y ninguna acción se llevará a cabo
 	 *
-	 *@param  l  The feature to be added to the attribute
+	 *@param  l  Atributo añadido a la lista de tipo IMensajeriaListener
 	 */
 	public void addListener(IMensajeriaListener l) {
 		listaOyentes.add(l);
@@ -77,9 +77,9 @@ public class ReceptorMensajes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Realiza una notificación
 	 *
-	 *@param  m  Description of Parameter
+	 *@param  m  Mensaje a notificar
 	 */
 	public synchronized void notifica(Mensaje m) {
 		Iterator it = listaOyentes.iterator();

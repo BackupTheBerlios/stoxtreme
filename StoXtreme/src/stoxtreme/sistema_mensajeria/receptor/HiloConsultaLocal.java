@@ -5,7 +5,7 @@ import stoxtreme.interfaz_remota.StoxtremeMensajes;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 /**
- *  Description of the Class
+ *  Hilo para los mensajes locales
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -14,9 +14,9 @@ public class HiloConsultaLocal extends Thread {
 
 
 	/**
-	 *  Constructor for the HiloConsultaLocal object
-	 *
-	 *@param  mensajes  Description of Parameter
+	 *  Constructor de HiloConsultaLocal 
+	 *  
+	 *@param  mensajes  Tipo de Mensajes
 	 */
 	public HiloConsultaLocal(ReceptorMensajes mensajes) {
 		receptor = mensajes;
@@ -24,7 +24,7 @@ public class HiloConsultaLocal extends Thread {
 
 
 	/**
-	 *  Main processing method for the HiloConsultaLocal object
+	 *  Método que realiza la consulta local
 	 */
 	public void run() {
 		try {

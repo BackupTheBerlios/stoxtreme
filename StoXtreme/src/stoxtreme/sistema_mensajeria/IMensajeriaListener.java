@@ -3,15 +3,15 @@ package stoxtreme.sistema_mensajeria;
 import stoxtreme.interfaz_remota.Mensaje;
 
 /**
- *  Description of the Interface
+ *  Interfaz de mensajes entre cliente Servidor
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface IMensajeriaListener {
 	/**
-	 *  Description of the Method
+	 *  REcibe un mensaje
 	 *
-	 *@param  m  Description of Parameter
+	 *@param  m  Mensaje Transmitido
 	 */
 	public void onMensaje(Mensaje m);
 }

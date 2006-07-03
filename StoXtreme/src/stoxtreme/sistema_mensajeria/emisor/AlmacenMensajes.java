@@ -10,7 +10,7 @@ import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.interfaz_remota.StoxtremeMensajes;
 
 /**
- *  Description of the Class
+ *  Almacen de los mensajes que el emisor desea enviar
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -35,7 +35,7 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Constructor for the AlmacenMensajes object
+	 *  Constructor de AlmacenMensajes
 	 */
 	private AlmacenMensajes() {
 		numMensajesGlobales = 0;
@@ -47,10 +47,10 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Gets the SiguienteMensaje attribute of the AlmacenMensajes object
+	 *  Obtiene el siguiente Mensaje a partir de un id
 	 *
-	 *@param  ID  Description of Parameter
-	 *@return     The SiguienteMensaje value
+	 *@param  ID  Id para la búsqueda
+	 *@return     Mensaje obtenido
 	 */
 	public Mensaje getSiguienteMensaje(String ID) {
 		try {
@@ -84,9 +84,9 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicia el buzón cuando se da de alta el cliente
 	 *
-	 *@param  ID  Description of Parameter
+	 *@param  ID  Id asignado al cliente
 	 */
 	public void altaUsuario(String ID) {
 		buzon.put(ID, 0);
@@ -95,9 +95,9 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Envia un mensaje privado o global
 	 *
-	 *@param  m  Description of Parameter
+	 *@param  m  Mensaje a enviar
 	 */
 	public void enviaMensaje(Mensaje m) {
 		if (m.getDestinatario().equals(Mensaje.GLOBAL)) {
@@ -110,9 +110,9 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Para el hilo que permite realizar consultas de sus buzones
 	 *
-	 *@param  id  Description of Parameter
+	 *@param  id  Id del cliente a parar
 	 */
 	public void pararHiloConsulta(String id) {
 		if (esperando.containsKey(id)) {
@@ -124,9 +124,9 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Se inserta un mensaje que va dirigido a todos los usuarios conectados
 	 *
-	 *@param  m  Description of Parameter
+	 *@param  m  Mensaje a enviar
 	 */
 	public synchronized void insertarMensajeGlobal(Mensaje m) {
 		mensajesGlobales.add(numMensajesGlobales, m);
@@ -145,10 +145,10 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Se inserta un mensaje que va dirigido a un usuario determinado
 	 *
-	 *@param  ID  Description of Parameter
-	 *@param  m   Description of Parameter
+	 *@param  ID  Id del usuario
+	 *@param  m   Mensaje a enviar
 	 */
 	public synchronized void insertarMensajePrivado(String ID, Mensaje m) {
 		String usuario = ID;
@@ -169,10 +169,10 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Gets the Nuevos attribute of the AlmacenMensajes object
+	 *  Comprueba si se han introducido mensajes nuevos
 	 *
-	 *@param  ID  Description of Parameter
-	 *@return     The Nuevos value
+	 *@param  ID  Id del cliente
+	 *@return     Devuelve verdadero o falso
 	 */
 	private synchronized boolean isNuevos(String ID) {
 		return buzon.get(ID) != numMensajesGlobales ||
@@ -181,9 +181,9 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Gets the Instance attribute of the AlmacenMensajes class
+	 *  Devuelve la instancia del Almacen
 	 *
-	 *@return    The Instance value
+	 *@return    Valor de la instancia
 	 */
 	public static AlmacenMensajes getInstance() {
 		return _instance;
@@ -191,9 +191,9 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 	/**
-	 *  Description of the Class
+	 *  Hilo para un lector del almacen de mensajes
 	 *
-	 *@author    Chris Seguin
+	 *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
 	 */
 	private static class Lector extends Thread {
 		AlmacenMensajes almacen;
@@ -201,10 +201,10 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 		/**
-		 *  Constructor for the Lector object
+		 *  Constructor del Lector
 		 *
-		 *@param  nombre   Description of Parameter
-		 *@param  almacen  Description of Parameter
+		 *@param  nombre   Nombre del Lector
+		 *@param  almacen  Alamcen asociado
 		 */
 		public Lector(String nombre, AlmacenMensajes almacen) {
 			this.almacen = almacen;
@@ -214,7 +214,7 @@ public class AlmacenMensajes implements StoxtremeMensajes {
 
 
 		/**
-		 *  Main processing method for the Lector object
+		 *  Metodo del Lector que ejecuta periódicamente
 		 */
 		public void run() {
 			Mensaje m = null;

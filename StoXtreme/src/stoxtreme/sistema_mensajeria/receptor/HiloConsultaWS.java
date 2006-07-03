@@ -22,10 +22,10 @@ public class HiloConsultaWS extends Thread {
 
 
 	/**
-	 *  Constructor for the HiloConsultaWS object
+	 *  Constructor de HiloConsultaWS 
 	 *
-	 *@param  mensajesWS  Description of Parameter
-	 *@param  url         Description of Parameter
+	 *@param  mensajesWS  Tipo de mensajes Web Services
+	 *@param  url         Direccion URL
 	 */
 	public HiloConsultaWS(ReceptorMensajes mensajesWS, String url) {
 		receptor = mensajesWS;
@@ -34,7 +34,7 @@ public class HiloConsultaWS extends Thread {
 
 
 	/**
-	 *  Main processing method for the HiloConsultaWS object
+	 *  Funcion que realiza la consulta Web Service
 	 */
 	public void run() {
 		try {
