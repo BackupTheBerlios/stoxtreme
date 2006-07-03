@@ -7,7 +7,8 @@ import stoxtreme.servidor.gui.ModeloListaUsuariosConectados;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 /**
- *  Description of the Class
+ *  Clase que gestiona los registros de nuevos usuarios y
+ *  la conexión de usuarios ya existentes al sistema
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -19,7 +20,7 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados {
 	/**
 	 *  Constructor for the GestionUsuarios object
 	 *
-	 *@param  fichReg  Description of Parameter
+	 *@param  fichReg  Ruta del fichero que contiene los datos de usuario registrados
 	 */
 	public GestionUsuarios(String fichReg) {
 		super();
@@ -35,19 +36,16 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados {
 	}
 
 
-	/*
-	 *  Comprueba que el usuario esta dado de alta, que la contraseï¿½a es correcta
-	 *  y que no estaba ya conectado.
-	 */
 	/**
-	 *  Description of the Method
+	 *  Comprueba que el usuario esta dado de alta, que la contraseña es correcta
+	 *  y que no estaba ya conectado.
 	 *
-	 *@param  id   Description of Parameter
-	 *@param  psw  Description of Parameter
-	 *@return      Description of the Returned Value
+	 *@param  id   Id de usuario
+	 *@param  psw  Contraseña
+	 *@return      Un booleano que indica si la conexión puede realizarsa
 	 */
 	public boolean conectaUsuario(String id, String psw) {
-		//Si esta registrado y la contreseï¿½a coincide y no esta conectado,lo conecta
+		//Si esta registrado y la contreseña coincide y no esta conectado,lo conecta
 		if (registrados.existeUsuario(id) && registrados.compruebaPsw(id, psw) && !conectados.yaConectado(id)) {
 			conectados.insertaUsuario(id);
 			super.setEstadoUsuario(id, true);
@@ -67,10 +65,10 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados {
 
 
 	/**
-	 *  Description of the Method
+	 *  Desconecta al usuario del sistema
 	 *
-	 *@param  id  Description of Parameter
-	 *@return     Description of the Returned Value
+	 *@param  id  Id del usuario a desconectar
+	 *@return     Booleano que indica si la desconixón se ha producido
 	 */
 	public boolean desconectaUsuario(String id) {
 		setEstadoUsuario(id, false);
@@ -79,17 +77,14 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados {
 	}
 
 
-	/*
-	 *  Si el id de usuario no existe, se aï¿½ade a la tabla hash
-	 *  y al arbol DOM (para que los cambios queden reflejados
-	 *  en el fichero registrados.xml)
-	 */
 	/**
-	 *  Description of the Method
+	 *  Si el id de usuario no existe, se añade a la tabla hash
+	 *  y al arbol DOM (para que los cambios queden reflejados
+	 *  en el fichero de registrados)
 	 *
-	 *@param  id   Description of Parameter
-	 *@param  psw  Description of Parameter
-	 *@return      Description of the Returned Value
+	 *@param  id   Id del usuario
+	 *@param  psw  Contraseña
+	 *@return      Booleano que indica si el nombre de usuario es válido (no estaba repetido)
 	 */
 	public boolean registraUsuario(String id, String psw) {
 		if (!registrados.existeUsuario(id)) {

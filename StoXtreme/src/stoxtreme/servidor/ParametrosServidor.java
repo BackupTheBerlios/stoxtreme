@@ -42,7 +42,6 @@ public class ParametrosServidor {
 	public static String NUMEMPRESAS = "numeroEmpresas";
 
 
-	//Constructora
 	/**
 	 *  Constructor for the ParametrosServidor object
 	 */
@@ -52,7 +51,6 @@ public class ParametrosServidor {
 	}
 
 
-	//Accesores de "parametros"
 	/**
 	 *  Gets the Tick attribute of the ParametrosServidor object
 	 *
@@ -115,7 +113,6 @@ public class ParametrosServidor {
 	}
 
 
-	//Vuelca en "parametros" la informacion del fichero XML
 	/**
 	 *  Parser que carga la información del fichero parametros.xml en un objeto de esta clase
 	 *

@@ -20,10 +20,9 @@ import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xml.serialize.Method;
 import org.apache.xml.serialize.OutputFormat;
 
-//import stoxtreme.servidor.gui.MainFrameAdmin;
 
 /**
- *  Description of the Class
+ *  Clase que guarda los datos de los usuarios registrados en el sistema
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -34,11 +33,10 @@ public class UsuariosRegistrados {
 	private Document document;
 
 
-	//Constructora
 	/**
 	 *  Constructor for the UsuariosRegistrados object
 	 *
-	 *@param  fich  Description of Parameter
+	 *@param  fich  Ruta del fichero .xml que contiene los datos de los usuarios registrados
 	 */
 	public UsuariosRegistrados(String fich) {
 		rutaFichero = fich;
@@ -60,49 +58,44 @@ public class UsuariosRegistrados {
 	}
 
 
-	//Comprueba si ya existe un usuario con ese id
 	/**
-	 *  Description of the Method
+	 *  Comprueba si ya existe un usuario con ese id
 	 *
-	 *@param  id  Description of Parameter
-	 *@return     Description of the Returned Value
+	 *@param  id  Id de usuario
+	 *@return     Booleano que indica si ese id ya está cogido
 	 */
 	public boolean existeUsuario(String id) {
 		return registrados.containsKey(id);
 	}
 
 
-	//Añade el usuario a la tabla
 	/**
-	 *  Description of the Method
+	 *  Añade el usuario a la tabla de registrados
 	 *
-	 *@param  id   Description of Parameter
-	 *@param  psw  Description of Parameter
+	 *@param  id   Id de usuario
+	 *@param  psw  Contraseña
 	 */
 	public void insertaUsuario(String id, String psw) {
 		registrados.put(id, psw);
 	}
 
-
-	//Comprueba que el password introducido es correcto
 	/**
-	 *  Description of the Method
+	 *  Comprueba que el password introducido es correcto
 	 *
-	 *@param  id   Description of Parameter
-	 *@param  psw  Description of Parameter
-	 *@return      Description of the Returned Value
+	 *@param  id   Id de usuario
+	 *@param  psw  Contraseña
+	 *@return      Booleano que indica si la contraseña corresponde al id
 	 */
 	public boolean compruebaPsw(String id, String psw) {
 		return psw.equals(registrados.get(id));
 	}
 
 
-	//Inserta un nuevo elemento de tipo "usuario" en el arbol DOM
 	/**
-	 *  Description of the Method
+	 *  Inserta un nuevo elemento de tipo "usuario" en el arbol DOM
 	 *
-	 *@param  id   Description of Parameter
-	 *@param  psw  Description of Parameter
+	 *@param  id   Id de usuario
+	 *@param  psw  Contraseña
 	 */
 	public void insertaEnDOM(String id, String psw) {
 		Element e = document.createElement("usuario");
@@ -112,9 +105,8 @@ public class UsuariosRegistrados {
 	}
 
 
-	//Rellena el fichero con los datos del arbol DOM (al finalizar la sesion)
 	/**
-	 *  Description of the Method
+	 *  Rellena el fichero de registrados con los datos del arbol DOM (al finalizar la sesion)
 	 */
 	public void vuelcaEnFichero() {
 		OutputFormat format = new OutputFormat(Method.XML, "UTF-8", true);
@@ -135,10 +127,9 @@ public class UsuariosRegistrados {
 		}
 	}
 
-	//Rellena la tabla hash con los datos del fichero
 
 	/**
-	 *  Description of the Method
+	 *  Rellena la tabla hash con los datos del fichero de registrados
 	 */
 	public void vuelcaEnTabla() {
 		NodeList nl = document.getElementsByTagName("usuario");
@@ -154,9 +145,9 @@ public class UsuariosRegistrados {
 
 
 	/**
-	 *  Description of the Method
+	 *  Devuelve los ids de los usuarios registrados en el sistema
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    Enumeración de los nombres de usuarios
 	 */
 	public Enumeration<String> dameUsuarios() {
 		return registrados.keys();

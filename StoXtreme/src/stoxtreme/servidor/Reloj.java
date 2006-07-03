@@ -96,7 +96,7 @@ public class Reloj {
 
 
 	/**
-	 *  //TODO
+	 *  A task that can be scheduled for one-time or repeated execution by a Timer. 
 	 *
 	 *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
 	 */

@@ -7,7 +7,7 @@ package stoxtreme.servidor;
  */
 public interface VariablesListener {
 	/**
-	 *  Metodo que ejecuta las acciones a especificar
+	 *  Metodo que cambia el estado de la varible especificada
 	 *
 	 *@param  var    Nombre de la variable
 	 *@param  value  Nuevo valor

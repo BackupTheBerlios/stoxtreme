@@ -8,7 +8,7 @@ import stoxtreme.servidor.eventos.evaluador.ParseException;
 import stoxtreme.servidor.gui.ModeloTablaEventos;
 
 /**
- *  Description of the Class
+ *  Sistema de eventos del servidor
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -22,7 +22,7 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 	/**
 	 *  Constructor for the SistemaEventos object
 	 *
-	 *@param  variables  Description of Parameter
+	 *@param  variables  Variables del sistema
 	 */
 	public SistemaEventos(VariablesSistema variables) {
 		super();
@@ -33,10 +33,11 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 
 
 	/**
-	 *  Description of the Method
+	 *  Clase que implementa el método cambioEstadoVariable(var, valor) de
+	 *  la interfaz VariablesListener
 	 *
-	 *@param  var    Description of Parameter
-	 *@param  valor  Description of Parameter
+	 *@param  var    Variable
+	 *@param  valor  Nuevo valor de la variable
 	 */
 	public void cambioEstadoVariable(String var, Object valor) {
 		for (int i = listaCondiciones.size() - 1; i >= 0; i--) {
@@ -56,12 +57,12 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta un nuevo evento en el sistema de eventos
 	 *
-	 *@param  descripcionIn  Description of Parameter
-	 *@param  accionIn       Description of Parameter
-	 *@param  unavez         Description of Parameter
-	 *@param  activo         Description of Parameter
+	 *@param  descripcionIn  Descripción del evento
+	 *@param  accionIn       Acción a tomar
+	 *@param  unavez         Indica si el evento se ejecuta una o varias veces
+	 *@param  activo         Indica si el evento está activado
 	 */
 	public void insertarEvento(String descripcionIn, String accionIn, boolean unavez, boolean activo) {
 		try {
@@ -88,11 +89,11 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 
 
 	/**
-	 *  Description of the Method
+	 *  Cambia los eventos que están activados
 	 *
-	 *@param  condicion  Description of Parameter
-	 *@param  accion     Description of Parameter
-	 *@param  valor      Description of Parameter
+	 *@param  condicion  Condición de ejecución
+	 *@param  accion     Acción a realizar
+	 *@param  valor      Booleano qu indica si hay que activar o desactivar el evento/s
 	 */
 	public void cambiaSeleccion(String condicion, String accion, boolean valor) {
 		for (int i = 0; i < listaCondiciones.size(); i++) {
@@ -105,10 +106,10 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 
 
 	/**
-	 *  Description of the Method
+	 *  Quita un evento del sistema de eventos
 	 *
-	 *@param  oc      Description of Parameter
-	 *@param  accion  Description of Parameter
+	 *@param  oc      Objeto que representa la condición
+	 *@param  accion  Acción que ejecuta el evento
 	 */
 	private void quitarEvento(ObjetoCondicion oc, String accion) {
 		ArrayList<Evento> eventos = new ArrayList<Evento>();

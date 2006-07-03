@@ -63,10 +63,10 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Sets the VariablesSistema attribute of the ObjetoBolsa object
+	 *  Inicializa el sistema de operaciones y las fluctuaciones del ObjetoBolsa
 	 *
-	 *@param  variables   The new VariablesSistema value
-	 *@param  parametros  The new VariablesSistema value
+	 *@param  variables   Variables del sistema
+	 *@param  parametros  Parámetros del servidor
 	 */
 	public void setVariablesSistema(VariablesSistema variables, ParametrosServidor parametros) {
 		sistemaOperaciones = new SistemaOperaciones(nAccionesInicial);

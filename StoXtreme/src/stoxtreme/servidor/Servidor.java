@@ -173,7 +173,7 @@ public class Servidor implements Administrador, Stoxtreme {
 	/**
 	 *  Inicia el servidor de aplicaciones tomcat
 	 *
-	 *@exception  Exception  Excepción al iniciar Tomcat
+	 *@exception  Exception  Excepción al iniciar el Tomcat
 	 */
 	public void iniciarTomcat() throws Exception {
 		PropertyConfigurator.configure("conf/log4j.properties");
@@ -217,7 +217,7 @@ public class Servidor implements Administrador, Stoxtreme {
 	/**
 	 *  Inicia el servidor (Tomcat, interfaz gráfica)
 	 *
-	 *@exception  RemoteException  Excepción al iniciar el servicio
+	 *@exception  RemoteException  Excepción remota 
 	 */
 	public void iniciarServidor() throws RemoteException {
 		try {
@@ -248,7 +248,7 @@ public class Servidor implements Administrador, Stoxtreme {
 	/**
 	 *  Para el servidor (para el reloj, finaliza la sesión en curso y para el Tomcat)
 	 *
-	 *@exception  RemoteException  Description of Exception
+	 *@exception  RemoteException  Excepción remota
 	 */
 	public void pararServidor() throws RemoteException {
 		if (reloj != null) {
@@ -268,7 +268,7 @@ public class Servidor implements Administrador, Stoxtreme {
 	/**
 	 *  Inicia una nueva sesión (carga los parámetros, inicia los ObjetoBolsa, el sistema de eventos y el reloj)
 	 *
-	 *@exception  RemoteException  Description of Exception
+	 *@exception  RemoteException  Excepción remota
 	 */
 	public void iniciaSesion() throws RemoteException {
 		// Consigue los parametros
@@ -357,7 +357,7 @@ public class Servidor implements Administrador, Stoxtreme {
 	/**
 	 *  Termina la simulación en curso
 	 *
-	 *@exception  RemoteException  Description of Exception
+	 *@exception  RemoteException  Excepción remota
 	 */
 	public void finalizaSesion() throws RemoteException {
 		AlmacenMensajes.getInstance().insertarMensajeGlobal(new Mensaje("FINSESION", "FINSESION", Mensaje.GLOBAL));
@@ -368,7 +368,7 @@ public class Servidor implements Administrador, Stoxtreme {
 	/**
 	 *  Muestra la interfaz gráfica de administrador
 	 *
-	 *@exception  RemoteException  Description of Exception
+	 *@exception  RemoteException  Excepción remota
 	 */
 	public void showGUI() throws RemoteException {
 		guiAdmin.setVisible(true);
@@ -378,7 +378,7 @@ public class Servidor implements Administrador, Stoxtreme {
 	/**
 	 *  Oculta la interfaz gráfica de administrador
 	 *
-	 *@exception  RemoteException  Description of Exception
+	 *@exception  RemoteException  Excepción remota
 	 */
 	public void hideGUI() throws RemoteException {
 		guiAdmin.setVisible(false);

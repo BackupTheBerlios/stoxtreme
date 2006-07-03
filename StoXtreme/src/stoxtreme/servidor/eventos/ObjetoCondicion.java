@@ -7,7 +7,7 @@ import stoxtreme.servidor.eventos.evaluador.Evaluador;
 import stoxtreme.servidor.eventos.evaluador.ParseException;
 
 /**
- *  Description of the Class
+ *  Clase que sirve para evaluar la condición de un evento
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -25,9 +25,9 @@ public class ObjetoCondicion {
 	/**
 	 *  Constructor for the ObjetoCondicion object
 	 *
-	 *@param  descripcion         Description of Parameter
-	 *@param  variables           Description of Parameter
-	 *@exception  ParseException  Description of Exception
+	 *@param  descripcion         Descripción del evento
+	 *@param  variables           Variables del sistema
+	 *@exception  ParseException  Error en la descripción
 	 */
 	public ObjetoCondicion(String descripcion, VariablesSistema variables) throws ParseException {
 		this(descripcion, variables, false, true);
@@ -37,11 +37,11 @@ public class ObjetoCondicion {
 	/**
 	 *  Constructor for the ObjetoCondicion object
 	 *
-	 *@param  descripcion         Description of Parameter
-	 *@param  variables           Description of Parameter
-	 *@param  unavez              Description of Parameter
-	 *@param  activado            Description of Parameter
-	 *@exception  ParseException  Description of Exception
+	 *@param  descripcion         Descripción del evento (condición)
+	 *@param  variables           Variables del sistema
+	 *@param  unavez              Booleano que indica si el evento se ejecuta una o varias veces
+	 *@param  activado            Booleano que indica si el evento está activado
+	 *@exception  ParseException  Error en la descripción
 	 */
 	public ObjetoCondicion(String descripcion, VariablesSistema variables, boolean unavez, boolean activado) throws ParseException {
 		this.condicion = descripcion;
@@ -102,10 +102,10 @@ public class ObjetoCondicion {
 
 
 	/**
-	 *  Description of the Method
+	 *  Mira si alguna variable de las usadas para la condición ha cambiado su valor
 	 *
-	 *@param  s      Description of Parameter
-	 *@param  valor  Description of Parameter
+	 *@param  s      Variable
+	 *@param  valor  Valor
 	 */
 	public void cambiaVariable(String s, Object valor) {
 		if (variablesUsadas.contains(s)) {
@@ -115,9 +115,10 @@ public class ObjetoCondicion {
 
 
 	/**
-	 *  Description of the Method
+	 *  Si alguna variable ha cambiado su valor, 
+	 *  mira si eso provoca la ejecución de la acción asociada al evento
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    Booleano que indica si la ejecución se ha provocado
 	 */
 	public boolean evalua() {
 		if (valorCambiado) {

@@ -22,7 +22,7 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 	 *  TODAS LAS VARIABLES EN MAYUSCULAS!! NECESARIO PARA EL PARSER DE LOS EVENTOS
 	 */
 	/**
-	 *  Description of the Field
+	 *  Guarda el número de pasos que se han dado
 	 */
 	public static String VAR_TIEMPO = "TIEMPO";
 
