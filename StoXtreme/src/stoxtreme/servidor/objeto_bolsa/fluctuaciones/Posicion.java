@@ -1,15 +1,7 @@
 package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
 
 /**
- *  <p>
- *
- *  Tï¿½tulo: </p> <p>
- *
- *  Descripciï¿½n: </p> <p>
- *
- *  Copyright: Copyright (c) 2005</p> <p>
- *
- *  Empresa: </p>
+ *  
  *
  *@author     Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  *@version    1.0

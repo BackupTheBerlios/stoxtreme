@@ -14,7 +14,7 @@ import stoxtreme.servidor.objeto_bolsa.informacion.Informacion;
 import stoxtreme.servidor.objeto_bolsa.informacion.informacion_XML.InformacionXML;
 
 /**
- *  Description of the Class
+ *  Clase que representa a una empresa que cotiza en la simulacion actual
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -38,9 +38,9 @@ public class ObjetoBolsa implements RelojListener {
 	/**
 	 *  Constructor for the ObjetoBolsa object
 	 *
-	 *@param  nombreEmpresa  Description of Parameter
-	 *@param  cotizacion     Description of Parameter
-	 *@param  informacion    Description of Parameter
+	 *@param  nombreEmpresa  Nombre de la empresa
+	 *@param  cotizacion     Valor inicial de las acciones
+	 *@param  informacion    Ruta del fichero que contiene la información de la empresa
 	 */
 	public ObjetoBolsa(String nombreEmpresa, double cotizacion, String informacion) {
 		this.nombreEmpresa = nombreEmpresa;
@@ -105,7 +105,9 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Description of the Method
+	 *  Implementación del metodo paso() de la interfaz RelojListener.
+	 *  En cada paso se calcula el nuevo precio de las acciones de la empresa
+	 *  representada por este ObjetoBolsa
 	 */
 	public void paso() {
 		if (sistemaOperaciones != null && fluctuaciones != null) {
@@ -116,11 +118,11 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Description of the Method
+	 *  Añade una operación al sistema de operaciones
 	 *
-	 *@param  IDAgente     Description of Parameter
-	 *@param  idOperacion  Description of Parameter
-	 *@param  op           Description of Parameter
+	 *@param  IDAgente     Agente que emitió la operación
+	 *@param  idOperacion  ID de la operación
+	 *@param  op           Operación
 	 */
 	public void insertaOperacion(String IDAgente, int idOperacion, Operacion op) {
 		mapaOpsAgentes.put(idOperacion, IDAgente);
@@ -134,9 +136,9 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Description of the Method
+	 *  Cancela una operación introducida previamente
 	 *
-	 *@param  idOperacion  Description of Parameter
+	 *@param  idOperacion  Id de la operación a cancelar
 	 */
 	public void cancelarOperacion(int idOperacion) {
 		sistemaOperaciones.cancelaOperacion(idOperacion, mapaOpsAgentes.get(idOperacion));

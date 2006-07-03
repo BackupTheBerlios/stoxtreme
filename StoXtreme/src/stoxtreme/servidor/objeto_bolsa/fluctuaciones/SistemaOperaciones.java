@@ -3,7 +3,6 @@ package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
 import java.util.*;
 
 import stoxtreme.interfaz_remota.Mensaje;
-import stoxtreme.servidor.Servidor;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 /*
@@ -21,14 +20,11 @@ import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
  *
  */
 /**
- *  Description of the Class
+ *  Clase que guarda las operaciones sobre una empresa que llegan al sistema
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class SistemaOperaciones {
-	/*
-	 *  implements RelojListener
-	 */
 	private Hashtable listaCompras;
 	private Hashtable listaVentas;
 	private int nAccionesVenta;
@@ -40,7 +36,7 @@ public class SistemaOperaciones {
 	/**
 	 *  Constructor for the SistemaOperaciones object
 	 *
-	 *@param  nAccionesVenta  Description of Parameter
+	 *@param  nAccionesVenta  Número de acciones a la venta de la empresa
 	 */
 	public SistemaOperaciones(int nAccionesVenta) {
 		listaCompras = new Hashtable();
@@ -55,8 +51,8 @@ public class SistemaOperaciones {
 	/**
 	 *  Constructor for the SistemaOperaciones object
 	 *
-	 *@param  lC  Description of Parameter
-	 *@param  lV  Description of Parameter
+	 *@param  lC  Lista de operaciones de compra
+	 *@param  lV  Lista de operaciones de venta
 	 */
 	public SistemaOperaciones(Hashtable lC, Hashtable lV) {
 		this.listaCompras = lC;
@@ -143,17 +139,16 @@ public class SistemaOperaciones {
 		return precioEstimado;
 	}
 
-	//TODO falta mirar a ver si tengo por variable lo que necesito
 
 	/**
-	 *  Description of the Method
+	 *  Introduce una operación de compra en el sistema de operaciones
 	 *
-	 *@param  idOperacion  Description of Parameter
-	 *@param  agente       Description of Parameter
-	 *@param  precio       Description of Parameter
-	 *@param  numAcciones  Description of Parameter
-	 *@param  precioA      Description of Parameter
-	 *@param  tick         Description of Parameter
+	 *@param  idOperacion  Id de la operación
+	 *@param  agente       Id del usuario que envía la operación
+	 *@param  precio       Precio de compra
+	 *@param  numAcciones  Número de acciones a comprar
+	 *@param  precioA      Precio actual de la acción
+	 *@param  tick         Tick
 	 */
 	public void introduceCompra(int idOperacion, String agente,
 			double precio, int numAcciones, double precioA, double tick) {
@@ -183,14 +178,14 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Introduce una operación de venta en el sistema de operaciones
 	 *
-	 *@param  idOperacion  Description of Parameter
-	 *@param  agente       Description of Parameter
-	 *@param  precio       Description of Parameter
-	 *@param  numAcciones  Description of Parameter
-	 *@param  precioA      Description of Parameter
-	 *@param  tick         Description of Parameter
+	 *@param  idOperacion  Id de operación
+	 *@param  agente       Id de usuario que envía la operación
+	 *@param  precio       Precio de venta
+	 *@param  numAcciones  Número de acciones a vender
+	 *@param  precioA      Precio actual de la acción
+	 *@param  tick         Tick
 	 */
 	public void introduceVenta(int idOperacion, String agente,
 			double precio, int numAcciones, double precioA, double tick) {
@@ -219,10 +214,10 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Cancela una operación previamente introducida
 	 *
-	 *@param  idOperacion  Description of Parameter
-	 *@param  idAgente     Description of Parameter
+	 *@param  idOperacion  Id de operación
+	 *@param  idAgente     Id de usuario que cancela la operación
 	 */
 	public void cancelaOperacion(int idOperacion, String idAgente) {
 		Hashtable operacion;
@@ -284,12 +279,12 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Genera un mensaje para enviar al usuario cuando su petición ha sido atendida
 	 *
-	 *@param  idAgente     Description of Parameter
-	 *@param  idOperacion  Description of Parameter
-	 *@param  numAcciones  Description of Parameter
-	 *@param  precio       Description of Parameter
+	 *@param  idAgente     Id de usuario
+	 *@param  idOperacion  Id de operación
+	 *@param  numAcciones  Número de acciones tramitadas
+	 *@param  precio       Precio al que se ha comprado/vendido
 	 */
 	public void notificaOperacion(String idAgente, int idOperacion, int numAcciones, double precio) {
 		String tipo = "NOTIFICACION_OPERACION";
@@ -300,12 +295,12 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Calcula el precio de cruce de operaciones
 	 *
-	 *@param  precioA        Description of Parameter
-	 *@param  tick           Description of Parameter
-	 *@param  precioCliente  Description of Parameter
-	 *@return                Description of the Returned Value
+	 *@param  precioA        Precio actual
+	 *@param  tick           Tick
+	 *@param  precioCliente  Precio enviado por el cliente
+	 *@return                Devuelve el precio de cruce de operaciones
 	 */
 	public static double calculaPrecio(double precioA, double tick, double precioCliente) {
 		double auxTick = tick;

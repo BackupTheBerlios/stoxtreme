@@ -1,7 +1,8 @@
 package stoxtreme.servidor.objeto_bolsa.informacion;
 
 /**
- *  Description of the Class
+ *  Clase que contiene un objeto InfoBursatil.
+ *  Podría añadirse nueva información sobre la empresa y se guardaría aquí.
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -15,17 +16,7 @@ public class Informacion {
 	 *@param  ib  Description of Parameter
 	 */
 	public Informacion(InfoBursatil ib) {
-		//balance=b;
 		iBursatil = ib;
-		/*
-		 *  Hashtable ht=ib.getParticipaciones();
-		 *  Enumeration e=ht.keys();
-		 *  while (e.hasMoreElements()){
-		 *  String i=e.nextElement().toString();
-		 *  System.out.println("Accionista: "+i+". Porcentaje: "+ht.get(i)+"%");
-		 *  }
-		 */
-		//cuenta=c;
 	}
 
 

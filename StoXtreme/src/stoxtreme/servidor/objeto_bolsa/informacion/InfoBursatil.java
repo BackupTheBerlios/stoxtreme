@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 /**
- *  Description of the Class
+ *  Guarda la información bursatil de la empresa, extraida del archivo de información correspondiente
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -15,7 +15,7 @@ public class InfoBursatil {
 	//0-Capital,1-Valor nominal,2-Numero acciones
 
 
-			/**
+	/**
 	 *  Sets the Participaciones attribute of the InfoBursatil object
 	 *
 	 *@param  participaciones  The new Participaciones value

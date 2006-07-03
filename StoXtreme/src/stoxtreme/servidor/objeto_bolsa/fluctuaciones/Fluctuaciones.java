@@ -2,39 +2,24 @@ package stoxtreme.servidor.objeto_bolsa.fluctuaciones;
 
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
-import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.servidor.VariablesSistema;
-import stoxtreme.servidor.objeto_bolsa.ObjetoBolsa;
-import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 /**
- *  <p>
- *
- *  Título: </p> <p>
- *
- *  Descripción: </p> <p>
- *
- *  Copyright: Copyright (c) 2005</p> <p>
- *
- *  Empresa: </p>
+ *	Clase que realiza el cruce de las operaciones y calcula el nuevo valor de las acciones
  *
  *@author     Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  *@version    1.0
  */
-//OJO EL PRIMER ELEMENTO QUE LLEVA EL NUMERO DE ACCIONES ES UN STRING AUNK SEA UN NUMERO
+//OJO EL PRIMER ELEMENTO QUE LLEVA EL NUMERO DE ACCIONES ES UN STRING AUNQUE SEA UN NUMERO
 public class Fluctuaciones {
 	/**
-	 *  Description of the Field
+	 *  Máximo cambio de precio en cada paso
 	 */
 	protected double tick;
-	//o intervalo?
-			/**
-	 *  Description of the Field
+	
+	/**
+	 *  Precio actual de la acción
 	 */
 	protected double pActual;
-	//protected Hashtable entorno=new Hashtable();
-	//protected Hashtable compraT,ventaT;
 	private SistemaOperaciones sisOp;
 	private VariablesSistema varS;
 	private String empresa;
@@ -43,11 +28,11 @@ public class Fluctuaciones {
 	/**
 	 *  Constructor for the Fluctuaciones object
 	 *
-	 *@param  varSis  Description of Parameter
-	 *@param  sO      Description of Parameter
-	 *@param  nt      Description of Parameter
-	 *@param  pa      Description of Parameter
-	 *@param  emp     Description of Parameter
+	 *@param  varSis  Variables del sistema
+	 *@param  sO      Sistema de operaciones
+	 *@param  nt      Tick
+	 *@param  pa      Precio actual
+	 *@param  emp     Nombre de la empresa
 	 */
 	public Fluctuaciones(VariablesSistema varSis, SistemaOperaciones sO, double nt, double pa, String emp) {
 		sisOp = sO;
@@ -61,10 +46,10 @@ public class Fluctuaciones {
 	/**
 	 *  Constructor for the Fluctuaciones object
 	 *
-	 *@param  sO   Description of Parameter
-	 *@param  nt   Description of Parameter
-	 *@param  pa   Description of Parameter
-	 *@param  emp  Description of Parameter
+	 *@param  sO   Sistema de operaciones
+	 *@param  nt   Tick
+	 *@param  pa   PrecioActual
+	 *@param  emp  Nombre de la empresa
 	 */
 	public Fluctuaciones(SistemaOperaciones sO, double nt, double pa, String emp) {
 		sisOp = sO;
@@ -135,11 +120,13 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Extrae de la tabla de operaciones una subtabla de precios que no 
+	 *  sobrepasan un umbral del precio actual.
 	 *
-	 *@param  vTotal  Description of Parameter
-	 *@return         Description of the Returned Value
+	 *@param  vTotal  Tabla total
+	 *@return         La subtabla de precios filtrados
 	 */
+	@SuppressWarnings("unchecked")
 	public Hashtable filtrayOrdena(Hashtable vTotal) {
 		Hashtable vFinal = new Hashtable();
 		Vector listaValores;
@@ -152,14 +139,12 @@ public class Fluctuaciones {
 		listaClaves = vTotal.keys();
 		while (listaClaves.hasMoreElements()) {
 			claveI = (String) listaClaves.nextElement();
-			//}
 			if (Double.parseDouble(claveI) <= max && Double.parseDouble(claveI) >= min) {
 				listaValores = (Vector) vTotal.get(claveI);
 				if (!vFinal.containsKey(claveI)) {
 					vFinal.put(claveI, listaValores);
 				}
 			}
-			//listaClaves.nextElement();
 		}
 		return vFinal;
 	}
@@ -167,9 +152,10 @@ public class Fluctuaciones {
 	//cambiar para el proyecto total
 
 	/**
-	 *  Description of the Method
+	 *  Implementación del método paso() de RelojListener.
+	 *  Obtiene el nuevo precio de un título y cambia su valor en las variables del sistema
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    El nuevo precio
 	 */
 	public double paso() {
 		pActual = calculaValorTitulo();
@@ -180,29 +166,23 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Realiza el cruce de operaciones y devuelve el precio de cruce
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    El precio de cruce
 	 */
-	public double calculaValorTitulo(
-	/*
-	 *  String nombreTitulo,double precioA
-	 */
-			) {
+	@SuppressWarnings("unchecked")
+	public double calculaValorTitulo() {
 		boolean hayOperacion = false;
 		Hashtable compra;
 		Hashtable venta;
 		Vector preciosCompra;
 		Vector preciosVenta;
 		Enumeration claves;
-		//Posicion aux,aux2;
 		String clave;
-		//Posicion aux,aux2;
 		String claveFinal;
 		compra = filtrayOrdena(sisOp.getCompras());
 		venta = filtrayOrdena(sisOp.getVentas());
 		claves = compra.keys();
-		//if (compra.size() == venta.size() ){
 		int ordenesM = 0;
 		int ordParcial;
 		double precioM = pActual;
@@ -214,7 +194,7 @@ public class Fluctuaciones {
 				preciosVenta = (Vector) venta.get(clave);
 				ordParcial = minimo(Integer.parseInt((String) preciosCompra.elementAt(0).toString()),
 						Integer.parseInt((String) preciosVenta.elementAt(0).toString()));
-				//atencion esto se queda kon el primer minimo mirar a ver si keremos otros minimos
+				//atencion esto se queda con el primer minimo mirar a ver si queremos otros minimos
 				if (ordParcial > ordenesM) {
 					hayOperacion = true;
 					ordenesM = ordParcial;
@@ -275,9 +255,6 @@ public class Fluctuaciones {
 			if (!claveFinal.equals("") && sisOp.getAccionesVenta() > 0) {
 				boolean acabado = sisOp.getAccionesVenta() == 0;
 				int i = 1;
-				//	    	Vector auxV=(Vector)compra.get(Double.toString
-				//	    			(SistemaOperaciones.calculaPrecio
-				//	    					(pActual,tick,pActual+sisOp.getPrecioEstimado())));
 				Vector auxC = (Vector) compra.get(claveFinal);
 				Integer accionesTotales = (Integer) auxC.elementAt(0);
 				if (sisOp.getAccionesVenta() > accionesTotales.intValue()) {
@@ -301,7 +278,6 @@ public class Fluctuaciones {
 							sisOp.setAccionesVenta(sisOp.getAccionesVenta() - pC.getNumeroDeAcciones());
 							sisOp.notificaOperacion(pC.getIDAgente(), pC.getIdOperacion(), pC.getNumeroDeAcciones(), Double.parseDouble(claveFinal));
 							auxC.remove(i);
-							//i++;
 						}
 
 					}
@@ -319,18 +295,16 @@ public class Fluctuaciones {
 				}
 			}
 		}
-		//sisOp.setListaCompras(compra);
-		//sisOp.setListaVentas(venta);
 		return redondeo(precioM, 2);
 	}
 
 
 	/**
-	 *  Description of the Method
+	 *  Calcula el mínimo entre un precio de compra y otro de venta
 	 *
-	 *@param  ordC  Description of Parameter
-	 *@param  ordV  Description of Parameter
-	 *@return       Description of the Returned Value
+	 *@param  ordC  Precio Compra
+	 *@param  ordV  Precio Venta
+	 *@return       Mínimo
 	 */
 	private int minimo(int ordC, int ordV) {
 		if (ordC < ordV) {
@@ -343,11 +317,11 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Redondea un double para que tenga menos decimales
 	 *
-	 *@param  numero      Description of Parameter
-	 *@param  nDecimales  Description of Parameter
-	 *@return             Description of the Returned Value
+	 *@param  numero      Número a redondear
+	 *@param  nDecimales  Número máximo de decimales
+	 *@return             El número redondeado
 	 */
 	public static double redondeo(double numero, int nDecimales) {
 		return Math.floor((Math.pow(10, nDecimales) * numero) + 0.5) / Math.pow(10, nDecimales);
@@ -355,11 +329,11 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Busca el precio (clave de la tabla compras), al que se tramita mayor volumen de acciones
 	 *
-	 *@param  compra  Description of Parameter
-	 *@param  claves  Description of Parameter
-	 *@return         Description of the Returned Value
+	 *@param  compra  Tabla de compras
+	 *@param  claves  Precios de compra
+	 *@return         Precio de compra al que se tramita mayour volumen
 	 */
 	private static String buscaMayorVolumen(Hashtable compra, Enumeration claves) {
 		String claveActual = "";
