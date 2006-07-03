@@ -3,7 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -40,15 +38,15 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 	/**
 	 *  Description of the Field
 	 */
-	public static String UNIFORME = "Distribucion Uniforme";
+	public static String UNIFORME = "Uniforme";
 	/**
 	 *  Description of the Field
 	 */
-	public static String NORMAL = "Distribucion Normal";
+	public static String NORMAL = "Normal";
 	/**
 	 *  Description of the Field
 	 */
-	public static String POISSON = "Distribucion Poisson";
+	public static String POISSON = "Poisson";
 
 	private static String[] distribs = {
 			UNIFORME, NORMAL, POISSON
@@ -97,7 +95,8 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 		if ("Uniforme".equals(tipo)) {
 			panelDependiente.add(getPanelOpcionesUniforme());
 			panelOpciones.setValor("Distribucion", UNIFORME);
-			panelParametros.setValor("Media", Double.toString(p1));
+			panelParametros.setValor("Maximo", Double.toString(p1));
+			panelParametros.setValor("Minimo", Double.toString(p2));
 			pack();
 			panelDependiente.updateUI();
 		}
@@ -195,7 +194,8 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 	 */
 	public Component getPanelOpcionesUniforme() {
 		ArrayList<String> opciones = new ArrayList<String>();
-		opciones.add("Media");
+		opciones.add("Maximo");
+		opciones.add("Minimo");
 		panelParametros = new PanelOpciones(opciones);
 		return panelParametros;
 	}
@@ -300,7 +300,8 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 			tipo = panelOpciones.getValor("Distribucion");
 			id = panelOpciones.getValor("Identificador");
 			if (UNIFORME.equals(tipo)) {
-				p1 = Double.parseDouble(panelParametros.getValor("Media"));
+				p1 = Double.parseDouble(panelParametros.getValor("Maximo"));
+				p2 = Double.parseDouble(panelParametros.getValor("Minimo"));
 			}
 			else if (NORMAL.equals(tipo)) {
 				p1 = Double.parseDouble(panelParametros.getValor("Media"));

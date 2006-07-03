@@ -3,14 +3,10 @@ import java.awt.Component;
 import java.util.Hashtable;
 import java.util.TreeSet;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-
-import stoxtreme.herramienta_agentes.agentes.ParametrosPsicologicos;
-import stoxtreme.herramienta_agentes.agentes.comportamiento.ModeloPsicologico;
 
 /**
  *  Description of the Class
@@ -23,12 +19,8 @@ public abstract class ModeloTablaEdicion extends AbstractTableModel implements T
 	private Hashtable<String, String> valores;
 	private TreeSet<String> distribuidas;
 	private ComboTextoCellEditor editor;
-
 	private int tipo;
 
-	private String[] distribuciones = {
-			"uniforme1", "normal2", "binomial3"
-			};
 	/**
 	 *  Description of the Field
 	 */
@@ -359,6 +351,7 @@ public abstract class ModeloTablaEdicion extends AbstractTableModel implements T
 	public abstract void actualiza();
 	
 	public Hashtable getValores(){
+		editor.rellena(this);
 		return valores;
 	}
 }

@@ -39,8 +39,6 @@ public class ComboTextoCellEditor extends AbstractCellEditor implements TableCel
 			lista.add(new JTextField());
 		}
 	}
-
-
 	/**
 	 *  Sets the Texto attribute of the ComboTextoCellEditor object
 	 *
@@ -128,6 +126,16 @@ public class ComboTextoCellEditor extends AbstractCellEditor implements TableCel
 			return ((JTextField) c).getText();
 		}
 	}
+	
+	public Object getCellEditorValue(int row) {
+		Component c = lista.get(row);
+		if (c instanceof JComboBox) {
+			return ((JComboBox) c).getSelectedItem();
+		}
+		else {
+			return ((JTextField) c).getText();
+		}
+	}
 
 
 	/**
@@ -157,6 +165,10 @@ public class ComboTextoCellEditor extends AbstractCellEditor implements TableCel
 				String s = ((JTextField) comp).getText();
 				((JTextField) comp).setText(s);
 			}
+			else{
+				String s = ((JComboBox) comp).getSelectedItem().toString();
+				((JComboBox) comp).setSelectedItem(s);
+			}
 		}
 	}
 
@@ -166,5 +178,16 @@ public class ComboTextoCellEditor extends AbstractCellEditor implements TableCel
 	 */
 	private void parar_seleccion() {
 		fireEditingStopped();
+	}
+	
+	public void rellena(ModeloTablaEdicion modeloTabla){
+		for(int i=0;i<lista.size();i++){
+			if (lista.get(i) instanceof JTextField){
+				modeloTabla.setValueAt(((JTextField)lista.get(i)).getText(),i,1);
+			}
+			else {
+				modeloTabla.setValueAt(((JComboBox)lista.get(i)).getSelectedItem(),i,1);
+			}
+		}
 	}
 }

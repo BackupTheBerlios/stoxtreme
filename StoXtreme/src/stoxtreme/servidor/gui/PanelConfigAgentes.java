@@ -147,6 +147,8 @@ public class PanelConfigAgentes extends JPanel {
 	 *  Description of the Method
 	 */
 	public void guarda_actionPerformed() {
+		
+		this.pararEdicion();
 		JFileChooser chooser = new JFileChooser(new File("."));
 		if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 			File fich = chooser.getSelectedFile();
@@ -260,7 +262,7 @@ public class PanelConfigAgentes extends JPanel {
 			double p1 = dialogo.getP1();
 			double p2 = dialogo.getP2();
 
-			if (DialogoInsertarDistribucion.NORMAL.equals(tipo)) {
+			if (DialogoInsertarDistribucion.NORMAL.equals(tipo) || DialogoInsertarDistribucion.UNIFORME.equals(tipo)) {
 				modeloListaDistribucion.addElement(new ElementoDistribucion(id, tipo, p1, p2));
 			}
 			else {
@@ -297,7 +299,7 @@ public class PanelConfigAgentes extends JPanel {
 			double p2 = dialogo.getP2();
 
 			int index = listaDistribuciones.getSelectedIndex();
-			if (DialogoInsertarDistribucion.NORMAL.equals(tipo)) {
+			if (DialogoInsertarDistribucion.NORMAL.equals(tipo) || DialogoInsertarDistribucion.UNIFORME.equals(tipo)) {
 				modeloListaDistribucion.setElementAt(new ElementoDistribucion(id, tipo, p1, p2), index);
 			}
 			else {
@@ -332,13 +334,12 @@ public class PanelConfigAgentes extends JPanel {
 					actualiza2();
 				}
 			};
-		pararEdicion();
 		modeloListaSocial.addElement(new Par(modelo, editor));
 		tablaEdicion.setModel(modelo);
 		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
 		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
 		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
-
+		pararEdicion();
 	}
 
 
@@ -357,13 +358,13 @@ public class PanelConfigAgentes extends JPanel {
 	 *  Description of the Method
 	 */
 	public void listaSocial_dblClick() {
-		pararEdicion();
 		ModeloTablaEdicion modelo = ((Par) listaSocial.getSelectedValue()).getModelo();
 		ComboTextoCellEditor editor = ((Par) listaSocial.getSelectedValue()).getEditor();
 		tablaEdicion.setModel(modelo);
 		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
 		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
 		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
+		pararEdicion();
 
 	}
 
@@ -374,7 +375,6 @@ public class PanelConfigAgentes extends JPanel {
 	 */
 	@SuppressWarnings("serial")
 	public void addPsicologico() {
-		pararEdicion();
 		ComboTextoCellEditor editor = new ComboTextoCellEditor(ModeloTablaEdicion.params_psicologicos.length, modeloListaDistribucion);
 		String id = JOptionPane.showInputDialog(this, "Introduzca identificador para el modelo");
 		ModeloTablaEdicion modelo =
@@ -388,6 +388,7 @@ public class PanelConfigAgentes extends JPanel {
 		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
 		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
 		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
+		pararEdicion();
 	}
 
 
@@ -406,13 +407,13 @@ public class PanelConfigAgentes extends JPanel {
 	 *  Description of the Method
 	 */
 	public void listaPsicologico_dblClick() {
-		pararEdicion();
 		ModeloTablaEdicion modelo = ((Par) listaPsicologico.getSelectedValue()).getModelo();
 		ComboTextoCellEditor editor = ((Par) listaPsicologico.getSelectedValue()).getEditor();
 		tablaEdicion.setModel(modelo);
 		tablaEdicion.getColumnModel().getColumn(1).setCellEditor(editor);
 		tablaEdicion.getColumnModel().getColumn(1).setCellRenderer(editor);
 		tablaEdicion.getColumn(tablaEdicion.getColumnName(2)).setMaxWidth(60);
+		pararEdicion();
 	}
 
 

@@ -114,8 +114,8 @@ public class CargaXMLAgentes {
 			if(el.getTipo().equals("Uniforme")){
 				elem=doc.createElement("dist_uniforme");
 				elem.setAttribute("id",el.getId());
-				elem.setAttribute("minimo",new Double(el.getP1()).toString());
-				elem.setAttribute("maximo",new Double(el.getP2()).toString());
+				elem.setAttribute("maximo",new Double(el.getP1()).toString());
+				elem.setAttribute("minimo",new Double(el.getP2()).toString());
 				distrib.appendChild(elem);
 			}
 		}
@@ -350,9 +350,9 @@ public class CargaXMLAgentes {
 		Element actual;
 		while ((actual = (Element) iterator.nextNode()) != null) {
 			String id = actual.getAttribute("id");
-			double minimo = Double.parseDouble(actual.getAttribute("minimo"));
 			double maximo = Double.parseDouble(actual.getAttribute("maximo"));
-			panel.insDistribucion(id, "Uniforme", minimo, maximo);
+			double minimo = Double.parseDouble(actual.getAttribute("minimo"));
+			panel.insDistribucion(id, "Uniforme", maximo, minimo );
 		}
 	}
 
