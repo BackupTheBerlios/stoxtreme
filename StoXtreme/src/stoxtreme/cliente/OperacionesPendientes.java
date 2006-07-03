@@ -13,7 +13,7 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Constructor for the OperacionesPendientes object
+	 *  Constructor de OperacionesPendientes
 	 */
 	public OperacionesPendientes() {
 		mOpPendientes = new ModeloOpPendientes();
@@ -21,9 +21,9 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Sets the MOpPendientes attribute of the OperacionesPendientes object
+	 *  sustituye MOpPendientes por nuevas operaciones pendientes
 	 *
-	 *@param  opPendientes  The new MOpPendientes value
+	 *@param  opPendientes  Nuevo valor de MOpPendientes
 	 */
 	public void setMOpPendientes(ModeloOpPendientes opPendientes) {
 		mOpPendientes = opPendientes;
@@ -31,9 +31,9 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Gets the MOpPendientes attribute of the OperacionesPendientes object
+	 *  Obtiene MOpPendientes
 	 *
-	 *@return    The MOpPendientes value
+	 *@return    Valor de MOpPendientes
 	 */
 	public ModeloOpPendientes getMOpPendientes() {
 		return mOpPendientes;
@@ -41,10 +41,10 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta operación pendiente
 	 *
-	 *@param  idOp  Description of Parameter
-	 *@param  op    Description of Parameter
+	 *@param  idOp  Id de la operación
+	 *@param  op    Detalle de la operación
 	 */
 	public void inserta(int idOp, Operacion op) {
 		mOpPendientes.insertarOperacion(op, idOp);
@@ -52,10 +52,10 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Devuelve los detalles de la operación de un determinado id
 	 *
-	 *@param  idOp  Description of Parameter
-	 *@return       Description of the Returned Value
+	 *@param  idOp  Id de la operación deseada
+	 *@return       Devuelve los detalles de la operación
 	 */
 	public Operacion dameOperacion(int idOp) {
 		return mOpPendientes.getOperacion(idOp);
@@ -63,9 +63,9 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Elimina una operación
 	 *
-	 *@param  idOp  Description of Parameter
+	 *@param  idOp  Id de la operación
 	 */
 	public void quitaOperacion(int idOp) {
 		mOpPendientes.borrarOperacion(idOp);
@@ -73,10 +73,10 @@ public class OperacionesPendientes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Determina si una operación está pendiente o ya ha sido ejecutada
 	 *
-	 *@param  idOp  Description of Parameter
-	 *@return       Description of the Returned Value
+	 *@param  idOp  Id de la operacion a evaluar
+	 *@return       Nos confirma su estado
 	 */
 	public boolean estaPendiente(int idOp) {
 		return mOpPendientes.contains(idOp);

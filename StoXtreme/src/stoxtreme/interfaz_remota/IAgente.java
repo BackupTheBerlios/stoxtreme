@@ -1,37 +1,35 @@
 package stoxtreme.interfaz_remota;
 
 /**
- *  Description of the Interface
+ *  Interfaz del agente
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface IAgente {
-	//public boolean registro(String nUsuario, String pswd);
-	//public boolean login(String nUsuario, String pswd);
 	// Los agentes normales no se registran ni hacen login, es el usuario
 	/**
-	 *  Description of the Method
+	 *  Inserta el agente una operación
 	 *
-	 *@param  id  Description of Parameter
-	 *@param  op  Description of Parameter
-	 *@return     Description of the Returned Value
+	 *@param  id  Id de la operación
+	 *@param  op  Operación introducida
+	 *@return     devuelve el entero que ha generado la inserción
 	 */
 	public int insertaOperacion(String id, Operacion op);
 
 
 	/**
-	 *  Description of the Method
+	 *  Cancela una operación insertada previamente
 	 *
-	 *@param  idOp  Description of Parameter
+	 *@param  idOp  Id de la operación
 	 */
 	public void cancelaOperacion(int idOp);
 
 
 	/**
-	 *  Description of the Method
+	 *  Modifica una operación insertada previamente
 	 *
-	 *@param  idOp     Description of Parameter
-	 *@param  nuevaOp  Description of Parameter
+	 *@param  idOp     Id de la operación
+	 *@param  nuevaOp  Nueva Operación introducida
 	 */
 	public void modificaOperacion(int idOp, Operacion nuevaOp);
 }

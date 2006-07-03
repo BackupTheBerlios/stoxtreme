@@ -1,7 +1,7 @@
 package stoxtreme.cliente.infoLocal;
 
 /**
- *  Description of the Class
+ *  Describe los componentes de un dato
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -18,7 +18,7 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Constructor for the DatoHistorico object
+	 *  Constructor de DatoHistorico
 	 */
 	public DatoHistorico() {
 
@@ -27,9 +27,9 @@ public class DatoHistorico {
 
 	//setters
 	/**
-	 *  Sets the Empresa attribute of the DatoHistorico object
+	 *  Pone la nueva Empresa
 	 *
-	 *@param  e  The new Empresa value
+	 *@param  e  Nuevo valor de Empresa
 	 */
 	public void setEmpresa(String e) {
 		this.empresa = e;
@@ -37,9 +37,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Sets the Fecha attribute of the DatoHistorico object
+	 *  Pone la nueva Fecha attribute
 	 *
-	 *@param  d  The new Fecha value
+	 *@param  d  Nuevo valor de Fecha
 	 */
 	public void setFecha(String d) {
 		this.fecha = d;
@@ -47,9 +47,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Sets the PrecioCierre attribute of the DatoHistorico object
+	 *  Pone el nuevo PrecioCierre
 	 *
-	 *@param  pc  The new PrecioCierre value
+	 *@param  pc  Nuevo valor de PrecioCierre
 	 */
 	public void setPrecioCierre(double pc) {
 		this.precio_cierre = pc;
@@ -57,9 +57,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Sets the PrecioInicio attribute of the DatoHistorico object
+	 *  Pone el nuevo PrecioInicio
 	 *
-	 *@param  pi  The new PrecioInicio value
+	 *@param  pi  Nuevo valor de PrecioInicio
 	 */
 	public void setPrecioInicio(double pi) {
 		this.precio_inicio = pi;
@@ -67,9 +67,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Sets the PrecioMaximo attribute of the DatoHistorico object
+	 *  Pone el nuevo PrecioMaximo
 	 *
-	 *@param  pmax  The new PrecioMaximo value
+	 *@param  pmax  Nuevo valor de PrecioMaximo
 	 */
 	public void setPrecioMaximo(double pmax) {
 		this.precio_maximo = pmax;
@@ -77,9 +77,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Sets the PrecioMinimo attribute of the DatoHistorico object
+	 *  Pone el nuevo PrecioMinimo
 	 *
-	 *@param  pmin  The new PrecioMinimo value
+	 *@param  pmin  Nuevo valor de PrecioMinimo
 	 */
 	public void setPrecioMinimo(double pmin) {
 		this.precio_minimo = pmin;
@@ -87,9 +87,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Sets the PrecioMedio attribute of the DatoHistorico object
+	 *  Pone el nuevo PrecioMedio
 	 *
-	 *@param  pmed  The new PrecioMedio value
+	 *@param  pmed  Nuevo valor de PrecioMedio
 	 */
 	public void setPrecioMedio(double pmed) {
 		this.precio_medio = pmed;
@@ -97,9 +97,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Sets the Efectivo attribute of the DatoHistorico object
+	 *  Pone el nuevo Efectivo
 	 *
-	 *@param  efe  The new Efectivo value
+	 *@param  efe  Nuevo valor de Efectivo
 	 */
 	public void setEfectivo(double efe) {
 		this.efectivo = efe;
@@ -107,9 +107,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Sets the Volumen attribute of the DatoHistorico object
+	 *  Pone el nuevo Volumen
 	 *
-	 *@param  v  The new Volumen value
+	 *@param  v  Nuevo valor de Volumen
 	 */
 	public void setVolumen(int v) {
 		this.volumen = v;
@@ -119,9 +119,9 @@ public class DatoHistorico {
 	//getters
 
 	/**
-	 *  Gets the Empresa attribute of the DatoHistorico object
+	 *  Obtiene el valor de Empresa
 	 *
-	 *@return    The Empresa value
+	 *@return    Valor de Empresa
 	 */
 	public String getEmpresa() {
 		return this.empresa;
@@ -129,9 +129,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Gets the Fecha attribute of the DatoHistorico object
+	 *  Obtiene el valor de Fecha
 	 *
-	 *@return    The Fecha value
+	 *@return    Valor de Fecha
 	 */
 	public String getFecha() {
 		return this.fecha;
@@ -139,9 +139,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Gets the PrecioCierre attribute of the DatoHistorico object
+	 *  Obtiene el valor de PrecioCierre
 	 *
-	 *@return    The PrecioCierre value
+	 *@return    Valor de PrecioCierre
 	 */
 	public double getPrecioCierre() {
 		return this.precio_cierre;
@@ -149,9 +149,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Gets the PrecioInicio attribute of the DatoHistorico object
+	 *  Obtiene el valor de PrecioInicio
 	 *
-	 *@return    The PrecioInicio value
+	 *@return    Valor de PrecioInicio
 	 */
 	public double getPrecioInicio() {
 		return this.precio_inicio;
@@ -159,9 +159,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Gets the PrecioMaximo attribute of the DatoHistorico object
+	 *  Obtiene el valor de PrecioMaximo
 	 *
-	 *@return    The PrecioMaximo value
+	 *@return    Valor de PrecioMaximo
 	 */
 	public double getPrecioMaximo() {
 		return this.precio_maximo;
@@ -169,9 +169,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Gets the PrecioMinimo attribute of the DatoHistorico object
+	 *  Obtiene el valor de PrecioMinimo
 	 *
-	 *@return    The PrecioMinimo value
+	 *@return    Valor de PrecioMinimo
 	 */
 	public double getPrecioMinimo() {
 		return this.precio_minimo;
@@ -179,9 +179,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Gets the PrecioMedio attribute of the DatoHistorico object
+	 *  Obtiene el valor de PrecioMedio
 	 *
-	 *@return    The PrecioMedio value
+	 *@return    Valor de PrecioMedio
 	 */
 	public double getPrecioMedio() {
 		return this.precio_medio;
@@ -189,9 +189,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Gets the Efectivo attribute of the DatoHistorico object
+	 *  Obtiene el valor de Efectivo
 	 *
-	 *@return    The Efectivo value
+	 *@return    Valor de Efectivo
 	 */
 	public double getEfectivo() {
 		return this.efectivo;
@@ -199,9 +199,9 @@ public class DatoHistorico {
 
 
 	/**
-	 *  Gets the Volumen attribute of the DatoHistorico object
+	 *  Obtiene el valor de Volumen
 	 *
-	 *@return    The Volumen value
+	 *@return    Valor de Volumen
 	 */
 	public int getVolumen() {
 		return this.volumen;

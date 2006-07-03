@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- *  Description of the Class
+ *  Permite Descargar archivos XML
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -21,12 +21,12 @@ public class XMLDownloader {
 
 
 	/**
-	 *  Description of the Method
+	 *  Descarga los xml en local de una direccion remota donde se encuentran
 	 *
-	 *@param  dirLocal         Description of Parameter
-	 *@param  dirRemoto        Description of Parameter
-	 *@param  fichs            Description of Parameter
-	 *@exception  IOException  Description of Exception
+	 *@param  dirLocal         Dirección destino
+	 *@param  dirRemoto        Dirección origen
+	 *@param  fichs            Lista de ficheros
+	 *@exception  IOException  Excepción de entrada y salida manejando ficheros
 	 */
 	public static void downloadAll(String dirLocal, String dirRemoto, String[] fichs) throws IOException {
 		for (int i = 0; i < fichs.length; i++) {
@@ -38,11 +38,11 @@ public class XMLDownloader {
 
 
 	/**
-	 *  Description of the Method
+	 *  Descarga una archivo en la dirección local indicada desde la dirección url 
 	 *
-	 *@param  local            Description of Parameter
-	 *@param  remoto           Description of Parameter
-	 *@exception  IOException  Description of Exception
+	 *@param  local            Dirección destino
+	 *@param  remoto           Dirección origen
+	 *@exception  IOException  Excepción de entrada y salida manejando ficheros
 	 */
 	public static void download(File local, URL remoto) throws IOException {
 		// Necesitamos preparar el fichero local
@@ -86,10 +86,10 @@ public class XMLDownloader {
 
 
 	/**
-	 *  Description of the Method
+	 *  Obtiene el directorio de una ruta tanto local como url
 	 *
-	 *@param  ruta  Description of Parameter
-	 *@return       Description of the Returned Value
+	 *@param  ruta  Path de la ruta a explorar
+	 *@return       Fichero creado con dicha ruta
 	 */
 	public static File sacaDirectorio(String ruta) {
 		String[] splits;
@@ -102,25 +102,5 @@ public class XMLDownloader {
 		String fichero = splits[splits.length - 1];
 		int index = ruta.indexOf(fichero);
 		return new File(ruta.substring(0, index));
-	}
-
-
-	/**
-	 *  The main program for the XMLDownloader class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) {
-		try {
-			File local = new File("conf/nose/sigosinsaber/prueba.xml");
-			URL fichero = new URL("http://localhost:8080/Stoxtreme/config/antena3.xml");
-			download(local, fichero);
-		}
-		catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }

@@ -43,7 +43,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Constructor for the DialogoInicial object
+	 *  Crea la ventana de registro o de login del usuario
 	 *
 	 *@param  despertador  Description of Parameter
 	 */
@@ -71,7 +71,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Sets the Operacion attribute of the DialogoInicial object
+	 *  asinamos un valor al atributo operación
 	 *
 	 *@param  i  The new Operacion value
 	 */
@@ -82,7 +82,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  no devuelve el id del usuario
 	 *
 	 *@return    Description of the Returned Value
 	 */
@@ -92,7 +92,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  no devuelve el password del usuario
 	 *
 	 *@return    Description of the Returned Value
 	 */
@@ -102,7 +102,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Gets the Operacion attribute of the DialogoInicial object
+	 *  nos devuelve la operación
 	 *
 	 *@return    The Operacion value
 	 */
@@ -112,7 +112,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Gets the DireccionServidor attribute of the DialogoInicial object
+	 *  obtiene la descripcion del servidor
 	 *
 	 *@return    The DireccionServidor value
 	 */
@@ -122,7 +122,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  inicio del swing
 	 */
 	public void init() {
 		getContentPane().add(getPanelPrincipal());
@@ -131,7 +131,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  Permite comprobar si el login es correcto
 	 *
 	 *@param  e  Description of Parameter
 	 */
@@ -149,7 +149,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  Permite registrar un usuario
 	 *
 	 *@param  e  Description of Parameter
 	 */
@@ -167,7 +167,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Gets the PanelPrincipal attribute of the DialogoInicial object
+	 *  Crea el Panel Principal
 	 *
 	 *@return    The PanelPrincipal value
 	 */
@@ -180,7 +180,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Gets the PanelSuperior attribute of the DialogoInicial object
+	 * Nos crea la parte superior del panel principal del registro
 	 *
 	 *@return    The PanelSuperior value
 	 */
@@ -199,7 +199,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Gets the PanelInferior attribute of the DialogoInicial object
+	 *  Nos crea la parte inferior del panel principal del registro
 	 *
 	 *@return    The PanelInferior value
 	 */
@@ -225,7 +225,7 @@ public class DialogoInicial extends JFrame {
 
 	//Panel de los botones
 	/**
-	 *  Gets the PButtons attribute of the DialogoInicial object
+	 *  Nos inserta los botones de login y registro con su evento asociado
 	 *
 	 *@return    The PButtons value
 	 */
@@ -262,7 +262,7 @@ public class DialogoInicial extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  cierra la ventana
 	 */
 	private void cerrarVentana() {
 		synchronized (despertador) {

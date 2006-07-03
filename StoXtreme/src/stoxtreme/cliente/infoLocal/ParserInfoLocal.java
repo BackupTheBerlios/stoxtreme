@@ -18,25 +18,25 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- *  Description of the Class
+ *  Lee información de empresas que se encuentran en local
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class ParserInfoLocal {
 
 	/**
-	 *  Constructor for the ParserInfoLocal object
+	 *  Constructor de ParserInfoLocal
 	 */
 	public ParserInfoLocal() {
 	}
 
 
 	/**
-	 *  Description of the Method
+	 *  Creo una variable que contiene información sobre todas las empresas
 	 *
-	 *@param  fichero      Description of Parameter
-	 *@param  numEmpresas  Description of Parameter
-	 *@return              Description of the Returned Value
+	 *@param  fichero      Fichero donde se encuentran los datos
+	 *@param  numEmpresas  Número de empresas que existen en la bolsa
+	 *@return              Devuelve la tabla hash donde están las empresas
 	 */
 	@SuppressWarnings({"unchecked"})
 	public Hashtable<String, Vector> creaInfoLocal(String fichero, int numEmpresas) {
@@ -89,20 +89,18 @@ public class ParserInfoLocal {
 		return ht;
 	}
 
-
-	/*
-	 *  Si no encuentra un dato en el historico con la fecha solicitada
-	 *  devuelve el dato del dia mas proximo.
-	 */
 	/**
-	 *  Gets the DatoHistorico attribute of the ParserInfoLocal class
+	 *  Obtiene los datos de una empresa en la fecha deseada
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@param  fecha    Description of Parameter
-	 *@return          The DatoHistorico value
+	 *@param  empresa  Nombre de la empresa
+	 *@param  fecha    Fecha a consultar
+	 *@return          Datos deseados
 	 */
 	public static DatoHistorico getDatoHistorico(String empresa, String fecha) {
-		//String fecha){
+		/*
+		 *  Si no encuentra un dato en el historico con la fecha solicitada
+		 *  devuelve el dato del dia mas proximo.
+		 */
 		String fichero = new String("./conf/cliente/" + empresa.toLowerCase().replace(" ", "_") + ".xml");
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DatoHistorico dt = new DatoHistorico();
@@ -110,7 +108,6 @@ public class ParserInfoLocal {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(new File(fichero));
 			NodeList nl = document.getElementsByTagName("fecha");
-			//SimpleDateFormat df=new SimpleDateFormat("dd/MM/aaaa");
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			Date dEntrada = new Date();
 			Date dDato = new Date();

@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 /**
- *  Description of the Class
+ *  Muestra en una tabla todas las operaciones pendientes de un cliente
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -22,12 +22,12 @@ public abstract class EditorOpPendientes extends AbstractCellEditor implements T
 	 *  Gets the TableCellEditorComponent attribute of the EditorOpPendientes
 	 *  object
 	 *
-	 *@param  table       Description of Parameter
-	 *@param  value       Description of Parameter
-	 *@param  isSelected  Description of Parameter
-	 *@param  row         Description of Parameter
-	 *@param  column      Description of Parameter
-	 *@return             The TableCellEditorComponent value
+	 *@param  table       tabla de operaciones
+	 *@param  value       elemento seleccionado
+	 *@param  isSelected  booleano para seleccionar
+	 *@param  row         número de filas 
+	 *@param  column      número de columnas
+	 *@return             devuelve el componenete gráfico
 	 */
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		JButton boton = new JButton(new ImageIcon("cancel.png"));
@@ -53,17 +53,17 @@ public abstract class EditorOpPendientes extends AbstractCellEditor implements T
 
 
 	/**
-	 *  Description of the Method
+	 *  elimina una operacion
 	 *
-	 *@param  fila  Description of Parameter
+	 *@param  fila  que se desea eliminar
 	 */
 	public abstract void borraOperacion(int fila);
 
 
 	/**
-	 *  Description of the Class
+	 *  Clase para el control de eventos de las filas
 	 *
-	 *@author    Chris Seguin
+	 *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
 	 */
 	private abstract class ListenerFila implements ActionListener {
 		private int fila;

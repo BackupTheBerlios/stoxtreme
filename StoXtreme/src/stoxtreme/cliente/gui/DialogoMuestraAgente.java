@@ -31,8 +31,8 @@ public class DialogoMuestraAgente extends JDialog {
 	/**
 	 *  Constructor for the DialogoMuestraAgente object
 	 *
-	 *@param  agente  Description of Parameter
-	 *@param  frame   Description of Parameter
+	 *@param  agente  agente asociado
+	 *@param  frame   ventana asociada
 	 */
 	public DialogoMuestraAgente(Agente agente, JFrame frame) {
 		super(frame, "Consulta agente", true);
@@ -56,7 +56,7 @@ public class DialogoMuestraAgente extends JDialog {
 	/**
 	 *  Gets the PanelPrincipal attribute of the DialogoMuestraAgente object
 	 *
-	 *@return    The PanelPrincipal value
+	 *@return    valor del panel principal
 	 */
 	public Component getPanelPrincipal() {
 		JPanel panel = new JPanel(new BorderLayout());

@@ -24,9 +24,9 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Constructor for the EstadoBolsa object
+	 *  contructor para EstadoBolsa 
 	 *
-	 *@param  info  Description of Parameter
+	 *@param  info  parametro que obtiene información de local
 	 */
 	public EstadoBolsa(InfoLocal info) {
 		this.empresas = info.getEmpresas();
@@ -45,9 +45,9 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Sets the MAcciones attribute of the EstadoBolsa object
+	 *  coloca a MAcciones un valor 
 	 *
-	 *@param  acciones  The new MAcciones value
+	 *@param  acciones  nuevo valor de MAcciones
 	 */
 	public void setMAcciones(ModeloPrecioAccionesGrafico acciones) {
 		mAcciones = acciones;
@@ -55,9 +55,9 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Sets the MEmpresas attribute of the EstadoBolsa object
+	 *  coloca a MEmpresas un valor
 	 *
-	 *@param  empresas  The new MEmpresas value
+	 *@param  empresas  nuevo valor de MEmpresas
 	 */
 	public void setMEmpresas(ModeloEmpresas empresas) {
 		mEmpresas = empresas;
@@ -65,9 +65,9 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Gets the MAcciones attribute of the EstadoBolsa object
+	 *  Nos da el modelo de acciones disponible
 	 *
-	 *@return    The MAcciones value
+	 *@return    valor de MAcciones
 	 */
 	public ModeloPrecioAccionesGrafico getMAcciones() {
 		return mAcciones;
@@ -75,9 +75,9 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Gets the MEmpresas attribute of the EstadoBolsa object
+	 * Nos devuelve el modelo de empresas
 	 *
-	 *@return    The MEmpresas value
+	 *@return    valor de MEmpresas
 	 */
 	public ModeloEmpresas getMEmpresas() {
 		return mEmpresas;
@@ -85,10 +85,10 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Gets the PrecioActualEmpresa attribute of the EstadoBolsa object
+	 *  obtenemos el precio actual de una determinada empresa
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The PrecioActualEmpresa value
+	 *@param  empresa  empresa a consultar
+	 *@return          devolvemos precio actual
 	 */
 	public double getPrecioActualEmpresa(String empresa) {
 		return preciosActuales.get(empresa);
@@ -96,9 +96,9 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Gets the Empresas attribute of the EstadoBolsa object
+	 *  Nos devuelve la lista de todas las empresas
 	 *
-	 *@return    The Empresas value
+	 *@return    valor de Empresas
 	 */
 	public ArrayList<String> getEmpresas() {
 		return this.empresas;
@@ -106,10 +106,10 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Gets the PorcentajeDiferencia attribute of the EstadoBolsa object
+	 *  Calcula el porcentaje que hay de subida o bajada en una accion
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The PorcentajeDiferencia value
+	 *@param  empresa  empresa seleccionada
+	 *@return          valor del porcentaje
 	 */
 	public double getPorcentajeDiferencia(String empresa) {
 		double inicial = preciosIniciales.get(empresa);
@@ -122,10 +122,10 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Gets the PrecioAperturaEmpresa attribute of the EstadoBolsa object
+	 *  Nos devuelve el precio de apertura de la empresa seleccionada
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The PrecioAperturaEmpresa value
+	 *@param  empresa  empresa seleccionada
+	 *@return          Precio Apertura de la Empresa
 	 */
 	public double getPrecioAperturaEmpresa(String empresa) {
 		return preciosIniciales.get(empresa);
@@ -133,10 +133,10 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Description of the Method
+	 *  realiza un cambio del precio actual en una empresa
 	 *
-	 *@param  empresa      Description of Parameter
-	 *@param  nuevoPrecio  Description of Parameter
+	 *@param  empresa      empresa seleccionada
+	 *@param  nuevoPrecio  nuevo precio
 	 */
 	public void cambiaValor(String empresa, double nuevoPrecio) {
 		mAcciones.insertaValor(empresa, nuevoPrecio);
@@ -145,9 +145,9 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Description of the Method
+	 *  Selecciona una empresa al azar
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    Devuelve el nombre d ela empresa
 	 */
 	public String dameEmpresaAleatoria() {
 		int i = (int) (MersenneTwister.makeDefault().nextDouble() * empresas.size());
@@ -156,11 +156,11 @@ public class EstadoBolsa {
 
 
 	/**
-	 *  Description of the Method
+	 *  Redondea un número para que tenga un determinado número de decimales
 	 *
-	 *@param  numero      Description of Parameter
-	 *@param  nDecimales  Description of Parameter
-	 *@return             Description of the Returned Value
+	 *@param  numero      Número a redondear
+	 *@param  nDecimales  Número de decimales
+	 *@return             Devuelve el número redondeado
 	 */
 	public static double redondeo(double numero, int nDecimales) {
 		return Math.floor((Math.pow(10, nDecimales) * numero) + 0.5) / Math.pow(10, nDecimales);

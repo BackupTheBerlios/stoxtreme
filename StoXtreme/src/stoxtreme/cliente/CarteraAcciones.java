@@ -6,7 +6,7 @@ import stoxtreme.cliente.gui.ModeloCartera;
 import stoxtreme.interfaz_remota.Operacion;
 
 /**
- *  Description of the Class
+ *  Total de valores de empresas que el cliente dispone
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -15,7 +15,7 @@ public class CarteraAcciones {
 
 
 	/**
-	 *  Constructor for the CarteraAcciones object
+	 *  Constructor de CarteraAcciones
 	 */
 	public CarteraAcciones() {
 		mCartera = new ModeloCartera();
@@ -23,9 +23,9 @@ public class CarteraAcciones {
 
 
 	/**
-	 *  Sets the MCartera attribute of the CarteraAcciones object
+	 *  Sutituimos MCartera por un nuevo objeto
 	 *
-	 *@param  cartera  The new MCartera value
+	 *@param  cartera  Nuevo valor de MCartera
 	 */
 	public void setMCartera(ModeloCartera cartera) {
 		mCartera = cartera;
@@ -33,9 +33,9 @@ public class CarteraAcciones {
 
 
 	/**
-	 *  Gets the MCartera attribute of the CarteraAcciones object
+	 *  obtenemos el valor de MCartera
 	 *
-	 *@return    The MCartera value
+	 *@return    Valor de MCartera
 	 */
 	public ModeloCartera getMCartera() {
 		return mCartera;
@@ -43,10 +43,10 @@ public class CarteraAcciones {
 
 
 	/**
-	 *  Description of the Method
+	 *  Actualiza nuestra cartera con una operación sobre alguna de las empresas que hay en el mercado
 	 *
-	 *@param  o         Description of Parameter
-	 *@param  cantidad  Description of Parameter
+	 *@param  o         Detalle de la operacion
+	 *@param  cantidad  Cantidad de acciones a operar
 	 */
 	public void actualiza(Operacion o, int cantidad) {
 		if (o.getTipoOp() == Operacion.COMPRA) {

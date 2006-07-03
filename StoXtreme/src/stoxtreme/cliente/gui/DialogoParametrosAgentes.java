@@ -10,7 +10,7 @@ import stoxtreme.cliente.gui.FakeInternalFrame;
 import stoxtreme.cliente.gui.PanelOpciones;
 
 /**
- *  Description of the Class
+ *  Clase que permite Configurar los agentes de cada cliente
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -26,7 +26,7 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Constructor for the DialogoParametrosAgentes object
+	 *  Constructor de la clase
 	 *
 	 *@param  frame  Description of Parameter
 	 */
@@ -49,9 +49,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Sets the Aceptado attribute of the DialogoParametrosAgentes object
+	 *  asignamos valor a la variable aceptado
 	 *
-	 *@param  aceptado  The new Aceptado value
+	 *@param  aceptado nuevo valor de aceptado
 	 */
 	public void setAceptado(boolean aceptado) {
 		this.aceptado = aceptado;
@@ -59,9 +59,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Sets the NAgentes attribute of the DialogoParametrosAgentes object
+	 *  Introduce el numero de agentes
 	 *
-	 *@param  agentes  The new NAgentes value
+	 *@param  agentes valor de nagentes
 	 */
 	public void setNAgentes(int agentes) {
 		nAgentes = agentes;
@@ -69,9 +69,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Sets the TCiclo attribute of the DialogoParametrosAgentes object
+	 *  Introduce e valor del tiempo de ciclo de los agentes
 	 *
-	 *@param  ciclo  The new TCiclo value
+	 *@param  ciclo  valor de tciclo
 	 */
 	public void setTCiclo(int ciclo) {
 		tCiclo = ciclo;
@@ -79,9 +79,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Sets the TEjecucion attribute of the DialogoParametrosAgentes object
+	 *  Introduce e valor del tiempo de ejecución de los agentes
 	 *
-	 *@param  ejecucion  The new TEjecucion value
+	 *@param  ejecucion  valor del tejecución
 	 */
 	public void setTEjecucion(int ejecucion) {
 		tEjecucion = ejecucion;
@@ -89,9 +89,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Gets the PanelPrincipal attribute of the DialogoParametrosAgentes object
+	 *  Nos crea el panel principal
 	 *
-	 *@return    The PanelPrincipal value
+	 *@return    devuelve el componente del panel principal
 	 */
 	public Component getPanelPrincipal() {
 		JPanel panel = new JPanel(new BorderLayout());
@@ -102,9 +102,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Gets the PanelBotones attribute of the DialogoParametrosAgentes object
+	 *  Nos crea un panel con botones y sus eventos asociados
 	 *
-	 *@return    The PanelBotones value
+	 *@return    devuelve un componente swing
 	 */
 	public Component getPanelBotones() {
 		JPanel panel = new JPanel();
@@ -131,9 +131,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Gets the PanelArriba attribute of the DialogoParametrosAgentes object
+	 *  nos crea el panel superior que se encarga de mostrar las opciones de configuración
 	 *
-	 *@return    The PanelArriba value
+	 *@return    devuelve un componente swing
 	 */
 	public Component getPanelArriba() {
 		ArrayList<String> opciones = new ArrayList<String>();
@@ -148,9 +148,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Gets the Aceptado attribute of the DialogoParametrosAgentes object
+	 *  nos devuelve si se ha aceptado
 	 *
-	 *@return    The Aceptado value
+	 *@return    valor de la variable aceptado
 	 */
 	public boolean isAceptado() {
 		return aceptado;
@@ -158,9 +158,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Gets the NAgentes attribute of the DialogoParametrosAgentes object
+	 *  nos devuelve el valor del numero de agentes
 	 *
-	 *@return    The NAgentes value
+	 *@return    valor del numero de agentes
 	 */
 	public int getNAgentes() {
 		return nAgentes;
@@ -178,9 +178,9 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Gets the TEjecucion attribute of the DialogoParametrosAgentes object
+	 *  nos da el valor del tiempo de ejecución
 	 *
-	 *@return    The TEjecucion value
+	 *@return    tiempo de ejecución
 	 */
 	public int getTEjecucion() {
 		return tEjecucion;
@@ -188,7 +188,7 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Description of the Method
+	 *  inicialización de la ventana
 	 */
 	public void init() {
 		setModal(true);
@@ -199,7 +199,7 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Description of the Method
+	 *  cuando cancelamos el formulario
 	 */
 	public void botonCancelar_actionPerformed() {
 		aceptado = false;
@@ -208,7 +208,7 @@ public class DialogoParametrosAgentes extends JDialog {
 
 
 	/**
-	 *  Description of the Method
+	 *  Puesta en marcha de los agentes una vez aceptado por el cliente
 	 */
 	public void botonAceptar_actionPerformed() {
 		try {
@@ -235,21 +235,5 @@ public class DialogoParametrosAgentes extends JDialog {
 			return;
 		}
 
-	}
-
-
-	/**
-	 *  The main program for the DialogoParametrosAgentes class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) {
-		JFrame f = new JFrame();
-		f.pack();
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		DialogoParametrosAgentes dialogo = new DialogoParametrosAgentes(f);
-		dialogo.setVisible(true);
 	}
 }

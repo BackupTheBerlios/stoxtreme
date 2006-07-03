@@ -14,7 +14,7 @@ import javax.swing.UIManager;
 import stoxtreme.cliente.infoLocal.ParserInfoLocal;
 
 /**
- *  Description of the Class
+ *  Tipo de datos de una empresa
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -32,10 +32,10 @@ public class InfoLocal {
 
 
 	/**
-	 *  Constructor for the InfoLocal object
+	 *  Constructor de InfoLocal
 	 *
-	 *@param  ruta         Description of Parameter
-	 *@param  numEmpresas  Description of Parameter
+	 *@param  ruta         Ruta de ficheros
+	 *@param  numEmpresas  Númeroi de empresas existentes 
 	 */
 	private InfoLocal(String ruta, int numEmpresas) {
 		ParserInfoLocal parser = new ParserInfoLocal();
@@ -49,10 +49,10 @@ public class InfoLocal {
 
 
 	/**
-	 *  Gets the PrecioInicial attribute of the InfoLocal object
+	 *  Obtiene el precio inicial
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The PrecioInicial value
+	 *@param  empresa  Nombre de la empresa
+	 *@return          Devuelve el precio
 	 */
 	public Double getPrecioInicial(String empresa) {
 		datos = info.get(empresa);
@@ -61,10 +61,10 @@ public class InfoLocal {
 
 
 	/**
-	 *  Gets the CapitalSocial attribute of the InfoLocal object
+	 * Obtiene el CapitalSocial
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The CapitalSocial value
+	 *@param  empresa  Nombre empresa
+	 *@return          Valor de CapitalSocial
 	 */
 	public Double getCapitalSocial(String empresa) {
 		datos = info.get(empresa);
@@ -73,10 +73,10 @@ public class InfoLocal {
 
 
 	/**
-	 *  Gets the ValorNominal attribute of the InfoLocal object
+	 *  Obtiene el ValorNominal
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The ValorNominal value
+	 *@param  empresa  Nombre empresa
+	 *@return          Valor de ValorNominal
 	 */
 	public Double getValorNominal(String empresa) {
 		datos = info.get(empresa);
@@ -85,10 +85,10 @@ public class InfoLocal {
 
 
 	/**
-	 *  Gets the AmpliacionesCapital attribute of the InfoLocal object
+	 *  Obtiene las AmpliacionesCapital
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The AmpliacionesCapital value
+	 *@param  empresa  Nombre empresa
+	 *@return          Valor de AmpliacionesCapital
 	 */
 	public int getAmpliacionesCapital(String empresa) {
 		datos = info.get(empresa);
@@ -97,10 +97,10 @@ public class InfoLocal {
 
 
 	/**
-	 *  Gets the Descripcion attribute of the InfoLocal object
+	 *  Obtiene la Descripcion
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The Descripcion value
+	 *@param  empresa  Nombre empresa
+	 *@return          Valor de Descripcion
 	 */
 	public String getDescripcion(String empresa) {
 		datos = info.get(empresa);
@@ -109,10 +109,10 @@ public class InfoLocal {
 
 
 	/**
-	 *  Gets the Sector attribute of the InfoLocal object
+	 *  Obtiene el Sector
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@return          The Sector value
+	 *@param  empresa  Nombre empresa
+	 *@return          Valor de Sector
 	 */
 	public String getSector(String empresa) {
 		datos = info.get(empresa);
@@ -121,9 +121,9 @@ public class InfoLocal {
 
 
 	/**
-	 *  Gets the Empresas attribute of the InfoLocal object
+	 *  Obtiene las Empresas 
 	 *
-	 *@return    The Empresas value
+	 *@return          Valor deEmpresas
 	 */
 	public ArrayList<String> getEmpresas() {
 		return empresas;
@@ -131,9 +131,9 @@ public class InfoLocal {
 
 
 	/**
-	 *  Gets the Instance attribute of the InfoLocal class
+	 *  Obtiene la Instancia
 	 *
-	 *@return    The Instance value
+	 *@return          Valor de Instance
 	 */
 	public static InfoLocal getInstance() {
 		return _instance;
@@ -141,10 +141,10 @@ public class InfoLocal {
 
 
 	/**
-	 *  Description of the Method
+	 *  Crea una instancia de la información local
 	 *
-	 *@param  ruta         Description of Parameter
-	 *@param  numEmpresas  Description of Parameter
+	 *@param  ruta         Direccion de los ficheros
+	 *@param  numEmpresas  Número de empresas disponibles
 	 */
 	public static void crearInstancia(String ruta, int numEmpresas) {
 		if (_instance == null) {

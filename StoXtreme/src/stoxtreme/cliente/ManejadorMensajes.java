@@ -15,9 +15,9 @@ public class ManejadorMensajes implements IMensajeriaListener {
 
 
 	/**
-	 *  Constructor for the ManejadorMensajes object
+	 *  Constructor del ManejadorMensajes
 	 *
-	 *@param  cl  Description of Parameter
+	 *@param  cl  Cliente asociado al manejador
 	 */
 	public ManejadorMensajes(Cliente cl) {
 		this.cliente = cl;
@@ -25,9 +25,9 @@ public class ManejadorMensajes implements IMensajeriaListener {
 
 
 	/**
-	 *  Description of the Method
+	 *  realiza la accion asociada al mensaje recibido
 	 *
-	 *@param  m  Description of Parameter
+	 *@param  m  Mensaje recibido
 	 */
 	public synchronized void onMensaje(Mensaje m) {
 
