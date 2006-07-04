@@ -18,7 +18,7 @@ public class GestionUsuarios extends ModeloListaUsuariosConectados {
 
 
 	/**
-	 *  Constructor for the GestionUsuarios object
+	 *  Constructor del objeto GestionUsuarios
 	 *
 	 *@param  fichReg  Ruta del fichero que contiene los datos de usuario registrados
 	 */

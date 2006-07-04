@@ -34,7 +34,7 @@ public class UsuariosRegistrados {
 
 
 	/**
-	 *  Constructor for the UsuariosRegistrados object
+	 *  Constructor del objeto UsuariosRegistrados
 	 *
 	 *@param  fich  Ruta del fichero .xml que contiene los datos de los usuarios registrados
 	 */

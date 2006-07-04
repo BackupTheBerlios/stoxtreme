@@ -36,8 +36,8 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Constructor for the ObjetoBolsa object
-	 *
+	 *  Constructor del objeto ObjetoBolsa
+	 *  
 	 *@param  nombreEmpresa  Nombre de la empresa
 	 *@param  cotizacion     Valor inicial de las acciones
 	 *@param  informacion    Ruta del fichero que contiene la información de la empresa
@@ -53,9 +53,9 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Sets the Cotizacion attribute of the ObjetoBolsa object
+	 *  Mutador del atributo Cotizacion
 	 *
-	 *@param  cotiz  The new Cotizacion value
+	 *@param  cotiz  El nuevo valor de Cotizacion
 	 */
 	public void setCotizacion(double cotiz) {
 		this.cotizacion = cotiz;
@@ -75,9 +75,9 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Gets the Cotizacion attribute of the ObjetoBolsa object
+	 *  Accesor del atributo Cotizacion
 	 *
-	 *@return    The Cotizacion value
+	 *@return    El valor de Cotizacion
 	 */
 	public double getCotizacion() {
 		return this.cotizacion;
@@ -85,9 +85,9 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Gets the NombreEmpresa attribute of the ObjetoBolsa object
+	 *  Accesor del atributo NombreEmpresa
 	 *
-	 *@return    The NombreEmpresa value
+	 *@return     El valor de NombreEmpresa
 	 */
 	public String getNombreEmpresa() {
 		return this.nombreEmpresa;
@@ -95,9 +95,9 @@ public class ObjetoBolsa implements RelojListener {
 
 
 	/**
-	 *  Gets the Informacion attribute of the ObjetoBolsa object
+	 *  Accesor del atributo Informacion 
 	 *
-	 *@return    The Informacion value
+	 *@return    El valor de Informacion
 	 */
 	public Informacion getInformacion() {
 		return this.informacion;

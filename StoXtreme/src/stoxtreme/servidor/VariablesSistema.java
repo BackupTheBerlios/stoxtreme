@@ -28,7 +28,7 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Constructor for the VariablesSistema object
+	 *  Constructor del objeto VariablesSistema
 	 */
 	public VariablesSistema() {
 		variables = new Hashtable<String, Double>();
@@ -38,7 +38,7 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Sets the Value attribute of the VariablesSistema object
+	 *  Cambia el valor asociado a una variable
 	 *
 	 *@param  variable  Variable a cambiar
 	 *@param  valor     El valor de la variable
@@ -49,7 +49,7 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Gets the Value attribute of the VariablesSistema object
+	 *  Obtiene el valor asociado a la variable
 	 *
 	 *@param  variable  La variable que me interesa
 	 *@return           El valor de dicha variable
@@ -69,10 +69,10 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Adds the specified listener to receive events from this component. If
-	 *  listener l is null, no exception is thrown and no action is performed.
+	 *  Añade el listener especificado  para que reciba eventos de este componente.
+	 *  Si el listener l es nulo, no se lanza excepción y no se ejecuta ninguna acción.
 	 *
-	 *@param  listener  The feature to be added to the attribute
+	 *@param  listener  El listener a añadir
 	 */
 	public void addListener(VariablesListener listener) {
 		listeners.add(listener);
@@ -80,13 +80,12 @@ public class VariablesSistema extends ModeloTablaVariables implements RelojListe
 
 
 	/**
-	 *  Removes the specified listener so that it no longer receives events from
-	 *  this component. This method performs no function, nor does it throw an
-	 *  exception, if the listener specified by the argument was not previously
-	 *  added to this component. If listener l is null, no exception is thrown
-	 *  and no action is performed.
+	 *  Elimina el componente especificado para que ya no reciva eventos de este componente.
+	 *  Este metodo no tiene efecto, ni lanza excepción, si el listener especificado por el 
+	 *  argumento no había sido añadido a este componente. Si el listener l es nulo
+	 *  no se lanza excepcion y no se realiza ninguna accion
 	 *
-	 *@param  listener  Contains the Listener for Event data.
+	 *@param  listener  El listener a eliminar
 	 */
 	public void removeListener(VariablesListener listener) {
 		listeners.remove(listener);

@@ -14,7 +14,7 @@ public class UsuariosConectados {
 
 
 	/**
-	 *  Constructor for the UsuariosConectados object
+	 *  Constructordel objeto UsuariosConectados
 	 */
 	public UsuariosConectados() {
 		conectados = new ArrayList<String>();
@@ -22,7 +22,7 @@ public class UsuariosConectados {
 
 
 	/**
-	 *  omprueba si el usuario ya esta conectado
+	 *  Comprueba si el usuario ya esta conectado
 	 *
 	 *@param  id  Id de usuario
 	 *@return     Booleano que indica si el usuario estaba ya conectado o no

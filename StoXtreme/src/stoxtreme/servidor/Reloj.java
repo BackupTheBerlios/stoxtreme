@@ -14,17 +14,15 @@ public class Reloj {
 
 
 	/**
-	 *  Default Constructor for the Reloj object
+	 *  Constructor del objeto Reloj
 	 */
 	public Reloj() {
 		this(500);
 	}
 
-	// Recibe el numero de milisegundos cada cuanto se
-
-	// ejecuta un paso
+	
 	/**
-	 *  Constructor for the Reloj object
+	 *  Constructor del objeto Reloj
 	 *
 	 *@param  ms  Número de milisegundos entre paso y paso
 	 */
@@ -36,10 +34,10 @@ public class Reloj {
 
 
 	/**
-	 *  Adds the specified listener to receive events from this component. If
-	 *  listener l is null, no exception is thrown and no action is performed.
+	 *  Añade el listener especificado  para que reciba eventos de este componente.
+	 *  Si el listener l es nulo, no se lanza excepción y no se ejecuta ninguna acción.
 	 *
-	 *@param  r  The feature to be added to the attribute
+	 *@param  r  El listener a añadir
 	 */
 	public void addListener(RelojListener r) {
 		oyentes.add(r);
@@ -96,7 +94,8 @@ public class Reloj {
 
 
 	/**
-	 *  A task that can be scheduled for one-time or repeated execution by a Timer. 
+	 * 	Una tarea programada para ejecutarse cada cierto tiempo,
+	 * gobernada por un Timer
 	 *
 	 *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
 	 */
@@ -105,7 +104,7 @@ public class Reloj {
 
 
 		/**
-		 *  Constructor for the Ejecucion object
+		 *  Constructor del objeto Ejecucion
 		 *
 		 *@param  r  Reloj que mide el tiempo
 		 */
@@ -115,7 +114,7 @@ public class Reloj {
 
 
 		/**
-		 *  Main processing method for the Ejecucion object
+		 *  Main de la calse ejecucion
 		 */
 		public void run() {
 			reloj.ejecuta();

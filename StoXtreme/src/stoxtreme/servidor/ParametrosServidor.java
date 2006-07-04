@@ -43,7 +43,7 @@ public class ParametrosServidor {
 
 
 	/**
-	 *  Constructor for the ParametrosServidor object
+	 *  Constructor del objeto ParametrosServidor
 	 */
 	public ParametrosServidor() {
 		this.parametros = new Hashtable<String, Object>();
@@ -52,9 +52,9 @@ public class ParametrosServidor {
 
 
 	/**
-	 *  Gets the Tick attribute of the ParametrosServidor object
+	 *  Accesor del atributo Tick
 	 *
-	 *@return    The Tick value
+	 *@return    El valor del Tick
 	 */
 	public double getTick() {
 		return ((Double) (this.parametros.get(TICK)));
@@ -62,9 +62,9 @@ public class ParametrosServidor {
 
 
 	/**
-	 *  Gets the Tiempo attribute of the ParametrosServidor object
+	 *  Accesor del atributo Tiempo
 	 *
-	 *@return    The Tiempo value
+	 *@return    El valor del Tiempo
 	 */
 	public long getTiempo() {
 		return ((Long) (this.parametros.get(TIEMPO)));
@@ -72,9 +72,9 @@ public class ParametrosServidor {
 
 
 	/**
-	 *  Gets the FicheroEmpresas attribute of the ParametrosServidor object
+	 *  Accesor del atributo FicheroEmpresas
 	 *
-	 *@return    The FicheroEmpresas value
+	 *@return   El valor de FicheroEmpresas
 	 */
 	public String getFicheroEmpresas() {
 		return this.parametros.get(FICH_EMP).toString();
@@ -82,9 +82,9 @@ public class ParametrosServidor {
 
 
 	/**
-	 *  Gets the FicheroRegistrados attribute of the ParametrosServidor object
+	 *  Accesor del atributo FicheroRegistrados
 	 *
-	 *@return    The FicheroRegistrados value
+	 *@return    El valor de FicheroRegistrados
 	 */
 	public String getFicheroRegistrados() {
 		return this.parametros.get(FICH_REG).toString();
@@ -92,15 +92,13 @@ public class ParametrosServidor {
 
 
 	/**
-	 *  Gets the NumEmpresas attribute of the ParametrosServidor object
+	 *  Accesor del atributo NumEmpresas
 	 *
-	 *@return    The NumEmpresas value
+	 *@return   El valor de NumEmpresas
 	 */
 	public String getNumEmpresas() {
 		return this.parametros.get(NUMEMPRESAS).toString();
 	}
-
-	//Modificador de la tabla hash "parametros"
 
 	/**
 	 *  Modificador de parámetros

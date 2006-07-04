@@ -37,7 +37,7 @@ public class DatosEmpresas {
 
 
 	/**
-	 *  Constructor for the DatosEmpresas object
+	 *  Constructor del objeto DatosEmpresas
 	 */
 	public DatosEmpresas() {
 		// Inicialmente no tiene datos hasta que no se parsea el fichero
@@ -46,9 +46,9 @@ public class DatosEmpresas {
 
 
 	/**
-	 *  Gets the NombresEmpresas attribute of the DatosEmpresas object
+	 *  Accesor del atributo NombresEmpresas
 	 *
-	 *@return    The NombresEmpresas value
+	 *@return    El valor de NombresEmpresas
 	 */
 	public ArrayList<String> getNombresEmpresas() {
 		return nombresEmpresas;

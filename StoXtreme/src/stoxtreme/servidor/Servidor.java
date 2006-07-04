@@ -74,7 +74,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 	//Constructora
 	/**
-	 *  Constructor for the Servidor object
+	 *  Constructor del objeto Servidor
 	 */
 	private Servidor() {
 
@@ -82,7 +82,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Gets the VariablesSistema attribute of the Servidor object
+	 *  Accesor del atributo variablesSistema
 	 *
 	 *@return    The VariablesSistema value
 	 */
@@ -92,7 +92,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Gets the GUI attribute of the Servidor object
+	 *  Accesor del atributo guiAdmin
 	 *
 	 *@return    The GUI value
 	 */
@@ -386,7 +386,7 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  Gets the Instance attribute of the Servidor class
+	 *  Devuelve una instancia del objeto Servidor
 	 *
 	 *@return    The Instance value
 	 */
@@ -396,9 +396,9 @@ public class Servidor implements Administrador, Stoxtreme {
 
 
 	/**
-	 *  The main program for the Servidor class
+	 *  Main de la clase servidor
 	 *
-	 *@param  argv  The command line arguments
+	 *@param  argv  Atributos de linea de comandos
 	 */
 	public static void main(String[] argv) {
 		try {

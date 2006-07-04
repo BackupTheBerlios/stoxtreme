@@ -19,7 +19,7 @@ public class EstadoBolsa extends ModeloTablaPrecioAcciones implements VariablesL
 
 
 	/**
-	 *  Constructor for the EstadoBolsa object
+	 *  Constructor del objeto EstadoBolsa
 	 *
 	 *@param  datos  Array que contiene los nombres de las empresas que cotizan en la sesión actual
 	 */
