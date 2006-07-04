@@ -43,15 +43,15 @@ import stoxtreme.interfaz_remota.Operacion;
 @SuppressWarnings("serial")
 public class MainFrameCliente extends JFrame {
 	/**
-	 *  Description of the Field
+	 *  permite mostrar o no el volumen de una acción
 	 */
 	public boolean volumen;
 	/**
-	 *  Description of the Field
+	 *  permite mostrar o no la gráfica del estocastico de una acción
 	 */
 	public boolean estocastico;
 	/**
-	 *  Description of the Field
+	 *  Cuenta las gráficas mostradas
 	 */
 	public int contadorGraficas = 1;
 	double max = 0;
@@ -90,13 +90,13 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Constructor for the MainFrameCliente object
-	 *
-	 *@param  cliente             Description of Parameter
-	 *@param  modeloCartera       Description of Parameter
-	 *@param  modeloOpPendientes  Description of Parameter
-	 *@param  eBolsa              Description of Parameter
-	 *@param  hAgentes            Description of Parameter
+	 *  Constructor de MainFrameCliente
+	 *  
+	 *@param  cliente             Cliente asociado
+	 *@param  modeloCartera       Cartera del cliente
+	 *@param  modeloOpPendientes  Operaciones pendientes del cliente
+	 *@param  eBolsa              Estado de la bolsa
+	 *@param  hAgentes            Herramienta de agentes asociados al cliente
 	 */
 	public MainFrameCliente(Cliente cliente,
 			ModeloCartera modeloCartera,
@@ -118,11 +118,11 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Constructor for the MainFrameCliente object
+	 *  Constructor de MainFrameCliente
 	 *
-	 *@param  cartera2      Description of Parameter
-	 *@param  opPendientes  Description of Parameter
-	 *@param  precios       Description of Parameter
+	 *@param  cartera2      Cartera del cliente
+	 *@param  opPendientes  Operaciones pendientes del cliente
+	 *@param  precios       Precios actuales del servidor
 	 */
 	public MainFrameCliente(ModeloCartera cartera2, ModeloOpPendientes opPendientes, ModeloPrecioAccionesGrafico precios) {
 		super("Stock Xtreme");
@@ -136,9 +136,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the PanelInfo attribute of the MainFrameCliente object
+	 *  Obtiene el valor de PanelInfo
 	 *
-	 *@return    The PanelInfo value
+	 *@return    Valor de PanelInfo
 	 */
 	public JSplitPane getPanelInfo() {
 		panelInfo = new JPanel(new BorderLayout());
@@ -149,7 +149,7 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the PanelEmpresas attribute of the MainFrameCliente object
+	 *  Obtiene el valor de PanelEmpresas attribute of the MainFrameCliente object
 	 *
 	 *@return    The PanelEmpresas value
 	 */
@@ -210,9 +210,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the Visualizador attribute of the MainFrameCliente object
+	 *  Obtiene el valor de Visualizador attribute of the MainFrameCliente object
 	 *
-	 *@return    The Visualizador value
+	 *@return    Valor de Visualizador
 	 */
 	public Component getVisualizador() {
 		JScrollPane panelScroll = new JScrollPane(panelInfoEmpresa);
@@ -222,9 +222,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the PanelPrincipal attribute of the MainFrameCliente object
+	 *  Obtiene el valor de PanelPrincipal
 	 *
-	 *@return    The PanelPrincipal value
+	 *@return    Valor de PanelPrincipal
 	 */
 	public Component getPanelPrincipal() {
 		JPanel panelIzquierda = new JPanel(new BorderLayout());
@@ -241,7 +241,7 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicialización de la interfaz
 	 */
 	public void init() {
 		JPanel panel = new JPanel(new BorderLayout());
@@ -269,7 +269,7 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  Configuracion de la pestaña información
 	 */
 	public void dividirInfoScreen() {
 		grafHistorico = !grafHistorico;
@@ -294,9 +294,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the PanelHerramientas attribute of the MainFrameCliente object
+	 *  Obtiene el valor de PanelHerramientas
 	 *
-	 *@return    The PanelHerramientas value
+	 *@return    Valor de PanelHerramientas
 	 */
 	private Component getPanelHerramientas() {
 		JSplitPane panelDerecha = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -306,9 +306,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the GraficaHistorica attribute of the MainFrameCliente object
+	 *  Obtiene el valor de GraficaHistorica
 	 *
-	 *@return    The GraficaHistorica value
+	 *@return    Valor de GraficaHistorica
 	 */
 	private JPanel getGraficaHistorica() {
 
@@ -370,9 +370,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the PanelIzquierdaArriba attribute of the MainFrameCliente object
+	 *  Obtiene el valor dePanelIzquierdaArriba
 	 *
-	 *@return    The PanelIzquierdaArriba value
+	 *@return    Valor de PanelIzquierdaArriba
 	 */
 	private Component getPanelIzquierdaArriba() {
 		JPanel panel = new JPanel(new BorderLayout());
@@ -420,9 +420,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the PanelGrafico attribute of the MainFrameCliente object
+	 *  Obtiene el valor de PanelGrafico
 	 *
-	 *@return    The PanelGrafico value
+	 *@return    Valor de PanelGrafico
 	 */
 	private Component getPanelGrafico() {
 		MDateEntryField entryField = new MDateEntryField();
@@ -489,7 +489,7 @@ public class MainFrameCliente extends JFrame {
 
 		split_graficas.add(getChartPanel());
 		int tam = split_graficas.size().height - split_graficas.size().height / 6;
-		split_graficas.setDividerLocation(200);
+		split_graficas.setDividerLocation(400);
 		FakeInternalFrame frame = new FakeInternalFrame("Precio Accion", split_graficas);
 		frame.setPreferredSize(new Dimension(500, 450));
 		frame.setMenuBar(barra);
@@ -498,9 +498,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the ChartPanel2 attribute of the MainFrameCliente object
+	 *  Obtiene el valor de ChartPanel2 gráfica del volumen
 	 *
-	 *@return    The ChartPanel2 value
+	 *@return     Valor de ChartPanel2
 	 */
 	private JPanel getChartPanel2() {
 
@@ -535,19 +535,12 @@ public class MainFrameCliente extends JFrame {
 			DefaultCategoryDataset auxds = new DefaultCategoryDataset();
 			int j = 0;
 			String fechaAux;
-			//while (j<modeloPrecios.empresaSeleccionada().size()){
-			//DefaultCategoryDataset auxds = new DefaultCategoryDataset();
-			//for (int i=0;i<200;i++){
 			while (c1.compareTo(c2) != 0) {
 				fechaAux = c1.get(Calendar.DAY_OF_MONTH) + "/" + (c1.get(Calendar.MONTH) + 1) + "/" + c1.get(Calendar.YEAR);
-				//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
 				DatoHistorico aux = ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase().replace(" ", "_"), fechaAux);
-				//auxds.addValue(aux.getVolumen(),"Volumen",c1.getTime());
 				auxds.addValue(aux.getVolumen(), "Volumen", fechaAux.split("/")[0] + "/" + fechaAux.split("/")[1]);
-				//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),aux.getVolumen());
 				c1.add(Calendar.DATE, 1);
 			}
-			//}
 			JFreeChart chart = ChartFactory.createBarChart(modeloPrecios.empresaSeleccionada(),
 					"Dias", "Volumen", auxds, PlotOrientation.VERTICAL,
 					true, true, true);
@@ -564,11 +557,11 @@ public class MainFrameCliente extends JFrame {
 	}
 
 
-//formula del estocastico 100*(C-Min/max-min) c es el cierre
 	/**
-	 *  Gets the ChartPanel3 attribute of the MainFrameCliente object
+	 *  Obtiene el valor de ChartPanel3 Gráfica del estocastica
+	 *  formula del estocastico 100*(C-Min/max-min) c es el cierre
 	 *
-	 *@return    The ChartPanel3 value
+	 *@return    Valor de ChartPanel3
 	 */
 	private JPanel getChartPanel3() {
 		try {
@@ -602,21 +595,14 @@ public class MainFrameCliente extends JFrame {
 			NumberAxis ejeY = new NumberAxis();
 			ejeY.setRange(new Range(0, 540));
 			DefaultCategoryDataset auxds = new DefaultCategoryDataset();
-			//TimeSeriesCollection auxds = new TimeSeriesCollection();
 			int j = 1;
 			String fechaAux;
 			XYSeries series = new XYSeries("Estocastico");
 			while (c1.compareTo(c2) != 0) {
 				calculaMaxenFecha(c1);
 				fechaAux = c1.get(Calendar.DAY_OF_MONTH) + "/" + (c1.get(Calendar.MONTH) + 1) + "/" + c1.get(Calendar.YEAR);
-				//String fechaAux2=c2.get(Calendar.DAY_OF_MONTH)+"/"+(c2.get(Calendar.MONTH)+1)+"/"+c2.get(Calendar.YEAR);
-				//DatoHistorico aux=ParserInfoLocal.getDatoHistorico(modeloPrecios.empresaSeleccionada().toLowerCase(),fechaAux);
 				auxds.addValue((100 * (cierre - min)) / (max - min), "Estocastico", fechaAux.split("/")[0] + "/" + fechaAux.split("/")[1]);
-				//System.out.println((100*(cierre - min))/(max-min));
 				series.add(j, (100 * (cierre - min)) / (max - min));
-				//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),(100*(cierre - min))/(max-min));
-				//auxds.addSeries(new TimeSeries("valores",Double.toString((100*(cierre - min))/(max-min))));
-				//modeloPrecios.insertaVolumen(modeloPrecios.empresaSeleccionada(),aux.getVolumen());
 				c1.add(Calendar.DATE, 1);
 
 			}
@@ -632,12 +618,6 @@ public class MainFrameCliente extends JFrame {
 			chartPlot = new XYPlot(
 					modeloPrecios.getVolumenSeleccionado(),
 					ejeX, ejeY, new XYLineAndShapeRenderer(true, false));
-			//JFreeChart chart = new JFreeChart(chartPlot);
-			//JFreeChart chart = ChartFactory.createBarChart(modeloPrecios.empresaSeleccionada(),
-			//        "Dias", "Volumen", auxds, PlotOrientation.VERTICAL,
-			//         true, true, true);
-			//chart.clearSubtitles();
-			//chart.getSubtitles().clear();
 			ChartPanel panel = new ChartPanel(chart);
 			return panel;
 		}
@@ -649,9 +629,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the ChartPanel attribute of the MainFrameCliente object
+	 *  Obtiene el valor de ChartPanel Gráfico intradia de los valores
 	 *
-	 *@return    The ChartPanel value
+	 *@return    Valor de ChartPanel
 	 */
 	private ChartPanel getChartPanel() {
 		DateAxis ejeX = new DateAxis();
@@ -679,9 +659,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the PanelIzquierdaAbajo attribute of the MainFrameCliente object
+	 *  Obtiene el valor de PanelIzquierdaAbajo
 	 *
-	 *@return    The PanelIzquierdaAbajo value
+	 *@return    Valor de PanelIzquierdaAbajo
 	 */
 	private Component getPanelIzquierdaAbajo() {
 		JPanel panel = new JPanel(new GridLayout(5, 1));
@@ -785,9 +765,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Gets the PanelTablaPrecios attribute of the MainFrameCliente object
+	 *  Obtenemos el valor de PanelTablaPrecios
 	 *
-	 *@return    The PanelTablaPrecios value
+	 *@return    Valor de PanelTablaPrecios
 	 */
 	private Component getPanelTablaPrecios() {
 		TableSorter sorterPrecios = new TableSorter(modeloPrecios);
@@ -815,9 +795,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  Evento al introducir el Cliente una operación
 	 *
-	 *@param  e  Description of Parameter
+	 *@param  e  Evento capturado
 	 */
 	private void opPend_actionPerformed(ActionEvent e) {
 		opPend.setSelected(true);
@@ -840,9 +820,9 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  Evento que se produce cuando se procesan las Operaciones pendientes
 	 *
-	 *@param  e  Description of Parameter
+	 *@param  e  Evento capturado
 	 */
 	private void cartera_actionPerformed(ActionEvent e) {
 		TableSorter sorter = new TableSorter();
@@ -868,12 +848,12 @@ public class MainFrameCliente extends JFrame {
 
 
 	/**
-	 *  Description of the Method
+	 *  Evento que permite dibujar las gráficas deseadas por el Cliente
 	 *
-	 *@param  e  Description of Parameter
+	 *@param  e  Evento capturado
 	 */
 	private void pinta_actionPerformed(ActionEvent e) {
-		split_graficas.setDividerLocation(300);
+		//split_graficas.setDividerLocation(50);
 		if (e.getActionCommand().equals("Ayuda Volumen")) {
 			JTextPane menuAyuda = new JTextPane();
 			menuAyuda.setSize(200, 200);
@@ -913,6 +893,7 @@ public class MainFrameCliente extends JFrame {
 				p2 = getChartPanel2();
 				graficas.put("volumen", p2);
 				split_graficas.setBottomComponent(p2);
+				split_graficas.setDividerLocation(200);
 
 			}
 		}
@@ -934,11 +915,12 @@ public class MainFrameCliente extends JFrame {
 				p3 = getChartPanel3();
 				graficas.put("estocastico", p3);
 				split_graficas.setBottomComponent(p3);
+				split_graficas.setDividerLocation(200);
 			}
 		}
 		JSplitPane aux = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		if (volumen && estocastico) {
-			split_graficas.setDividerLocation(200);
+			split_graficas.setDividerLocation(175);
 			aux.add(p2);
 			aux.setDividerLocation(100);
 			aux.setBottomComponent(p3);

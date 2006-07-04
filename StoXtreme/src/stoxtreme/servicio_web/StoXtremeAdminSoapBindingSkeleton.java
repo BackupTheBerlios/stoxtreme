@@ -24,7 +24,6 @@ public class StoXtremeAdminSoapBindingSkeleton implements stoxtreme.interfaz_rem
 	 */
 	public StoXtremeAdminSoapBindingSkeleton() {
 		// Generado automaticamente
-		//this.impl = new stoxtreme.interfaz_remota.StoXtremeAdminSoapBindingImpl();
 		// Lo sobreescribo
 		this.impl = Servidor.getInstance();
 	}
@@ -112,9 +111,9 @@ public class StoXtremeAdminSoapBindingSkeleton implements stoxtreme.interfaz_rem
 
 
 	/**
-	 *  Returns Collection of OperationDescs
+	 *  Lista de operaciones
 	 *
-	 *@return    The OperationDescs value
+	 *@return    Valor de las Operaciones
 	 */
 	public static java.util.Collection getOperationDescs() {
 		return _myOperationsList;
