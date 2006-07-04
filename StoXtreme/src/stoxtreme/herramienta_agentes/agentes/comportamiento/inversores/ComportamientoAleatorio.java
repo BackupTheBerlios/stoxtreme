@@ -84,41 +84,41 @@ public class ComportamientoAleatorio extends ComportamientoAgente {
 				}
 			}
 			else {
-//				int idOp = operacionesPendientes.dameOperacionAleatoria();
-//
-//				if (!operacionesPendientes.isPendienteCancelacion(idOp)) {
-//					decisiones.add(new CancelarOperacion(idOp));
-//					estado = "Genera cancelacion";
-//					// Una cancelacion es una operacion pendiente
-//
-//					if (numeroCancelaciones < modeloPsicologico.numeroMaximoCancelaciones()) {
-//						double precio = operacionesPendientes.getPrecioOperacion(idOp);
-//						int tipo = operacionesPendientes.getTipoOperacion(idOp);
-//
-//						int cantidad;
-//						if (tipo == Operacion.COMPRA) {
-//							precio = precio * (1 + modeloPsicologico.porcentajeSubidaPrecio());
-//							cantidad = modeloPsicologico.numeroCompraAcciones();
-//						}
-//						else {
-//							precio = precio * (1 - modeloPsicologico.porcentajeBajadaPrecio());
-//							cantidad = estadoCartera.numeroAccionesPosesion(empresa);
-//							cantidad = (int) (((double) cantidad) * Math.random());
-//						}
-//						precio = redondeo(precio, 2);
-//						Operacion op = new Operacion(null, tipo, cantidad, empresa, precio);
-//						generaDecisionAPartirNotificacion(-idOp, new IntroducirOperacion(op));
-//
-//						numeroCancelaciones++;
-//					}
-//					else {
-//						numeroCancelaciones = 0;
-//					}
-//				}
-//				else {
-//					int x = 0;
-//					x++;
-//				}
+				int idOp = operacionesPendientes.dameOperacionAleatoria();
+
+				if (!operacionesPendientes.isPendienteCancelacion(idOp)) {
+					decisiones.add(new CancelarOperacion(idOp));
+					estado = "Genera cancelacion";
+					// Una cancelacion es una operacion pendiente
+
+					if (numeroCancelaciones < modeloPsicologico.numeroMaximoCancelaciones()) {
+						double precio = operacionesPendientes.getPrecioOperacion(idOp);
+						int tipo = operacionesPendientes.getTipoOperacion(idOp);
+
+						int cantidad;
+						if (tipo == Operacion.COMPRA) {
+							precio = precio * (1 + modeloPsicologico.porcentajeSubidaPrecio());
+							cantidad = modeloPsicologico.numeroCompraAcciones();
+						}
+						else {
+							precio = precio * (1 - modeloPsicologico.porcentajeBajadaPrecio());
+							cantidad = estadoCartera.numeroAccionesPosesion(empresa);
+							cantidad = (int) (((double) cantidad) * Math.random());
+						}
+						precio = redondeo(precio, 2);
+						Operacion op = new Operacion(null, tipo, cantidad, empresa, precio);
+						generaDecisionAPartirNotificacion(-idOp, new IntroducirOperacion(op));
+
+						numeroCancelaciones++;
+					}
+					else {
+						numeroCancelaciones = 0;
+					}
+				}
+				else {
+					int x = 0;
+					x++;
+				}
 			}
 		}
 	}
