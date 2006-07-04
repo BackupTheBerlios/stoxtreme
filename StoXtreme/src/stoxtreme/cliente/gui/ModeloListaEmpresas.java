@@ -28,7 +28,7 @@ public class ModeloListaEmpresas extends AbstractTableModel {
 
 
 	/**
-	Obtenemos el número de filas RowCount
+	 * Obtenemos el número de filas RowCount
 	 *
 	 *@return    Valor de RowCount
 	 */
@@ -48,7 +48,7 @@ public class ModeloListaEmpresas extends AbstractTableModel {
 
 
 	/**
-	*  Obtenemos el valor ValueAt
+	 *  Obtenemos el valor ValueAt
 	 *
 	 *@param  rowIndex     Número de fila
 	 *@param  columnIndex  Número de columna

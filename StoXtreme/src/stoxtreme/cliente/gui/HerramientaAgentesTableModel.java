@@ -11,7 +11,7 @@ import javax.swing.table.AbstractTableModel;
 import stoxtreme.herramienta_agentes.agentes.Agente;
 
 /**
- *  Description of the Class
+ *  Implementación del listado de agentes dentro de la herramienta de agentes
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -22,9 +22,9 @@ public class HerramientaAgentesTableModel extends AbstractTableModel {
 
 
 	/**
-	 *  Sets the Agentes attribute of the HerramientaAgentesTableModel object
+	 *  Asigna la lista de agentes Agentes
 	 *
-	 *@param  agentes  The new Agentes value
+	 *@param  agentes  El nuevo valor de los Agentes
 	 */
 	public void setAgentes(ArrayList<Agente> agentes) {
 		elementos = agentes;
@@ -33,11 +33,12 @@ public class HerramientaAgentesTableModel extends AbstractTableModel {
 
 
 	/**
-	 *  Sets the ValueAt attribute of the HerramientaAgentesTableModel object
+	 *  Asignamos el valor aValue
 	 *
-	 *@param  aValue       The new ValueAt value
-	 *@param  rowIndex     The new ValueAt value
-	 *@param  columnIndex  The new ValueAt value
+	 *@param  aValue       Objeto a asignar
+	 *@param  rowIndex     Número de fila
+	 *@param  columnIndex  Número de columna
+	 *@return              Valor de ValueAt
 	 */
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		if (columnIndex == 0) {
@@ -52,10 +53,10 @@ public class HerramientaAgentesTableModel extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the ColumnName attribute of the HerramientaAgentesTableModel object
+	 *  Obtenemos el nombre de Columnas ColumnName
 	 *
-	 *@param  column  Description of Parameter
-	 *@return         The ColumnName value
+	 *@param  column        Número de columna
+	 *@return        		Valor de ColumnName
 	 */
 	public String getColumnName(int column) {
 		return columnas[column];
@@ -63,9 +64,9 @@ public class HerramientaAgentesTableModel extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the RowCount attribute of the HerramientaAgentesTableModel object
+	 * Obtenemos el número de filas RowCount
 	 *
-	 *@return    The RowCount value
+	 *@return    Valor de RowCount
 	 */
 	public int getRowCount() {
 		return elementos.size();
@@ -73,9 +74,9 @@ public class HerramientaAgentesTableModel extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the ColumnCount attribute of the HerramientaAgentesTableModel object
+	 *  Obtenemos el número de Columnas ColumnCount
 	 *
-	 *@return    The ColumnCount value
+	 *@return    Valor de ColumnCount
 	 */
 	public int getColumnCount() {
 		return columnas.length;
@@ -83,12 +84,12 @@ public class HerramientaAgentesTableModel extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the CellEditable attribute of the HerramientaAgentesTableModel
+	 *  Comprobamos si una celda es editable
 	 *  object
 	 *
-	 *@param  rowIndex     Description of Parameter
-	 *@param  columnIndex  Description of Parameter
-	 *@return              The CellEditable value
+	 *@param  rowIndex     Número de fila
+	 *@param  columnIndex  Número de columna
+	 *@return              Respuesta de la comprobación
 	 */
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return columnIndex == 0;
