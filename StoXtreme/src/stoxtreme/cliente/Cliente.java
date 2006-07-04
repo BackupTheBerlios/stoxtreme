@@ -47,9 +47,9 @@ public class Cliente {
 
 
 	/**
-	 *  Gets the NUsuario attribute of the Cliente object
+	 *  Nos dice el número de usuario
 	 *
-	 *@return    The NUsuario value
+	 *@return    valor de NUsuario 
 	 */
 	public String getNUsuario() {
 		return nUsuario;
@@ -57,10 +57,10 @@ public class Cliente {
 
 
 	/**
-	 *  Gets the NombreFicheros attribute of the Cliente object
+	 *  obtiene los ficheros de las empresas del cliente
 	 *
-	 *@param  fichEmpresas  Description of Parameter
-	 *@return               The NombreFicheros value
+	 *@param  fichEmpresas  fichero descriptor de las empresas
+	 *@return               una lista de nombre de variables
 	 */
 	public String[] getNombreFicheros(String fichEmpresas) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -100,9 +100,9 @@ public class Cliente {
 
 
 	/**
-	 *  Gets the EstadoBolsa attribute of the Cliente object
+	 *  Obtenemos el estado de la bolsa
 	 *
-	 *@return    The EstadoBolsa value
+	 *@return    Valor de EstadoBolsa
 	 */
 	public EstadoBolsa getEstadoBolsa() {
 		return eBolsa;
@@ -110,9 +110,9 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicialización del cliente
 	 *
-	 *@exception  Exception  Description of Exception
+	 *@exception  Exception  Lanza excepciones en caso de tener algún problema con el servidor
 	 */
 	public void init() throws Exception {
 		boolean conectado = false;
@@ -225,9 +225,9 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Iniciamos los agentes asociados al cliente
 	 *
-	 *@param  parametros  Description of Parameter
+	 *@param  parametros  Parametros seleccionados por el cliente
 	 */
 	public void iniciarHerramientaAgentes(ParametrosAgentes parametros) {
 		try {
@@ -247,10 +247,10 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta una operacion realizada por el cliente
 	 *
-	 *@param  op             Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  op             Tipo de operación
+	 *@exception  Exception  Lanza una excepcion si hay problema con el servidor
 	 */
 	public void insertarOperacion(Operacion op) throws Exception {
 		int idOp = servidor.insertarOperacion(nUsuario, op);
@@ -259,10 +259,10 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Cancela una operacion realizada por el cliente
 	 *
-	 *@param  op             Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  op             Tipo de operación
+	 *@exception  Exception  Lanza una excepcion si hay problema con el servidor
 	 */
 	public void cancelarOperacion(int op) throws Exception {
 		servidor.cancelarOperacion(nUsuario, op);
@@ -270,12 +270,12 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Realiza la notificación de una operacion realizada
 	 *
-	 *@param  idDestino  Description of Parameter
-	 *@param  idOp       Description of Parameter
-	 *@param  cantidad   Description of Parameter
-	 *@param  precio     Description of Parameter
+	 *@param  idDestino  Id del usuario destino
+	 *@param  idOp       Id de la operación destino
+	 *@param  cantidad   Cantidad de acciones
+	 *@param  precio     Precio de las acciones
 	 */
 	public void notificaOperacion(String idDestino, int idOp, int cantidad, double precio) {
 		if (nUsuario.equals(idDestino)) {
@@ -291,10 +291,10 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Realiza la cancelación de una operacion realizada
 	 *
-	 *@param  idDestino  Description of Parameter
-	 *@param  idOp       Description of Parameter
+	 *@param  idDestino  Id del usuario destino
+	 *@param  idOp       Id de la operación destino
 	 */
 	public void notificaCancelacion(String idDestino, int idOp) {
 		if (nUsuario.equals(idDestino)) {
@@ -307,9 +307,9 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Desconexión del cliente
 	 *
-	 *@exception  Exception  Description of Exception
+	 *@exception  Exception  Por si hay conflicto con el servidor
 	 */
 	public void desloguea() throws Exception {
 		System.out.println("Deslogea");
@@ -333,10 +333,11 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Comprueba si la cadena introducida es correcta
+	 *  
 	 *
-	 *@param  s  Description of Parameter
-	 *@return    Description of the Returned Value
+	 *@param  s  Cadena a comprobar
+	 *@return    Nos dice si es valido o no
 	 */
 	public boolean validar(String s) {
 		boolean valido = true;
@@ -352,22 +353,19 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Nos muestra una ventana con un mensaje
 	 *
-	 *@param  contenido  Description of Parameter
+	 *@param  contenido  Contenido del mensaje
 	 */
 	public void informar(String contenido) {
 		if (gui != null) {
 			JOptionPane.showMessageDialog(gui, contenido);
 		}
-		else {
-			//System.out.println("Mensaje informacion: "+contenido);
-		}
 	}
 
 
 	/**
-	 *  Description of the Method
+	 *  Detiene los agentes creados por el cliente
 	 */
 	public void detenerHerramientaAgentes() {
 		hAgentes.pausarAgentes();
@@ -375,7 +373,7 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Reanuda los agentes creados que estaban pausados
 	 */
 	public void reanudarHerramientaAgentes() {
 		hAgentes.reanudarAgentes();
@@ -383,9 +381,9 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  Vuelve a construir una herramienta de agentes 
 	 *
-	 *@param  parametros  Description of Parameter
+	 *@param  parametros  Parámetros seleccionados por el cliente
 	 */
 	public void reiniciarHerramientaAgentes(ParametrosAgentes parametros) {
 		try {
@@ -398,7 +396,7 @@ public class Cliente {
 
 
 	/**
-	 *  Description of the Method
+	 *  En caso que el servidor haya terminado inesperadamente se notifica al cliente
 	 */
 	public void finSimulacion() {
 		try {
@@ -411,23 +409,6 @@ public class Cliente {
 		}
 	}
 
-
-	/**
-	 *  The main program for the Cliente class
-	 *
-	 *@param  args  The command line arguments
-	 */
-	public static void main(String[] args) {
-		PropertyConfigurator.configure("conf/log4j.properties");
-		Cliente c = new Cliente();
-		try {
-			c.init();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-	}
 
 	static {
 		try {
