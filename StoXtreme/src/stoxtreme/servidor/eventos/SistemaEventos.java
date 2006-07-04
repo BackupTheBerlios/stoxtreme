@@ -124,4 +124,17 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 		}
 	}
 
+	public void quitaEventoModelo(String condicion, String accion) {
+		int i=0; 
+		while(i<listaCondiciones.size() && 
+			!listaCondiciones.get(i).getDescripcion().equals(condicion) &&
+			!listaAcciones.get(i).equals(accion)
+		)i++;
+		System.err.println(i);
+		if(i<listaCondiciones.size()){
+			listaAcciones.remove(i);
+			listaCondiciones.remove(i);
+		}
+	}
+
 }

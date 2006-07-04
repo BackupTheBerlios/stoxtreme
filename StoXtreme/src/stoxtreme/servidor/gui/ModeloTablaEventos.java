@@ -208,8 +208,10 @@ public abstract class ModeloTablaEventos extends AbstractTableModel implements A
 		if (cambiado) {
 			fireTableDataChanged();
 		}
+		quitaEventoModelo(evento.condicion, evento.accion);
 	}
 
+	public abstract void quitaEventoModelo(String condicion, String accion);
 
 	/**
 	 *  Description of the Method
