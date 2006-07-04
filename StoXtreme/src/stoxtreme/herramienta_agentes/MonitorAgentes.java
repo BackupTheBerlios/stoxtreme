@@ -73,6 +73,7 @@ public class MonitorAgentes extends Thread {
 	public MonitorAgentes(Stoxtreme conexion, ConsolaAgentes consola, int tiempoCiclo) {
 		this.conexion = conexion;
 		this.consola = consola;
+		this.listaAgentes=new ArrayList<Agente>();
 		this.pausa = false;
 		colaPeticiones = new PriorityBlockingQueue<Decision>();
 		ciclo = 0;

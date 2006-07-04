@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 /**
- *  Description of the Class
+ *  Configura el marco de la pantalla inicial
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -30,14 +30,13 @@ public class FakeInternalFrame extends JPanel {
 
 
 	/**
-	 *  Constructor for the FakeInternalFrame object
+	 *  Constructor de FakeInternalFrame
 	 *
-	 *@param  titulo     Description of Parameter
-	 *@param  principal  Description of Parameter
+	 *@param  titulo     Titulo de la ventana
+	 *@param  principal  Componente incluido en la ventana
 	 */
 	public FakeInternalFrame(String titulo, Component principal) {
 		super(new BorderLayout());
-		//super();
 		this.titulo = titulo;
 		this.add(getBarraTitulo(), BorderLayout.NORTH);
 		panelPrincipal.add(principal);
@@ -47,9 +46,9 @@ public class FakeInternalFrame extends JPanel {
 
 
 	/**
-	 *  Sets the MenuBar attribute of the FakeInternalFrame object
+	 *  Añade un MenuBar a la ventana
 	 *
-	 *@param  menuBar  The new MenuBar value
+	 *@param  menuBar  Nuevo valor de MenuBar
 	 */
 	public void setMenuBar(JMenuBar menuBar) {
 		panelPrincipal.add(menuBar, BorderLayout.NORTH);
@@ -57,9 +56,9 @@ public class FakeInternalFrame extends JPanel {
 
 
 	/**
-	 *  Sets the Title attribute of the FakeInternalFrame object
+	 *  Añade un Título a la ventana
 	 *
-	 *@param  title  The new Title value
+	 *@param  title  Nuevo valor de Tílulo
 	 */
 	public void setTitle(String title) {
 		tituloLabel.setText(title);
@@ -68,9 +67,9 @@ public class FakeInternalFrame extends JPanel {
 
 
 	/**
-	 *  Gets the BarraTitulo attribute of the FakeInternalFrame object
+	 *  Obtiene la  BarraTitulo
 	 *
-	 *@return    The BarraTitulo value
+	 *@return    Valor de la BarraTitulo
 	 */
 	public JPanel getBarraTitulo() {
 		JPanel panel = new JPanel();
@@ -84,9 +83,9 @@ public class FakeInternalFrame extends JPanel {
 
 
 	/**
-	 *  Gets the Title attribute of the FakeInternalFrame object
+	 *  Obtiene la Título de la ventana
 	 *
-	 *@return    The Title value
+	 *@return    Valor del Title
 	 */
 	public String getTitle() {
 		return titulo;
@@ -94,9 +93,9 @@ public class FakeInternalFrame extends JPanel {
 
 
 	/**
-	 *  Description of the Method
+	 *  Obtenemos la ventana completa
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    este Objeto
 	 */
 	public FakeInternalFrame damePanel() {
 		return this;

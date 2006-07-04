@@ -22,13 +22,13 @@ import stoxtreme.herramienta_agentes.agentes.IDAgente;
 import stoxtreme.interfaz_remota.Operacion;
 
 /**
- *  Description of the Class
+ *  Configura la interfaz de los Agentes asociados a un Cliente
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 	/**
-	 *  Description of the Field
+	 *  Tabla de Agentes
 	 */
 	protected HerramientaAgentesTableModel modeloTabla;
 
@@ -61,7 +61,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Constructor for the HerramientaAgentesPanel object
+	 *  Constructor de HerramientaAgentesPanel
 	 */
 	public HerramientaAgentesPanel() {
 		try {
@@ -74,9 +74,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Sets the Frame attribute of the HerramientaAgentesPanel object
+	 *  Asigna una nueva Frame
 	 *
-	 *@param  frame  The new Frame value
+	 *@param  frame  Nuevo valor de Frame
 	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
@@ -84,9 +84,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Sets the Cliente attribute of the HerramientaAgentesPanel object
+	 *  Asigna un Cliente
 	 *
-	 *@param  cliente  The new Cliente value
+	 *@param  cliente  Nuevo valor de Cliente
 	 */
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
@@ -94,9 +94,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Gets the PanelIzquierdo attribute of the HerramientaAgentesPanel object
+	 *  Obtiene el PanelIzquierdo
 	 *
-	 *@return    The PanelIzquierdo value
+	 *@return    Valor de PanelIzquierdo
 	 */
 	public Component getPanelIzquierdo() {
 		JPanel panel = new JPanel(new BorderLayout());
@@ -108,10 +108,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Gets the PanelIzquierdoArriba attribute of the HerramientaAgentesPanel
-	 *  object
+	 *  Obtiene el PanelIzquierdoArriba
 	 *
-	 *@return    The PanelIzquierdoArriba value
+	 *@return    Valor de PanelIzquierdoArriba
 	 */
 	public Component getPanelIzquierdoArriba() {
 		modeloTabla = new HerramientaAgentesTableModel();
@@ -124,10 +123,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Gets the PanelIzquierdoAbajo attribute of the HerramientaAgentesPanel
-	 *  object
+	 *  Obtiene el PanelIzquierdoAbajo
 	 *
-	 *@return    The PanelIzquierdoAbajo value
+	 *@return    Valor de PanelIzquierdoAbajo
 	 */
 	public Component getPanelIzquierdoAbajo() {
 		panelBotonesNormal = new JPanel();
@@ -184,9 +182,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Gets the PanelDerecho attribute of the HerramientaAgentesPanel object
+	 *  Obtiene el PanelDerecho attribute
 	 *
-	 *@return    The PanelDerecho value
+	 *@return    Valor de PanelDerecho
 	 */
 	public Component getPanelDerecho() {
 		setLayout(new BorderLayout());
@@ -198,10 +196,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Gets the PanelInferiorDerecho attribute of the HerramientaAgentesPanel
-	 *  object
+	 *  Obtiene el PanelInferiorDerecho
 	 *
-	 *@return    The PanelInferiorDerecho value
+	 *@return    Valor de PanelInferiorDerecho
 	 */
 	public Component getPanelInferiorDerecho() {
 		JTextPane texto = new JTextPane();
@@ -214,10 +211,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Gets the PanelSuperiorDerecho attribute of the HerramientaAgentesPanel
-	 *  object
+	 *  Obtiene el PanelSuperiorDerecho
 	 *
-	 *@return    The PanelSuperiorDerecho value
+	 *@return    Valor de PanelSuperiorDerecho
 	 */
 	public Component getPanelSuperiorDerecho() {
 		JTextPane texto = new JTextPane();
@@ -230,9 +226,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicia la pantalla de agentes
 	 *
-	 *@exception  Exception  Description of Exception
+	 *@exception  Exception  Lanza las excepciones producidas al iniciar
 	 */
 	public void init() throws Exception {
 		panelPrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
@@ -246,10 +242,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Adds a feature to the ListaAgentes attribute of the
-	 *  HerramientaAgentesPanel object
+	 *  Añade a la tabla de Agentes todos los agentes que han sido almacenados en la lista
 	 *
-	 *@param  listaAgentes  The feature to be added to the ListaAgentes attribute
+	 *@param  listaAgentes  Lista de Agentes creados
 	 */
 	public void addListaAgentes(ArrayList<Agente> listaAgentes) {
 		modeloTabla.setAgentes(listaAgentes);
@@ -257,10 +252,10 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta una acción que ha producido un agente
 	 *
-	 *@param  idAgente  Description of Parameter
-	 *@param  accion    Description of Parameter
+	 *@param  idAgente  Id del agente que ha producido la acción
+	 *@param  accion    Acción producida por el agente
 	 */
 	public synchronized void insertarAccion(String idAgente, String accion) {
 		try {
@@ -290,10 +285,10 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Se realiza una notificación por parte de un agente
 	 *
-	 *@param  idAgente  Description of Parameter
-	 *@param  notif     Description of Parameter
+	 *@param  idAgente  Id del agente
+	 *@param  notif     Notificación producida
 	 */
 	public synchronized void insertarNotificacion(String idAgente, String notif) {
 		try {
@@ -321,7 +316,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Elimina los campos de la interfaz gráfica
 	 */
 	public void limpiarGUI() {
 		try {
@@ -335,9 +330,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Incrementa en cada ciclo el tick que ha sido asignado para los agentes
 	 *
-	 *@param  tick  Description of Parameter
+	 *@param  tick  Contador de ticks
 	 */
 	public void incrementaTick(int tick) {
 		String titulo = "Agentes en el sistema. Ciclo: " + tick;
@@ -346,7 +341,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Reinicia la herramienta de agentes cuando el Cliente lo desee
 	 */
 	private void boton_reiniciarActionPerformed() {
 		DialogoParametrosAgentes dialogo = new DialogoParametrosAgentes(frame);
@@ -364,7 +359,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Para las acciones de los Agentes
 	 */
 	private void botonParar_actionPerformed() {
 		cliente.detenerHerramientaAgentes();
@@ -373,7 +368,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inicia la herramienta de agentes
 	 */
 	private void botonIniciar_actionPerformed() {
 		DialogoParametrosAgentes dialogo = new DialogoParametrosAgentes(frame);
@@ -392,7 +387,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Permite volver a los agentes a su actividad
 	 */
 	private void botonReanudar_actionPerformed() {
 		cliente.reanudarHerramientaAgentes();
@@ -401,7 +396,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Elimina un agente que el Cliente a seleccionado
 	 */
 	private void botonEliminar_actionPerformed() {
 		// Cogemos los agentes seleccionados y los eliminamos
@@ -415,7 +410,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Editamos los movimientos de un agente en exclusiva
 	 */
 	private void botonEditar_actionPerformed() {
 		int row = tablaAgentes.getSelectedRow();
@@ -428,7 +423,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Desplazo la barra segun se incremente el número de agentes
 	 */
 	private void scrollAbajoConsola() {
 		scrollTextoConsola.getVerticalScrollBar().setValue(scrollTextoConsola.getVerticalScrollBar().getMaximum());
@@ -436,7 +431,7 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Realizo desplazamientos en las notificaciones
 	 */
 	private void scrollAbajoNotificacion() {
 		scrollTextoNotificacion.getVerticalScrollBar().setValue(scrollTextoConsola.getVerticalScrollBar().getMaximum());
@@ -444,10 +439,9 @@ public class HerramientaAgentesPanel extends JPanel implements ConsolaAgentes {
 
 
 	/**
-	 *  Adds a feature to the StylesToDocument attribute of the
-	 *  HerramientaAgentesPanel object
+	 *  añadimos a lso agentes diferentes tipos de letras
 	 *
-	 *@param  doc  The feature to be added to the StylesToDocument attribute
+	 *@param  doc  variable que nos permite cambiar el tipo de letra
 	 */
 	private void addStylesToDocument(StyledDocument doc) {
 		//Initialize some styles.
