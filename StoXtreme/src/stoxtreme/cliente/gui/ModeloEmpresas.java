@@ -8,7 +8,8 @@ import javax.swing.DefaultComboBoxModel;
 import stoxtreme.cliente.infoLocal.InfoLocal;
 
 /**
- *  Description of the Class
+ *  Permite representar las empresas en la interfaz gráfica
+ *  
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -20,9 +21,9 @@ public class ModeloEmpresas extends DefaultComboBoxModel {
 
 
 	/**
-	 *  Constructor for the ModeloEmpresas object
+	 *  Constructor de ModeloEmpresas
 	 *
-	 *@param  info  Description of Parameter
+	 *@param  info  Información que se encuentra en el disco
 	 */
 	public ModeloEmpresas(InfoLocal info) {
 		empresas = new Hashtable<String, ValoresEmpresa>();
@@ -41,9 +42,9 @@ public class ModeloEmpresas extends DefaultComboBoxModel {
 
 
 	/**
-	 *  Sets the SelectedItem attribute of the ModeloEmpresas object
+	 *  Asigna un el elemento seleccionado
 	 *
-	 *@param  anItem  The new SelectedItem value
+	 *@param  anItem  Nuevo objeto selecionado
 	 */
 	public void setSelectedItem(Object anItem) {
 		empresaFocus = (String) anItem;
@@ -52,9 +53,9 @@ public class ModeloEmpresas extends DefaultComboBoxModel {
 
 
 	/**
-	 *  Gets the SelectedItem attribute of the ModeloEmpresas object
+	 *  Obtiene el elemento seleccionado
 	 *
-	 *@return    The SelectedItem value
+	 *@return    Objeto seleccionado
 	 */
 	public Object getSelectedItem() {
 		return empresaFocus;
@@ -62,9 +63,9 @@ public class ModeloEmpresas extends DefaultComboBoxModel {
 
 
 	/**
-	 *  Gets the Size attribute of the ModeloEmpresas object
+	 *  Obtiene el tamaño de las empresas
 	 *
-	 *@return    The Size value
+	 *@return    Valor del tamaño
 	 */
 	public int getSize() {
 		return nombreEmpresas.size();
@@ -72,10 +73,10 @@ public class ModeloEmpresas extends DefaultComboBoxModel {
 
 
 	/**
-	 *  Gets the ElementAt attribute of the ModeloEmpresas object
+	 *  Obtengo un atributo del modelo de empresas
 	 *
-	 *@param  index  Description of Parameter
-	 *@return        The ElementAt value
+	 *@param  index  Indice de empresa
+	 *@return        El valor del elemento
 	 */
 	public Object getElementAt(int index) {
 		return nombreEmpresas.get(index);
@@ -83,9 +84,9 @@ public class ModeloEmpresas extends DefaultComboBoxModel {
 
 
 	/**
-	 *  Gets the ValoresFocus attribute of the ModeloEmpresas object
+	 *  obtiene los valores del modelo de empresa
 	 *
-	 *@return    The ValoresFocus value
+	 *@return    Valores del modelo
 	 */
 	public ValoresEmpresa getValoresFocus() {
 		return valorFocus;
@@ -93,10 +94,10 @@ public class ModeloEmpresas extends DefaultComboBoxModel {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta un nuevo valor en una empresa
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@param  valor    Description of Parameter
+	 *@param  empresa  Nombre de la empresa
+	 *@param  valor    Valor nuevo
 	 */
 	public void insertaValor(String empresa, double valor) {
 		((ValoresEmpresa) empresas.get(empresa)).insertarSiguienteValor(valor);

@@ -18,7 +18,7 @@ import javax.swing.table.TableCellEditor;
 import stoxtreme.interfaz_remota.Operacion;
 
 /**
- *  Description of the Class
+ *  Muestra la tabla de operaciones pendientes
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -39,7 +39,7 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Constructor for the ModeloOpPendientes object
+	 *  Constructor de ModeloOpPendientes
 	 */
 	public ModeloOpPendientes() {
 		opPendientes = new Hashtable<Integer, Operacion>();
@@ -48,9 +48,9 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the RowCount attribute of the ModeloOpPendientes object
+	  *  Obtenemos el número de filas RowCount
 	 *
-	 *@return    The RowCount value
+	 *@return    Valor de RowCount
 	 */
 	public int getRowCount() {
 		return listaIDS.size();
@@ -58,9 +58,9 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the ColumnCount attribute of the ModeloOpPendientes object
+	  *  Obtenemos el número de Columnas ColumnCount
 	 *
-	 *@return    The ColumnCount value
+	 *@return    Valor de ColumnCount
 	 */
 	public int getColumnCount() {
 		return nCol.length;
@@ -68,10 +68,10 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the ColumnName attribute of the ModeloOpPendientes object
+	 *  Obtenemos el nombre de Columnas ColumnName
 	 *
-	 *@param  index  Description of Parameter
-	 *@return        The ColumnName value
+	 *@param  index  Número de columna
+	 *@return        Valor de ColumnName
 	 */
 	public String getColumnName(int index) {
 		return nCol[index];
@@ -79,11 +79,11 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the ValueAt attribute of the ModeloOpPendientes object
+	*  Obtenemos el valor ValueAt
 	 *
-	 *@param  rowIndex     Description of Parameter
-	 *@param  columnIndex  Description of Parameter
-	 *@return              The ValueAt value
+	 *@param  rowIndex     Número de fila
+	 *@param  columnIndex  Número de columna
+	 *@return              Valor de ValueAt
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
@@ -104,10 +104,10 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the CellEditable attribute of the ModeloOpPendientes object
+	 *  Nos informa si una celda es editable o no
 	 *
-	 *@param  row  Description of Parameter
-	 *@param  col  Description of Parameter
+	 *@param  row  Número de fila
+	 *@param  col  Número de columna
 	 *@return      The CellEditable value
 	 */
 	public boolean isCellEditable(int row, int col) {
@@ -126,10 +126,10 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the Operacion attribute of the ModeloOpPendientes object
+	 *  Obtiene la Operacion del ModeloOpPendientes
 	 *
-	 *@param  idOp  Description of Parameter
-	 *@return       The Operacion value
+	 *@param  idOp  Id de la operación
+	 *@return       Devuelve la operación indicada
 	 */
 	public Operacion getOperacion(int idOp) {
 		return opPendientes.get(idOp);
@@ -137,10 +137,10 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta una nueva operación
 	 *
-	 *@param  o     Description of Parameter
-	 *@param  idOp  Description of Parameter
+	 *@param  o     Operación a insertar
+	 *@param  idOp  Id de la operación
 	 */
 	public void insertarOperacion(Operacion o, int idOp) {
 		listaIDS.add(new Integer(idOp));
@@ -150,9 +150,9 @@ public class ModeloOpPendientes extends AbstractTableModel {
 
 
 	/**
-	 *  Description of the Method
+	 *  Borra una operación existente
 	 *
-	 *@param  idOp  Description of Parameter
+	 *@param  idOp  Id de la operación
 	 */
 	public void borrarOperacion(int idOp) {
 		int i = listaIDS.indexOf(new Integer(idOp));
