@@ -8,50 +8,52 @@ package stoxtreme.interfaz_remota;
 import java.rmi.RemoteException;
 
 /**
- *  Description of the Interface
+ *  Interfaz del servidor
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface Stoxtreme extends java.rmi.Remote {
 	/**
-	 *  Description of the Method
+	 *  Registro de un usuario
 	 *
-	 *@param  id                   Description of Parameter
-	 *@param  pass                 Description of Parameter
-	 *@return                      Description of the Returned Value
-	 *@exception  RemoteException  Description of Exception
+	 *@param  id                   Id del usuario
+	 *@param  pass                 Contraseña de usuario
+	 *@return                      Devuelve exito o fracaso en la conexión
+	 *@exception  RemoteException  Excepción Remota
 	 */
 	public boolean registro(String id, String pass) throws RemoteException;
 
 
 	/**
-	 *  Description of the Method
+	 *  Comprobación de un usuario ya registrado
 	 *
-	 *@param  id                   Description of Parameter
-	 *@param  pass                 Description of Parameter
-	 *@return                      Description of the Returned Value
-	 *@exception  RemoteException  Description of Exception
+	 *@param  id                   Id del usuario
+	 *@param  pass                 Contraseña de usuario
+	 *@return                      Devuelve exito o fracaso en la conexión
+	 *@exception  RemoteException  Excepción Remota
 	 */
 	public int login(String id, String pass) throws RemoteException;
 
-
 	/**
-	 *  Description of the Method
+	 
+	 */
+	/**
+	 *  Inserta una operación
 	 *
-	 *@param  id                   Description of Parameter
-	 *@param  op                   Description of Parameter
-	 *@return                      Description of the Returned Value
-	 *@exception  RemoteException  Description of Exception
+	 *@param  id  					Id de la operación
+	 *@param  op  					Operación introducida
+	 *@return     					devuelve el entero que ha generado la inserción
+	 *@exception  RemoteException   Excepción Remota  
 	 */
 	public int insertarOperacion(String id, Operacion op) throws RemoteException;
 
 
 	/**
-	 *  Description of the Method
+	 *  Cancela una operación
 	 *
-	 *@param  id                   Description of Parameter
-	 *@param  idOp                 Description of Parameter
-	 *@exception  RemoteException  Description of Exception
+	 *@param  id                   Id del que la cancela
+	 *@param  idOp                 Id de la operación
+	 *@exception  RemoteException  Excepción Remota
 	 */
 	public void cancelarOperacion(String id, int idOp) throws RemoteException;
 }

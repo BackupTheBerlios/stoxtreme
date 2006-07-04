@@ -1,27 +1,27 @@
 package stoxtreme.interfaz_remota;
 
 /**
- *  Description of the Interface
+ *  Interfaz de usuario
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface IUsuario {
 	/**
-	 *  Description of the Method
+	 *  Premite registrar un nuevo usuario
 	 *
-	 *@param  nUsuario  Description of Parameter
-	 *@param  pswd      Description of Parameter
-	 *@return           Description of the Returned Value
+	 *@param  nUsuario  Nombre del nuevo usuario
+	 *@param  pswd      Contraseña del nuevo usuario
+	 *@return           devuelve si se ha podido realizar el registro
 	 */
 	public boolean registro(String nUsuario, String pswd);
 
 
 	/**
-	 *  Description of the Method
+	 *  Premite loguear un usuario ya registrado
 	 *
-	 *@param  nUsuario  Description of Parameter
-	 *@param  pswd      Description of Parameter
-	 *@return           Description of the Returned Value
+	 *@param  nUsuario  Nombre del usuario
+	 *@param  pswd      Contraseña del usuario
+	 *@return           devuelve si se ha podido realizar la conexión
 	 */
 	public boolean login(String nUsuario, String pswd);
 }

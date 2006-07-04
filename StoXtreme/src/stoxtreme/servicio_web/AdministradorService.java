@@ -8,7 +8,7 @@ package stoxtreme.servicio_web;
 import stoxtreme.interfaz_remota.Administrador;
 
 /**
- *  Description of the Interface
+ *  Interfaz de administrador de servicios
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */

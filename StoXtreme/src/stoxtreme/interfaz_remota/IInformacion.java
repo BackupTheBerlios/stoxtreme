@@ -3,42 +3,42 @@ package stoxtreme.interfaz_remota;
 import stoxtreme.servidor.objeto_bolsa.informacion.InfoBursatil;
 
 /**
- *  Description of the Interface
+ *  Posee información de los datos bursátiles que hay en el sistema
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface IInformacion {
 	// Participaciones, ampliaciones de capital, etc...
 	/**
-	 *  Gets the DatosBursatiles attribute of the IInformacion object
+	 *  Obtiene los DatosBursatiles
 	 *
-	 *@return    The DatosBursatiles value
+	 *@return    Valor de DatosBursatiles
 	 */
 	public InfoBursatil getDatosBursatiles();
 
 
 	/**
-	 *  Sets the InfoBursatil attribute of the IInformacion object
+	 *  Asignamos una nueva InfoBursatil
 	 *
-	 *@param  i  The new InfoBursatil value
+	 *@param  i  Nuevo valor de InfoBursatil
 	 */
 	public void setInfoBursatil(InfoBursatil i);
 
-	// Valoraciï¿½n de como se va a comportar la empresa en el futuro
+	// Valoración de como se va a comportar la empresa en el futuro
 
 	// Util para los eventos, etc.
 	/**
-	 *  Gets the PerspectivaFuturo attribute of the IInformacion object
+	 *  Obtiene la  PerspectivaFuturo
 	 *
-	 *@return    The PerspectivaFuturo value
+	 *@return    Valor de PerspectivaFuturo
 	 */
 	public String getPerspectivaFuturo();
 
 
 	/**
-	 *  Sets the PerspectivaFuturo attribute of the IInformacion object
+	 *  Asignamos una nueva PerspectivaFuturo
 	 *
-	 *@param  s  The new PerspectivaFuturo value
+	 *@param  s  Nuevo valor de PerspectivaFuturo
 	 */
 	public void setPerspectivaFuturo(String s);
 }

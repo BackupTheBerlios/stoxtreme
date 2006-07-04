@@ -12,49 +12,49 @@ package stoxtreme.interfaz_remota;
  */
 public interface Administrador extends java.rmi.Remote {
 	/**
-	 *  Description of the Method
+	 *  Método que permite iniciar el sistema al Administrador
 	 *
-	 *@exception  java.rmi.RemoteException  Description of Exception
+	 *@exception  java.rmi.RemoteException  Excepción remota del servidor
 	 */
 	public void iniciarServidor() throws java.rmi.RemoteException;
 
 
 	/**
-	 *  Description of the Method
+	 *  Permite parar el servidor al administrador en un momento determinado
 	 *
-	 *@exception  java.rmi.RemoteException  Description of Exception
+	 *@exception  java.rmi.RemoteException  Excepción remota del servidor
 	 */
 	public void pararServidor() throws java.rmi.RemoteException;
 
 
 	/**
-	 *  Description of the Method
+	 *  Permite iniciar una sesión bursátil
 	 *
-	 *@exception  java.rmi.RemoteException  Description of Exception
+	 *@exception  java.rmi.RemoteException  Excepción remota del servidor
 	 */
 	public void iniciaSesion() throws java.rmi.RemoteException;
 
 
 	/**
-	 *  Description of the Method
+	 *  Permite finalizar una sesión bursátil
 	 *
-	 *@exception  java.rmi.RemoteException  Description of Exception
+	 *@exception  java.rmi.RemoteException  Excepción remota del servidor
 	 */
 	public void finalizaSesion() throws java.rmi.RemoteException;
 
 
 	/**
-	 *  Description of the Method
+	 *  Muestra la interfaz gráfica
 	 *
-	 *@exception  java.rmi.RemoteException  Description of Exception
+	 *@exception  java.rmi.RemoteException  Excepción remota del servidor
 	 */
 	public void showGUI() throws java.rmi.RemoteException;
 
 
 	/**
-	 *  Description of the Method
+	 *  Oculta la Interfaz gráfica
 	 *
-	 *@exception  java.rmi.RemoteException  Description of Exception
+	 *@exception  java.rmi.RemoteException  Excepción remota del servidor
 	 */
 	public void hideGUI() throws java.rmi.RemoteException;
 }

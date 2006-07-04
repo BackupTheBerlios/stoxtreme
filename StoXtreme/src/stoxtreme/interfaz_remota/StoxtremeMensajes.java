@@ -9,26 +9,26 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- *  Description of the Interface
+ *  Mensajes remotos del servidor
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public interface StoxtremeMensajes extends Remote {
 	/**
-	 *  Gets the SiguienteMensaje attribute of the StoxtremeMensajes object
+	 *  Obtiene el siguiente mensaje de un usuario SiguienteMensaje
 	 *
-	 *@param  id                   Description of Parameter
-	 *@return                      The SiguienteMensaje value
-	 *@exception  RemoteException  Description of Exception
+	 *@param  id                   Id del usuario a revisar
+	 *@return                      Valor del SiguienteMensaje
+	 *@exception  RemoteException  Excepción de conexion con el servidor
 	 */
 	public Mensaje getSiguienteMensaje(String id) throws RemoteException;
 
 
 	/**
-	 *  Description of the Method
+	 *  Envía un mensaje
 	 *
-	 *@param  mensaje              Description of Parameter
-	 *@exception  RemoteException  Description of Exception
+	 *@param  mensaje              contenido del mensaje
+	 *@exception  RemoteException  Excepción remota
 	 */
 	public void enviaMensaje(Mensaje mensaje) throws RemoteException;
 }

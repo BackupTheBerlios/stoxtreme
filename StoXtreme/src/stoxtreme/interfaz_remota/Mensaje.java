@@ -6,7 +6,8 @@
 package stoxtreme.interfaz_remota;
 
 /**
- *  Description of the Class
+ *  Clase Mensaje permitimos mediante estos mensajes la comunicación del 
+ *  sistema con los agentes y clientes
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -19,7 +20,7 @@ public class Mensaje implements java.io.Serializable {
 
 	private boolean __hashCodeCalc = false;
 	/**
-	 *  Description of the Field
+	 *  Tipo de mensaje
 	 */
 	public static final String GLOBAL = "GLOBAL";
 
@@ -29,18 +30,18 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Constructor for the Mensaje object
+	 *  Constructor de Mensaje
 	 */
 	public Mensaje() {
 	}
 
 
 	/**
-	 *  Constructor for the Mensaje object
+	 *  Constructor de Mensaje
 	 *
-	 *@param  contenido     Description of Parameter
-	 *@param  tipoMensaje   Description of Parameter
-	 *@param  destinatario  Description of Parameter
+	 *@param  contenido     Contenido que se mandará en el mensaje
+	 *@param  tipoMensaje   que tipo de mensaje es alerta, información...
+	 *@param  destinatario  A quien va dirigido
 	 */
 	public Mensaje(String contenido, String tipoMensaje, String destinatario) {
 		this.contenido = contenido;
@@ -50,9 +51,9 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Sets the contenido value for this Mensaje.
+	 *  Asignamos un nuevo Contenido
 	 *
-	 *@param  contenido
+	 *@param  contenido el nuevo Contenido
 	 */
 	public void setContenido(java.lang.String contenido) {
 		this.contenido = contenido;
@@ -60,9 +61,9 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Sets the tipoMensaje value for this Mensaje.
+	 *  Asignamos un nuevo tipoMensaje
 	 *
-	 *@param  tipoMensaje
+	 *@param  tipoMensaje el nuevo Tipo
 	 */
 	public void setTipoMensaje(java.lang.String tipoMensaje) {
 		this.tipoMensaje = tipoMensaje;
@@ -70,9 +71,9 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Sets the Destinatario attribute of the Mensaje object
+	 *  Asignamos un nuevo Destinatario
 	 *
-	 *@param  destinatario  The new Destinatario value
+	 *@param  destinatario  el nuevo Destinatario
 	 */
 	public void setDestinatario(String destinatario) {
 		this.destinatario = destinatario;
@@ -80,9 +81,9 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Gets the contenido value for this Mensaje.
+	 *  Obtiene el valor de contenido
 	 *
-	 *@return    contenido
+	 *@return    Valor de contenido
 	 */
 	public java.lang.String getContenido() {
 		return contenido;
@@ -90,9 +91,9 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Gets the tipoMensaje value for this Mensaje.
+	 *  Obtiene el valor de tipoMensaje
 	 *
-	 *@return    tipoMensaje
+	 *@return    Valor de tipoMensaje
 	 */
 	public java.lang.String getTipoMensaje() {
 		return tipoMensaje;
@@ -100,9 +101,9 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Gets the Destinatario attribute of the Mensaje object
+	 *  Obtiene el valor de Destinatario
 	 *
-	 *@return    The Destinatario value
+	 *@return    Valor de Destinatario
 	 */
 	public String getDestinatario() {
 		return destinatario;
@@ -110,11 +111,10 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Compares this to the parameter.
+	 *  Comparación de dos objetos de tipo Mensaje.
 	 *
-	 *@param  obj  the reference object with which to compare.
-	 *@return      <tt>true</tt> if this object is the same as the obj argument;
-	 *      <tt>false</tt> otherwise.
+	 *@param  obj  Objeto referencia al cual estamos comparando el objeto de this.
+	 *@return      cierto si son el mismo objeto y falso en caso contrario.
 	 */
 	public synchronized boolean equals(java.lang.Object obj) {
 		if (!(obj instanceof Mensaje)) {
@@ -148,9 +148,9 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Computes a hash value for this object.
+	 *  Calcula el valor hash para este objeto.
 	 *
-	 *@return    The hash value for this object.
+	 *@return    Devuelve el valor hash.
 	 */
 	public synchronized int hashCode() {
 		if (__hashCodeCalc) {
@@ -173,9 +173,9 @@ public class Mensaje implements java.io.Serializable {
 
 
 	/**
-	 *  Return type metadata object
+	 *  DEvuelve el tipo de descripción
 	 *
-	 *@return    The TypeDesc value
+	 *@return    Valor de TypeDesc
 	 */
 	public static org.apache.axis.description.TypeDesc getTypeDesc() {
 		return typeDesc;
