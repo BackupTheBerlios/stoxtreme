@@ -93,6 +93,7 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 
 		panelDependiente.removeAll();
 		if ("Uniforme".equals(tipo)) {
+			panelDependiente.removeAll();
 			panelDependiente.add(getPanelOpcionesUniforme());
 			panelOpciones.setValor("Distribucion", UNIFORME);
 			panelParametros.setValor("Maximo", Double.toString(p1));
@@ -102,6 +103,7 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 		}
 		else if ("Normal".equals(tipo)) {
 			panelOpciones.setValor("Distribucion", NORMAL);
+			panelDependiente.removeAll();
 			panelDependiente.add(getPanelOpcionesNormal());
 			panelParametros.setValor("Media", Double.toString(p1));
 			panelParametros.setValor("Desviacion tipica", Double.toString(p2));
@@ -110,6 +112,7 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 		}
 		else {
 			panelOpciones.setValor("Distribucion", POISSON);
+			panelDependiente.removeAll();
 			panelDependiente.add(getPanelOpcionesPoisson());
 			panelParametros.setValor("Lambda", Double.toString(p1));
 			pack();
@@ -383,5 +386,6 @@ public class DialogoInsertarDistribucion extends JDialog implements ActionListen
 		botonCancelar.addActionListener(listener);
 		return panel;
 	}
-
+	
+	
 }
