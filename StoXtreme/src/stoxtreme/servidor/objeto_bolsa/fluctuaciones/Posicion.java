@@ -13,11 +13,11 @@ public class Posicion {
 
 
 	/**
-	 *  Constructor for the Posicion object
+	 *  Constructor del objeto Posicion
 	 *
-	 *@param  id  Description of Parameter
-	 *@param  nA  Description of Parameter
-	 *@param  iO  Description of Parameter
+	 *@param  id  Id del Agente
+	 *@param  nA  Numero de acciones
+	 *@param  iO  Id operacion
 	 */
 	public Posicion(String id, int nA, int iO) {
 		idAgente = id;
@@ -27,9 +27,9 @@ public class Posicion {
 
 
 	/**
-	 *  Sets the Precio attribute of the Posicion object
+	 *  Mutador del atributo Precio
 	 *
-	 *@param  id  The new Precio value
+	 *@param  id  El nuevo valor de Precio
 	 */
 	public void setPrecio(String id) {
 		idAgente = id;
@@ -37,9 +37,9 @@ public class Posicion {
 
 
 	/**
-	 *  Sets the NumeroDeAcciones attribute of the Posicion object
+	 *  Mutador del atributo NumeroDeAcciones
 	 *
-	 *@param  nA  The new NumeroDeAcciones value
+	 *@param  nA  El nuevo valor de NumeroDeAcciones
 	 */
 	public void setNumeroDeAcciones(int nA) {
 		numeroDeAcciones = nA;
@@ -47,9 +47,9 @@ public class Posicion {
 
 
 	/**
-	 *  Sets the IdOperacion attribute of the Posicion object
+	 *  Mutador del atributo IdOperacion
 	 *
-	 *@param  iO  The new IdOperacion value
+	 *@param  iO  El nuevo valor de IdOperacion
 	 */
 	public void setIdOperacion(int iO) {
 		idOp = iO;
@@ -57,9 +57,9 @@ public class Posicion {
 
 
 	/**
-	 *  Gets the Precio attribute of the Posicion object
+	 *  Accesor del atributo Precio
 	 *
-	 *@return    The Precio value
+	 *@return    El valor de Precio
 	 */
 	public String getPrecio() {
 		return idAgente;
@@ -67,9 +67,9 @@ public class Posicion {
 
 
 	/**
-	 *  Gets the NumeroDeAcciones attribute of the Posicion object
+	 *  Accesor del atributo NumeroDeAcciones
 	 *
-	 *@return    The NumeroDeAcciones value
+	 *@return    El valor de NumeroDeAcciones
 	 */
 	public int getNumeroDeAcciones() {
 		return numeroDeAcciones;
@@ -77,9 +77,9 @@ public class Posicion {
 
 
 	/**
-	 *  Gets the IdOperacion attribute of the Posicion object
+	 *  Accesor del atributo IdOperacion
 	 *
-	 *@return    The IdOperacion value
+	 *@return    El valor de IdOperacion
 	 */
 	public int getIdOperacion() {
 		return idOp;
@@ -87,9 +87,9 @@ public class Posicion {
 
 
 	/**
-	 *  Gets the IDAgente attribute of the Posicion object
+	 *  Accesor del atributo IDAgente
 	 *
-	 *@return    The IDAgente value
+	 *@return    El valor de IDAgente
 	 */
 	public String getIDAgente() {
 		return idAgente;
@@ -97,9 +97,9 @@ public class Posicion {
 
 
 	/**
-	 *  Converts to a String representation of the object.
+	 * 	Devuelve una representacion en String del objeto
 	 *
-	 *@return    A string representation of the object.
+	 *@return    Representacion en String del objeto
 	 */
 	public String toString() {
 		return idAgente + " " + numeroDeAcciones + " " + idOp;

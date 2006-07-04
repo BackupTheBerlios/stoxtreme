@@ -1,21 +1,15 @@
 package stoxtreme.servidor.gui;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
 
-import javax.swing.DefaultListModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.apache.xml.serialize.Method;
 import org.apache.xml.serialize.OutputFormat;
@@ -24,7 +18,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.traversal.NodeIterator;
-import org.xml.sax.SAXException;
 
 import stoxtreme.servidor.gui.PanelConfigAgentes.ElementoComportamiento;
 import stoxtreme.servidor.gui.PanelConfigAgentes.ElementoDistribucion;
@@ -33,17 +26,18 @@ import stoxtreme.servidor.gui.PanelConfigAgentes.Par;
 import com.sun.org.apache.xpath.internal.XPathAPI;
 
 /**
- *  Description of the Class
+ *  Trata el archivo de configuracion de agentes
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
 public class CargaXMLAgentes {
 	/**
-	 *  Description of the Method
+	 *  Parser que extrae la información del archivo de configuración de agentes
+	 *  y la guarda en un objeto de tipo PanelConfigAgentes
 	 *
-	 *@param  fich           Description of Parameter
-	 *@param  panel          Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  fich           Ruta del fichero
+	 *@param  panel          Donde se guardara la informacion del fichero
+	 *@exception  Exception  Excepción al parsear
 	 */
 	public static void carga(File fich, PanelConfigAgentes panel) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -71,6 +65,14 @@ public class CargaXMLAgentes {
 		panel.expandeArbol();
 	}
 	
+	
+	/**
+	 *  Guarda las modificaciones de configuracion en el fichero correspondiente
+	 *
+	 *@param  fich           Ruta del fichero
+	 *@param  panel          Nueva informacion
+	 *@exception  Exception  Excepción al parsear
+	 */
 	public static void guarda(File fich, PanelConfigAgentes panel) throws Exception{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		Document doc;
@@ -207,11 +209,11 @@ public class CargaXMLAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Procesa el nodo Comportamientos
 	 *
-	 *@param  panel          Description of Parameter
-	 *@param  doc            Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  panel          Informacion
+	 *@param  doc            Documento que se esta parseando
+	 *@exception  Exception  Excepcion al parsear
 	 */
 	private static void procesaComportamientos(PanelConfigAgentes panel, Document doc) throws Exception {
 		NodeIterator iterator = XPathAPI.selectNodeIterator(doc, "//comportamientos/comportamiento");
@@ -230,12 +232,12 @@ public class CargaXMLAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Procesa los subcomportamientos
 	 *
-	 *@param  doc            Description of Parameter
-	 *@param  id             Description of Parameter
-	 *@return                Description of the Returned Value
-	 *@exception  Exception  Description of Exception
+	 *@param  doc            Documento que se esta parseando
+	 *@param  id             Nombre del comportamiento padre
+	 *@return                Lista de subcomportamientos
+	 *@exception  Exception  Excepcion al parsear
 	 */
 	private static ArrayList<Hashtable<String, Object>> procesaSubcomportamientos(Document doc, String id) throws Exception {
 		NodeIterator iterator = XPathAPI.selectNodeIterator(doc, "//comportamiento[@id='" + id + "']/comportamiento");
@@ -257,11 +259,11 @@ public class CargaXMLAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Procesa los modelos psicologicos
 	 *
-	 *@param  panel          Description of Parameter
-	 *@param  doc            Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  panel          Informacion
+	 *@param  doc            Documento que se esta parseando
+	 *@exception  Exception  Excepcion al parsear
 	 */
 	private static void procesaModelosPsicologicos(PanelConfigAgentes panel, Document doc) throws Exception {
 		NodeIterator iterator = XPathAPI.selectNodeIterator(doc, "//modelo_psicologico");
@@ -291,11 +293,11 @@ public class CargaXMLAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Procesa los modelos sociales
 	 *
-	 *@param  panel          Description of Parameter
-	 *@param  doc            Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  panel          Informacion
+	 *@param  doc            Documento que se esta parseando
+	 *@exception  Exception  Excepcion al parsear
 	 */
 	private static void procesaModelosSociales(PanelConfigAgentes panel, Document doc) throws Exception {
 		NodeIterator iterator = XPathAPI.selectNodeIterator(doc, "//modelo_social");
@@ -325,11 +327,11 @@ public class CargaXMLAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Procesa las distribuciones
 	 *
-	 *@param  panel          Description of Parameter
-	 *@param  doc            Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  panel          Informacion
+	 *@param  doc            Documento que se esta parseando
+	 *@exception  Exception  Excepcion al parsear
 	 */
 	private static void procesaDistribuciones(PanelConfigAgentes panel, Document doc) throws Exception {
 		procesaNormales(panel, doc);
@@ -339,11 +341,11 @@ public class CargaXMLAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Procesa las distribuciones uniformes
 	 *
-	 *@param  panel          Description of Parameter
-	 *@param  doc            Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  panel          Informacion
+	 *@param  doc            Documento que se esta parseando
+	 *@exception  Exception  Excepcion al parsear
 	 */
 	private static void procesaUniformes(PanelConfigAgentes panel, Document doc) throws Exception {
 		NodeIterator iterator = XPathAPI.selectNodeIterator(doc, "//dist_uniforme");
@@ -358,11 +360,11 @@ public class CargaXMLAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Procesa las distribuciones poissons
 	 *
-	 *@param  panel          Description of Parameter
-	 *@param  doc            Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  panel          Informacion
+	 *@param  doc            Documento que se esta parseando
+	 *@exception  Exception  Excepcion al parsear
 	 */
 	private static void procesaPoissons(PanelConfigAgentes panel, Document doc) throws Exception {
 		NodeIterator iterator = XPathAPI.selectNodeIterator(doc, "//dist_poisson");
@@ -376,11 +378,11 @@ public class CargaXMLAgentes {
 
 
 	/**
-	 *  Description of the Method
+	 *  Procesa las distribuciones normales
 	 *
-	 *@param  panel          Description of Parameter
-	 *@param  doc            Description of Parameter
-	 *@exception  Exception  Description of Exception
+	 *@param  panel          Informacion
+	 *@param  doc            Documento que se esta parseando
+	 *@exception  Exception  Excepcion al parsear
 	 */
 	private static void procesaNormales(PanelConfigAgentes panel, Document doc) throws Exception {
 		NodeIterator iterator = XPathAPI.selectNodeIterator(doc, "//dist_normal");

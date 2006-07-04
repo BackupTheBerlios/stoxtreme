@@ -23,22 +23,4 @@ public interface IInformacion {
 	 *@param  i  Nuevo valor de InfoBursatil
 	 */
 	public void setInfoBursatil(InfoBursatil i);
-
-	// Valoración de como se va a comportar la empresa en el futuro
-
-	// Util para los eventos, etc.
-	/**
-	 *  Obtiene la  PerspectivaFuturo
-	 *
-	 *@return    Valor de PerspectivaFuturo
-	 */
-	public String getPerspectivaFuturo();
-
-
-	/**
-	 *  Asignamos una nueva PerspectivaFuturo
-	 *
-	 *@param  s  Nuevo valor de PerspectivaFuturo
-	 */
-	public void setPerspectivaFuturo(String s);
 }

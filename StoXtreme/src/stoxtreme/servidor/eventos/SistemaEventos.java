@@ -20,7 +20,7 @@ public class SistemaEventos extends ModeloTablaEventos implements VariablesListe
 
 
 	/**
-	 *  Constructor for the SistemaEventos object
+	 *  Constructor del objeto SistemaEventos
 	 *
 	 *@param  variables  Variables del sistema
 	 */

@@ -23,7 +23,7 @@ public class ObjetoCondicion {
 
 
 	/**
-	 *  Constructor for the ObjetoCondicion object
+	 *  Constructor del objeto ObjetoCondicion
 	 *
 	 *@param  descripcion         Descripción del evento
 	 *@param  variables           Variables del sistema
@@ -35,7 +35,7 @@ public class ObjetoCondicion {
 
 
 	/**
-	 *  Constructor for the ObjetoCondicion object
+	 *  Constructor del objeto ObjetoCondicion
 	 *
 	 *@param  descripcion         Descripción del evento (condición)
 	 *@param  variables           Variables del sistema
@@ -62,9 +62,9 @@ public class ObjetoCondicion {
 
 
 	/**
-	 *  Sets the Activado attribute of the ObjetoCondicion object
+	 *  Mutador del atributo Activado
 	 *
-	 *@param  b  The new Activado value
+	 *@param  b  El nuevo valor de Activado
 	 */
 	public void setActivado(boolean b) {
 		this.activado = b;
@@ -72,9 +72,9 @@ public class ObjetoCondicion {
 
 
 	/**
-	 *  Gets the Activado attribute of the ObjetoCondicion object
+	 *  Accesor del atributo Activado
 	 *
-	 *@return    The Activado value
+	 *@return    El valor de Activado
 	 */
 	public boolean isActivado() {
 		return activado;
@@ -82,9 +82,9 @@ public class ObjetoCondicion {
 
 
 	/**
-	 *  Gets the UnaVez attribute of the ObjetoCondicion object
+	 *  Accesor del atributo UnaVez
 	 *
-	 *@return    The UnaVez value
+	 *@return    El valor de UnaVez
 	 */
 	public boolean isUnaVez() {
 		return this.unavez;
@@ -92,9 +92,9 @@ public class ObjetoCondicion {
 
 
 	/**
-	 *  Gets the Descripcion attribute of the ObjetoCondicion object
+	 *  Accesor del atributo Descripcion
 	 *
-	 *@return    The Descripcion value
+	 *@return     El valor de Descripcion
 	 */
 	public String getDescripcion() {
 		return condicion;

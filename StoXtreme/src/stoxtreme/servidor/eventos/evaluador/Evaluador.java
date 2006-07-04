@@ -8,7 +8,7 @@ import java.util.*;
 import stoxtreme.servidor.VariablesSistema;
 
 /**
- *  Description of the Class
+ *  Clase que evalúa si la condición tiene una sintaxis correcta
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */

@@ -26,7 +26,7 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Constructor for the Fluctuaciones object
+	 *  Constructor del objeto Fluctuaciones
 	 *
 	 *@param  varSis  Variables del sistema
 	 *@param  sO      Sistema de operaciones
@@ -44,7 +44,7 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Constructor for the Fluctuaciones object
+	 *  Constructor del objeto Fluctuaciones
 	 *
 	 *@param  sO   Sistema de operaciones
 	 *@param  nt   Tick
@@ -60,9 +60,9 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Sets the PrecioActual attribute of the Fluctuaciones object
+	 *  Mutador del atributo PrecioActual
 	 *
-	 *@param  actual  The new PrecioActual value
+	 *@param  actual  El nuevo valor de PrecioActual
 	 */
 	public void setPrecioActual(double actual) {
 		pActual = actual;
@@ -70,9 +70,9 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Sets the Tick attribute of the Fluctuaciones object
+	 *  Mutador del atributo Tick
 	 *
-	 *@param  tick  The new Tick value
+	 *@param  tick  El nuevo valor de Tick
 	 */
 	public void setTick(double tick) {
 		this.tick = tick;
@@ -80,9 +80,9 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Sets the SisOp attribute of the Fluctuaciones object
+	 *  Mutador del atributo SisOp
 	 *
-	 *@param  sisOp  The new SisOp value
+	 *@param  sisOp  El nuevo valor de SisOp
 	 */
 	public void setSisOp(SistemaOperaciones sisOp) {
 		this.sisOp = sisOp;
@@ -90,9 +90,9 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Gets the PrecioActual attribute of the Fluctuaciones object
+	 *  Accesor del atributo PrecioActual
 	 *
-	 *@return    The PrecioActual value
+	 *@return    El nuevo valor de PrecioActual
 	 */
 	public double getPrecioActual() {
 		return pActual;
@@ -100,9 +100,9 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Gets the Tick attribute of the Fluctuaciones object
+	 *  Accesor del atributo Tick
 	 *
-	 *@return    The Tick value
+	 *@return    El nuevo valor de Tick
 	 */
 	public double getTick() {
 		return tick;
@@ -110,9 +110,9 @@ public class Fluctuaciones {
 
 
 	/**
-	 *  Gets the SisOp attribute of the Fluctuaciones object
+	 *  Accesor del atributo SisOp
 	 *
-	 *@return    The SisOp value
+	 *@return    El nuevo valor de SisOp
 	 */
 	public SistemaOperaciones getSisOp() {
 		return sisOp;

@@ -4,7 +4,7 @@
 package stoxtreme.servidor.eventos.evaluador;
 
 /**
- *  Description of the Interface
+ *  El léxico de las condiciones de los eventos
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */

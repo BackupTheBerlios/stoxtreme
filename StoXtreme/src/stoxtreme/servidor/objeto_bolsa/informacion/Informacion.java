@@ -11,9 +11,9 @@ public class Informacion {
 
 
 	/**
-	 *  Constructor for the Informacion object
+	 *  Constructor del objeto Informacion
 	 *
-	 *@param  ib  Description of Parameter
+	 *@param  ib  Informacion bursatil
 	 */
 	public Informacion(InfoBursatil ib) {
 		iBursatil = ib;
@@ -21,9 +21,9 @@ public class Informacion {
 
 
 	/**
-	 *  Gets the IBursatil attribute of the Informacion object
+	 *  Accesor del atributo IBursatil
 	 *
-	 *@return    The IBursatil value
+	 *@return    El valor de IBursatil
 	 */
 	public InfoBursatil getIBursatil() {
 		return iBursatil;

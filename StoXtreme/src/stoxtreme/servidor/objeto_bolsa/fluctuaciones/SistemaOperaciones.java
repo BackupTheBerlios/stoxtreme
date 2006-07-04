@@ -34,7 +34,7 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Constructor for the SistemaOperaciones object
+	 *  Constructor del objeto SistemaOperaciones
 	 *
 	 *@param  nAccionesVenta  Número de acciones a la venta de la empresa
 	 */
@@ -49,7 +49,7 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Constructor for the SistemaOperaciones object
+	 *  Constructor del objeto SistemaOperaciones
 	 *
 	 *@param  lC  Lista de operaciones de compra
 	 *@param  lV  Lista de operaciones de venta
@@ -61,9 +61,9 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Sets the AccionesVenta attribute of the SistemaOperaciones object
+	 *  Mutador del atributo AccionesVenta
 	 *
-	 *@param  accionesVenta  The new AccionesVenta value
+	 *@param  accionesVenta  El nuevo valor de AccionesVenta
 	 */
 	public void setAccionesVenta(int accionesVenta) {
 		nAccionesVenta = accionesVenta;
@@ -71,9 +71,9 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Sets the PrecioEstimado attribute of the SistemaOperaciones object
+	 *  Mutador del atributo PrecioEstimado
 	 *
-	 *@param  precioEstimado  The new PrecioEstimado value
+	 *@param  precioEstimado  El nuevo valor de PrecioEstimado
 	 */
 	public void setPrecioEstimado(double precioEstimado) {
 		this.precioEstimado = precioEstimado;
@@ -81,9 +81,9 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Sets the ListaCompras attribute of the SistemaOperaciones object
+	 *  Mutador del atributo ListaCompras
 	 *
-	 *@param  listaCompras  The new ListaCompras value
+	 *@param  listaCompras  El nuevo valor de ListaCompras
 	 */
 	public void setListaCompras(Hashtable listaCompras) {
 		this.listaCompras = listaCompras;
@@ -91,9 +91,9 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Sets the ListaVentas attribute of the SistemaOperaciones object
+	 *  Mutador del atributo ListaVentas
 	 *
-	 *@param  listaVentas  The new ListaVentas value
+	 *@param  listaVentas  El nuevo valor de ListaVentas
 	 */
 	public void setListaVentas(Hashtable listaVentas) {
 		this.listaVentas = listaVentas;
@@ -101,9 +101,9 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Gets the Compras attribute of the SistemaOperaciones object
+	 *  Accesor del atributo Compras
 	 *
-	 *@return    The Compras value
+	 *@return    El valor de Compras
 	 */
 	public Hashtable getCompras() {
 		return listaCompras;
@@ -111,9 +111,9 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Gets the Ventas attribute of the SistemaOperaciones object
+	 *  Accesor del atributo Ventas
 	 *
-	 *@return    The Ventas value
+	 *@return    El valor de Ventas
 	 */
 	public Hashtable getVentas() {
 		return listaVentas;
@@ -121,9 +121,9 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Gets the AccionesVenta attribute of the SistemaOperaciones object
+	 *  Accesor del atributo AccionesVenta
 	 *
-	 *@return    The AccionesVenta value
+	 *@return    El valor de AccionesVenta
 	 */
 	public int getAccionesVenta() {
 		return nAccionesVenta;
@@ -131,9 +131,9 @@ public class SistemaOperaciones {
 
 
 	/**
-	 *  Gets the PrecioEstimado attribute of the SistemaOperaciones object
+	 *  Accesor del atributo PrecioEstimado
 	 *
-	 *@return    The PrecioEstimado value
+	 *@return   El valor de PrecioEstimado
 	 */
 	public double getPrecioEstimado() {
 		return precioEstimado;

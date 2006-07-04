@@ -4,7 +4,7 @@ import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 /**
- *  Description of the Class
+ *  Clase que ejecuta las acciones asociadas a los eventos
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -27,17 +27,16 @@ public class Ejecutor {
 
 
 	/**
-	 *  Constructor for the Ejecutor object
+	 *  Constructor del objeto Ejecutor
 	 */
 	private Ejecutor() {
 	}
 
 
-	// TODO: IMPLEMENTAR LA CLASE, QUIZAS EJECUTAR DEBERIA SER ESTATICO
 	/**
-	 *  Description of the Method
+	 *  Ejecuta las acciones asociadas a los eventos
 	 *
-	 *@param  s  Description of Parameter
+	 *@param  s  Descripción del evento
 	 */
 	public static void ejecuta(String s) {
 		if (s.equals(OPA_Endesa.toUpperCase())) {
@@ -58,12 +57,5 @@ public class Ejecutor {
 		if (s.equals("Rumor_FCC".toUpperCase())) {
 			AlmacenMensajes.getInstance().enviaMensaje(new Mensaje(Rumor_FCC, "RUMOR_AGENTES", Mensaje.GLOBAL));
 		}
-//		if(s.equals(DIHOLA)){
-//			System.out.println("Hola!!");
-//		}
-//		if(s.equals(DIHOLA_ALONSO)){
-//			Mensaje m = new Mensaje("HOLAAAA", "INFORMACION", "alonso");
-//			AlmacenMensajes.getInstance().enviaMensaje(m);
-//		}
 	}
 }

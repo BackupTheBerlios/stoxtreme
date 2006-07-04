@@ -16,9 +16,9 @@ public class InfoBursatil {
 
 
 	/**
-	 *  Sets the Participaciones attribute of the InfoBursatil object
+	 *  Mutador del atributo Participaciones
 	 *
-	 *@param  participaciones  The new Participaciones value
+	 *@param  participaciones  El nuevo valor de Participaciones
 	 */
 	public void setParticipaciones(Hashtable participaciones) {
 		this.participaciones = participaciones;
@@ -26,9 +26,9 @@ public class InfoBursatil {
 
 
 	/**
-	 *  Sets the AmpliacionesCapital attribute of the InfoBursatil object
+	 *  Mutador del atributo AmpliacionesCapital
 	 *
-	 *@param  ampliacionesCapital  The new AmpliacionesCapital value
+	 *@param  ampliacionesCapital  El nuevo valor de AmpliacionesCapital
 	 */
 	public void setAmpliacionesCapital(Vector ampliacionesCapital) {
 		this.ampliacionesCapital = ampliacionesCapital;
@@ -36,9 +36,9 @@ public class InfoBursatil {
 
 
 	/**
-	 *  Sets the CapitalSocial attribute of the InfoBursatil object
+	 *  Mutador del atributo CapitalSocial
 	 *
-	 *@param  capitalSocial  The new CapitalSocial value
+	 *@param  capitalSocial  El nuevo valor de CapitalSocial
 	 */
 	public void setCapitalSocial(Vector capitalSocial) {
 		this.capitalSocial = capitalSocial;
@@ -46,9 +46,9 @@ public class InfoBursatil {
 
 
 	/**
-	 *  Gets the Participaciones attribute of the InfoBursatil object
+	 *  Accesor del atributo Participaciones
 	 *
-	 *@return    The Participaciones value
+	 *@return    El valor de Participaciones
 	 */
 	public Hashtable getParticipaciones() {
 		return participaciones;
@@ -56,9 +56,9 @@ public class InfoBursatil {
 
 
 	/**
-	 *  Gets the AmpliacionesCapital attribute of the InfoBursatil object
+	 *  Accesor del atributo AmpliacionesCapital
 	 *
-	 *@return    The AmpliacionesCapital value
+	 *@return    El valor de AmpliacionesCapital
 	 */
 	public Vector getAmpliacionesCapital() {
 		return ampliacionesCapital;
@@ -66,9 +66,9 @@ public class InfoBursatil {
 
 
 	/**
-	 *  Gets the CapitalSocial attribute of the InfoBursatil object
+	 *  Accesor del atributo CapitalSocial
 	 *
-	 *@return    The CapitalSocial value
+	 *@return    El valor de CapitalSocial
 	 */
 	public Vector getCapitalSocial() {
 		return capitalSocial;

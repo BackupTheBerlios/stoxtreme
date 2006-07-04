@@ -69,7 +69,7 @@ public class InformacionXML implements IInformacion {
 
 
 	/**
-	 *  Constructor for the InformacionXML object
+	 *  Constructor del objeto InformacionXML
 	 *
 	 *@param  archivo  Ruta del archivo que contiene la información
 	 *@param  empresa  Nombre de la empresa a la que pertenece la información
@@ -105,9 +105,9 @@ public class InformacionXML implements IInformacion {
 	 *  que se han dado en la bolsa
 	 */
 	/**
-	 *  Sets the Participaciones attribute of the InformacionXML object
+	 *  Mutador del atributo Participaciones
 	 *
-	 *@param  ht  The new Participaciones value
+	 *@param  ht  El nuevo valor de Participaciones
 	 */
 	public void setParticipaciones(Hashtable ht) {
 
@@ -115,30 +115,20 @@ public class InformacionXML implements IInformacion {
 
 
 	/**
-	 *  Sets the AmpliacionesCapital attribute of the InformacionXML object
+	 * Mutador del atributo AmpliacionesCapital
 	 *
-	 *@param  v  The new AmpliacionesCapital value
+	 *@param  v  El nuevo valor de AmpliacionesCapital
 	 */
 	public void setAmpliacionesCapital(Vector v) {
 	}
 
 
 	/**
-	 *  Sets the InfoBursatil attribute of the InformacionXML object
+	 *  Mutador del atributo InfoBursatil
 	 *
-	 *@param  i  The new InfoBursatil value
+	 *@param  i  El nuevo valor de InfoBursatil
 	 */
 	public void setInfoBursatil(InfoBursatil i) {
-
-	}
-
-
-	/**
-	 *  Sets the PerspectivaFuturo attribute of the InformacionXML object
-	 *
-	 *@param  s  The new PerspectivaFuturo value
-	 */
-	public void setPerspectivaFuturo(String s) {
 
 	}
 
@@ -146,14 +136,14 @@ public class InformacionXML implements IInformacion {
 	/*
 	 *  Obtenemos los datos bursatiles:
 	 *  Participaciones (nombre del accionista, numero de acciones que posee)
-	 *  Capital Social (Capital, calor nominal de la accion y numero de acciones)
+	 *  Capital Social (Capital, valor nominal de la accion y numero de acciones)
 	 *  Ampliaciones de capital
 	 *  Informacion historica
 	 */
 	/**
-	 *  Gets the DatosBursatiles attribute of the InformacionXML object
+	 *  Accesor del atributo DatosBursatiles
 	 *
-	 *@return    The DatosBursatiles value
+	 *@return    El valor de DatosBursatiles
 	 */
 	public InfoBursatil getDatosBursatiles() {
 		InfoBursatil ib = new InfoBursatil();
@@ -165,9 +155,9 @@ public class InformacionXML implements IInformacion {
 
 
 	/**
-	 *  Gets the Participaciones attribute of the InformacionXML object
+	 *  Accesor del atributo Participaciones
 	 *
-	 *@return    The Participaciones value
+	 *@return    El valor de Participaciones
 	 */
 	@SuppressWarnings("unchecked")
 	public Hashtable getParticipaciones() {
@@ -185,9 +175,9 @@ public class InformacionXML implements IInformacion {
 
 	
 	/**
-	 *  Gets the AmpliacionesCapital attribute of the InformacionXML object
+	 *  Accesor del atributo AmpliacionesCapital
 	 *
-	 *@return    The AmpliacionesCapital value
+	 *@return    El valor de AmpliacionesCapital
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getAmpliacionesCapital() {
@@ -199,9 +189,9 @@ public class InformacionXML implements IInformacion {
 
 
 	/**
-	 *  Gets the CapitalSocial attribute of the InformacionXML object
+	 *  Accesor del atributo CapitalSocial
 	 *
-	 *@return    The CapitalSocial value
+	 *@return    El valor de CapitalSocial
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getCapitalSocial() {
@@ -212,15 +202,4 @@ public class InformacionXML implements IInformacion {
 		capSocial.addElement(((Element) nl.item(0)).getAttribute("num_acciones"));
 		return capSocial;
 	}
-
-
-	/**
-	 *  Gets the PerspectivaFuturo attribute of the InformacionXML object
-	 *
-	 *@return    The PerspectivaFuturo value
-	 */
-	public String getPerspectivaFuturo() {
-		return null;
-	}
-
 }
