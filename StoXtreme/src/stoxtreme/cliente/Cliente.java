@@ -54,7 +54,24 @@ public class Cliente {
 	public String getNUsuario() {
 		return nUsuario;
 	}
-
+	static{
+		try {
+			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	public static void main(String[] args) {
+		PropertyConfigurator.configure("conf/log4j.properties");
+		Cliente c = new Cliente();
+		try {
+			c.init();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+	}
 
 	/**
 	 *  obtiene los ficheros de las empresas del cliente
