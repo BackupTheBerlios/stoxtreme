@@ -10,7 +10,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
- *  Description of the Class
+ *  Nos muestra el panel donde fluctuan las acciones
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -27,9 +27,9 @@ public class PanelCotizaciones extends JPanel implements ActionListener {
 
 
 	/**
-	 *  Constructor for the PanelCotizaciones object
+	 *  Constructor de PanelCotizaciones
 	 *
-	 *@param  bolsa  Description of Parameter
+	 *@param  bolsa  Estado actual de la bolsa
 	 */
 	public PanelCotizaciones(EstadoBolsa bolsa) {
 		setPreferredSize(new Dimension(getWidth(), 30));
@@ -53,9 +53,9 @@ public class PanelCotizaciones extends JPanel implements ActionListener {
 
 
 	/**
-	 *  Description of the Method
+	 *  Representación gráfica de los valores
 	 *
-	 *@param  g  Description of Parameter
+	 *@param  g  variable que captura los gráficos
 	 */
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -87,9 +87,9 @@ public class PanelCotizaciones extends JPanel implements ActionListener {
 
 
 	/**
-	 *  Description of the Method
+	 *  Captura eventos para repintar
 	 *
-	 *@param  e  Description of Parameter
+	 *@param  e  evento capturado
 	 */
 	public void actionPerformed(ActionEvent e) {
 		this.repaint();

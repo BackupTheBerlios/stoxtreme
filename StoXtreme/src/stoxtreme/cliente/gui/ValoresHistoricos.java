@@ -6,7 +6,7 @@ import java.util.Calendar;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 /**
- *  Description of the Class
+ *  Recoge los datos históricos de una empresa
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -18,8 +18,8 @@ public class ValoresHistoricos extends TimeSeries {
 	/**
 	 *  Constructor for the ValoresHistoricos object
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@param  fecha    Description of Parameter
+	 *@param  empresa  Nombre de la empresa
+	 *@param  fecha    Fecha de inicio
 	 */
 	public ValoresHistoricos(String empresa, Date fecha) {
 		super(empresa);
@@ -30,9 +30,9 @@ public class ValoresHistoricos extends TimeSeries {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta un nuevo valor
 	 *
-	 *@param  valor  Description of Parameter
+	 *@param  valor  Volumen introducido
 	 */
 	public void insertarSiguienteValor(double valor) {
 		volumenesSesion.add(new Double(valor));

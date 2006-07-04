@@ -11,7 +11,7 @@ import stoxtreme.interfaz_remota.Mensaje;
 import stoxtreme.sistema_mensajeria.emisor.AlmacenMensajes;
 
 /**
- *  Description of the Class
+ *  Permite representar gráficamente la cartera del Cliente
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -23,7 +23,7 @@ public class ModeloCartera extends AbstractTableModel {
 
 
 	/**
-	 *  Constructor for the ModeloCartera object
+	 *  Constructor de ModeloCartera
 	 */
 	public ModeloCartera() {
 		nombreEmpresas = new ArrayList<String>();
@@ -33,9 +33,9 @@ public class ModeloCartera extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the RowCount attribute of the ModeloCartera object
+	 *  Obtenemos el número de filas RowCount
 	 *
-	 *@return    The RowCount value
+	 *@return    Valor de RowCount
 	 */
 	public int getRowCount() {
 		return nombreEmpresas.size();
@@ -43,9 +43,9 @@ public class ModeloCartera extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the ColumnCount attribute of the ModeloCartera object
+	 *  Obtenemos el número de Columnas ColumnCount
 	 *
-	 *@return    The ColumnCount value
+	 *@return    Valor de ColumnCount
 	 */
 	public int getColumnCount() {
 		return nCol.length;
@@ -53,10 +53,10 @@ public class ModeloCartera extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the ColumnName attribute of the ModeloCartera object
+	 *  Obtenemos el nombre de Columnas ColumnName
 	 *
-	 *@param  index  Description of Parameter
-	 *@return        The ColumnName value
+	 *@param  index  Número de columna
+	 *@return        Valor de ColumnName
 	 */
 	public String getColumnName(int index) {
 		return nCol[index];
@@ -64,11 +64,11 @@ public class ModeloCartera extends AbstractTableModel {
 
 
 	/**
-	 *  Gets the ValueAt attribute of the ModeloCartera object
+	 *  Obtenemos el valor ValueAt
 	 *
-	 *@param  rowIndex     Description of Parameter
-	 *@param  columnIndex  Description of Parameter
-	 *@return              The ValueAt value
+	 *@param  rowIndex     Número de fila
+	 *@param  columnIndex  Número de columna
+	 *@return              Valor de ValueAt
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
@@ -83,11 +83,11 @@ public class ModeloCartera extends AbstractTableModel {
 
 
 	/**
-	 *  Description of the Method
+	 *  Insertamos acciones a la cartera del cliente
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@param  numero   Description of Parameter
-	 *@param  precio   Description of Parameter
+	 *@param  empresa  Empresa de la que provienen las acciones
+	 *@param  numero   Cantidad
+	 *@param  precio   Precio de compra
 	 */
 	public void insertarAcciones(String empresa, int numero, double precio) {
 		int nAnterior = 0;
@@ -109,10 +109,10 @@ public class ModeloCartera extends AbstractTableModel {
 
 
 	/**
-	 *  Description of the Method
+	 *  Una vez producida la venta de acciones
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@param  numero   Description of Parameter
+	 *@param  empresa  Empresa de la que provienen las acciones
+	 *@param  numero   Cantidad
 	 */
 	public void restaAcciones(String empresa, int numero) {
 		int nAnterior = 0;

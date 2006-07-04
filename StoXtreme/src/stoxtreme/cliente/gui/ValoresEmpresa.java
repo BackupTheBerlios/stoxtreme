@@ -7,7 +7,7 @@ import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 
 /**
- *  Description of the Class
+ *  Recoge los valores de una empresa intradiarios
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -23,10 +23,10 @@ public class ValoresEmpresa extends TimeSeries {
 
 
 	/**
-	 *  Constructor for the ValoresEmpresa object
+	 *  Constructor de ValoresEmpresa
 	 *
-	 *@param  empresa     Description of Parameter
-	 *@param  cadaCuanto  Description of Parameter
+	 *@param  empresa     Nombre de la empresa
+	 *@param  cadaCuanto  Tiempo de fluctuación
 	 */
 	public ValoresEmpresa(String empresa, int cadaCuanto) {
 		super(empresa);
@@ -43,9 +43,9 @@ public class ValoresEmpresa extends TimeSeries {
 
 
 	/**
-	 *  Gets the TendenciaAlta attribute of the ValoresEmpresa object
+	 *  Obtiene la TendenciaAlta si es alta o no
 	 *
-	 *@return    The TendenciaAlta value
+	 *@return    Valor de la TendenciaAlta
 	 */
 	public boolean isTendenciaAlta() {
 		if (preciosSesion.size() > 0) {
@@ -58,9 +58,9 @@ public class ValoresEmpresa extends TimeSeries {
 
 
 	/**
-	 *  Description of the Method
+	 *  Inserta un nuevo valor
 	 *
-	 *@param  valor  Description of Parameter
+	 *@param  valor  Nuevo precio
 	 */
 	@SuppressWarnings("unchecked")
 	public void insertarSiguienteValor(double valor) {
@@ -76,9 +76,9 @@ public class ValoresEmpresa extends TimeSeries {
 
 
 	/**
-	 *  Description of the Method
+	 *  Obtenemos el último precio insertado
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    Último precio
 	 */
 	public double ultimoPrecio() {
 		if (preciosSesion.size() > 0) {

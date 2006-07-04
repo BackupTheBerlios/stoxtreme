@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- *  Description of the Class
+ *  Vista de las gráfica de las acciones
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -24,11 +24,11 @@ public class PrecioGraficoMoviendose {
 
 
 	/**
-	 *  Constructor for the PrecioGraficoMoviendose object
+	 *  Constructor de PrecioGraficoMoviendose
 	 *
-	 *@param  empresa  Description of Parameter
-	 *@param  precio   Description of Parameter
-	 *@param  panel    Description of Parameter
+	 *@param  empresa  Nombre de la empresa
+	 *@param  precio   Precio de la empresa
+	 *@param  panel    Panel donde representar
 	 */
 	public PrecioGraficoMoviendose(String empresa, double precio, JPanel panel) {
 		this.empresa = empresa;
@@ -52,9 +52,9 @@ public class PrecioGraficoMoviendose {
 
 
 	/**
-	 *  Description of the Method
+	 *  Forma de representación
 	 *
-	 *@param  g  Description of Parameter
+	 *@param  g  Gráficos capturados
 	 */
 	public void paint(Graphics g) {
 		xpoints[0] = x + ts1 + 4;
@@ -91,9 +91,9 @@ public class PrecioGraficoMoviendose {
 
 
 	/**
-	 *  Description of the Method
+	 *  Mira si el valor está dentro del espacio requerido
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    Devuelve la respuesta
 	 */
 	public boolean dentro() {
 		return (x + ts1 + ts2 + anchoTriangulo + 10) < panel.getWidth();
@@ -101,9 +101,9 @@ public class PrecioGraficoMoviendose {
 
 
 	/**
-	 *  Description of the Method
+	 *  Mira si el valor está fuera del espacio requerido
 	 *
-	 *@return    Description of the Returned Value
+	 *@return    Devuelve la respuesta
 	 */
 	public boolean fuera() {
 		return (x + ts1 + ts2 + anchoTriangulo + 10) < 0;
