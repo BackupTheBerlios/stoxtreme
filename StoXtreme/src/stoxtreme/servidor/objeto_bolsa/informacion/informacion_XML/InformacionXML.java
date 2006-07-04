@@ -18,7 +18,7 @@ import stoxtreme.interfaz_remota.IInformacion;
 import stoxtreme.servidor.objeto_bolsa.informacion.InfoBursatil;
 
 /**
- *  Description of the Class
+ *  Parser que extrae la información específica de cada empresa
  *
  *@author    Iván Gómez Edo, Itziar Pérez García, Alonso Javier Torres
  */
@@ -71,8 +71,8 @@ public class InformacionXML implements IInformacion {
 	/**
 	 *  Constructor for the InformacionXML object
 	 *
-	 *@param  archivo  Description of Parameter
-	 *@param  empresa  Description of Parameter
+	 *@param  archivo  Ruta del archivo que contiene la información
+	 *@param  empresa  Nombre de la empresa a la que pertenece la información
 	 */
 	public InformacionXML(String archivo, String empresa) {
 		factory = DocumentBuilderFactory.newInstance();
@@ -114,10 +114,6 @@ public class InformacionXML implements IInformacion {
 	}
 
 
-	/*
-	 *  Modificamos el XML para adecuarlo a los cambios
-	 *  que se han dado en la bolsa
-	 */
 	/**
 	 *  Sets the AmpliacionesCapital attribute of the InformacionXML object
 	 *
@@ -147,7 +143,6 @@ public class InformacionXML implements IInformacion {
 	}
 
 
-
 	/*
 	 *  Obtenemos los datos bursatiles:
 	 *  Participaciones (nombre del accionista, numero de acciones que posee)
@@ -169,12 +164,6 @@ public class InformacionXML implements IInformacion {
 	}
 
 
-	/*
-	 *  Obtenemos las participaciones.
-	 *  Se guardan en una Hashtable con:
-	 *  key=nombre del accionista
-	 *  valor=numero de acciones que posee
-	 */
 	/**
 	 *  Gets the Participaciones attribute of the InformacionXML object
 	 *
@@ -194,10 +183,7 @@ public class InformacionXML implements IInformacion {
 	}
 
 
-	/*
-	 *  Obtenemos la informacion de las ampliaciones de capital.
-	 *
-	 */
+	
 	/**
 	 *  Gets the AmpliacionesCapital attribute of the InformacionXML object
 	 *
